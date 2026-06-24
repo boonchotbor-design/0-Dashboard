@@ -1092,40 +1092,81 @@ export function Dashboard({ activeSlide, data, onImport }: {
           <SectionTitle>Recovery Plan: Install On-Process (2026)</SectionTitle>
           <div className="bg-blue-950/20 border border-blue-500/20 rounded-2xl p-8 text-center">
             <p className="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-2">Total Install On-Process (2026)</p>
-            <p className="text-6xl font-extrabold text-white">฿{fmt(d.recoveryPlan.installOnProcess)}</p>
+            <p className="text-6xl font-extrabold text-white">฿{fmt(1662690)}</p>
             <p className="text-zinc-400 text-sm mt-3">มูลค่างาน In-house ที่อยู่ระหว่างดำเนินการ — กำลังแปลงเป็น Acceptance</p>
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <KpiCard title="On-Process → AC คาดการณ์" value="฿0.45M" sub="ไตรมาส 3" icon={<TrendingUp size={16}/>} color="emerald"/>
-            <KpiCard title="ยังต้องดำเนินการ" value="฿0.49M" sub="Q4 2026" icon={<Clock size={16}/>} color="amber"/>
-            <KpiCard title="Conversion Rate" value="48%" sub="On-Process → Revenue" icon={<Activity size={16}/>} color="blue"/>
+            <KpiCard title="On-Process → AC คาดการณ์" value={`฿${fmt(1662690 * 0.45)}`} sub="ไตรมาส 3" icon={<TrendingUp size={16}/>} color="emerald"/>
+            <KpiCard title="ยังต้องดำเนินการ" value={`฿${fmt(1662690 * 0.55)}`} sub="Q4 2026" icon={<Clock size={16}/>} color="amber"/>
+            <KpiCard title="Action Plan AC#2" value={`฿${fmt(88523.40)}`} sub="สำหรับรับรายได้" icon={<Activity size={16}/>} color="blue"/>
           </div>
         </div>
       );
 
       // ── Slide 27: Summary of Remain ─────────────────────────────────────────
       case 27: return (
-        <div className="space-y-5 animate-in fade-in duration-500">
+        <div className="space-y-4 animate-in fade-in duration-500">
           <SectionTitle>Summary of REMAIN — 3 Pillars</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="border border-blue-500/30 bg-blue-950/20 rounded-2xl p-5 space-y-2">
-              <div className="text-blue-400 text-xs font-bold uppercase tracking-widest">Pillar 1</div>
-              <div className="text-white font-bold">AC1 DONE — Summary of Remain</div>
-              <div className="text-2xl font-extrabold text-blue-300">฿{fmt(d.documentStatus.ac1.done)}</div>
-              <InfoRow label="Avg Aging#1" value={`${d.documentStatus.ac1.avgAging.toFixed(0)} วัน`}/>
+
+          {/* Pillar Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Pillar 1: AC1 DONE REMAIN */}
+            <div className="border border-blue-500/30 bg-blue-950/20 rounded-2xl p-4 space-y-2">
+              <div className="text-blue-400 text-xs font-bold uppercase tracking-widest">Pillar 1 — AC1 DONE REMAIN</div>
+              <InfoRow label="2023" value={`฿${fmt(45713.10)}`}/>
+              <InfoRow label="2024" value={`฿${fmt(12891.90)}`}/>
+              <InfoRow label="2025" value={`฿${fmt(28959.00)}`}/>
+              <InfoRow label="2026" value={`฿${fmt(88616.90)}`} highlight/>
+              <div className="pt-1 border-t border-zinc-700 flex justify-between items-center">
+                <span className="text-xs text-zinc-400">AC1 DONE / Total</span>
+                <span className="text-sm font-extrabold text-blue-300">฿{fmt(45713.10+12891.90+28959.00+88616.90)}</span>
+              </div>
             </div>
-            <div className="border border-amber-500/30 bg-amber-950/20 rounded-2xl p-5 space-y-2">
-              <div className="text-amber-400 text-xs font-bold uppercase tracking-widest">Pillar 2</div>
-              <div className="text-white font-bold">UNFULFILL — Summary of Remain</div>
-              <div className="text-2xl font-extrabold text-amber-300">783 ไซต์</div>
-              <InfoRow label="Revenue at Risk" value="฿2.48M"/>
+
+            {/* Pillar 2: UNFULFILL REMAIN */}
+            <div className="border border-amber-500/30 bg-amber-950/20 rounded-2xl p-4 space-y-2">
+              <div className="text-amber-400 text-xs font-bold uppercase tracking-widest">Pillar 2 — UNFULFILL REMAIN</div>
+              <InfoRow label="2023" value={`฿${fmt(112782.00)}`}/>
+              <InfoRow label="2024" value={`฿${fmt(60400.00)}`}/>
+              <InfoRow label="2025" value={`฿${fmt(77207.00)}`}/>
+              <InfoRow label="2026" value={`฿${fmt(2053060.00)}`} highlight/>
+              <div className="pt-1 border-t border-zinc-700 flex justify-between items-center">
+                <span className="text-xs text-zinc-400">UNFULFILL / Total</span>
+                <span className="text-sm font-extrabold text-amber-300">฿{fmt(112782+60400+77207+2053060)}</span>
+              </div>
             </div>
-            <div className="border border-rose-500/30 bg-rose-950/20 rounded-2xl p-5 space-y-2">
-              <div className="text-rose-400 text-xs font-bold uppercase tracking-widest">Pillar 3</div>
-              <div className="text-white font-bold">Total Sum of REMAIN</div>
-              <div className="text-2xl font-extrabold text-rose-300">฿{fmt(d.financials.remain)}</div>
-              <InfoRow label="เป้าเคลียร์ภายใน" value="Q3 2026"/>
+
+            {/* Pillar 3: REMAIN / Total */}
+            <div className="border border-rose-500/30 bg-rose-950/20 rounded-2xl p-4 space-y-2">
+              <div className="text-rose-400 text-xs font-bold uppercase tracking-widest">Pillar 3 — REMAIN / Total</div>
+              <div className="text-3xl font-extrabold text-white pt-1">฿{fmt(2479629.90)}</div>
+              <div className="text-xs text-zinc-400 pb-1">Grand Total ยอดคงค้างทั้งหมด</div>
+              <div className="pt-1 border-t border-zinc-700 space-y-1">
+                <InfoRow label="เป้าเคลียร์ภายใน" value="Q3 2026"/>
+                <InfoRow label="Install On-Process" value={`฿${fmt(1662690)}`} highlight/>
+              </div>
             </div>
+          </div>
+
+          {/* Summary Chart */}
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
+            <h3 className="text-sm font-semibold text-zinc-400 mb-3 uppercase tracking-wider">REMAIN แยกปี และประเภท</h3>
+            <ResponsiveContainer width="100%" height={160}>
+              <BarChart data={[
+                { year: '2023', ac1: 45713.10,  unfulfill: 112782.00  },
+                { year: '2024', ac1: 12891.90,  unfulfill: 60400.00   },
+                { year: '2025', ac1: 28959.00,  unfulfill: 77207.00   },
+                { year: '2026', ac1: 88616.90,  unfulfill: 2053060.00 },
+              ]}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false}/>
+                <XAxis dataKey="year" stroke="#71717a" fontSize={12} tickLine={false}/>
+                <YAxis stroke="#71717a" fontSize={11} tickLine={false} tickFormatter={v => `฿${(v/1000).toFixed(0)}k`}/>
+                <Tooltip contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: 8 }} formatter={(v: any) => [`฿${fmt(v)}`]}/>
+                <Bar dataKey="ac1"       name="AC1 DONE REMAIN" fill="#3b82f6" radius={[4,4,0,0]}/>
+                <Bar dataKey="unfulfill" name="UNFULFILL REMAIN"  fill="#f59e0b" radius={[4,4,0,0]}/>
+                <Legend/>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
       );
