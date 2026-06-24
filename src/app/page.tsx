@@ -1,9 +1,9 @@
-import Demo from "@/components/ui/demo";
+import EfferdDashboard2 from "@/components/ui/efferd-dashboard-2";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Demo />
+      <EfferdDashboard2 />
     </main>
   );
 }
