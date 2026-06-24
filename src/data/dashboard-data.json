@@ -2,42 +2,149 @@
   "reportWeek": 26,
   "projectYear": 2026,
   "performance": {
-    "haeM1Avg": 365.56,
-    "tmeM1Avg": -542.98,
-    "overallM1Avg": 1.35,
-    "overallM2Avg": 9.47,
+    "haeM1Avg": 3.86,
+    "tmeM1Avg": 2.29,
+    "overallM1Avg": 3.53,
+    "overallM2Avg": 13.25,
     "smartQC": {
       "passRate": 95,
       "totalInspected": 142
     }
   },
+  "projects": {
+    "HAE": {
+      "sites": 130,
+      "income": 2100030,
+      "ar": 889264.8,
+      "ap": 157755,
+      "remain": 1072599.4
+    },
+    "TME": {
+      "sites": 77,
+      "income": 244992.4,
+      "ar": 182401.12,
+      "ap": 117959.5,
+      "remain": 60445.28
+    }
+  },
   "peAging": {
-    "adisak": { "m1": 1.83, "m2": -1346.09 },
-    "palagon": { "m1": -4617.60, "m2": -4614.80 }
+    "adisak": {
+      "name": "Adisak Chanmao",
+      "sites": 142,
+      "m1": 3.64,
+      "m2": 13.75,
+      "hae_mbb": 66,
+      "hae_iptan": 0,
+      "tme_mbb": 1,
+      "tme_iptan": 75
+    },
+    "palagon": {
+      "name": "Palagon Prommueangma",
+      "sites": 11,
+      "m1": 2.5,
+      "m2": 5.56,
+      "hae_mbb": 11,
+      "hae_iptan": 0,
+      "tme_mbb": 0,
+      "tme_iptan": 0
+    }
+  },
+  "docOwners": {
+    "hathairat": {
+      "name": "น.ส. หทัยรัตน์ สิงห์แก้ว",
+      "sites": 41,
+      "ac1": 693558.6,
+      "ac2": 165659.4,
+      "avgAging1": 15.98,
+      "avgAging2": 33.15
+    },
+    "sermsiri": {
+      "name": "Sermsiri Bampentam",
+      "sites": 50,
+      "ac1": 113164,
+      "ac2": 2364,
+      "avgAging1": 15.46,
+      "avgAging2": 49
+    },
+    "apichart": {
+      "name": "Apichart Kampuang",
+      "sites": 26,
+      "ac1": 138324.6,
+      "ac2": 0,
+      "avgAging1": 14.88,
+      "avgAging2": 0
+    }
+  },
+  "workTypes": {
+    "MBB": {
+      "sites": 130,
+      "remain": 1092105.4
+    },
+    "IPTAN": {
+      "sites": 78,
+      "remain": 40939.28
+    }
   },
   "documentStatus": {
-    "ac1": { "amount": 1513763.02, "done": 8297444.00, "avgAging": -2160.15 },
-    "ac2": { "amount": 349622.30, "done": 4704479.00, "avgAging": -2871.84 }
+    "ac1": {
+      "amount": 2307341.6799999997,
+      "done": 1055496.9199999985,
+      "avgAging": 9.703862660944205
+    },
+    "ac2": {
+      "amount": 988860.72,
+      "done": 177499.19999999998,
+      "avgAging": 11.54054054054054
+    }
   },
   "financials": {
-    "estimateFinalIncome": 3186618.40,
-    "ar": 1735926.12,
-    "ap": 635296.62,
-    "remain": 1142138.08
+    "estimateFinalIncome": 3296202.4,
+    "ar": 1071665.92,
+    "ap": 275714.5,
+    "remain": 2084224.68
+  },
+  "siteStatus": {
+    "total": 208,
+    "completed": 153,
+    "onProcess": 53
   },
   "recoveryPlan": {
-    "juneAcceptanceTarget": 192566.00,
-    "juneActionPlanAC2": 242060.30,
-    "installOnProcess": 937070.00
+    "juneAcceptanceTarget": 192566,
+    "juneActionPlanAC2": 242060.3,
+    "installOnProcess": 737770
   },
   "backlogTrend": [
-    { "week": "W08", "value": 1680000 },
-    { "week": "W12", "value": 1030000 },
-    { "week": "W16", "value": 700000 },
-    { "week": "W20", "value": 500000 },
-    { "week": "W23", "value": 278511 },
-    { "week": "W24", "value": 1187938 },
-    { "week": "W25", "value": 1150000 },
-    { "week": "W26", "value": 1142138 }
+    {
+      "week": "W08",
+      "value": 1680000
+    },
+    {
+      "week": "W12",
+      "value": 1030000
+    },
+    {
+      "week": "W16",
+      "value": 700000
+    },
+    {
+      "week": "W20",
+      "value": 500000
+    },
+    {
+      "week": "W23",
+      "value": 278511
+    },
+    {
+      "week": "W24",
+      "value": 1187938
+    },
+    {
+      "week": "W25",
+      "value": 1150000
+    },
+    {
+      "week": "W26",
+      "value": 2084224.68
+    }
   ]
 }
