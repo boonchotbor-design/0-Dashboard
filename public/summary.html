@@ -988,104 +988,180 @@
     reader.onload = function(evt) {
       try {
         const wb = XLSX.read(evt.target.result, { type: 'binary' });
-        // Try sheet named '2026', else use first sheet
-        const sheetName = wb.SheetNames.includes('2026') ? '2026' : wb.SheetNames[0];
-        const ws = wb.Sheets[sheetName];
-        const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
 
-        // Helper: find value by column header (case-insensitive, partial match)
-        function findCol(row, keyword) {
-          const k = keyword.toLowerCase();
-          const key = Object.keys(row).find(h => h.toLowerCase().includes(k));
-          return key ? row[key] : null;
+        function getSheet(name) {
+          return wb.Sheets[name] ? XLSX.utils.sheet_to_json(wb.Sheets[name], { defval: '' }) : [];
         }
-
         function fmtBaht(n) {
           if (!n && n !== 0) return '-';
-          return Number(n).toLocaleString('th-TH', {maximumFractionDigits:0}) + ' ฿';
+          return Number(n).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
+        }
+        function fmtDays(n) {
+          return n ? Number(n).toFixed(2) + 'd' : '-';
+        }
+        // Find metric value by exact or partial match in "Metric" column
+        function findMetric(rows, metricKeyword, valueCol) {
+          const k = metricKeyword.toLowerCase();
+          const row = rows.find(r => {
+            const m = String(r['Metric'] || r['Metric / Data Point'] || r['Category / Person'] || '').toLowerCase();
+            return m.includes(k);
+          });
+          return row ? row[valueCol] : null;
         }
 
-        // Aggregate from rows
-        let totalSites = 0, hae = 0, tme = 0, completed = 0;
-        let income = 0, ar = 0, ap = 0, backlog = 0;
-        let ac2target = 0, actionPlan = 0, onProcess = 0;
-        let haeM1sum = 0, haeM1cnt = 0, tmeM1sum = 0, tmeM1cnt = 0;
-        let qcPass = 0, qcTotal = 0;
+        let importedSheets = [];
 
-        rows.forEach(r => {
-          totalSites++;
-          const proj = String(findCol(r,'project') || '').toUpperCase();
-          if (proj.includes('HAE')) hae++; else if (proj.includes('TME')) tme++;
-          const status = String(findCol(r,'status') || '').toLowerCase();
-          if (status.includes('complet') || status.includes('done')) completed++;
+        /* ─── Part 1 - Overview ─── */
+        const p1 = getSheet('Part 1 - Overview');
+        if (p1.length) {
+          importedSheets.push('Part 1');
+          const week = findMetric(p1, 'report week', 'Value');
+          if (week) document.getElementById('weekBadge').textContent = `WEEK ${week} · 2026`;
 
-          const inc = parseFloat(findCol(r,'income') || findCol(r,'final income') || 0);
-          if (!isNaN(inc)) income += inc;
-          const arv = parseFloat(findCol(r,'receivable') || findCol(r,' ar') || 0);
-          if (!isNaN(arv)) ar += arv;
-          const apv = parseFloat(findCol(r,'payable') || findCol(r,' ap') || 0);
-          if (!isNaN(apv)) ap += apv;
-          const bl = parseFloat(findCol(r,'backlog') || 0);
-          if (!isNaN(bl)) backlog += bl;
-          const act = parseFloat(findCol(r,'action plan') || 0);
-          if (!isNaN(act)) actionPlan += act;
-          const op = parseFloat(findCol(r,'on process') || 0);
-          if (!isNaN(op)) onProcess += op;
-          const tgt = parseFloat(findCol(r,'target') || 0);
-          if (!isNaN(tgt)) ac2target += tgt;
-
-          const m1 = parseFloat(findCol(r,'m1') || findCol(r,'aging m1') || 0);
-          if (!isNaN(m1) && m1 > 0) {
-            if (proj.includes('HAE')) { haeM1sum += m1; haeM1cnt++; }
-            else { tmeM1sum += m1; tmeM1cnt++; }
+          const haeM1 = findMetric(p1, 'hae m1', 'Value');
+          const tmeM1 = findMetric(p1, 'tme m1', 'Value');
+          if (haeM1) {
+            document.getElementById('kpiHaeAging').innerHTML = Number(haeM1).toFixed(2) + '<span class="unit">days</span>';
+            document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1 ? Number(tmeM1).toFixed(2) : '-'} days`;
           }
-          const qc = String(findCol(r,'qc') || findCol(r,'smartqc') || '');
-          if (qc) { qcTotal++; if (qc.toLowerCase().includes('pass') || qc === '1') qcPass++; }
-        });
-
-        // Update KPI Cards
-        if (totalSites > 0) {
-          document.getElementById('kpiTotalSites').textContent = totalSites;
-          document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
-          const pct = totalSites > 0 ? (completed/totalSites*100).toFixed(1) : 0;
-          document.getElementById('kpiTotalSitesTrend').textContent = pct + '% Done';
-        }
-        if (income > 0) {
-          document.getElementById('kpiIncome').innerHTML = (income/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
-          document.getElementById('kpiIncomeSub').textContent = `AR ${(ar/1000000).toFixed(2)}M · AP ${(ap/1000).toFixed(0)}K`;
-          document.getElementById('finIncome').textContent = fmtBaht(income);
-          document.getElementById('finAR').textContent = fmtBaht(ar);
-          document.getElementById('finAP').textContent = fmtBaht(ap);
-        }
-        if (backlog > 0) {
-          document.getElementById('kpiBacklog').innerHTML = (backlog/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
-          document.getElementById('finBacklog').textContent = fmtBaht(backlog);
-        }
-        if (haeM1cnt > 0) {
-          const avg = (haeM1sum/haeM1cnt).toFixed(2);
-          const tmeAvg = tmeM1cnt > 0 ? (tmeM1sum/tmeM1cnt).toFixed(2) : '-';
-          document.getElementById('kpiHaeAging').innerHTML = avg + '<span class="unit">days</span>';
-          document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeAvg} days`;
-        }
-        if (qcTotal > 0) {
-          const rate = (qcPass/qcTotal*100).toFixed(0);
-          document.getElementById('kpiQC').innerHTML = rate + '<span class="unit">%</span>';
-          document.getElementById('kpiQCSub').textContent = `Inspected ${qcTotal} sites`;
-        }
-        if (actionPlan > 0) {
-          document.getElementById('kpiActionPlan').innerHTML = (actionPlan/1000).toFixed(0) + 'K<span class="unit">฿</span>';
-          document.getElementById('kpiActionPlanSub').textContent = `Target ${(ac2target/1000).toFixed(1)}K · On Process ${(onProcess/1000).toFixed(0)}K`;
-          document.getElementById('finAC2Target').textContent = fmtBaht(ac2target);
-          document.getElementById('finActionPlan').textContent = fmtBaht(actionPlan);
-          document.getElementById('finOnProcess').textContent = fmtBaht(onProcess);
         }
 
+        /* ─── Part 2 - Aging ─── */
+        const p2 = getSheet('Part 2 - Aging');
+        if (p2.length) {
+          importedSheets.push('Part 2');
+          // HAE/TME M1 & M2 Aging
+          const haeM1row = p2.find(r => String(r['Category / Person']).includes('HAE M1'));
+          const tmeM1row = p2.find(r => String(r['Category / Person']).includes('TME M1'));
+          if (haeM1row && haeM1row['M1 Aging']) {
+            const hM1 = Number(haeM1row['M1 Aging']).toFixed(2);
+            const tM1 = tmeM1row ? Number(tmeM1row['M1 Aging']).toFixed(2) : '-';
+            document.getElementById('kpiHaeAging').innerHTML = hM1 + '<span class="unit">days</span>';
+            document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tM1} days`;
+          }
+          // PE Aging table rows (Adisak, Palagon)
+          const adisak = p2.find(r => String(r['Category / Person']).toLowerCase().includes('adisak'));
+          const palagon = p2.find(r => String(r['Category / Person']).toLowerCase().includes('palagon'));
+          if (adisak) {
+            const el = document.querySelector('#peRow0 .m1val');
+            if (el) el.textContent = fmtDays(adisak['M1 Aging']);
+          }
+          if (palagon) {
+            const el = document.querySelector('#peRow1 .m1val');
+            if (el) el.textContent = fmtDays(palagon['M1 Aging']);
+          }
+        }
+
+        /* ─── Part 3 - Doc Management ─── */
+        const p3 = getSheet('Part 3 - Doc Management');
+        if (p3.length) {
+          importedSheets.push('Part 3');
+          const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1') || String(r['Owner / Type']).includes('AC1'));
+          const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2') || String(r['Owner / Type']).includes('AC2'));
+          if (ac1row) {
+            const el = document.getElementById('finAC1Aging');
+            if (el) el.textContent = ac1row['Avg Aging'] ? Number(ac1row['Avg Aging']).toFixed(1) + ' days' : '-';
+          }
+          if (ac2row) {
+            const el = document.getElementById('finAC2Aging');
+            if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
+          }
+        }
+
+        /* ─── Part 4 - Financials ─── */
+        const p4 = getSheet('Part 4 - Financials');
+        if (p4.length) {
+          importedSheets.push('Part 4');
+          const V = 'Value (THB)';
+          const getVal = (kw) => {
+            const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
+            return row ? row[V] : null;
+          };
+
+          const income    = getVal('estimate final income') || getVal('estimate income');
+          const ar        = getVal('ar (commerce)') || getVal('ar');
+          const ap        = getVal('ap') || getVal('accounts payable');
+          const backlog   = getVal('backlog');
+          const ac2tgt    = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target')) 
+                            ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
+          const actPlan   = getVal('action plan ac#2') || getVal('action plan');
+          const onProc    = getVal('on-process') || getVal('on process');
+
+          if (income) {
+            document.getElementById('kpiIncome').innerHTML = (income/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
+            document.getElementById('finIncome').textContent = fmtBaht(income);
+          }
+          if (ar) {
+            document.getElementById('finAR').textContent = fmtBaht(ar);
+            document.getElementById('kpiIncomeSub').textContent =
+              `AR ${ar >= 1000000 ? (ar/1000000).toFixed(2)+'M' : (ar/1000).toFixed(0)+'K'} · AP ${ap ? (ap/1000).toFixed(0)+'K' : '-'}`;
+          }
+          if (ap)  document.getElementById('finAP').textContent = fmtBaht(ap);
+          if (backlog) {
+            document.getElementById('kpiBacklog').innerHTML = (backlog/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
+            document.getElementById('finBacklog').textContent = fmtBaht(backlog);
+          }
+          if (actPlan) {
+            document.getElementById('kpiActionPlan').innerHTML = (actPlan/1000).toFixed(0) + 'K<span class="unit">฿</span>';
+            document.getElementById('finActionPlan').textContent = fmtBaht(actPlan);
+          }
+          if (onProc) {
+            document.getElementById('kpiActionPlanSub').textContent =
+              `On Process ${(onProc/1000).toFixed(0)}K · Target ${ac2tgt ? (ac2tgt/1000).toFixed(1)+'K' : '-'}`;
+            document.getElementById('finOnProcess').textContent = fmtBaht(onProc);
+          }
+          if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
+        }
+
+        /* ─── Sheet 2026 (raw site data) ─── */
+        const raw2026 = wb.SheetNames.includes('2026') ? wb.Sheets['2026'] : null;
+        if (raw2026) {
+          importedSheets.push('2026');
+          // Row 0 = aggregate totals, Row 1 = real headers, Row 2+ = site rows
+          const allRows = XLSX.utils.sheet_to_json(raw2026, { defval: '', header: 1 });
+          // allRows[0] = aggregate numbers, allRows[1] = headers
+          const aggRow = allRows[0];   // index array
+          const headers = allRows[1];  // real column names
+          // Total sites = first cell of aggRow (208)
+          const totalSites = Number(aggRow[0]);
+          if (totalSites > 0) {
+            // Count HAE/TME from data rows (row index 2 onward)
+            // Header positions for Project column
+            const projIdx = headers.findIndex(h => String(h).toUpperCase().includes('PROJECT'));
+            const statusIdx = headers.findIndex(h => String(h).toLowerCase().includes('status') || String(h).toLowerCase().includes('on-service'));
+            let hae = 0, tme = 0, completed = 0;
+            for (let i = 2; i < allRows.length; i++) {
+              const row = allRows[i];
+              if (!row || !row[projIdx]) continue;
+              const proj = String(row[projIdx]).toUpperCase();
+              if (proj.includes('HAE')) hae++;
+              else if (proj.includes('TME')) tme++;
+              if (statusIdx >= 0 && row[statusIdx]) {
+                const st = String(row[statusIdx]).toLowerCase();
+                if (st.includes('done') || st.includes('complet') || st === '1') completed++;
+              }
+            }
+            // If Part 1 didn't set sites, use 2026 data
+            if (!p1.length) {
+              document.getElementById('kpiTotalSites').textContent = totalSites;
+              document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae || '-'} · TME ${tme || '-'} · Completed ${completed || '-'}`;
+              const pct = completed > 0 ? (completed / totalSites * 100).toFixed(1) : '-';
+              document.getElementById('kpiTotalSitesTrend').textContent = pct !== '-' ? pct + '% Done' : 'In Progress';
+            } else {
+              document.getElementById('kpiTotalSites').textContent = totalSites;
+              document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae || '-'} · TME ${tme || '-'} · Completed ${completed || '-'}`;
+            }
+          }
+        }
+
+        /* ─── Show status ─── */
         const st = document.getElementById('importStatus');
         st.style.display = 'inline-block';
-        st.textContent = `✓ Imported ${totalSites} rows from "${sheetName}"`;
-        setTimeout(() => { st.style.display = 'none'; }, 5000);
+        st.textContent = `✓ Imported: ${importedSheets.join(', ')}`;
+        setTimeout(() => { st.style.display = 'none'; }, 6000);
+
       } catch(err) {
-        alert('Import error: ' + err.message);
+        alert('Import error: ' + err.message + '\n' + err.stack);
       }
     };
     reader.readAsBinaryString(file);
