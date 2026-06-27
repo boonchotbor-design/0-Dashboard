@@ -1240,6 +1240,14 @@
           const ac2tgt    = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target')) 
                             ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
           
+          const getValByTitle = (metricKw, titleKw) => {
+            const row = p4.find(r =>
+              String(r['Metric']).toLowerCase().includes(metricKw.toLowerCase()) &&
+              String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
+            );
+            return row ? row[V] : null;
+          };
+
           let actPlan = getValByTitle('action plan ac#2', 'total');
           if (actPlan === null) {
             // Sum only individual year rows, exclude TOTAL rows
@@ -1257,13 +1265,6 @@
           let onProc = getSum('on-process');
           if (onProc === null) onProc = getSum('on process');
 
-          const getValByTitle = (metricKw, titleKw) => {
-            const row = p4.find(r =>
-              String(r['Metric']).toLowerCase().includes(metricKw.toLowerCase()) &&
-              String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
-            );
-            return row ? row[V] : null;
-          };
 
           // Actual Acceptance by week
           const vAct23   = getVal('actual acceptance wk23');
