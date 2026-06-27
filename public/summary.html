@@ -1123,6 +1123,11 @@
           if (!n && n !== 0) return '-';
           return Number(n).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
         }
+        function getValOrFallback(val, fallback) {
+          if (val === undefined || val === null || val === '') return fallback;
+          const n = Number(String(val).replace(/[^0-9.-]/g, ''));
+          return isNaN(n) ? fallback : n;
+        }
         function fmtDays(n) {
           return n ? Number(n).toFixed(2) + 'd' : '-';
         }
@@ -1418,16 +1423,23 @@
           const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
           const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
           if (window.docChart && ac1row && ac2row) {
-            window.docChart.data.datasets[0].data = [ac1row['Amount (THB)'] || 2307342, ac2row['Amount (THB)'] || 988861];
-            window.docChart.data.datasets[1].data = [ac1row['Done (THB)'] || 1055497, ac2row['Done (THB)'] || 177499];
+            window.docChart.data.datasets[0].data = [
+              getValOrFallback(ac1row['Amount (THB)'], 2307342),
+              getValOrFallback(ac2row['Amount (THB)'], 988861)
+            ];
+            window.docChart.data.datasets[1].data = [
+              getValOrFallback(ac1row['Done (THB)'], 1055497),
+              getValOrFallback(ac2row['Done (THB)'], 177499)
+            ];
             window.docChart.update();
           }
         }
         if (p1.length || raw2026) {
-           const completed = document.getElementById('kpiTotalSitesSub').textContent.match(/Completed (\d+)/)?.[1] || 153;
-           const onProcess = document.getElementById('finOnProcess').textContent.replace(/[^0-9.-]+/g,"") || 53;
+           const completed = document.getElementById('legendCompleted')?.textContent || 153;
+           const onProcess = document.getElementById('legendOnProcess')?.textContent || 53;
+           const remaining = document.getElementById('legendRemaining')?.textContent || 2;
            if (window.siteDonut) {
-             window.siteDonut.data.datasets[0].data = [Number(completed), Number(onProcess), 2];
+             window.siteDonut.data.datasets[0].data = [Number(completed), Number(onProcess), Number(remaining)];
              window.siteDonut.update();
            }
         }
