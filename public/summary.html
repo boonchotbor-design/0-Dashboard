@@ -852,6 +852,10 @@
         <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber" id="dtlAC12024">-</span></div>
         <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber" id="dtlAC12025">-</span></div>
         <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber" id="dtlAC12026">-</span></div>
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
+          <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
+          <span class="fin-val amber" style="font-weight:700" id="dtlAC1Total">-</span>
+        </div>
       </div>
 
       <!-- Card 3: AC2 Plan -->
@@ -864,6 +868,10 @@
         <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22024">-</span></div>
         <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22025">-</span></div>
         <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22026">-</span></div>
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
+          <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
+          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2Total">-</span>
+        </div>
       </div>
 
       <!-- Card 4: Install On-Process -->
@@ -1260,6 +1268,10 @@
           const vAc225 = getValByTitle('action plan ac#2', '2025');
           const vAc226 = getValByTitle('action plan ac#2', '2026');
 
+          // Totals for AC#1 and AC#2 plans
+          const vAc1Total = getValByTitle('action plan ac#1', 'total');
+          const vAc2Total = getValByTitle('action plan ac#2', 'total');
+
           // On-Process per project — Metric contains project name
           const vOnMBB    = getVal('tme-mbb')    || getVal('on-process (2026) tme-mbb');
           const vOnIPRAN  = getVal('tme-ipran')  || getVal('on-process (2026) tme-ipran');
@@ -1270,8 +1282,8 @@
           const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
           setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
           setEl('dtlActWK26', vAct26); setEl('dtlActJUNE', vActJune);
-          setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126);
-          setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226);
+          setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126); setEl('dtlAC1Total', vAc1Total);
+          setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226); setEl('dtlAC2Total', vAc2Total);
           setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
           setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
 
@@ -1410,8 +1422,8 @@
           'finIncome','finAR','finAP','finBacklog','finAC2Target','finActionPlan','finOnProcess',
           'finAC1Aging','finAC2Aging',
           'dtlActWK23','dtlActWK24','dtlActWK25','dtlActWK26','dtlActJUNE',
-          'dtlAC12023','dtlAC12024','dtlAC12025','dtlAC12026',
-          'dtlAC22023','dtlAC22024','dtlAC22025','dtlAC22026',
+          'dtlAC12023','dtlAC12024','dtlAC12025','dtlAC12026','dtlAC1Total',
+          'dtlAC22023','dtlAC22024','dtlAC22025','dtlAC22026','dtlAC2Total',
           'dtlOnProcMBB','dtlOnProcIPRAN','dtlOnProcBATT','dtlOnProcHAEMBB','dtlOnProcTRE',
           'peAdisakM1','pePalagonM1',
           'docHathairatAC1','docSermsiriAC2','docApichartAC1',
@@ -1428,7 +1440,7 @@
              doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
            }
         };
-        localStorage.setItem('dashboardData2026_v4', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v5', JSON.stringify(dashState));
 
         /* ─── Show status ─── */
         const st = document.getElementById('importStatus');
@@ -1446,10 +1458,10 @@
 
   // Restore state from LocalStorage on load
   window.addEventListener('DOMContentLoaded', () => {
-    const DASH_VERSION = 'v4';
+    const DASH_VERSION = 'v5';
     const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
     // Remove stale versions
-    ['dashboardData2026','dashboardData2026_v2','dashboardData2026_v3'].forEach(k => localStorage.removeItem(k));
+    ['dashboardData2026','dashboardData2026_v2','dashboardData2026_v3','dashboardData2026_v4'].forEach(k => localStorage.removeItem(k));
     const saved = localStorage.getItem(DASH_KEY);
     if (saved) {
       try {
