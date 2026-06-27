@@ -703,15 +703,15 @@
         <div class="donut-legend">
           <div class="legend-item">
             <span class="legend-dot" style="background:#10b981"></span>
-            Completed <strong style="margin-left:auto;color:#f0f6ff">153</strong>
+            Completed <strong id="legendCompleted" style="margin-left:auto;color:#f0f6ff">153</strong>
           </div>
           <div class="legend-item">
             <span class="legend-dot" style="background:#3b82f6"></span>
-            On Process <strong style="margin-left:auto;color:#f0f6ff">53</strong>
+            On Process <strong id="legendOnProcess" style="margin-left:auto;color:#f0f6ff">53</strong>
           </div>
           <div class="legend-item">
             <span class="legend-dot" style="background:#374151"></span>
-            Remaining <strong style="margin-left:auto;color:#f0f6ff">2</strong>
+            Remaining <strong id="legendRemaining" style="margin-left:auto;color:#f0f6ff">2</strong>
           </div>
         </div>
       </div>
@@ -774,8 +774,8 @@
 
         <!-- Totals summary -->
         <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.72rem">
-          <span style="color:var(--text-muted)">Total Sites <strong style="color:var(--text-primary)">208</strong></span>
-          <span style="color:var(--text-muted)">HAE <strong style="color:#3b82f6">130</strong> · TME <strong style="color:#8b5cf6">77</strong></span>
+          <span style="color:var(--text-muted)" id="totalSitesText">Total Sites <strong style="color:var(--text-primary)">208</strong></span>
+          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6">130</strong> · TME <strong style="color:#8b5cf6">77</strong></span>
         </div>
       </div>
 
@@ -1235,7 +1235,18 @@
           const ac2tgt    = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target')) 
                             ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
           
-          let actPlan = getSum('action plan ac#2');
+          let actPlan = getValByTitle('action plan ac#2', 'total');
+          if (actPlan === null) {
+            // Sum only individual year rows, exclude TOTAL rows
+            const rows = p4.filter(r =>
+              String(r['Metric']).toLowerCase().includes('action plan ac#2') &&
+              !String(r['Slide Title'] || '').toLowerCase().includes('total') &&
+              !String(r['Metric']).toLowerCase().includes('total')
+            );
+            if (rows.length > 0) {
+              actPlan = rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
+            }
+          }
           if (actPlan === null) actPlan = getSum('action plan');
 
           let onProc = getSum('on-process');
@@ -1339,40 +1350,50 @@
         const raw2026 = wb.SheetNames.includes('2026') ? wb.Sheets['2026'] : null;
         if (raw2026) {
           importedSheets.push('2026');
-          // Row 0 = aggregate totals, Row 1 = real headers, Row 2+ = site rows
           const allRows = XLSX.utils.sheet_to_json(raw2026, { defval: '', header: 1 });
-          // allRows[0] = aggregate numbers, allRows[1] = headers
-          const aggRow = allRows[0];   // index array
-          const headers = allRows[1];  // real column names
-          // Total sites = first cell of aggRow (208)
-          const totalSites = Number(aggRow[0]);
-          if (totalSites > 0) {
-            // Count HAE/TME from data rows (row index 2 onward)
-            // Header positions for Project column
+          const headers = allRows[2];  // headers are in row index 2
+          if (headers) {
             const projIdx = headers.findIndex(h => String(h).toUpperCase().includes('PROJECT'));
-            const statusIdx = headers.findIndex(h => String(h).toLowerCase().includes('status') || String(h).toLowerCase().includes('on-service'));
-            let hae = 0, tme = 0, completed = 0;
-            for (let i = 2; i < allRows.length; i++) {
+            const statusIdx = headers.findIndex(h => String(h).toUpperCase().includes('STATUS WORK'));
+            
+            let hae = 0, tme = 0, completed = 0, onProcess = 0, totalSites = 0;
+            for (let i = 3; i < allRows.length; i++) {
               const row = allRows[i];
               if (!row || !row[projIdx]) continue;
               const proj = String(row[projIdx]).toUpperCase();
-              if (proj.includes('HAE')) hae++;
-              else if (proj.includes('TME')) tme++;
-              if (statusIdx >= 0 && row[statusIdx]) {
-                const st = String(row[statusIdx]).toLowerCase();
-                if (st.includes('done') || st.includes('complet') || st === '1') completed++;
+              const isHae = proj.includes('HAE');
+              const isTme = proj.includes('TME');
+              if (isHae || isTme) {
+                totalSites++;
+                if (isHae) hae++;
+                if (isTme) tme++;
+                
+                if (statusIdx >= 0) {
+                  const st = String(row[statusIdx]).toUpperCase();
+                  if (st.includes('COMPLETED')) completed++;
+                  else if (st.includes('ON PROCESS')) onProcess++;
+                }
               }
             }
-            // If Part 1 didn't set sites, use 2026 data
-            if (!p1.length) {
-              document.getElementById('kpiTotalSites').textContent = totalSites;
-              document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae || '-'} · TME ${tme || '-'} · Completed ${completed || '-'}`;
-              const pct = completed > 0 ? (completed / totalSites * 100).toFixed(1) : '-';
-              document.getElementById('kpiTotalSitesTrend').textContent = pct !== '-' ? pct + '% Done' : 'In Progress';
-            } else {
-              document.getElementById('kpiTotalSites').textContent = totalSites;
-              document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae || '-'} · TME ${tme || '-'} · Completed ${completed || '-'}`;
-            }
+
+            // Update UI elements
+            document.getElementById('kpiTotalSites').textContent = totalSites;
+            document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
+            const pct = totalSites > 0 ? (completed / totalSites * 100).toFixed(1) : '-';
+            document.getElementById('kpiTotalSitesTrend').textContent = pct !== '-' ? pct + '% Done' : 'In Progress';
+
+            const totalSitesText = document.getElementById('totalSitesText');
+            if (totalSitesText) totalSitesText.innerHTML = `Total Sites <strong style="color:var(--text-primary)">${totalSites}</strong>`;
+            const projectBreakdownText = document.getElementById('projectBreakdownText');
+            if (projectBreakdownText) projectBreakdownText.innerHTML = `HAE <strong style="color:#3b82f6">${hae}</strong> · TME <strong style="color:#8b5cf6">${tme}</strong>`;
+
+            // Update the legend counts in the DOM
+            const compEl = document.getElementById('legendCompleted');
+            if (compEl) compEl.textContent = completed;
+            const opEl = document.getElementById('legendOnProcess');
+            if (opEl) opEl.textContent = onProcess;
+            const remEl = document.getElementById('legendRemaining');
+            if (remEl) remEl.textContent = Math.max(0, totalSites - completed - onProcess);
           }
         }
 
@@ -1381,7 +1402,6 @@
           const v23 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK23'))?.['Value (THB)'] || 0;
           const v24 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK24'))?.['Value (THB)'] || 0;
           const v25 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK25'))?.['Value (THB)'] || 0;
-          const v26 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK26'))?.['Value (THB)'] || 0;
           const b26 = p4.find(r => String(r.Metric).includes('Backlog Week 26'))?.['Value (THB)'] || 2084224.68;
           const b27 = p4.find(r => String(r.Metric).includes('Backlog Week 27'))?.['Value (THB)'] || 64754.4;
 
@@ -1428,7 +1448,9 @@
           'peAdisakM1','pePalagonM1',
           'docHathairatAC1','docSermsiriAC2','docApichartAC1',
           'ehsZeroAccident','ehsHighRisk',
-          'conclusionAction','conclusionAssignee','conclusionDeadline'
+          'conclusionAction','conclusionAssignee','conclusionDeadline',
+          'legendCompleted','legendOnProcess','legendRemaining',
+          'totalSitesText','projectBreakdownText'
         ];
         const vals = {};
         VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
@@ -1440,7 +1462,7 @@
              doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
            }
         };
-        localStorage.setItem('dashboardData2026_v5', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
 
         /* ─── Show status ─── */
         const st = document.getElementById('importStatus');
@@ -1458,10 +1480,10 @@
 
   // Restore state from LocalStorage on load
   window.addEventListener('DOMContentLoaded', () => {
-    const DASH_VERSION = 'v5';
+    const DASH_VERSION = 'v6';
     const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
     // Remove stale versions
-    ['dashboardData2026','dashboardData2026_v2','dashboardData2026_v3','dashboardData2026_v4'].forEach(k => localStorage.removeItem(k));
+    ['dashboardData2026','dashboardData2026_v2','dashboardData2026_v3','dashboardData2026_v4','dashboardData2026_v5'].forEach(k => localStorage.removeItem(k));
     const saved = localStorage.getItem(DASH_KEY);
     if (saved) {
       try {
