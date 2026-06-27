@@ -1171,50 +1171,47 @@
           let onProc = getSum('on-process');
           if (onProc === null) onProc = getSum('on process');
 
-          // Detailed extraction
-          const vAct23 = getVal('Actual Acceptance WK23');
-          const vAct24 = getVal('Actual Acceptance WK24');
-          const vAct25 = getVal('Actual Acceptance WK25');
-          const vAct26 = getVal('Actual Acceptance WK26');
-          const vActJune = getVal('Actual Acceptance JUNE');
-          
-          const vAc123 = getVal('ac#1 plan wk27 (2023)');
-          const vAc124 = getVal('ac#1 plan wk27 (2024)');
-          const vAc125 = getVal('ac#1 plan wk27 (2025)');
-          const vAc126 = getVal('ac#1 plan wk27 (2026)');
+          const getValByTitle = (metricKw, titleKw) => {
+            const row = p4.find(r =>
+              String(r['Metric']).toLowerCase().includes(metricKw.toLowerCase()) &&
+              String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
+            );
+            return row ? row[V] : null;
+          };
 
-          const vAc223 = getVal('ac#2 plan wk27 (2023)');
-          const vAc224 = getVal('ac#2 plan wk27 (2024)');
-          const vAc225 = getVal('ac#2 plan wk27 (2025)');
-          const vAc226 = getVal('ac#2 plan wk27 (2026)');
+          // Actual Acceptance by week
+          const vAct23   = getVal('actual acceptance wk23');
+          const vAct24   = getVal('actual acceptance wk24');
+          const vAct25   = getVal('actual acceptance wk25');
+          const vAct26   = getVal('actual acceptance wk26');
+          const vActJune = getVal('actual acceptance june');
 
-          const vOnMBB = getVal('on-process (2026) tme-mbb');
-          const vOnIPRAN = getVal('on-process (2026) tme-ipran');
-          const vOnBATT = getVal('on-process (2026) tme-battery');
-          const vOnHAEMBB = getVal('on-process (2026) hae-mbb');
-          const vOnTRE = getVal('on-process (2026) tre-dismantle');
+          // AC#1 plan by year — Metric = 'Action Plan AC#1 WK27', year in Slide Title
+          const vAc123 = getValByTitle('action plan ac#1', '2023');
+          const vAc124 = getValByTitle('action plan ac#1', '2024');
+          const vAc125 = getValByTitle('action plan ac#1', '2025');
+          const vAc126 = getValByTitle('action plan ac#1', '2026');
 
-          if (vAct23 !== null) document.getElementById('dtlActWK23').textContent = fmtBaht(vAct23);
-          if (vAct24 !== null) document.getElementById('dtlActWK24').textContent = fmtBaht(vAct24);
-          if (vAct25 !== null) document.getElementById('dtlActWK25').textContent = fmtBaht(vAct25);
-          if (vAct26 !== null) document.getElementById('dtlActWK26').textContent = fmtBaht(vAct26);
-          if (vActJune !== null) document.getElementById('dtlActJUNE').textContent = fmtBaht(vActJune);
+          // AC#2 plan by year — Metric = 'Action Plan AC#2 WK27', year in Slide Title
+          const vAc223 = getValByTitle('action plan ac#2', '2023');
+          const vAc224 = getValByTitle('action plan ac#2', '2024');
+          const vAc225 = getValByTitle('action plan ac#2', '2025');
+          const vAc226 = getValByTitle('action plan ac#2', '2026');
 
-          if (vAc123 !== null) document.getElementById('dtlAC12023').textContent = fmtBaht(vAc123);
-          if (vAc124 !== null) document.getElementById('dtlAC12024').textContent = fmtBaht(vAc124);
-          if (vAc125 !== null) document.getElementById('dtlAC12025').textContent = fmtBaht(vAc125);
-          if (vAc126 !== null) document.getElementById('dtlAC12026').textContent = fmtBaht(vAc126);
+          // On-Process per project — Metric contains project name
+          const vOnMBB    = getVal('tme-mbb')    || getVal('on-process (2026) tme-mbb');
+          const vOnIPRAN  = getVal('tme-ipran')  || getVal('on-process (2026) tme-ipran');
+          const vOnBATT   = getVal('tme-battery') || getVal('on-process (2026) tme-battery');
+          const vOnHAEMBB = getVal('hae-mbb')    || getVal('on-process (2026) hae-mbb');
+          const vOnTRE    = getVal('tre-dismantle') || getVal('on-process (2026) tre-dismantle');
 
-          if (vAc223 !== null) document.getElementById('dtlAC22023').textContent = fmtBaht(vAc223);
-          if (vAc224 !== null) document.getElementById('dtlAC22024').textContent = fmtBaht(vAc224);
-          if (vAc225 !== null) document.getElementById('dtlAC22025').textContent = fmtBaht(vAc225);
-          if (vAc226 !== null) document.getElementById('dtlAC22026').textContent = fmtBaht(vAc226);
-
-          if (vOnMBB !== null) document.getElementById('dtlOnProcMBB').textContent = fmtBaht(vOnMBB);
-          if (vOnIPRAN !== null) document.getElementById('dtlOnProcIPRAN').textContent = fmtBaht(vOnIPRAN);
-          if (vOnBATT !== null) document.getElementById('dtlOnProcBATT').textContent = fmtBaht(vOnBATT);
-          if (vOnHAEMBB !== null) document.getElementById('dtlOnProcHAEMBB').textContent = fmtBaht(vOnHAEMBB);
-          if (vOnTRE !== null) document.getElementById('dtlOnProcTRE').textContent = fmtBaht(vOnTRE);
+          const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
+          setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
+          setEl('dtlActWK26', vAct26); setEl('dtlActJUNE', vActJune);
+          setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126);
+          setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226);
+          setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
+          setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
 
           if (income) {
             document.getElementById('kpiIncome').innerHTML = (income/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
@@ -1320,15 +1317,28 @@
         }
 
         /* ─── Save to LocalStorage ─── */
+        const VALUE_IDS = [
+          'kpiTotalSites','kpiTotalSitesSub','kpiTotalSitesTrend',
+          'kpiIncome','kpiIncomeSub','kpiBacklog','kpiActionPlan','kpiActionPlanSub',
+          'kpiM1Aging','kpiM1AgingSub','kpiSmartIQC','kpiSmartIQCSub','kpiSmartIQCTrend',
+          'finIncome','finAR','finAP','finBacklog','finAC2Target','finActionPlan','finOnProcess',
+          'finAC1Aging','finAC2Aging',
+          'dtlActWK23','dtlActWK24','dtlActWK25','dtlActWK26','dtlActJUNE',
+          'dtlAC12023','dtlAC12024','dtlAC12025','dtlAC12026',
+          'dtlAC22023','dtlAC22024','dtlAC22025','dtlAC22026',
+          'dtlOnProcMBB','dtlOnProcIPRAN','dtlOnProcBATT','dtlOnProcHAEMBB','dtlOnProcTRE'
+        ];
+        const vals = {};
+        VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
         const dashState = {
-           html: document.querySelector('.container').innerHTML,
+           vals,
            charts: {
              backlog: window.backlogChart ? window.backlogChart.data.datasets[0].data : [],
              donut: window.siteDonut ? window.siteDonut.data.datasets[0].data : [],
              doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
            }
         };
-        localStorage.setItem('dashboardData2026', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v3', JSON.stringify(dashState));
 
         /* ─── Show status ─── */
         const st = document.getElementById('importStatus');
@@ -1346,11 +1356,20 @@
 
   // Restore state from LocalStorage on load
   window.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('dashboardData2026');
+    const DASH_VERSION = 'v3';
+    const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
+    // Remove stale versions
+    ['dashboardData2026','dashboardData2026_v2'].forEach(k => localStorage.removeItem(k));
+    const saved = localStorage.getItem(DASH_KEY);
     if (saved) {
       try {
         const state = JSON.parse(saved);
-        if (state.html) document.querySelector('.container').innerHTML = state.html;
+        // Only restore individual value elements, NOT inner HTML (to preserve new cards)
+        if (state.vals) {
+          Object.entries(state.vals).forEach(([id, txt]) => {
+            const el = document.getElementById(id); if (el) el.textContent = txt;
+          });
+        }
         
         // Re-assign chart properties that might have been lost if they rely on canvas DOM
         if (state.charts) {
