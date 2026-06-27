@@ -905,7 +905,7 @@
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao</td>
               <td><span class="badge badge-blue">142</span></td>
-              <td><span class="badge badge-green">3.64d</span></td>
+              <td><span class="badge badge-green" id="peAdisakM1">3.64d</span></td>
               <td><span class="badge badge-amber">13.75d</span></td>
               <td>66</td>
               <td>75</td>
@@ -913,7 +913,7 @@
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Palagon Prommueangma</td>
               <td><span class="badge badge-blue">11</span></td>
-              <td><span class="badge badge-green">2.50d</span></td>
+              <td><span class="badge badge-green" id="pePalagonM1">2.50d</span></td>
               <td><span class="badge badge-green">5.56d</span></td>
               <td>11</td>
               <td>0</td>
@@ -942,7 +942,7 @@
               <td style="color:var(--text-primary);font-weight:500">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
               <td><span class="badge badge-purple">41</span></td>
               <td>693,559 ฿</td>
-              <td><span class="badge badge-amber">15.98d</span></td>
+              <td><span class="badge badge-amber" id="docHathairatAC1">15.98d</span></td>
               <td><span class="badge badge-amber">33.15d</span></td>
             </tr>
             <tr>
@@ -950,17 +950,63 @@
               <td><span class="badge badge-purple">50</span></td>
               <td>113,164 ฿</td>
               <td><span class="badge badge-green">15.46d</span></td>
-              <td><span class="badge badge-amber">49d</span></td>
+              <td><span class="badge badge-amber" id="docSermsiriAC2">49d</span></td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Apichart Kampuang</td>
               <td><span class="badge badge-purple">26</span></td>
               <td>138,325 ฿</td>
-              <td><span class="badge badge-green">14.88d</span></td>
+              <td><span class="badge badge-green" id="docApichartAC1">14.88d</span></td>
               <td><span class="badge badge-green">0d</span></td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+    </div>
+
+    <!-- ── Row 4: Safety & Conclusion (Part 5 & 6) ── -->
+    <p class="section-title">🛡️ Safety &amp; Conclusion</p>
+    <div class="main-grid">
+
+      <!-- Safety Compliance (Part 5) -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">🛡️</span>
+          EHS Compliance &amp; Safety Status
+        </div>
+        <div class="prog-item" style="margin-bottom: 20px;">
+          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-green); margin-bottom: 6px;">Zero Accident Target</div>
+          <p id="ehsZeroAccident" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">มาตรฐานความปลอดภัยไม่ประนีประนอม</p>
+        </div>
+        <div class="prog-item">
+          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-amber); margin-bottom: 6px;">High-Risk Site Monitoring</div>
+          <p id="ehsHighRisk" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">ประเด็นปัญหาที่เกิดขึ้นและมาตรการป้องกัน</p>
+        </div>
+      </div>
+
+      <!-- Next Steps & Action Plan (Part 6) -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(99,102,241,.15)">🎯</span>
+          Next Steps &amp; Action Plan
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <span style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Action Item</span>
+            <strong id="conclusionAction" style="font-size: .82rem; color: var(--text-primary);">Immediate Actions Week 27</strong>
+          </div>
+          <div style="display: flex; gap: 20px;">
+            <div style="flex: 1;">
+              <span style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Assignee</span>
+              <span id="conclusionAssignee" class="badge badge-purple" style="font-size: .72rem;">PE, DOC Owner, Finance</span>
+            </div>
+            <div style="flex: 2;">
+              <span style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Deadline / Notes</span>
+              <p id="conclusionDeadline" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">แผนปฏิบัติการที่ต้องทำทันที พร้อมนัดหมายติดตามผล</p>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -1116,11 +1162,11 @@
           const adisak = p2.find(r => String(r['Category / Person']).toLowerCase().includes('adisak'));
           const palagon = p2.find(r => String(r['Category / Person']).toLowerCase().includes('palagon'));
           if (adisak) {
-            const el = document.querySelector('#peRow0 .m1val');
+            const el = document.getElementById('peAdisakM1');
             if (el) el.textContent = fmtDays(adisak['M1 Aging']);
           }
           if (palagon) {
-            const el = document.querySelector('#peRow1 .m1val');
+            const el = document.getElementById('pePalagonM1');
             if (el) el.textContent = fmtDays(palagon['M1 Aging']);
           }
         }
@@ -1138,6 +1184,22 @@
           if (ac2row) {
             const el = document.getElementById('finAC2Aging');
             if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
+          }
+          // Doc Owners
+          const hathairat = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('hathairat'));
+          const sermsiri = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('sermsiri'));
+          const apichart = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('apichart'));
+          if (hathairat) {
+            const el = document.getElementById('docHathairatAC1');
+            if (el) el.textContent = fmtDays(hathairat['Avg Aging']);
+          }
+          if (sermsiri) {
+            const el = document.getElementById('docSermsiriAC2');
+            if (el) el.textContent = fmtDays(sermsiri['Avg Aging']);
+          }
+          if (apichart) {
+            const el = document.getElementById('docApichartAC1');
+            if (el) el.textContent = fmtDays(apichart['Avg Aging']);
           }
         }
 
@@ -1239,6 +1301,28 @@
           if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
         }
 
+        /* ─── Part 5 - Safety ─── */
+        const p5 = getSheet('Part 5 - Safety');
+        if (p5.length) {
+          importedSheets.push('Part 5');
+          const zeroAcc = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('zero accident'));
+          const highRisk = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('issues & prevention') || String(r['Topic / Metric']).toLowerCase().includes('high-risk'));
+          if (zeroAcc) document.getElementById('ehsZeroAccident').textContent = zeroAcc['Status / Detail'] || '-';
+          if (highRisk) document.getElementById('ehsHighRisk').textContent = highRisk['Status / Detail'] || '-';
+        }
+
+        /* ─── Part 6 - Conclusion ─── */
+        const p6 = getSheet('Part 6 - Conclusion');
+        if (p6.length) {
+          importedSheets.push('Part 6');
+          const row = p6[0];
+          if (row) {
+            if (row['Action Item']) document.getElementById('conclusionAction').textContent = row['Action Item'];
+            if (row['Assignee']) document.getElementById('conclusionAssignee').textContent = row['Assignee'];
+            if (row['Deadline / Notes']) document.getElementById('conclusionDeadline').textContent = row['Deadline / Notes'];
+          }
+        }
+
         /* ─── Sheet 2026 (raw site data) ─── */
         const raw2026 = wb.SheetNames.includes('2026') ? wb.Sheets['2026'] : null;
         if (raw2026) {
@@ -1319,14 +1403,20 @@
         /* ─── Save to LocalStorage ─── */
         const VALUE_IDS = [
           'kpiTotalSites','kpiTotalSitesSub','kpiTotalSitesTrend',
-          'kpiIncome','kpiIncomeSub','kpiBacklog','kpiActionPlan','kpiActionPlanSub',
-          'kpiM1Aging','kpiM1AgingSub','kpiSmartIQC','kpiSmartIQCSub','kpiSmartIQCTrend',
+          'kpiIncome','kpiIncomeSub','kpiBacklog','kpiBacklogSub',
+          'kpiHaeAging','kpiHaeAgingSub',
+          'kpiQC','kpiQCSub',
+          'kpiActionPlan','kpiActionPlanSub',
           'finIncome','finAR','finAP','finBacklog','finAC2Target','finActionPlan','finOnProcess',
           'finAC1Aging','finAC2Aging',
           'dtlActWK23','dtlActWK24','dtlActWK25','dtlActWK26','dtlActJUNE',
           'dtlAC12023','dtlAC12024','dtlAC12025','dtlAC12026',
           'dtlAC22023','dtlAC22024','dtlAC22025','dtlAC22026',
-          'dtlOnProcMBB','dtlOnProcIPRAN','dtlOnProcBATT','dtlOnProcHAEMBB','dtlOnProcTRE'
+          'dtlOnProcMBB','dtlOnProcIPRAN','dtlOnProcBATT','dtlOnProcHAEMBB','dtlOnProcTRE',
+          'peAdisakM1','pePalagonM1',
+          'docHathairatAC1','docSermsiriAC2','docApichartAC1',
+          'ehsZeroAccident','ehsHighRisk',
+          'conclusionAction','conclusionAssignee','conclusionDeadline'
         ];
         const vals = {};
         VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
@@ -1338,7 +1428,7 @@
              doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
            }
         };
-        localStorage.setItem('dashboardData2026_v3', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v4', JSON.stringify(dashState));
 
         /* ─── Show status ─── */
         const st = document.getElementById('importStatus');
@@ -1356,10 +1446,10 @@
 
   // Restore state from LocalStorage on load
   window.addEventListener('DOMContentLoaded', () => {
-    const DASH_VERSION = 'v3';
+    const DASH_VERSION = 'v4';
     const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
     // Remove stale versions
-    ['dashboardData2026','dashboardData2026_v2'].forEach(k => localStorage.removeItem(k));
+    ['dashboardData2026','dashboardData2026_v2','dashboardData2026_v3'].forEach(k => localStorage.removeItem(k));
     const saved = localStorage.getItem(DASH_KEY);
     if (saved) {
       try {
