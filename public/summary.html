@@ -1078,14 +1078,25 @@
             return row ? row[V] : null;
           };
 
+          const getSum = (kw) => {
+            const rows = p4.filter(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
+            if (rows.length === 0) return null;
+            return rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
+          };
+
           const income    = getVal('estimate final income') || getVal('estimate income');
           const ar        = getVal('ar (commerce)') || getVal('ar');
           const ap        = getVal('ap') || getVal('accounts payable');
-          const backlog   = getVal('backlog');
+          // For backlog, we probably only want one match (e.g., Remaining Backlog)
+          const backlog   = getVal('remain to claim') || getVal('backlog');
           const ac2tgt    = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target')) 
                             ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
-          const actPlan   = getVal('action plan ac#2') || getVal('action plan');
-          const onProc    = getVal('on-process') || getVal('on process');
+          
+          let actPlan = getSum('action plan ac#2');
+          if (actPlan === null) actPlan = getSum('action plan');
+
+          let onProc = getSum('on-process');
+          if (onProc === null) onProc = getSum('on process');
 
           if (income) {
             document.getElementById('kpiIncome').innerHTML = (income/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
