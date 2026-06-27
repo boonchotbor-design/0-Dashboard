@@ -911,7 +911,7 @@
     grad.addColorStop(0, 'rgba(59,130,246,.35)');
     grad.addColorStop(1, 'rgba(59,130,246,0)');
 
-    new Chart(blCtx, {
+    window.backlogChart = new Chart(blCtx, {
       type: 'line',
       data: {
         labels: ['W08', 'W12', 'W16', 'W20', 'W23', 'W24', 'W25', 'W26'],
@@ -941,7 +941,7 @@
     });
 
     /* ── Site Donut ── */
-    new Chart(document.getElementById('siteDonut').getContext('2d'), {
+    window.siteDonut = new Chart(document.getElementById('siteDonut').getContext('2d'), {
       type: 'doughnut',
       data: {
         labels: ['Completed', 'On Process', 'Other'],
@@ -954,7 +954,7 @@
     });
 
     /* ── Doc Status Bar ── */
-    new Chart(document.getElementById('docChart').getContext('2d'), {
+    window.docChart = new Chart(document.getElementById('docChart').getContext('2d'), {
       type: 'bar',
       data: {
         labels: ['AC1', 'AC2'],
@@ -1154,6 +1154,53 @@
           }
         }
 
+        /* ─── Update Charts dynamically ─── */
+        if (p4.length) {
+          const v23 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK23'))?.['Value (THB)'] || 0;
+          const v24 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK24'))?.['Value (THB)'] || 0;
+          const v25 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK25'))?.['Value (THB)'] || 0;
+          const v26 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK26'))?.['Value (THB)'] || 0;
+          const b26 = p4.find(r => String(r.Metric).includes('Backlog Week 26'))?.['Value (THB)'] || 2084224.68;
+          const b27 = p4.find(r => String(r.Metric).includes('Backlog Week 27'))?.['Value (THB)'] || 64754.4;
+
+          if (window.backlogChart) {
+            const data = window.backlogChart.data.datasets[0].data;
+            if (data.length >= 2) {
+               data[data.length - 2] = b26;
+               data[data.length - 1] = b27;
+               window.backlogChart.update();
+            }
+          }
+        }
+        if (p3.length) {
+          const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
+          const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
+          if (window.docChart && ac1row && ac2row) {
+            window.docChart.data.datasets[0].data = [ac1row['Amount (THB)'] || 2307342, ac2row['Amount (THB)'] || 988861];
+            window.docChart.data.datasets[1].data = [ac1row['Done (THB)'] || 1055497, ac2row['Done (THB)'] || 177499];
+            window.docChart.update();
+          }
+        }
+        if (p1.length || raw2026) {
+           const completed = document.getElementById('kpiTotalSitesSub').textContent.match(/Completed (\d+)/)?.[1] || 153;
+           const onProcess = document.getElementById('finOnProcess').textContent.replace(/[^0-9.-]+/g,"") || 53;
+           if (window.siteDonut) {
+             window.siteDonut.data.datasets[0].data = [Number(completed), Number(onProcess), 2];
+             window.siteDonut.update();
+           }
+        }
+
+        /* ─── Save to LocalStorage ─── */
+        const dashState = {
+           html: document.querySelector('.container').innerHTML,
+           charts: {
+             backlog: window.backlogChart ? window.backlogChart.data.datasets[0].data : [],
+             donut: window.siteDonut ? window.siteDonut.data.datasets[0].data : [],
+             doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
+           }
+        };
+        localStorage.setItem('dashboardData2026', JSON.stringify(dashState));
+
         /* ─── Show status ─── */
         const st = document.getElementById('importStatus');
         st.style.display = 'inline-block';
@@ -1166,6 +1213,34 @@
     };
     reader.readAsBinaryString(file);
     e.target.value = '';
+  });
+
+  // Restore state from LocalStorage on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('dashboardData2026');
+    if (saved) {
+      try {
+        const state = JSON.parse(saved);
+        if (state.html) document.querySelector('.container').innerHTML = state.html;
+        
+        // Re-assign chart properties that might have been lost if they rely on canvas DOM
+        if (state.charts) {
+          if (window.backlogChart && state.charts.backlog.length > 0) {
+             window.backlogChart.data.datasets[0].data = state.charts.backlog;
+             window.backlogChart.update();
+          }
+          if (window.siteDonut && state.charts.donut.length > 0) {
+             window.siteDonut.data.datasets[0].data = state.charts.donut;
+             window.siteDonut.update();
+          }
+          if (window.docChart && state.charts.doc.length > 0) {
+             window.docChart.data.datasets[0].data = state.charts.doc[0];
+             window.docChart.data.datasets[1].data = state.charts.doc[1];
+             window.docChart.update();
+          }
+        }
+      } catch(e) { console.error('Error restoring state:', e); }
+    }
   });
 
   /* ═══════════════════════════════════════════════
