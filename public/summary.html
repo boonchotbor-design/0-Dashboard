@@ -1223,6 +1223,36 @@
               <td><span class="badge badge-amber">1d</span></td>
               <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
             </tr>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card: Acceptance Raw Data -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📄</span>
+          Acceptance AC#1 &amp; AC#2 (Raw)
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Amount (SUM)</th>
+              <th>Aging (AVG)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-primary); font-weight:500;">AC#1</td>
+              <td id="rawAc1Amt">-</td>
+              <td><span class="badge badge-amber" id="rawAc1Aging">-</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary); font-weight:500;">AC#2</td>
+              <td id="rawAc2Amt">-</td>
+              <td><span class="badge badge-amber" id="rawAc2Aging">-</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1825,6 +1855,52 @@
                 setBadge('pePalagonTme', palagonTme);
               }
 
+              // Parse AC#1 and AC#2 raw amounts and agings
+              let sumAc1Amt = 0, countAc1Aging = 0, sumAc1Aging = 0;
+              let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
+
+              for (let i = 3; i < allRows.length; i++) {
+                const row = allRows[i];
+                if (!row) continue;
+                
+                // Col BH (59)
+                const amt1 = Number(String(row[59] || '').replace(/[^0-9.-]/g, ''));
+                if (!isNaN(amt1) && amt1 > 0) sumAc1Amt += amt1;
+
+                // Col BK (62)
+                const amt2 = Number(String(row[62] || '').replace(/[^0-9.-]/g, ''));
+                if (!isNaN(amt2) && amt2 > 0) sumAc2Amt += amt2;
+
+                // Col BJ (61)
+                const aging1Str = String(row[61] || '');
+                if (aging1Str.trim() !== '') {
+                    const aging1 = Number(aging1Str.replace(/[^0-9.-]/g, ''));
+                    if (!isNaN(aging1)) {
+                        sumAc1Aging += aging1;
+                        countAc1Aging++;
+                    }
+                }
+
+                // Col BM (64)
+                const aging2Str = String(row[64] || '');
+                if (aging2Str.trim() !== '') {
+                    const aging2 = Number(aging2Str.replace(/[^0-9.-]/g, ''));
+                    if (!isNaN(aging2)) {
+                        sumAc2Aging += aging2;
+                        countAc2Aging++;
+                    }
+                }
+              }
+
+              const avgAc1Aging = countAc1Aging > 0 ? (sumAc1Aging / countAc1Aging) : 0;
+              const avgAc2Aging = countAc2Aging > 0 ? (sumAc2Aging / countAc2Aging) : 0;
+
+              const setBadge = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+              setBadge('rawAc1Amt', sumAc1Amt > 0 ? fmtBaht(sumAc1Amt) : '-');
+              setBadge('rawAc2Amt', sumAc2Amt > 0 ? fmtBaht(sumAc2Amt) : '-');
+              setBadge('rawAc1Aging', avgAc1Aging > 0 ? avgAc1Aging.toFixed(2) + 'd' : '-');
+              setBadge('rawAc2Aging', avgAc2Aging > 0 ? avgAc2Aging.toFixed(2) + 'd' : '-');
+
               // Update UI elements
               document.getElementById('kpiTotalSites').textContent = totalSites;
               document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
@@ -1911,10 +1987,15 @@
             'ehsZeroAccident', 'ehsHighRisk',
             'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
             'legendCompleted', 'legendOnProcess', 'legendRemaining',
-            'totalSitesText', 'projectBreakdownText'
+            'totalSitesText', 'projectBreakdownText',
+            'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
+            'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
           ];
           const vals = {};
-          VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
+          VALUE_IDS.forEach(id => { 
+            const el = document.getElementById(id); 
+            if (el) vals[id] = el.tagName === 'TBODY' ? el.innerHTML : el.textContent; 
+          });
           const dashState = {
             vals,
             charts: {
@@ -1953,7 +2034,11 @@
           // Only restore individual value elements, NOT inner HTML (to preserve new cards)
           if (state.vals) {
             Object.entries(state.vals).forEach(([id, txt]) => {
-              const el = document.getElementById(id); if (el) el.textContent = txt;
+              const el = document.getElementById(id); 
+              if (el) {
+                if (el.tagName === 'TBODY') el.innerHTML = txt;
+                else el.textContent = txt;
+              }
             });
           }
 
@@ -2012,7 +2097,8 @@
             'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
             'legendCompleted', 'legendOnProcess', 'legendRemaining',
             'totalSitesText', 'projectBreakdownText',
-            'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody'
+            'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
+            'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
           ];
         const vals = {};
         VALUE_IDS.forEach(id => { 
