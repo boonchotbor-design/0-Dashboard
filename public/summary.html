@@ -1564,24 +1564,36 @@
             if (actPlan === null) actPlan = getSum('action plan');
 
             /* ─── Part 7 - SLA On-Process ─── */
-          const p7 = wb.Sheets['Part 7 - SLA On-Process'];
+          const p7Name = wb.SheetNames.find(n => {
+            const normalized = n.toUpperCase().replace(/[\s-_]+/g, '');
+            return normalized.includes('PART7') || normalized.includes('SLAONPROCESS');
+          });
+          const p7 = p7Name ? wb.Sheets[p7Name] : null;
           if (p7) {
             importedSheets.push('Part 7');
             const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
             
-            // Find the header row and the column index of the first Site DUID (Column B) dynamically
-            let startRow = 28;
+            // Find the header row and the column index of the first Site DUID dynamically
+            let startRow = -1;
             let colBIndex = 1;
             for (let i = 0; i < p7Rows.length; i++) {
               const row = p7Rows[i];
               if (row) {
-                const idx = row.findIndex(cell => String(cell || '').toUpperCase().includes('SITE DUID'));
+                const idx = row.findIndex(cell => {
+                  const val = String(cell || '').toUpperCase().replace(/\s+/g, ' ');
+                  return val.includes('SITE DUID') || val.includes('SITE_DUID');
+                });
                 if (idx >= 0) {
                   colBIndex = idx;
                   startRow = i + 1;
                   break;
                 }
               }
+            }
+
+            // Fallback if header row is not found
+            if (startRow === -1) {
+              startRow = Math.min(28, p7Rows.length);
             }
 
             const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
