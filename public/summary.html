@@ -1529,7 +1529,10 @@
             const vRemUnfulfillTotal = unfulfillRows.length > 0 ? unfulfillRows.reduce((a, r) => a + (Number(r[V]) || 0), 0) : null;
 
             // Slide 27 – Summary of REMAIN
-            const vRem3PillarsTotal = getVal('summary of remain') || getVal('summary of remain (3 pillars)') || getVal('remain / total');
+            let vRem3PillarsTotal = getVal('summary of remain') || getVal('summary of remain (3 pillars)') || getVal('remain / total');
+            if (vRemAC1doneTotal !== null && vRemUnfulfillTotal !== null) {
+              vRem3PillarsTotal = vRemAC1doneTotal + vRemUnfulfillTotal;
+            }
 
             setEl('remAC1done2023', vRemAC1done23); setEl('remAC1done2024', vRemAC1done24);
             setEl('remAC1done2025', vRemAC1done25); setEl('remAC1done2026', vRemAC1done26);
