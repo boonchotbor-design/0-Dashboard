@@ -319,10 +319,15 @@
     }
 
     @media (max-width: 1200px) {
-      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .grid-4 {
+        grid-template-columns: 1fr 1fr;
+      }
     }
+
     @media (max-width: 640px) {
-      .grid-4 { grid-template-columns: 1fr; }
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card {
@@ -575,22 +580,61 @@
     }
 
     /* ── Toolbar ── */
-    .toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .tb-btn {
-      display:inline-flex; align-items:center; gap:6px;
-      padding:7px 14px; border-radius:8px; font-size:.72rem; font-weight:600;
-      cursor:pointer; border:none; transition:all .2s; letter-spacing:.02em;
-      font-family:'Inter',sans-serif;
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
     }
-    .tb-btn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,0,0,.4); }
-    .tb-btn-import  { background:linear-gradient(135deg,#1d4ed8,#3b82f6); color:#fff; }
-    .tb-btn-pdf     { background:linear-gradient(135deg,#991b1b,#ef4444); color:#fff; }
-    .tb-btn-ppt     { background:linear-gradient(135deg,#92400e,#f59e0b); color:#fff; }
-    #file-input { display:none; }
+
+    .tb-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: .72rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+      letter-spacing: .02em;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .tb-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .4);
+    }
+
+    .tb-btn-import {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: #fff;
+    }
+
+    .tb-btn-pdf {
+      background: linear-gradient(135deg, #991b1b, #ef4444);
+      color: #fff;
+    }
+
+    .tb-btn-ppt {
+      background: linear-gradient(135deg, #92400e, #f59e0b);
+      color: #fff;
+    }
+
+    #file-input {
+      display: none;
+    }
+
     .import-status {
-      font-size:.7rem; color:#6ee7b7; font-weight:500;
-      padding:4px 10px; background:rgba(16,185,129,.1);
-      border:1px solid rgba(16,185,129,.25); border-radius:6px; display:none;
+      font-size: .7rem;
+      color: #6ee7b7;
+      font-weight: 500;
+      padding: 4px 10px;
+      background: rgba(16, 185, 129, .1);
+      border: 1px solid rgba(16, 185, 129, .25);
+      border-radius: 6px;
+      display: none;
     }
   </style>
 </head>
@@ -616,7 +660,8 @@
         <span class="live-dot">LIVE</span>
         <div class="toolbar">
           <input type="file" id="file-input" accept=".xlsx,.xls" />
-          <button class="tb-btn tb-btn-import" onclick="document.getElementById('file-input').click()">📂 Import Excel</button>
+          <button class="tb-btn tb-btn-import" onclick="document.getElementById('file-input').click()">📂 Import
+            Excel</button>
           <button class="tb-btn tb-btn-pdf" onclick="exportPDF()">📄 Export PDF</button>
           <button class="tb-btn tb-btn-ppt" onclick="exportPPT()">📊 Export PPT</button>
           <span class="import-status" id="importStatus">✓ Imported</span>
@@ -729,12 +774,15 @@
         </div>
 
         <!-- Divider label -->
-        <div style="font-size:.65rem;font-weight:600;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px">HAE</div>
+        <div
+          style="font-size:.65rem;font-weight:600;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px">
+          HAE</div>
 
         <div class="prog-item">
           <div class="prog-header">
             <span class="label">🔵 HAE-MBB</span>
-            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">119 sites</span>2,100,030 ฿</span>
+            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">119
+                sites</span>2,100,030 ฿</span>
           </div>
           <div class="prog-bar">
             <div class="prog-fill" style="width:85%;--fill-color:#3b82f6"></div>
@@ -742,12 +790,15 @@
         </div>
 
         <!-- Divider label -->
-        <div style="font-size:.65rem;font-weight:600;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px">TME</div>
+        <div
+          style="font-size:.65rem;font-weight:600;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px">
+          TME</div>
 
         <div class="prog-item">
           <div class="prog-header">
             <span class="label">🟣 TME-MBB</span>
-            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">11 sites</span>104,547 ฿</span>
+            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">11
+                sites</span>104,547 ฿</span>
           </div>
           <div class="prog-bar">
             <div class="prog-fill" style="width:43%;--fill-color:#8b5cf6"></div>
@@ -756,7 +807,8 @@
         <div class="prog-item">
           <div class="prog-header">
             <span class="label">🟡 TME-IPRAN</span>
-            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">54 sites</span>100,000 ฿</span>
+            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">54
+                sites</span>100,000 ฿</span>
           </div>
           <div class="prog-bar">
             <div class="prog-fill" style="width:30%;--fill-color:#f59e0b"></div>
@@ -765,7 +817,8 @@
         <div class="prog-item">
           <div class="prog-header">
             <span class="label">🔴 TME-BATTERY</span>
-            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">12 sites</span>40,445 ฿</span>
+            <span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px">12
+                sites</span>40,445 ฿</span>
           </div>
           <div class="prog-bar">
             <div class="prog-fill" style="width:17%;--fill-color:#ef4444"></div>
@@ -773,9 +826,12 @@
         </div>
 
         <!-- Totals summary -->
-        <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.72rem">
-          <span style="color:var(--text-muted)" id="totalSitesText">Total Sites <strong style="color:var(--text-primary)">208</strong></span>
-          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6">130</strong> · TME <strong style="color:#8b5cf6">77</strong></span>
+        <div
+          style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.72rem">
+          <span style="color:var(--text-muted)" id="totalSitesText">Total Sites <strong
+              style="color:var(--text-primary)">208</strong></span>
+          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6">130</strong>
+            · TME <strong style="color:#8b5cf6">77</strong></span>
         </div>
       </div>
 
@@ -785,10 +841,14 @@
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">💹</span>
           Financial Summary
         </div>
-        <div class="fin-row"><span class="fin-label">Estimated Final Income</span><span class="fin-val green" id="finIncome">3,296,202 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">Accounts Receivable (AR)</span><span class="fin-val amber" id="finAR">1,071,666 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">Accounts Payable (AP)</span><span class="fin-val red" id="finAP">275,715 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">Remaining Backlog</span><span class="fin-val amber" id="finBacklog">2,084,225 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">Estimated Final Income</span><span class="fin-val green"
+            id="finIncome">3,296,202 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">Accounts Receivable (AR)</span><span class="fin-val amber"
+            id="finAR">1,071,666 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">Accounts Payable (AP)</span><span class="fin-val red"
+            id="finAP">275,715 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">Remaining Backlog</span><span class="fin-val amber"
+            id="finBacklog">2,084,225 ฿</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
           <span class="fin-label" style="color:#93c5fd;font-weight:600">June AC2 Target</span>
           <span class="fin-val" style="color:#93c5fd" id="finAC2Target">192,566 ฿</span>
@@ -825,17 +885,21 @@
     <!-- ── Row 2.5: Detailed Financials (Part 4) ── -->
     <p class="section-title">📊 Financial Details (Part 4 Breakdown)</p>
     <div class="grid-4">
-      
+
       <!-- Card 1: Actual Acceptance -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">💰</span>
           Actual Acceptance
         </div>
-        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">-</span>
+        </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(16,185,129,.3)">
           <span class="fin-label" style="font-weight:600;color:#6ee7b7">JUNE Total</span>
           <span class="fin-val green" style="font-weight:700" id="dtlActJUNE">-</span>
@@ -848,10 +912,14 @@
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
           AC#1 Plan WK27
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber" id="dtlAC12023">-</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber" id="dtlAC12024">-</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber" id="dtlAC12025">-</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber" id="dtlAC12026">-</span></div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber" id="dtlAC12023">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber" id="dtlAC12024">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber" id="dtlAC12025">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber" id="dtlAC12026">-</span>
+        </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
           <span class="fin-val amber" style="font-weight:700" id="dtlAC1Total">-</span>
@@ -864,10 +932,14 @@
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
           AC#2 Plan WK27
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22023">-</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22024">-</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22025">-</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd" id="dtlAC22026">-</span></div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22023">-</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22024">-</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22025">-</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22026">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
           <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
           <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2Total">-</span>
@@ -880,11 +952,16 @@
           <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">⚙️</span>
           Install On-Process
         </div>
-        <div class="fin-row"><span class="fin-label">TME-MBB</span><span class="fin-val" style="color:#c4b5fd" id="dtlOnProcMBB">-</span></div>
-        <div class="fin-row"><span class="fin-label">TME-IPRAN</span><span class="fin-val" style="color:#c4b5fd" id="dtlOnProcIPRAN">-</span></div>
-        <div class="fin-row"><span class="fin-label">TME-BATTERY</span><span class="fin-val" style="color:#c4b5fd" id="dtlOnProcBATT">-</span></div>
-        <div class="fin-row"><span class="fin-label">HAE-MBB</span><span class="fin-val" style="color:#c4b5fd" id="dtlOnProcHAEMBB">-</span></div>
-        <div class="fin-row"><span class="fin-label">TRE-DISMANTLE</span><span class="fin-val" style="color:#c4b5fd" id="dtlOnProcTRE">-</span></div>
+        <div class="fin-row"><span class="fin-label">TME-MBB</span><span class="fin-val" style="color:#c4b5fd"
+            id="dtlOnProcMBB">-</span></div>
+        <div class="fin-row"><span class="fin-label">TME-IPRAN</span><span class="fin-val" style="color:#c4b5fd"
+            id="dtlOnProcIPRAN">-</span></div>
+        <div class="fin-row"><span class="fin-label">TME-BATTERY</span><span class="fin-val" style="color:#c4b5fd"
+            id="dtlOnProcBATT">-</span></div>
+        <div class="fin-row"><span class="fin-label">HAE-MBB</span><span class="fin-val" style="color:#c4b5fd"
+            id="dtlOnProcHAEMBB">-</span></div>
+        <div class="fin-row"><span class="fin-label">TRE-DISMANTLE</span><span class="fin-val" style="color:#c4b5fd"
+            id="dtlOnProcTRE">-</span></div>
       </div>
 
     </div>
@@ -984,12 +1061,16 @@
           EHS Compliance &amp; Safety Status
         </div>
         <div class="prog-item" style="margin-bottom: 20px;">
-          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-green); margin-bottom: 6px;">Zero Accident Target</div>
-          <p id="ehsZeroAccident" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">มาตรฐานความปลอดภัยไม่ประนีประนอม</p>
+          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-green); margin-bottom: 6px;">Zero Accident
+            Target</div>
+          <p id="ehsZeroAccident" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">
+            มาตรฐานความปลอดภัยไม่ประนีประนอม</p>
         </div>
         <div class="prog-item">
-          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-amber); margin-bottom: 6px;">High-Risk Site Monitoring</div>
-          <p id="ehsHighRisk" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">ประเด็นปัญหาที่เกิดขึ้นและมาตรการป้องกัน</p>
+          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-amber); margin-bottom: 6px;">High-Risk
+            Site Monitoring</div>
+          <p id="ehsHighRisk" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">
+            ประเด็นปัญหาที่เกิดขึ้นและมาตรการป้องกัน</p>
         </div>
       </div>
 
@@ -1001,17 +1082,25 @@
         </div>
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <div>
-            <span style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Action Item</span>
-            <strong id="conclusionAction" style="font-size: .82rem; color: var(--text-primary);">Immediate Actions Week 27</strong>
+            <span
+              style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Action
+              Item</span>
+            <strong id="conclusionAction" style="font-size: .82rem; color: var(--text-primary);">Immediate Actions Week
+              27</strong>
           </div>
           <div style="display: flex; gap: 20px;">
             <div style="flex: 1;">
-              <span style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Assignee</span>
-              <span id="conclusionAssignee" class="badge badge-purple" style="font-size: .72rem;">PE, DOC Owner, Finance</span>
+              <span
+                style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Assignee</span>
+              <span id="conclusionAssignee" class="badge badge-purple" style="font-size: .72rem;">PE, DOC Owner,
+                Finance</span>
             </div>
             <div style="flex: 2;">
-              <span style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Deadline / Notes</span>
-              <p id="conclusionDeadline" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">แผนปฏิบัติการที่ต้องทำทันที พร้อมนัดหมายติดตามผล</p>
+              <span
+                style="font-size: .65rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Deadline
+                / Notes</span>
+              <p id="conclusionDeadline" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">
+                แผนปฏิบัติการที่ต้องทำทันที พร้อมนัดหมายติดตามผล</p>
             </div>
           </div>
         </div>
@@ -1022,7 +1111,7 @@
     <!-- Footer -->
     <footer
       style="text-align:center;padding:20px 0;color:var(--text-muted);font-size:.72rem;border-top:1px solid var(--border);margin-top:8px">
-      Strategic Performance Dashboard · Week 26, 2026 · Auto-generated from live data
+      Strategic Performance Dashboard · Week 27, 2026 · Auto-generated from live data
     </footer>
 
   </div><!-- /container -->
@@ -1041,7 +1130,7 @@
     window.backlogChart = new Chart(blCtx, {
       type: 'line',
       data: {
-        labels: ['W08', 'W12', 'W16', 'W20', 'W23', 'W24', 'W25', 'W26'],
+        labels: ['W08', 'W12', 'W16', 'W20', 'W23', 'W24', 'W25', 'W26', 'W27'],
         datasets: [{
           label: 'Backlog (฿)',
           data: [1680000, 1030000, 700000, 500000, 278511, 1187938, 1150000, 2084224.68],
@@ -1105,482 +1194,482 @@
   </script>
 
   <script>
-  /* ═══════════════════════════════════════════════
-     IMPORT EXCEL
-  ═══════════════════════════════════════════════ */
-  document.getElementById('file-input').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      try {
-        const wb = XLSX.read(evt.target.result, { type: 'binary' });
+    /* ═══════════════════════════════════════════════
+       IMPORT EXCEL
+    ═══════════════════════════════════════════════ */
+    document.getElementById('file-input').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        try {
+          const wb = XLSX.read(evt.target.result, { type: 'binary' });
 
-        function getSheet(name) {
-          return wb.Sheets[name] ? XLSX.utils.sheet_to_json(wb.Sheets[name], { defval: '' }) : [];
-        }
-        function fmtBaht(n) {
-          if (!n && n !== 0) return '-';
-          return Number(n).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
-        }
-        function getValOrFallback(val, fallback) {
-          if (val === undefined || val === null || val === '') return fallback;
-          const n = Number(String(val).replace(/[^0-9.-]/g, ''));
-          return isNaN(n) ? fallback : n;
-        }
-        function fmtDays(n) {
-          return n ? Number(n).toFixed(2) + 'd' : '-';
-        }
-        // Find metric value by exact or partial match in "Metric" column
-        function findMetric(rows, metricKeyword, valueCol) {
-          const k = metricKeyword.toLowerCase();
-          const row = rows.find(r => {
-            const m = String(r['Metric'] || r['Metric / Data Point'] || r['Category / Person'] || '').toLowerCase();
-            return m.includes(k);
-          });
-          return row ? row[valueCol] : null;
-        }
-
-        let importedSheets = [];
-
-        /* ─── Part 1 - Overview ─── */
-        const p1 = getSheet('Part 1 - Overview');
-        if (p1.length) {
-          importedSheets.push('Part 1');
-          const week = findMetric(p1, 'report week', 'Value');
-          if (week) document.getElementById('weekBadge').textContent = `WEEK ${week} · 2026`;
-
-          const haeM1 = findMetric(p1, 'hae m1', 'Value');
-          const tmeM1 = findMetric(p1, 'tme m1', 'Value');
-          if (haeM1) {
-            document.getElementById('kpiHaeAging').innerHTML = Number(haeM1).toFixed(2) + '<span class="unit">days</span>';
-            document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1 ? Number(tmeM1).toFixed(2) : '-'} days`;
+          function getSheet(name) {
+            return wb.Sheets[name] ? XLSX.utils.sheet_to_json(wb.Sheets[name], { defval: '' }) : [];
           }
-        }
+          function fmtBaht(n) {
+            if (!n && n !== 0) return '-';
+            return Number(n).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
+          }
+          function getValOrFallback(val, fallback) {
+            if (val === undefined || val === null || val === '') return fallback;
+            const n = Number(String(val).replace(/[^0-9.-]/g, ''));
+            return isNaN(n) ? fallback : n;
+          }
+          function fmtDays(n) {
+            return n ? Number(n).toFixed(2) + 'd' : '-';
+          }
+          // Find metric value by exact or partial match in "Metric" column
+          function findMetric(rows, metricKeyword, valueCol) {
+            const k = metricKeyword.toLowerCase();
+            const row = rows.find(r => {
+              const m = String(r['Metric'] || r['Metric / Data Point'] || r['Category / Person'] || '').toLowerCase();
+              return m.includes(k);
+            });
+            return row ? row[valueCol] : null;
+          }
 
-        /* ─── Part 2 - Aging ─── */
-        const p2 = getSheet('Part 2 - Aging');
-        if (p2.length) {
-          importedSheets.push('Part 2');
-          // HAE/TME M1 & M2 Aging
-          const haeM1row = p2.find(r => String(r['Category / Person']).includes('HAE M1'));
-          const tmeM1row = p2.find(r => String(r['Category / Person']).includes('TME M1'));
-          if (haeM1row && haeM1row['M1 Aging']) {
-            const hM1 = Number(haeM1row['M1 Aging']).toFixed(2);
-            const tM1 = tmeM1row ? Number(tmeM1row['M1 Aging']).toFixed(2) : '-';
-            document.getElementById('kpiHaeAging').innerHTML = hM1 + '<span class="unit">days</span>';
-            document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tM1} days`;
-          }
-          // PE Aging table rows (Adisak, Palagon)
-          const adisak = p2.find(r => String(r['Category / Person']).toLowerCase().includes('adisak'));
-          const palagon = p2.find(r => String(r['Category / Person']).toLowerCase().includes('palagon'));
-          if (adisak) {
-            const el = document.getElementById('peAdisakM1');
-            if (el) el.textContent = fmtDays(adisak['M1 Aging']);
-          }
-          if (palagon) {
-            const el = document.getElementById('pePalagonM1');
-            if (el) el.textContent = fmtDays(palagon['M1 Aging']);
-          }
-        }
+          let importedSheets = [];
 
-        /* ─── Part 3 - Doc Management ─── */
-        const p3 = getSheet('Part 3 - Doc Management');
-        if (p3.length) {
-          importedSheets.push('Part 3');
-          const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1') || String(r['Owner / Type']).includes('AC1'));
-          const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2') || String(r['Owner / Type']).includes('AC2'));
-          if (ac1row) {
-            const el = document.getElementById('finAC1Aging');
-            if (el) el.textContent = ac1row['Avg Aging'] ? Number(ac1row['Avg Aging']).toFixed(1) + ' days' : '-';
-          }
-          if (ac2row) {
-            const el = document.getElementById('finAC2Aging');
-            if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
-          }
-          // Doc Owners
-          const hathairat = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('hathairat'));
-          const sermsiri = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('sermsiri'));
-          const apichart = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('apichart'));
-          if (hathairat) {
-            const el = document.getElementById('docHathairatAC1');
-            if (el) el.textContent = fmtDays(hathairat['Avg Aging']);
-          }
-          if (sermsiri) {
-            const el = document.getElementById('docSermsiriAC2');
-            if (el) el.textContent = fmtDays(sermsiri['Avg Aging']);
-          }
-          if (apichart) {
-            const el = document.getElementById('docApichartAC1');
-            if (el) el.textContent = fmtDays(apichart['Avg Aging']);
-          }
-        }
+          /* ─── Part 1 - Overview ─── */
+          const p1 = getSheet('Part 1 - Overview');
+          if (p1.length) {
+            importedSheets.push('Part 1');
+            const week = findMetric(p1, 'report week', 'Value');
+            if (week) document.getElementById('weekBadge').textContent = `WEEK ${week} · 2026`;
 
-        /* ─── Part 4 - Financials ─── */
-        const p4 = getSheet('Part 4 - Financials');
-        if (p4.length) {
-          importedSheets.push('Part 4');
-          const V = 'Value (THB)';
-          const getVal = (kw) => {
-            const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
-            return row ? row[V] : null;
-          };
-
-          const getSum = (kw) => {
-            const rows = p4.filter(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
-            if (rows.length === 0) return null;
-            return rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
-          };
-
-          const income    = getVal('estimate final income') || getVal('estimate income');
-          const ar        = getVal('ar (commerce)') || getVal('ar');
-          const ap        = getVal('ap') || getVal('accounts payable');
-          // For backlog, we probably only want one match (e.g., Remaining Backlog)
-          const backlog   = getVal('remain to claim') || getVal('backlog');
-          const ac2tgt    = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target')) 
-                            ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
-          
-          const getValByTitle = (metricKw, titleKw) => {
-            const row = p4.find(r =>
-              String(r['Metric']).toLowerCase().includes(metricKw.toLowerCase()) &&
-              String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
-            );
-            return row ? row[V] : null;
-          };
-
-          let actPlan = getValByTitle('action plan ac#2', 'total');
-          if (actPlan === null) {
-            // Sum only individual year rows, exclude TOTAL rows
-            const rows = p4.filter(r =>
-              String(r['Metric']).toLowerCase().includes('action plan ac#2') &&
-              !String(r['Slide Title'] || '').toLowerCase().includes('total') &&
-              !String(r['Metric']).toLowerCase().includes('total')
-            );
-            if (rows.length > 0) {
-              actPlan = rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
+            const haeM1 = findMetric(p1, 'hae m1', 'Value');
+            const tmeM1 = findMetric(p1, 'tme m1', 'Value');
+            if (haeM1) {
+              document.getElementById('kpiHaeAging').innerHTML = Number(haeM1).toFixed(2) + '<span class="unit">days</span>';
+              document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1 ? Number(tmeM1).toFixed(2) : '-'} days`;
             }
           }
-          if (actPlan === null) actPlan = getSum('action plan');
 
-          let onProc = getSum('on-process');
-          if (onProc === null) onProc = getSum('on process');
-
-
-          // Actual Acceptance by week
-          const vAct23   = getVal('actual acceptance wk23');
-          const vAct24   = getVal('actual acceptance wk24');
-          const vAct25   = getVal('actual acceptance wk25');
-          const vAct26   = getVal('actual acceptance wk26');
-          const vActJune = getVal('actual acceptance june');
-
-          // AC#1 plan by year — Metric = 'Action Plan AC#1 WK27', year in Slide Title
-          const vAc123 = getValByTitle('action plan ac#1', '2023');
-          const vAc124 = getValByTitle('action plan ac#1', '2024');
-          const vAc125 = getValByTitle('action plan ac#1', '2025');
-          const vAc126 = getValByTitle('action plan ac#1', '2026');
-
-          // AC#2 plan by year — Metric = 'Action Plan AC#2 WK27', year in Slide Title
-          const vAc223 = getValByTitle('action plan ac#2', '2023');
-          const vAc224 = getValByTitle('action plan ac#2', '2024');
-          const vAc225 = getValByTitle('action plan ac#2', '2025');
-          const vAc226 = getValByTitle('action plan ac#2', '2026');
-
-          // Totals for AC#1 and AC#2 plans
-          const vAc1Total = getValByTitle('action plan ac#1', 'total');
-          const vAc2Total = getValByTitle('action plan ac#2', 'total');
-
-          // On-Process per project — Metric contains project name
-          const vOnMBB    = getVal('tme-mbb')    || getVal('on-process (2026) tme-mbb');
-          const vOnIPRAN  = getVal('tme-ipran')  || getVal('on-process (2026) tme-ipran');
-          const vOnBATT   = getVal('tme-battery') || getVal('on-process (2026) tme-battery');
-          const vOnHAEMBB = getVal('hae-mbb')    || getVal('on-process (2026) hae-mbb');
-          const vOnTRE    = getVal('tre-dismantle') || getVal('on-process (2026) tre-dismantle');
-
-          const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
-          setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
-          setEl('dtlActWK26', vAct26); setEl('dtlActJUNE', vActJune);
-          setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126); setEl('dtlAC1Total', vAc1Total);
-          setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226); setEl('dtlAC2Total', vAc2Total);
-          setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
-          setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
-
-          if (income) {
-            document.getElementById('kpiIncome').innerHTML = (income/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
-            document.getElementById('finIncome').textContent = fmtBaht(income);
+          /* ─── Part 2 - Aging ─── */
+          const p2 = getSheet('Part 2 - Aging');
+          if (p2.length) {
+            importedSheets.push('Part 2');
+            // HAE/TME M1 & M2 Aging
+            const haeM1row = p2.find(r => String(r['Category / Person']).includes('HAE M1'));
+            const tmeM1row = p2.find(r => String(r['Category / Person']).includes('TME M1'));
+            if (haeM1row && haeM1row['M1 Aging']) {
+              const hM1 = Number(haeM1row['M1 Aging']).toFixed(2);
+              const tM1 = tmeM1row ? Number(tmeM1row['M1 Aging']).toFixed(2) : '-';
+              document.getElementById('kpiHaeAging').innerHTML = hM1 + '<span class="unit">days</span>';
+              document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tM1} days`;
+            }
+            // PE Aging table rows (Adisak, Palagon)
+            const adisak = p2.find(r => String(r['Category / Person']).toLowerCase().includes('adisak'));
+            const palagon = p2.find(r => String(r['Category / Person']).toLowerCase().includes('palagon'));
+            if (adisak) {
+              const el = document.getElementById('peAdisakM1');
+              if (el) el.textContent = fmtDays(adisak['M1 Aging']);
+            }
+            if (palagon) {
+              const el = document.getElementById('pePalagonM1');
+              if (el) el.textContent = fmtDays(palagon['M1 Aging']);
+            }
           }
-          if (ar) {
-            document.getElementById('finAR').textContent = fmtBaht(ar);
-            document.getElementById('kpiIncomeSub').textContent =
-              `AR ${ar >= 1000000 ? (ar/1000000).toFixed(2)+'M' : (ar/1000).toFixed(0)+'K'} · AP ${ap ? (ap/1000).toFixed(0)+'K' : '-'}`;
-          }
-          if (ap)  document.getElementById('finAP').textContent = fmtBaht(ap);
-          if (backlog) {
-            document.getElementById('kpiBacklog').innerHTML = (backlog/1000000).toFixed(2) + '<span class="unit">M ฿</span>';
-            document.getElementById('finBacklog').textContent = fmtBaht(backlog);
-          }
-          if (actPlan) {
-            document.getElementById('kpiActionPlan').innerHTML = (actPlan/1000).toFixed(0) + 'K<span class="unit">฿</span>';
-            document.getElementById('finActionPlan').textContent = fmtBaht(actPlan);
-          }
-          if (onProc) {
-            document.getElementById('kpiActionPlanSub').textContent =
-              `On Process ${(onProc/1000).toFixed(0)}K · Target ${ac2tgt ? (ac2tgt/1000).toFixed(1)+'K' : '-'}`;
-            document.getElementById('finOnProcess').textContent = fmtBaht(onProc);
-          }
-          if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
-        }
 
-        /* ─── Part 5 - Safety ─── */
-        const p5 = getSheet('Part 5 - Safety');
-        if (p5.length) {
-          importedSheets.push('Part 5');
-          const zeroAcc = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('zero accident'));
-          const highRisk = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('issues & prevention') || String(r['Topic / Metric']).toLowerCase().includes('high-risk'));
-          if (zeroAcc) document.getElementById('ehsZeroAccident').textContent = zeroAcc['Status / Detail'] || '-';
-          if (highRisk) document.getElementById('ehsHighRisk').textContent = highRisk['Status / Detail'] || '-';
-        }
-
-        /* ─── Part 6 - Conclusion ─── */
-        const p6 = getSheet('Part 6 - Conclusion');
-        if (p6.length) {
-          importedSheets.push('Part 6');
-          const row = p6[0];
-          if (row) {
-            if (row['Action Item']) document.getElementById('conclusionAction').textContent = row['Action Item'];
-            if (row['Assignee']) document.getElementById('conclusionAssignee').textContent = row['Assignee'];
-            if (row['Deadline / Notes']) document.getElementById('conclusionDeadline').textContent = row['Deadline / Notes'];
+          /* ─── Part 3 - Doc Management ─── */
+          const p3 = getSheet('Part 3 - Doc Management');
+          if (p3.length) {
+            importedSheets.push('Part 3');
+            const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1') || String(r['Owner / Type']).includes('AC1'));
+            const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2') || String(r['Owner / Type']).includes('AC2'));
+            if (ac1row) {
+              const el = document.getElementById('finAC1Aging');
+              if (el) el.textContent = ac1row['Avg Aging'] ? Number(ac1row['Avg Aging']).toFixed(1) + ' days' : '-';
+            }
+            if (ac2row) {
+              const el = document.getElementById('finAC2Aging');
+              if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
+            }
+            // Doc Owners
+            const hathairat = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('hathairat'));
+            const sermsiri = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('sermsiri'));
+            const apichart = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('apichart'));
+            if (hathairat) {
+              const el = document.getElementById('docHathairatAC1');
+              if (el) el.textContent = fmtDays(hathairat['Avg Aging']);
+            }
+            if (sermsiri) {
+              const el = document.getElementById('docSermsiriAC2');
+              if (el) el.textContent = fmtDays(sermsiri['Avg Aging']);
+            }
+            if (apichart) {
+              const el = document.getElementById('docApichartAC1');
+              if (el) el.textContent = fmtDays(apichart['Avg Aging']);
+            }
           }
-        }
 
-        /* ─── Sheet 2026 (raw site data) ─── */
-        const raw2026 = wb.SheetNames.includes('2026') ? wb.Sheets['2026'] : null;
-        if (raw2026) {
-          importedSheets.push('2026');
-          const allRows = XLSX.utils.sheet_to_json(raw2026, { defval: '', header: 1 });
-          const headers = allRows[2];  // headers are in row index 2
-          if (headers) {
-            const projIdx = headers.findIndex(h => String(h).toUpperCase().includes('PROJECT'));
-            const statusIdx = headers.findIndex(h => String(h).toUpperCase().includes('STATUS WORK'));
-            
-            let hae = 0, tme = 0, completed = 0, onProcess = 0, totalSites = 0;
-            for (let i = 3; i < allRows.length; i++) {
-              const row = allRows[i];
-              if (!row || !row[projIdx]) continue;
-              const proj = String(row[projIdx]).toUpperCase();
-              const isHae = proj.includes('HAE');
-              const isTme = proj.includes('TME');
-              if (isHae || isTme) {
-                totalSites++;
-                if (isHae) hae++;
-                if (isTme) tme++;
-                
-                if (statusIdx >= 0) {
-                  const st = String(row[statusIdx]).toUpperCase();
-                  if (st.includes('COMPLETED')) completed++;
-                  else if (st.includes('ON PROCESS')) onProcess++;
-                }
+          /* ─── Part 4 - Financials ─── */
+          const p4 = getSheet('Part 4 - Financials');
+          if (p4.length) {
+            importedSheets.push('Part 4');
+            const V = 'Value (THB)';
+            const getVal = (kw) => {
+              const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
+              return row ? row[V] : null;
+            };
+
+            const getSum = (kw) => {
+              const rows = p4.filter(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
+              if (rows.length === 0) return null;
+              return rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
+            };
+
+            const income = getVal('estimate final income') || getVal('estimate income');
+            const ar = getVal('ar (commerce)') || getVal('ar');
+            const ap = getVal('ap') || getVal('accounts payable');
+            // For backlog, we probably only want one match (e.g., Remaining Backlog)
+            const backlog = getVal('remain to claim') || getVal('backlog');
+            const ac2tgt = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))
+              ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
+
+            const getValByTitle = (metricKw, titleKw) => {
+              const row = p4.find(r =>
+                String(r['Metric']).toLowerCase().includes(metricKw.toLowerCase()) &&
+                String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
+              );
+              return row ? row[V] : null;
+            };
+
+            let actPlan = getValByTitle('action plan ac#2', 'total');
+            if (actPlan === null) {
+              // Sum only individual year rows, exclude TOTAL rows
+              const rows = p4.filter(r =>
+                String(r['Metric']).toLowerCase().includes('action plan ac#2') &&
+                !String(r['Slide Title'] || '').toLowerCase().includes('total') &&
+                !String(r['Metric']).toLowerCase().includes('total')
+              );
+              if (rows.length > 0) {
+                actPlan = rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
               }
             }
+            if (actPlan === null) actPlan = getSum('action plan');
 
-            // Update UI elements
-            document.getElementById('kpiTotalSites').textContent = totalSites;
-            document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
-            const pct = totalSites > 0 ? (completed / totalSites * 100).toFixed(1) : '-';
-            document.getElementById('kpiTotalSitesTrend').textContent = pct !== '-' ? pct + '% Done' : 'In Progress';
+            let onProc = getSum('on-process');
+            if (onProc === null) onProc = getSum('on process');
 
-            const totalSitesText = document.getElementById('totalSitesText');
-            if (totalSitesText) totalSitesText.innerHTML = `Total Sites <strong style="color:var(--text-primary)">${totalSites}</strong>`;
-            const projectBreakdownText = document.getElementById('projectBreakdownText');
-            if (projectBreakdownText) projectBreakdownText.innerHTML = `HAE <strong style="color:#3b82f6">${hae}</strong> · TME <strong style="color:#8b5cf6">${tme}</strong>`;
 
-            // Update the legend counts in the DOM
-            const compEl = document.getElementById('legendCompleted');
-            if (compEl) compEl.textContent = completed;
-            const opEl = document.getElementById('legendOnProcess');
-            if (opEl) opEl.textContent = onProcess;
-            const remEl = document.getElementById('legendRemaining');
-            if (remEl) remEl.textContent = Math.max(0, totalSites - completed - onProcess);
+            // Actual Acceptance by week
+            const vAct23 = getVal('actual acceptance wk23');
+            const vAct24 = getVal('actual acceptance wk24');
+            const vAct25 = getVal('actual acceptance wk25');
+            const vAct26 = getVal('actual acceptance wk26');
+            const vActJune = getVal('actual acceptance june');
+
+            // AC#1 plan by year — Metric = 'Action Plan AC#1 WK27', year in Slide Title
+            const vAc123 = getValByTitle('action plan ac#1', '2023');
+            const vAc124 = getValByTitle('action plan ac#1', '2024');
+            const vAc125 = getValByTitle('action plan ac#1', '2025');
+            const vAc126 = getValByTitle('action plan ac#1', '2026');
+
+            // AC#2 plan by year — Metric = 'Action Plan AC#2 WK27', year in Slide Title
+            const vAc223 = getValByTitle('action plan ac#2', '2023');
+            const vAc224 = getValByTitle('action plan ac#2', '2024');
+            const vAc225 = getValByTitle('action plan ac#2', '2025');
+            const vAc226 = getValByTitle('action plan ac#2', '2026');
+
+            // Totals for AC#1 and AC#2 plans
+            const vAc1Total = getValByTitle('action plan ac#1', 'total');
+            const vAc2Total = getValByTitle('action plan ac#2', 'total');
+
+            // On-Process per project — Metric contains project name
+            const vOnMBB = getVal('tme-mbb') || getVal('on-process (2026) tme-mbb');
+            const vOnIPRAN = getVal('tme-ipran') || getVal('on-process (2026) tme-ipran');
+            const vOnBATT = getVal('tme-battery') || getVal('on-process (2026) tme-battery');
+            const vOnHAEMBB = getVal('hae-mbb') || getVal('on-process (2026) hae-mbb');
+            const vOnTRE = getVal('tre-dismantle') || getVal('on-process (2026) tre-dismantle');
+
+            const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
+            setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
+            setEl('dtlActWK26', vAct26); setEl('dtlActJUNE', vActJune);
+            setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126); setEl('dtlAC1Total', vAc1Total);
+            setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226); setEl('dtlAC2Total', vAc2Total);
+            setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
+            setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
+
+            if (income) {
+              document.getElementById('kpiIncome').innerHTML = (income / 1000000).toFixed(2) + '<span class="unit">M ฿</span>';
+              document.getElementById('finIncome').textContent = fmtBaht(income);
+            }
+            if (ar) {
+              document.getElementById('finAR').textContent = fmtBaht(ar);
+              document.getElementById('kpiIncomeSub').textContent =
+                `AR ${ar >= 1000000 ? (ar / 1000000).toFixed(2) + 'M' : (ar / 1000).toFixed(0) + 'K'} · AP ${ap ? (ap / 1000).toFixed(0) + 'K' : '-'}`;
+            }
+            if (ap) document.getElementById('finAP').textContent = fmtBaht(ap);
+            if (backlog) {
+              document.getElementById('kpiBacklog').innerHTML = (backlog / 1000000).toFixed(2) + '<span class="unit">M ฿</span>';
+              document.getElementById('finBacklog').textContent = fmtBaht(backlog);
+            }
+            if (actPlan) {
+              document.getElementById('kpiActionPlan').innerHTML = (actPlan / 1000).toFixed(0) + 'K<span class="unit">฿</span>';
+              document.getElementById('finActionPlan').textContent = fmtBaht(actPlan);
+            }
+            if (onProc) {
+              document.getElementById('kpiActionPlanSub').textContent =
+                `On Process ${(onProc / 1000).toFixed(0)}K · Target ${ac2tgt ? (ac2tgt / 1000).toFixed(1) + 'K' : '-'}`;
+              document.getElementById('finOnProcess').textContent = fmtBaht(onProc);
+            }
+            if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
           }
-        }
 
-        /* ─── Update Charts dynamically ─── */
-        if (p4.length) {
-          const v23 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK23'))?.['Value (THB)'] || 0;
-          const v24 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK24'))?.['Value (THB)'] || 0;
-          const v25 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK25'))?.['Value (THB)'] || 0;
-          const b26 = p4.find(r => String(r.Metric).includes('Backlog Week 26'))?.['Value (THB)'] || 2084224.68;
-          const b27 = p4.find(r => String(r.Metric).includes('Backlog Week 27'))?.['Value (THB)'] || 64754.4;
+          /* ─── Part 5 - Safety ─── */
+          const p5 = getSheet('Part 5 - Safety');
+          if (p5.length) {
+            importedSheets.push('Part 5');
+            const zeroAcc = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('zero accident'));
+            const highRisk = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('issues & prevention') || String(r['Topic / Metric']).toLowerCase().includes('high-risk'));
+            if (zeroAcc) document.getElementById('ehsZeroAccident').textContent = zeroAcc['Status / Detail'] || '-';
+            if (highRisk) document.getElementById('ehsHighRisk').textContent = highRisk['Status / Detail'] || '-';
+          }
 
-          if (window.backlogChart) {
-            const data = window.backlogChart.data.datasets[0].data;
-            if (data.length >= 2) {
-               data[data.length - 2] = b26;
-               data[data.length - 1] = b27;
-               window.backlogChart.update();
+          /* ─── Part 6 - Conclusion ─── */
+          const p6 = getSheet('Part 6 - Conclusion');
+          if (p6.length) {
+            importedSheets.push('Part 6');
+            const row = p6[0];
+            if (row) {
+              if (row['Action Item']) document.getElementById('conclusionAction').textContent = row['Action Item'];
+              if (row['Assignee']) document.getElementById('conclusionAssignee').textContent = row['Assignee'];
+              if (row['Deadline / Notes']) document.getElementById('conclusionDeadline').textContent = row['Deadline / Notes'];
             }
           }
-        }
-        if (p3.length) {
-          const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
-          const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
-          if (window.docChart && ac1row && ac2row) {
-            window.docChart.data.datasets[0].data = [
-              getValOrFallback(ac1row['Amount (THB)'], 2307342),
-              getValOrFallback(ac2row['Amount (THB)'], 988861)
-            ];
-            window.docChart.data.datasets[1].data = [
-              getValOrFallback(ac1row['Done (THB)'], 1055497),
-              getValOrFallback(ac2row['Done (THB)'], 177499)
-            ];
-            window.docChart.update();
+
+          /* ─── Sheet 2026 (raw site data) ─── */
+          const raw2026 = wb.SheetNames.includes('2026') ? wb.Sheets['2026'] : null;
+          if (raw2026) {
+            importedSheets.push('2026');
+            const allRows = XLSX.utils.sheet_to_json(raw2026, { defval: '', header: 1 });
+            const headers = allRows[2];  // headers are in row index 2
+            if (headers) {
+              const projIdx = headers.findIndex(h => String(h).toUpperCase().includes('PROJECT'));
+              const statusIdx = headers.findIndex(h => String(h).toUpperCase().includes('STATUS WORK'));
+
+              let hae = 0, tme = 0, completed = 0, onProcess = 0, totalSites = 0;
+              for (let i = 3; i < allRows.length; i++) {
+                const row = allRows[i];
+                if (!row || !row[projIdx]) continue;
+                const proj = String(row[projIdx]).toUpperCase();
+                const isHae = proj.includes('HAE');
+                const isTme = proj.includes('TME');
+                if (isHae || isTme) {
+                  totalSites++;
+                  if (isHae) hae++;
+                  if (isTme) tme++;
+
+                  if (statusIdx >= 0) {
+                    const st = String(row[statusIdx]).toUpperCase();
+                    if (st.includes('COMPLETED')) completed++;
+                    else if (st.includes('ON PROCESS')) onProcess++;
+                  }
+                }
+              }
+
+              // Update UI elements
+              document.getElementById('kpiTotalSites').textContent = totalSites;
+              document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
+              const pct = totalSites > 0 ? (completed / totalSites * 100).toFixed(1) : '-';
+              document.getElementById('kpiTotalSitesTrend').textContent = pct !== '-' ? pct + '% Done' : 'In Progress';
+
+              const totalSitesText = document.getElementById('totalSitesText');
+              if (totalSitesText) totalSitesText.innerHTML = `Total Sites <strong style="color:var(--text-primary)">${totalSites}</strong>`;
+              const projectBreakdownText = document.getElementById('projectBreakdownText');
+              if (projectBreakdownText) projectBreakdownText.innerHTML = `HAE <strong style="color:#3b82f6">${hae}</strong> · TME <strong style="color:#8b5cf6">${tme}</strong>`;
+
+              // Update the legend counts in the DOM
+              const compEl = document.getElementById('legendCompleted');
+              if (compEl) compEl.textContent = completed;
+              const opEl = document.getElementById('legendOnProcess');
+              if (opEl) opEl.textContent = onProcess;
+              const remEl = document.getElementById('legendRemaining');
+              if (remEl) remEl.textContent = Math.max(0, totalSites - completed - onProcess);
+            }
           }
+
+          /* ─── Update Charts dynamically ─── */
+          if (p4.length) {
+            const v23 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK23'))?.['Value (THB)'] || 0;
+            const v24 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK24'))?.['Value (THB)'] || 0;
+            const v25 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK25'))?.['Value (THB)'] || 0;
+            const b26 = p4.find(r => String(r.Metric).includes('Backlog Week 26'))?.['Value (THB)'] || 2084224.68;
+            const b27 = p4.find(r => String(r.Metric).includes('Backlog Week 27'))?.['Value (THB)'] || 64754.4;
+
+            if (window.backlogChart) {
+              const data = window.backlogChart.data.datasets[0].data;
+              if (data.length >= 2) {
+                data[data.length - 2] = b26;
+                data[data.length - 1] = b27;
+                window.backlogChart.update();
+              }
+            }
+          }
+          if (p3.length) {
+            const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
+            const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
+            if (window.docChart && ac1row && ac2row) {
+              window.docChart.data.datasets[0].data = [
+                getValOrFallback(ac1row['Amount (THB)'], 2307342),
+                getValOrFallback(ac2row['Amount (THB)'], 988861)
+              ];
+              window.docChart.data.datasets[1].data = [
+                getValOrFallback(ac1row['Done (THB)'], 1055497),
+                getValOrFallback(ac2row['Done (THB)'], 177499)
+              ];
+              window.docChart.update();
+            }
+          }
+          if (p1.length || raw2026) {
+            const completed = document.getElementById('legendCompleted')?.textContent || 153;
+            const onProcess = document.getElementById('legendOnProcess')?.textContent || 53;
+            const remaining = document.getElementById('legendRemaining')?.textContent || 2;
+            if (window.siteDonut) {
+              window.siteDonut.data.datasets[0].data = [Number(completed), Number(onProcess), Number(remaining)];
+              window.siteDonut.update();
+            }
+          }
+
+          /* ─── Save to LocalStorage ─── */
+          const VALUE_IDS = [
+            'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
+            'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
+            'kpiHaeAging', 'kpiHaeAgingSub',
+            'kpiQC', 'kpiQCSub',
+            'kpiActionPlan', 'kpiActionPlanSub',
+            'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
+            'finAC1Aging', 'finAC2Aging',
+            'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
+            'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
+            'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
+            'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
+            'peAdisakM1', 'pePalagonM1',
+            'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
+            'ehsZeroAccident', 'ehsHighRisk',
+            'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
+            'legendCompleted', 'legendOnProcess', 'legendRemaining',
+            'totalSitesText', 'projectBreakdownText'
+          ];
+          const vals = {};
+          VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
+          const dashState = {
+            vals,
+            charts: {
+              backlog: window.backlogChart ? window.backlogChart.data.datasets[0].data : [],
+              donut: window.siteDonut ? window.siteDonut.data.datasets[0].data : [],
+              doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
+            }
+          };
+          localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
+
+          /* ─── Show status ─── */
+          const st = document.getElementById('importStatus');
+          st.style.display = 'inline-block';
+          st.textContent = `✓ Imported: ${importedSheets.join(', ')}`;
+          setTimeout(() => { st.style.display = 'none'; }, 6000);
+
+        } catch (err) {
+          alert('Import error: ' + err.message + '\n' + err.stack);
         }
-        if (p1.length || raw2026) {
-           const completed = document.getElementById('legendCompleted')?.textContent || 153;
-           const onProcess = document.getElementById('legendOnProcess')?.textContent || 53;
-           const remaining = document.getElementById('legendRemaining')?.textContent || 2;
-           if (window.siteDonut) {
-             window.siteDonut.data.datasets[0].data = [Number(completed), Number(onProcess), Number(remaining)];
-             window.siteDonut.update();
-           }
-        }
+      };
+      reader.readAsBinaryString(file);
+      e.target.value = '';
+    });
 
-        /* ─── Save to LocalStorage ─── */
-        const VALUE_IDS = [
-          'kpiTotalSites','kpiTotalSitesSub','kpiTotalSitesTrend',
-          'kpiIncome','kpiIncomeSub','kpiBacklog','kpiBacklogSub',
-          'kpiHaeAging','kpiHaeAgingSub',
-          'kpiQC','kpiQCSub',
-          'kpiActionPlan','kpiActionPlanSub',
-          'finIncome','finAR','finAP','finBacklog','finAC2Target','finActionPlan','finOnProcess',
-          'finAC1Aging','finAC2Aging',
-          'dtlActWK23','dtlActWK24','dtlActWK25','dtlActWK26','dtlActJUNE',
-          'dtlAC12023','dtlAC12024','dtlAC12025','dtlAC12026','dtlAC1Total',
-          'dtlAC22023','dtlAC22024','dtlAC22025','dtlAC22026','dtlAC2Total',
-          'dtlOnProcMBB','dtlOnProcIPRAN','dtlOnProcBATT','dtlOnProcHAEMBB','dtlOnProcTRE',
-          'peAdisakM1','pePalagonM1',
-          'docHathairatAC1','docSermsiriAC2','docApichartAC1',
-          'ehsZeroAccident','ehsHighRisk',
-          'conclusionAction','conclusionAssignee','conclusionDeadline',
-          'legendCompleted','legendOnProcess','legendRemaining',
-          'totalSitesText','projectBreakdownText'
-        ];
-        const vals = {};
-        VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
-        const dashState = {
-           vals,
-           charts: {
-             backlog: window.backlogChart ? window.backlogChart.data.datasets[0].data : [],
-             donut: window.siteDonut ? window.siteDonut.data.datasets[0].data : [],
-             doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
-           }
-        };
-        localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
+    // Restore state from LocalStorage on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const DASH_VERSION = 'v6';
+      const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
+      // Remove stale versions
+      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5'].forEach(k => localStorage.removeItem(k));
+      const saved = localStorage.getItem(DASH_KEY);
+      if (saved) {
+        try {
+          const state = JSON.parse(saved);
+          // Only restore individual value elements, NOT inner HTML (to preserve new cards)
+          if (state.vals) {
+            Object.entries(state.vals).forEach(([id, txt]) => {
+              const el = document.getElementById(id); if (el) el.textContent = txt;
+            });
+          }
 
-        /* ─── Show status ─── */
-        const st = document.getElementById('importStatus');
-        st.style.display = 'inline-block';
-        st.textContent = `✓ Imported: ${importedSheets.join(', ')}`;
-        setTimeout(() => { st.style.display = 'none'; }, 6000);
-
-      } catch(err) {
-        alert('Import error: ' + err.message + '\n' + err.stack);
+          // Re-assign chart properties that might have been lost if they rely on canvas DOM
+          if (state.charts) {
+            if (window.backlogChart && state.charts.backlog.length > 0) {
+              window.backlogChart.data.datasets[0].data = state.charts.backlog;
+              window.backlogChart.update();
+            }
+            if (window.siteDonut && state.charts.donut.length > 0) {
+              window.siteDonut.data.datasets[0].data = state.charts.donut;
+              window.siteDonut.update();
+            }
+            if (window.docChart && state.charts.doc.length > 0) {
+              window.docChart.data.datasets[0].data = state.charts.doc[0];
+              window.docChart.data.datasets[1].data = state.charts.doc[1];
+              window.docChart.update();
+            }
+          }
+        } catch (e) { console.error('Error restoring state:', e); }
       }
-    };
-    reader.readAsBinaryString(file);
-    e.target.value = '';
-  });
+    });
 
-  // Restore state from LocalStorage on load
-  window.addEventListener('DOMContentLoaded', () => {
-    const DASH_VERSION = 'v6';
-    const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
-    // Remove stale versions
-    ['dashboardData2026','dashboardData2026_v2','dashboardData2026_v3','dashboardData2026_v4','dashboardData2026_v5'].forEach(k => localStorage.removeItem(k));
-    const saved = localStorage.getItem(DASH_KEY);
-    if (saved) {
+    /* ═══════════════════════════════════════════════
+       EXPORT PDF
+    ═══════════════════════════════════════════════ */
+    async function exportPDF() {
+      const btn = document.querySelector('.tb-btn-pdf');
+      btn.textContent = '⏳ Generating…';
+      btn.disabled = true;
       try {
-        const state = JSON.parse(saved);
-        // Only restore individual value elements, NOT inner HTML (to preserve new cards)
-        if (state.vals) {
-          Object.entries(state.vals).forEach(([id, txt]) => {
-            const el = document.getElementById(id); if (el) el.textContent = txt;
-          });
+        const { jsPDF } = window.jspdf;
+        const el = document.querySelector('.container');
+        const canvas = await html2canvas(el, { scale: 1.5, backgroundColor: '#0a0d14', useCORS: true });
+        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        const pw = pdf.internal.pageSize.getWidth();
+        const ph = pdf.internal.pageSize.getHeight();
+        const imgW = pw;
+        const imgH = canvas.height * pw / canvas.width;
+        let posY = 0;
+        let remaining = imgH;
+        while (remaining > 0) {
+          pdf.addImage(imgData, 'JPEG', 0, posY, imgW, imgH);
+          remaining -= ph;
+          if (remaining > 0) { pdf.addPage(); posY = -(imgH - remaining); }
         }
-        
-        // Re-assign chart properties that might have been lost if they rely on canvas DOM
-        if (state.charts) {
-          if (window.backlogChart && state.charts.backlog.length > 0) {
-             window.backlogChart.data.datasets[0].data = state.charts.backlog;
-             window.backlogChart.update();
-          }
-          if (window.siteDonut && state.charts.donut.length > 0) {
-             window.siteDonut.data.datasets[0].data = state.charts.donut;
-             window.siteDonut.update();
-          }
-          if (window.docChart && state.charts.doc.length > 0) {
-             window.docChart.data.datasets[0].data = state.charts.doc[0];
-             window.docChart.data.datasets[1].data = state.charts.doc[1];
-             window.docChart.update();
-          }
-        }
-      } catch(e) { console.error('Error restoring state:', e); }
+        pdf.save('Dashboard_2026_WK26.pdf');
+      } catch (e) { alert('PDF error: ' + e.message); }
+      btn.textContent = '📄 Export PDF';
+      btn.disabled = false;
     }
-  });
 
-  /* ═══════════════════════════════════════════════
-     EXPORT PDF
-  ═══════════════════════════════════════════════ */
-  async function exportPDF() {
-    const btn = document.querySelector('.tb-btn-pdf');
-    btn.textContent = '⏳ Generating…';
-    btn.disabled = true;
-    try {
-      const { jsPDF } = window.jspdf;
-      const el = document.querySelector('.container');
-      const canvas = await html2canvas(el, { scale: 1.5, backgroundColor: '#0a0d14', useCORS: true });
-      const imgData = canvas.toDataURL('image/jpeg', 0.92);
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-      const pw = pdf.internal.pageSize.getWidth();
-      const ph = pdf.internal.pageSize.getHeight();
-      const imgW = pw;
-      const imgH = canvas.height * pw / canvas.width;
-      let posY = 0;
-      let remaining = imgH;
-      while (remaining > 0) {
-        pdf.addImage(imgData, 'JPEG', 0, posY, imgW, imgH);
-        remaining -= ph;
-        if (remaining > 0) { pdf.addPage(); posY = -(imgH - remaining); }
-      }
-      pdf.save('Dashboard_2026_WK26.pdf');
-    } catch(e) { alert('PDF error: ' + e.message); }
-    btn.textContent = '📄 Export PDF';
-    btn.disabled = false;
-  }
+    /* ═══════════════════════════════════════════════
+       EXPORT PPT
+    ═══════════════════════════════════════════════ */
+    async function exportPPT() {
+      const btn = document.querySelector('.tb-btn-ppt');
+      btn.textContent = '⏳ Generating…';
+      btn.disabled = true;
+      try {
+        const el = document.querySelector('.container');
+        const canvas = await html2canvas(el, { scale: 1.5, backgroundColor: '#0a0d14', useCORS: true });
+        const imgData = canvas.toDataURL('image/png');
 
-  /* ═══════════════════════════════════════════════
-     EXPORT PPT
-  ═══════════════════════════════════════════════ */
-  async function exportPPT() {
-    const btn = document.querySelector('.tb-btn-ppt');
-    btn.textContent = '⏳ Generating…';
-    btn.disabled = true;
-    try {
-      const el = document.querySelector('.container');
-      const canvas = await html2canvas(el, { scale: 1.5, backgroundColor: '#0a0d14', useCORS: true });
-      const imgData = canvas.toDataURL('image/png');
+        const pptx = new PptxGenJS();
+        pptx.layout = 'LAYOUT_WIDE'; // 33.87 x 19.05 cm (16:9)
+        const slide = pptx.addSlide();
+        slide.background = { color: '0a0d14' };
+        slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%', sizing: { type: 'contain', align: 'center', valign: 'middle' } });
 
-      const pptx = new PptxGenJS();
-      pptx.layout = 'LAYOUT_WIDE'; // 33.87 x 19.05 cm (16:9)
-      const slide = pptx.addSlide();
-      slide.background = { color: '0a0d14' };
-      slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%', sizing: { type: 'contain', align: 'center', valign: 'middle' } });
-
-      await pptx.writeFile({ fileName: 'Dashboard_2026_WK26.pptx' });
-    } catch(e) { alert('PPT error: ' + e.message); }
-    btn.textContent = '📊 Export PPT';
-    btn.disabled = false;
-  }
+        await pptx.writeFile({ fileName: 'Dashboard_2026_WK26.pptx' });
+      } catch (e) { alert('PPT error: ' + e.message); }
+      btn.textContent = '📊 Export PPT';
+      btn.disabled = false;
+    }
   </script>
 </body>
 
