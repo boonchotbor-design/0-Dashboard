@@ -1591,9 +1591,16 @@
               }
             }
 
+            console.log('SLA On-Process Import Debug:', {
+              totalRows: p7Rows.length,
+              headerRowIdx: startRow - 1,
+              colBIndex: colBIndex
+            });
+
             // Fallback if header row is not found
             if (startRow === -1) {
               startRow = Math.min(28, p7Rows.length);
+              console.warn('SLA On-Process: Header row SITE DUID not found, falling back to startRow:', startRow);
             }
 
             const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
@@ -1622,6 +1629,12 @@
             const smartQcData = parseSlaColumn(colBIndex, colBIndex + 1);
             const patSubconData = parseSlaColumn(colBIndex + 3, colBIndex + 4, colBIndex + 5);
             const reworkData = parseSlaColumn(colBIndex + 7, colBIndex + 8, colBIndex + 9);
+
+            console.log('SLA Parsed Data Counts:', {
+              smartQc: smartQcData.length,
+              patSubcon: patSubconData.length,
+              rework: reworkData.length
+            });
 
             const renderTable = (tbodyId, data, hasOwner) => {
               const tbody = document.getElementById(tbodyId);
