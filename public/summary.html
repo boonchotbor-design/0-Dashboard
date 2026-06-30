@@ -1518,7 +1518,9 @@
           }
 
           /* ─── Part 4 - Financials ─── */
-          const p4 = getSheet('Part 4 - Financials');
+          // Also try the 'Financials & Recovery' sheet name used in Dashboard_Data_Template.xlsx
+          const p4raw = wb.Sheets['Part 4 - Financials'] || wb.Sheets['Financials & Recovery'] || wb.Sheets['Financials'];
+          const p4 = p4raw ? XLSX.utils.sheet_to_json(p4raw, { defval: '' }) : [];
           if (p4.length) {
             importedSheets.push('Part 4');
             const V = 'Value (THB)';
@@ -1855,7 +1857,53 @@
             if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
           }
 
+          /* ─── Sheet1 Fallback: AC#1 / AC#2 Plan data from pivot table ─── */
+          if (!p4.length || !document.getElementById('dtlAC12023').textContent.replace(/-/g,'').trim()) {
+            const s1sheet = wb.Sheets['Sheet1'];
+            if (s1sheet) {
+              const s1Rows = XLSX.utils.sheet_to_json(s1sheet, { header: 1, defval: '' });
+              // Data is in column 15 (P) = label, column 16 (Q) = HUAWEI value, column 18 (S) = Grand Total
+              let section = null;
+              const ac1 = {}, ac2 = {};
+              s1Rows.forEach(row => {
+                const label = String(row[15] || '').toUpperCase().replace(/\s+/g,' ').trim();
+                const val = Number(row[18] || row[16] || 0) || 0;
+                if (label.includes('ACCTANCE PLAN AC#1') || label.includes('ACTION PLAN AC#1') || label.includes('AC1 WK')) {
+                  section = 'AC1'; ac1.total = val;
+                } else if (label.includes('ACTION PLAN AC#2') || label.includes('ACCTANCE PLAN AC#2') || label.includes('AC2 WK')) {
+                  section = 'AC2'; ac2.total = val;
+                } else if (label.includes('ACCEPTANCE PLAN JULY') || label.includes('GRAND TOTAL')) {
+                  section = null; // stop collecting
+                } else if (section && /^202\d$/.test(label)) {
+                  if (section === 'AC1') ac1[label] = val;
+                  if (section === 'AC2') ac2[label] = val;
+                }
+              });
+
+              const setElIfEmpty = (id, val) => {
+                const el = document.getElementById(id);
+                if (el && (!el.textContent || el.textContent === '-')) el.textContent = fmtBaht(val);
+              };
+              if (ac1.total) {
+                setElIfEmpty('dtlAC12023', ac1['2023']);
+                setElIfEmpty('dtlAC12024', ac1['2024']);
+                setElIfEmpty('dtlAC12025', ac1['2025']);
+                setElIfEmpty('dtlAC12026', ac1['2026']);
+                setElIfEmpty('dtlAC1Total', ac1.total);
+              }
+              if (ac2.total) {
+                setElIfEmpty('dtlAC22023', ac2['2023']);
+                setElIfEmpty('dtlAC22024', ac2['2024']);
+                setElIfEmpty('dtlAC22025', ac2['2025']);
+                setElIfEmpty('dtlAC22026', ac2['2026']);
+                setElIfEmpty('dtlAC2Total', ac2.total);
+              }
+              console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
+            }
+          }
+
           /* ─── Part 5 - Safety ─── */
+
           const p5 = getSheet('Part 5 - Safety');
           if (p5.length) {
             importedSheets.push('Part 5');
