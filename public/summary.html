@@ -1168,7 +1168,7 @@
               <th style="width: 50px;">Aging</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="slaSmartQcBody">
             <tr>
               <td style="color:var(--text-primary); font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Ph1_EXP_ER</td>
               <td><span class="badge badge-amber">3d</span></td>
@@ -1185,7 +1185,7 @@
               <th style="width: 50px;">Aging</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="slaPatSubconBody">
             <tr>
               <td colspan="2" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites are up to date 🎉</td>
             </tr>
@@ -1202,7 +1202,7 @@
               <th>Assign</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="slaReworkBody">
             <tr>
               <td style="color:#ef4444; font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Modernize_EXP_ER</td>
               <td><span class="badge badge-amber">1d</span></td>
@@ -1544,6 +1544,102 @@
               }
             }
             if (actPlan === null) actPlan = getSum('action plan');
+
+            /* ─── Part 7 - SLA On-Process ─── */
+          const p7 = wb.Sheets['Part 7 - SLA On-Process'];
+          if (p7) {
+            importedSheets.push('Part 7');
+            const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
+            
+            const parseSlaTable = (titleKeyword) => {
+              const result = [];
+              let startIdx = -1;
+              let colSite = -1, colAging = -1, colOwner = -1;
+              for (let i = 0; i < p7Rows.length; i++) {
+                const row = p7Rows[i];
+                if (startIdx === -1) {
+                  for (let j = 0; j < row.length; j++) {
+                    if (String(row[j]).toUpperCase().includes(titleKeyword)) {
+                      startIdx = i;
+                      break;
+                    }
+                  }
+                }
+                if (startIdx !== -1 && i >= startIdx) {
+                  if (colSite === -1) {
+                    for (let j = 0; j < row.length; j++) {
+                      const v = String(row[j]).toUpperCase();
+                      if (v.includes('SITE DUID') || v.includes('SITE')) colSite = j;
+                      else if (v.includes('AGING')) colAging = j;
+                      else if (v.includes('ASSIGN') || v.includes('OWNER')) colOwner = j;
+                    }
+                    if (colSite !== -1) continue;
+                  } else {
+                    const site = String(row[colSite] || '').trim();
+                    if (!site) {
+                      if (result.length > 0) break;
+                      continue;
+                    }
+                    if (site.toLowerCase().includes('all sites are up to date')) {
+                       result.push({ site: site, upToDate: true });
+                       break;
+                    }
+                    let aging = String(row[colAging] || '').trim();
+                    if (aging && !aging.toLowerCase().includes('d') && !aging.includes('วัน')) aging += 'd';
+                    else aging = aging.replace(' วัน', 'd').replace('วัน', 'd');
+                    
+                    const owner = colOwner !== -1 ? String(row[colOwner] || '').trim() : '';
+                    result.push({ site, aging, owner });
+                  }
+                }
+              }
+              return result;
+            };
+
+            const smartQcData = parseSlaTable('SMART QC');
+            const patSubconData = parseSlaTable('PAT SUBCON');
+            const reworkData = parseSlaTable('PAT NOT PASS');
+
+            const renderTable = (tbodyId, data, hasOwner) => {
+              const tbody = document.getElementById(tbodyId);
+              if (!tbody) return;
+              if (data.length === 0 || (data.length === 1 && data[0].upToDate)) {
+                 tbody.innerHTML = `<tr><td colspan="${hasOwner ? 3 : 2}" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites are up to date 🎉</td></tr>`;
+                 return;
+              }
+              let html = '';
+              data.forEach(item => {
+                let siteColor = tbodyId === 'slaReworkBody' ? '#ef4444' : 'var(--text-primary)';
+                const badgeColor = String(item.aging).includes('0d') ? 'badge-green' : 'badge-amber';
+                let tr = `<tr>
+                  <td style="color:${siteColor}; font-size: 0.72rem;">${item.site}</td>
+                  <td><span class="badge ${badgeColor}">${item.aging}</span></td>`;
+                if (hasOwner) {
+                  tr += `<td style="color:var(--accent-green); font-size: 0.72rem;">${item.owner}</td>`;
+                }
+                tr += `</tr>`;
+                html += tr;
+              });
+              tbody.innerHTML = html;
+            };
+
+            renderTable('slaSmartQcBody', smartQcData, false);
+            renderTable('slaPatSubconBody', patSubconData, true);
+            renderTable('slaReworkBody', reworkData, true);
+          }
+
+          if (importedSheets.length > 0) {
+            // Update charts
+            window.backlogChart.update();
+            window.siteDonut.update();
+            window.docChart.update();
+
+            document.getElementById('importStatus').style.display = 'inline-block';
+            setTimeout(() => document.getElementById('importStatus').style.display = 'none', 3000);
+            
+            // Allow save
+            document.getElementById('btnSave').classList.add('show');
+          }
 
             let onProc = getSum('on-process');
             if (onProc === null) onProc = getSum('on process');
@@ -1915,10 +2011,14 @@
             'ehsZeroAccident', 'ehsHighRisk',
             'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
             'legendCompleted', 'legendOnProcess', 'legendRemaining',
-            'totalSitesText', 'projectBreakdownText'
+            'totalSitesText', 'projectBreakdownText',
+            'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody'
           ];
         const vals = {};
-        VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
+        VALUE_IDS.forEach(id => { 
+          const el = document.getElementById(id); 
+          if (el) vals[id] = el.tagName === 'TBODY' ? el.innerHTML : el.textContent; 
+        });
         const dashState = {
           vals,
           savedAt: new Date().toISOString(),
