@@ -1133,7 +1133,7 @@
         labels: ['W08', 'W12', 'W16', 'W20', 'W23', 'W24', 'W25', 'W26', 'W27'],
         datasets: [{
           label: 'Backlog (฿)',
-          data: [1680000, 1030000, 700000, 500000, 278511, 1187938, 1150000, 2084224.68],
+          data: [1680000, 1030000, 700000, 500000, 278511, 1187938, 1150000, 2084224.68, 64754.4],
           borderColor: '#3b82f6', backgroundColor: grad, borderWidth: 2.5,
           pointBackgroundColor: '#3b82f6', pointBorderColor: '#0a0d14', pointBorderWidth: 2,
           pointRadius: 5, tension: .4, fill: true,
@@ -1502,11 +1502,10 @@
 
             if (window.backlogChart) {
               const data = window.backlogChart.data.datasets[0].data;
-              if (data.length >= 2) {
-                data[data.length - 2] = b26;
-                data[data.length - 1] = b27;
-                window.backlogChart.update();
-              }
+              // Update W26 (index 7) and W27 (index 8) explicitly
+              data[7] = b26;
+              data[8] = b27;
+              window.backlogChart.update();
             }
           }
           if (p3.length) {
