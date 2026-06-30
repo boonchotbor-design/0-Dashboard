@@ -1628,9 +1628,44 @@
               return result;
             };
 
-            const smartQcData = parseSlaColumn(colBIndex, colBIndex + 1);
-            const patSubconData = parseSlaColumn(colBIndex + 4, colBIndex + 5, colBIndex + 6);
-            const reworkData = parseSlaColumn(colBIndex + 8, colBIndex + 9, colBIndex + 10);
+            // Find column indices dynamically
+            let smartQcSite = -1, smartQcAging = -1;
+            let patSite = -1, patAging = -1, patOwner = -1;
+            let reworkSite = -1, reworkAging = -1, reworkOwner = -1;
+            
+            // Scan the first few rows (e.g. up to row 5) to find the main headers
+            for (let i = 0; i < Math.min(6, p7Rows.length); i++) {
+              const row = p7Rows[i];
+              if (!row) continue;
+              for (let c = 0; c < row.length; c++) {
+                const val = String(row[c] || '').toUpperCase().replace(/\s+/g, ' ');
+                if (val.includes('SMART QC')) {
+                  smartQcSite = c;
+                  smartQcAging = c + 1;
+                }
+                if (val.includes('PAT SUBCON')) {
+                  patSite = c;
+                  patAging = c + 1;
+                  patOwner = c + 2;
+                }
+                if (val.includes('REWORK REQUIRED') || val.includes('PAT NOT PASS')) {
+                  reworkSite = c;
+                  reworkAging = c + 1;
+                  reworkOwner = c + 2;
+                }
+              }
+            }
+
+            // Fallbacks if not found by top header, try to use relative to first 'SITE DUID'
+            if (smartQcSite === -1) {
+              smartQcSite = colBIndex; smartQcAging = colBIndex + 1;
+              patSite = colBIndex + 4; patAging = colBIndex + 5; patOwner = colBIndex + 6;
+              reworkSite = colBIndex + 8; reworkAging = colBIndex + 9; reworkOwner = colBIndex + 10;
+            }
+
+            const smartQcData = smartQcSite >= 0 ? parseSlaColumn(smartQcSite, smartQcAging) : [];
+            const patSubconData = patSite >= 0 ? parseSlaColumn(patSite, patAging, patOwner) : [];
+            const reworkData = reworkSite >= 0 ? parseSlaColumn(reworkSite, reworkAging, reworkOwner) : [];
 
             console.log('SLA Parsed Data Counts:', {
               smartQc: smartQcData.length,
@@ -1692,21 +1727,29 @@
             const vAct26 = getVal('actual acceptance wk26');
             const vActJune = getVal('actual acceptance june');
 
+            const getValByTitleRegex = (metricRegex, titleKw) => {
+              const row = p4.find(r =>
+                metricRegex.test(String(r['Metric']).toLowerCase()) &&
+                String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
+              );
+              return row ? row[V] : null;
+            };
+
             // AC#1 plan by year — Metric = 'Action Plan AC#1 WK27', year in Slide Title
-            const vAc123 = getValByTitle('action plan ac#1', '2023');
-            const vAc124 = getValByTitle('action plan ac#1', '2024');
-            const vAc125 = getValByTitle('action plan ac#1', '2025');
-            const vAc126 = getValByTitle('action plan ac#1', '2026');
+            const vAc123 = getValByTitleRegex(/action plan ac#?1/, '2023');
+            const vAc124 = getValByTitleRegex(/action plan ac#?1/, '2024');
+            const vAc125 = getValByTitleRegex(/action plan ac#?1/, '2025');
+            const vAc126 = getValByTitleRegex(/action plan ac#?1/, '2026');
 
             // AC#2 plan by year — Metric = 'Action Plan AC#2 WK27', year in Slide Title
-            const vAc223 = getValByTitle('action plan ac#2', '2023');
-            const vAc224 = getValByTitle('action plan ac#2', '2024');
-            const vAc225 = getValByTitle('action plan ac#2', '2025');
-            const vAc226 = getValByTitle('action plan ac#2', '2026');
+            const vAc223 = getValByTitleRegex(/action plan ac#?2/, '2023');
+            const vAc224 = getValByTitleRegex(/action plan ac#?2/, '2024');
+            const vAc225 = getValByTitleRegex(/action plan ac#?2/, '2025');
+            const vAc226 = getValByTitleRegex(/action plan ac#?2/, '2026');
 
             // Totals for AC#1 and AC#2 plans
-            const vAc1Total = getValByTitle('action plan ac#1', 'total');
-            const vAc2Total = getValByTitle('action plan ac#2', 'total');
+            const vAc1Total = getValByTitleRegex(/action plan ac#?1/, 'total');
+            const vAc2Total = getValByTitleRegex(/action plan ac#?2/, 'total');
 
             // On-Process per project — Metric contains project name
             const vOnMBB = getVal('tme-mbb') || getVal('on-process (2026) tme-mbb');
