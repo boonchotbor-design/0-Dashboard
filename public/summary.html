@@ -1607,18 +1607,20 @@
               const result = [];
               for (let i = startRow; i < p7Rows.length; i++) {
                 const row = p7Rows[i];
-                if (!row) break;
+                if (!row) continue;
                 const site = String(row[siteCol] || '').trim();
-                if (!site) break;
+                if (!site) continue;  // skip blank rows, don't break (other cols may still have data)
                 
-                if (site.toLowerCase().includes('all sites are up to date') || site.includes('up to date')) {
+                if (site.toLowerCase().includes('all sites are up to date') || site.toLowerCase().includes('up to date')) {
                   result.push({ site: site, upToDate: true });
                   break;
                 }
                 
                 let aging = String(row[agingCol] || '').trim();
-                if (aging && !aging.toLowerCase().includes('d') && !aging.includes('วัน')) aging += 'd';
-                else aging = aging.replace(' วัน', 'd').replace('วัน', 'd');
+                // Normalize aging: "3 วัน" -> "3d", plain number -> "3d"
+                aging = aging.replace(/\s*วัน\s*/g, 'd');
+                if (aging && !isNaN(aging)) aging = aging + 'd';
+                if (!aging) aging = '-';
                 
                 const owner = ownerCol !== undefined ? String(row[ownerCol] || '').trim() : '';
                 result.push({ site, aging, owner });
@@ -1627,8 +1629,8 @@
             };
 
             const smartQcData = parseSlaColumn(colBIndex, colBIndex + 1);
-            const patSubconData = parseSlaColumn(colBIndex + 3, colBIndex + 4, colBIndex + 5);
-            const reworkData = parseSlaColumn(colBIndex + 7, colBIndex + 8, colBIndex + 9);
+            const patSubconData = parseSlaColumn(colBIndex + 4, colBIndex + 5, colBIndex + 6);
+            const reworkData = parseSlaColumn(colBIndex + 8, colBIndex + 9, colBIndex + 10);
 
             console.log('SLA Parsed Data Counts:', {
               smartQc: smartQcData.length,
