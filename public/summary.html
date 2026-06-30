@@ -1569,13 +1569,18 @@
             importedSheets.push('Part 7');
             const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
             
-            // Find the header row (containing Site DUID in column B/index 1)
+            // Find the header row and the column index of the first Site DUID (Column B) dynamically
             let startRow = 28;
+            let colBIndex = 1;
             for (let i = 0; i < p7Rows.length; i++) {
               const row = p7Rows[i];
-              if (row && String(row[1] || '').toUpperCase().includes('SITE DUID')) {
-                startRow = i + 1;
-                break;
+              if (row) {
+                const idx = row.findIndex(cell => String(cell || '').toUpperCase().includes('SITE DUID'));
+                if (idx >= 0) {
+                  colBIndex = idx;
+                  startRow = i + 1;
+                  break;
+                }
               }
             }
 
@@ -1602,9 +1607,9 @@
               return result;
             };
 
-            const smartQcData = parseSlaColumn(1, 2);
-            const patSubconData = parseSlaColumn(4, 5, 6);
-            const reworkData = parseSlaColumn(8, 9, 10);
+            const smartQcData = parseSlaColumn(colBIndex, colBIndex + 1);
+            const patSubconData = parseSlaColumn(colBIndex + 3, colBIndex + 4, colBIndex + 5);
+            const reworkData = parseSlaColumn(colBIndex + 7, colBIndex + 8, colBIndex + 9);
 
             const renderTable = (tbodyId, data, hasOwner) => {
               const tbody = document.getElementById(tbodyId);
