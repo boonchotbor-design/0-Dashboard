@@ -672,7 +672,7 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="week-badge" id="weekBadge">WEEK 26 · 2026</span>
+        <span class="week-badge" id="weekBadge" contenteditable="true" spellcheck="false" title="Click to edit">WEEK 26 · 2026</span>
         <span class="live-dot">LIVE</span>
         <div class="toolbar">
           <input type="file" id="file-input" accept=".xlsx,.xls" />
@@ -1058,25 +1058,54 @@
               <th>M1 Avg</th>
               <th>M2 Avg</th>
               <th>HAE MBB</th>
-              <th>TME IPTAN</th>
+              <th>TME IPRAN</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao</td>
-              <td><span class="badge badge-blue">142</span></td>
-              <td><span class="badge badge-green" id="peAdisakM1">3.64d</span></td>
-              <td><span class="badge badge-amber">13.75d</span></td>
-              <td>66</td>
-              <td>75</td>
+              <td><span class="badge badge-blue" id="peAdisakSites">142</span></td>
+              <td><span class="badge badge-green" id="peAdisakM1">1.82d</span></td>
+              <td><span class="badge badge-amber" id="peAdisakM2">13.75d</span></td>
+              <td id="peAdisakHae">66</td>
+              <td id="peAdisakTme">75</td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Palagon Prommueangma</td>
-              <td><span class="badge badge-blue">11</span></td>
-              <td><span class="badge badge-green" id="pePalagonM1">2.50d</span></td>
-              <td><span class="badge badge-green">5.56d</span></td>
-              <td>11</td>
-              <td>0</td>
+              <td><span class="badge badge-blue" id="pePalagonSites">11</span></td>
+              <td><span class="badge badge-green" id="pePalagonM1">1.92d</span></td>
+              <td><span class="badge badge-green" id="pePalagonM2">5.56d</span></td>
+              <td id="pePalagonHae">11</td>
+              <td id="pePalagonTme">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card: Overall Team Install -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">🛠️</span>
+          Overall Team Install
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Amount (THB)</th>
+              <th>Avg Aging</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">WK25</td>
+              <td id="docInstallAmtWK25">145,743 ฿</td>
+              <td><span class="badge badge-amber" id="docInstallAgeWK25">7d</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">WK26</td>
+              <td id="docInstallAmtWK26">117,805 ฿</td>
+              <td><span class="badge badge-green" id="docInstallAgeWK26">5d</span></td>
             </tr>
           </tbody>
         </table>
@@ -1378,6 +1407,21 @@
               const el = document.getElementById('docApichartAC1');
               if (el) el.textContent = fmtDays(apichart['Avg Aging']);
             }
+            // Overall Team Install
+            const inst25 = p3.find(r => String(r['Owner / Type']).includes('WK25'));
+            const inst26 = p3.find(r => String(r['Owner / Type']).includes('WK26'));
+            if (inst25) {
+              const amtEl = document.getElementById('docInstallAmtWK25');
+              if (amtEl) amtEl.textContent = inst25['Amount (THB)'] ? fmtBaht(inst25['Amount (THB)']) : '-';
+              const ageEl = document.getElementById('docInstallAgeWK25');
+              if (ageEl) ageEl.textContent = fmtDays(inst25['Avg Aging']);
+            }
+            if (inst26) {
+              const amtEl = document.getElementById('docInstallAmtWK26');
+              if (amtEl) amtEl.textContent = inst26['Amount (THB)'] ? fmtBaht(inst26['Amount (THB)']) : '-';
+              const ageEl = document.getElementById('docInstallAgeWK26');
+              if (ageEl) ageEl.textContent = fmtDays(inst26['Avg Aging']);
+            }
           }
 
           /* ─── Part 4 - Financials ─── */
@@ -1485,7 +1529,7 @@
             const vRemUnfulfillTotal = unfulfillRows.length > 0 ? unfulfillRows.reduce((a, r) => a + (Number(r[V]) || 0), 0) : null;
 
             // Slide 27 – Summary of REMAIN
-            const vRem3PillarsTotal = getVal('remain / total') || getVal('remain/total');
+            const vRem3PillarsTotal = getVal('summary of remain') || getVal('summary of remain (3 pillars)') || getVal('remain / total');
 
             setEl('remAC1done2023', vRemAC1done23); setEl('remAC1done2024', vRemAC1done24);
             setEl('remAC1done2025', vRemAC1done25); setEl('remAC1done2026', vRemAC1done26);
@@ -1575,6 +1619,38 @@
                 }
               }
 
+              // Update PE dynamically if PE column exists
+              const peIdx = headers.findIndex(h => String(h).toUpperCase() === 'PE' || String(h).toUpperCase().includes('PIC') || String(h).toUpperCase().includes('OWNER'));
+              if (peIdx >= 0) {
+                let adisakHae = 0, adisakTme = 0, adisakTmeMbb = 0, palagonHae = 0, palagonTme = 0, palagonTmeMbb = 0;
+                for (let i = 3; i < allRows.length; i++) {
+                  const row = allRows[i];
+                  if (!row || !row[projIdx]) continue;
+                  const pe = String(row[peIdx] || '').toUpperCase();
+                  const proj = String(row[projIdx]).toUpperCase();
+                  if (pe.includes('ADISAK')) {
+                    if (proj.includes('HAE')) adisakHae++;
+                    if (proj.includes('TME')) {
+                      adisakTme++;
+                      if (proj.includes('MBB')) adisakTmeMbb++;
+                    }
+                  } else if (pe.includes('PALAGON') || pe.includes('PHALAGON')) {
+                    if (proj.includes('HAE')) palagonHae++;
+                    if (proj.includes('TME')) {
+                      palagonTme++;
+                      if (proj.includes('MBB')) palagonTmeMbb++;
+                    }
+                  }
+                }
+                const setBadge = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+                setBadge('peAdisakSites', adisakHae + adisakTme);
+                setBadge('peAdisakHae', adisakHae);
+                setBadge('peAdisakTme', adisakTme); // You can use adisakTmeMbb if needed
+                setBadge('pePalagonSites', palagonHae + palagonTme);
+                setBadge('pePalagonHae', palagonHae);
+                setBadge('pePalagonTme', palagonTme);
+              }
+
               // Update UI elements
               document.getElementById('kpiTotalSites').textContent = totalSites;
               document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
@@ -1639,6 +1715,7 @@
 
           /* ─── Save to LocalStorage ─── */
           const VALUE_IDS = [
+            'weekBadge',
             'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
             'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
             'kpiHaeAging', 'kpiHaeAgingSub',
@@ -1653,7 +1730,9 @@
             'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
             'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
             'rem3pillarsAC1', 'rem3pillarsUnfulfill', 'rem3pillarsTotal',
-            'peAdisakM1', 'pePalagonM1',
+            'peAdisakSites', 'peAdisakM1', 'peAdisakM2', 'peAdisakHae', 'peAdisakTme',
+            'pePalagonSites', 'pePalagonM1', 'pePalagonM2', 'pePalagonHae', 'pePalagonTme',
+            'docInstallAmtWK25', 'docInstallAgeWK25', 'docInstallAmtWK26', 'docInstallAgeWK26',
             'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
             'ehsZeroAccident', 'ehsHighRisk',
             'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
@@ -1735,28 +1814,31 @@
       btn.disabled = true;
 
       try {
-        const VALUE_IDS = [
-          'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
-          'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
-          'kpiHaeAging', 'kpiHaeAgingSub',
-          'kpiQC', 'kpiQCSub',
-          'kpiActionPlan', 'kpiActionPlanSub',
-          'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
-          'finAC1Aging', 'finAC2Aging',
-          'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
-          'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
-          'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
-          'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
-          'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
-          'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
-          'rem3pillarsAC1', 'rem3pillarsUnfulfill', 'rem3pillarsTotal',
-          'peAdisakM1', 'pePalagonM1',
-          'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
-          'ehsZeroAccident', 'ehsHighRisk',
-          'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
-          'legendCompleted', 'legendOnProcess', 'legendRemaining',
-          'totalSitesText', 'projectBreakdownText'
-        ];
+          const VALUE_IDS = [
+            'weekBadge',
+            'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
+            'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
+            'kpiHaeAging', 'kpiHaeAgingSub',
+            'kpiQC', 'kpiQCSub',
+            'kpiActionPlan', 'kpiActionPlanSub',
+            'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
+            'finAC1Aging', 'finAC2Aging',
+            'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
+            'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
+            'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
+            'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
+            'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
+            'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
+            'rem3pillarsAC1', 'rem3pillarsUnfulfill', 'rem3pillarsTotal',
+            'peAdisakSites', 'peAdisakM1', 'peAdisakM2', 'peAdisakHae', 'peAdisakTme',
+            'pePalagonSites', 'pePalagonM1', 'pePalagonM2', 'pePalagonHae', 'pePalagonTme',
+            'docInstallAmtWK25', 'docInstallAgeWK25', 'docInstallAmtWK26', 'docInstallAgeWK26',
+            'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
+            'ehsZeroAccident', 'ehsHighRisk',
+            'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
+            'legendCompleted', 'legendOnProcess', 'legendRemaining',
+            'totalSitesText', 'projectBreakdownText'
+          ];
         const vals = {};
         VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
         const dashState = {
