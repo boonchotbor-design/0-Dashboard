@@ -866,18 +866,6 @@
             id="finAP">275,715 ฿</span></div>
         <div class="fin-row"><span class="fin-label">Remaining Backlog</span><span class="fin-val amber"
             id="finBacklog">2,410,583 ฿</span></div>
-        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
-          <span class="fin-label" style="color:#93c5fd;font-weight:600">June AC2 Target</span>
-          <span class="fin-val" style="color:#93c5fd" id="finAC2Target">192,566 ฿</span>
-        </div>
-        <div class="fin-row">
-          <span class="fin-label" style="color:#6ee7b7;font-weight:600">June Action Plan</span>
-          <span class="fin-val green" id="finActionPlan">242,060 ฿</span>
-        </div>
-        <div class="fin-row">
-          <span class="fin-label">Install On Process</span>
-          <span class="fin-val" style="color:#c4b5fd" id="finOnProcess">737,770 ฿</span>
-        </div>
       </div>
 
       <!-- Document Status -->
@@ -1749,12 +1737,10 @@
             }
             if (actPlan) {
               document.getElementById('kpiActionPlan').innerHTML = (actPlan / 1000).toFixed(0) + 'K<span class="unit">฿</span>';
-              document.getElementById('finActionPlan').textContent = fmtBaht(actPlan);
             }
             if (onProc) {
               document.getElementById('kpiActionPlanSub').textContent =
                 `On Process ${(onProc / 1000).toFixed(0)}K · Target ${ac2tgt ? (ac2tgt / 1000).toFixed(1) + 'K' : '-'}`;
-              document.getElementById('finOnProcess').textContent = fmtBaht(onProc);
             }
             if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
           }
