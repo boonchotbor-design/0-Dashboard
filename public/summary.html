@@ -622,6 +622,22 @@
       color: #fff;
     }
 
+    .tb-btn-save {
+      background: linear-gradient(135deg, #065f46, #10b981);
+      color: #fff;
+      display: none;
+    }
+
+    .tb-btn-save.show {
+      display: inline-flex;
+      animation: fadeInBtn .3s ease;
+    }
+
+    @keyframes fadeInBtn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     #file-input {
       display: none;
     }
@@ -664,6 +680,7 @@
             Excel</button>
           <button class="tb-btn tb-btn-pdf" onclick="exportPDF()">📄 Export PDF</button>
           <button class="tb-btn tb-btn-ppt" onclick="exportPPT()">📊 Export PPT</button>
+          <button class="tb-btn tb-btn-save" id="btnSave" onclick="saveDashboard()">💾 Save</button>
           <span class="import-status" id="importStatus">✓ Imported</span>
         </div>
       </div>
@@ -1565,11 +1582,12 @@
           };
           localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
 
-          /* ─── Show status ─── */
+          /* ─── Show Save button & status ─── */
+          document.getElementById('btnSave').classList.add('show');
           const st = document.getElementById('importStatus');
           st.style.display = 'inline-block';
-          st.textContent = `✓ Imported: ${importedSheets.join(', ')}`;
-          setTimeout(() => { st.style.display = 'none'; }, 6000);
+          st.textContent = `✓ Imported: ${importedSheets.join(', ')} — กด Save เพื่อบันทึก`;
+          setTimeout(() => { st.style.display = 'none'; }, 8000);
 
         } catch (err) {
           alert('Import error: ' + err.message + '\n' + err.stack);
@@ -1613,8 +1631,65 @@
             }
           }
         } catch (e) { console.error('Error restoring state:', e); }
+        // Show Save button since we have previously imported data
+        document.getElementById('btnSave').classList.add('show');
       }
     });
+
+    /* ═══════════════════════════════════════════════
+       SAVE DASHBOARD STATE
+    ═══════════════════════════════════════════════ */
+    function saveDashboard() {
+      const btn = document.getElementById('btnSave');
+      btn.textContent = '⏳ Saving…';
+      btn.disabled = true;
+
+      try {
+        const VALUE_IDS = [
+          'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
+          'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
+          'kpiHaeAging', 'kpiHaeAgingSub',
+          'kpiQC', 'kpiQCSub',
+          'kpiActionPlan', 'kpiActionPlanSub',
+          'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
+          'finAC1Aging', 'finAC2Aging',
+          'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
+          'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
+          'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
+          'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
+          'peAdisakM1', 'pePalagonM1',
+          'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
+          'ehsZeroAccident', 'ehsHighRisk',
+          'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
+          'legendCompleted', 'legendOnProcess', 'legendRemaining',
+          'totalSitesText', 'projectBreakdownText'
+        ];
+        const vals = {};
+        VALUE_IDS.forEach(id => { const el = document.getElementById(id); if (el) vals[id] = el.textContent; });
+        const dashState = {
+          vals,
+          savedAt: new Date().toISOString(),
+          charts: {
+            backlog: window.backlogChart ? [...window.backlogChart.data.datasets[0].data] : [],
+            donut: window.siteDonut ? [...window.siteDonut.data.datasets[0].data] : [],
+            doc: window.docChart ? [[...window.docChart.data.datasets[0].data], [...window.docChart.data.datasets[1].data]] : []
+          }
+        };
+        localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
+
+        // Show success
+        const st = document.getElementById('importStatus');
+        st.style.display = 'inline-block';
+        st.textContent = '✅ Saved successfully!';
+        st.style.color = '#6ee7b7';
+        setTimeout(() => { st.style.display = 'none'; st.style.color = ''; }, 4000);
+
+      } catch (err) {
+        alert('Save error: ' + err.message);
+      }
+      btn.textContent = '💾 Save';
+      btn.disabled = false;
+    }
 
     /* ═══════════════════════════════════════════════
        EXPORT PDF
