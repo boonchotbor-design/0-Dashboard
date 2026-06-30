@@ -1663,14 +1663,16 @@
 
             renderTable('slaSmartQcBody', smartQcData, false);
             renderTable('slaPatSubconBody', patSubconData, true);
+            console.log('[DEBUG] reworkData before renderTable:', JSON.stringify(reworkData));
             renderTable('slaReworkBody', reworkData, true);
+            console.log('[DEBUG] slaReworkBody innerHTML after render:', document.getElementById('slaReworkBody') ? document.getElementById('slaReworkBody').innerHTML.substring(0, 100) : 'NOT FOUND');
           }
 
           if (importedSheets.length > 0) {
-            // Update charts
-            window.backlogChart.update();
-            window.siteDonut.update();
-            window.docChart.update();
+            // Update charts (wrapped in try-catch to prevent blocking)
+            try { window.backlogChart.update(); } catch(e) { console.warn('backlogChart update failed:', e.message); }
+            try { window.siteDonut.update(); } catch(e) { console.warn('siteDonut update failed:', e.message); }
+            try { window.docChart.update(); } catch(e) { console.warn('docChart update failed:', e.message); }
 
             document.getElementById('importStatus').style.display = 'inline-block';
             setTimeout(() => document.getElementById('importStatus').style.display = 'none', 3000);
