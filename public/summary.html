@@ -1581,54 +1581,42 @@
             importedSheets.push('Part 7');
             const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
             
-            const parseSlaTable = (titleKeyword) => {
+            // Find the header row (containing Site DUID in column B/index 1)
+            let startRow = 28;
+            for (let i = 0; i < p7Rows.length; i++) {
+              const row = p7Rows[i];
+              if (row && String(row[1] || '').toUpperCase().includes('SITE DUID')) {
+                startRow = i + 1;
+                break;
+              }
+            }
+
+            const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
               const result = [];
-              let startIdx = -1;
-              let colSite = -1, colAging = -1, colOwner = -1;
-              for (let i = 0; i < p7Rows.length; i++) {
+              for (let i = startRow; i < p7Rows.length; i++) {
                 const row = p7Rows[i];
-                if (startIdx === -1) {
-                  for (let j = 0; j < row.length; j++) {
-                    if (String(row[j]).toUpperCase().includes(titleKeyword)) {
-                      startIdx = i;
-                      break;
-                    }
-                  }
+                if (!row) break;
+                const site = String(row[siteCol] || '').trim();
+                if (!site) break;
+                
+                if (site.toLowerCase().includes('all sites are up to date') || site.includes('up to date')) {
+                  result.push({ site: site, upToDate: true });
+                  break;
                 }
-                if (startIdx !== -1 && i >= startIdx) {
-                  if (colSite === -1) {
-                    for (let j = 0; j < row.length; j++) {
-                      const v = String(row[j]).toUpperCase();
-                      if (v.includes('SITE DUID') || v.includes('SITE')) colSite = j;
-                      else if (v.includes('AGING')) colAging = j;
-                      else if (v.includes('ASSIGN') || v.includes('OWNER')) colOwner = j;
-                    }
-                    if (colSite !== -1) continue;
-                  } else {
-                    const site = String(row[colSite] || '').trim();
-                    if (!site) {
-                      if (result.length > 0) break;
-                      continue;
-                    }
-                    if (site.toLowerCase().includes('all sites are up to date')) {
-                       result.push({ site: site, upToDate: true });
-                       break;
-                    }
-                    let aging = String(row[colAging] || '').trim();
-                    if (aging && !aging.toLowerCase().includes('d') && !aging.includes('วัน')) aging += 'd';
-                    else aging = aging.replace(' วัน', 'd').replace('วัน', 'd');
-                    
-                    const owner = colOwner !== -1 ? String(row[colOwner] || '').trim() : '';
-                    result.push({ site, aging, owner });
-                  }
-                }
+                
+                let aging = String(row[agingCol] || '').trim();
+                if (aging && !aging.toLowerCase().includes('d') && !aging.includes('วัน')) aging += 'd';
+                else aging = aging.replace(' วัน', 'd').replace('วัน', 'd');
+                
+                const owner = ownerCol !== undefined ? String(row[ownerCol] || '').trim() : '';
+                result.push({ site, aging, owner });
               }
               return result;
             };
 
-            const smartQcData = parseSlaTable('SMART QC');
-            const patSubconData = parseSlaTable('PAT SUBCON');
-            const reworkData = parseSlaTable('PAT NOT PASS');
+            const smartQcData = parseSlaColumn(1, 2);
+            const patSubconData = parseSlaColumn(4, 5, 6);
+            const reworkData = parseSlaColumn(8, 9, 10);
 
             const renderTable = (tbodyId, data, hasOwner) => {
               const tbody = document.getElementById(tbodyId);
