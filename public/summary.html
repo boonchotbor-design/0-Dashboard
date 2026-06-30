@@ -1736,20 +1736,53 @@
             };
 
             // AC#1 plan by year — Metric = 'Action Plan AC#1 WK27', year in Slide Title
-            const vAc123 = getValByTitleRegex(/action plan ac#?1/, '2023');
-            const vAc124 = getValByTitleRegex(/action plan ac#?1/, '2024');
-            const vAc125 = getValByTitleRegex(/action plan ac#?1/, '2025');
-            const vAc126 = getValByTitleRegex(/action plan ac#?1/, '2026');
+            let vAc123 = getValByTitleRegex(/action plan ac#?1/, '2023');
+            let vAc124 = getValByTitleRegex(/action plan ac#?1/, '2024');
+            let vAc125 = getValByTitleRegex(/action plan ac#?1/, '2025');
+            let vAc126 = getValByTitleRegex(/action plan ac#?1/, '2026');
 
             // AC#2 plan by year — Metric = 'Action Plan AC#2 WK27', year in Slide Title
-            const vAc223 = getValByTitleRegex(/action plan ac#?2/, '2023');
-            const vAc224 = getValByTitleRegex(/action plan ac#?2/, '2024');
-            const vAc225 = getValByTitleRegex(/action plan ac#?2/, '2025');
-            const vAc226 = getValByTitleRegex(/action plan ac#?2/, '2026');
+            let vAc223 = getValByTitleRegex(/action plan ac#?2/, '2023');
+            let vAc224 = getValByTitleRegex(/action plan ac#?2/, '2024');
+            let vAc225 = getValByTitleRegex(/action plan ac#?2/, '2025');
+            let vAc226 = getValByTitleRegex(/action plan ac#?2/, '2026');
 
             // Totals for AC#1 and AC#2 plans
-            const vAc1Total = getValByTitleRegex(/action plan ac#?1/, 'total');
-            const vAc2Total = getValByTitleRegex(/action plan ac#?2/, 'total');
+            let vAc1Total = getValByTitleRegex(/action plan ac#?1/, 'total');
+            let vAc2Total = getValByTitleRegex(/action plan ac#?2/, 'total');
+
+            // Fallback to reading from Sheet1 pivot table if data is missing in Part 4
+            const sheet1 = wb.Sheets['Sheet1'];
+            if (sheet1) {
+              const s1Rows = XLSX.utils.sheet_to_json(sheet1, { header: 1, defval: '' });
+              let currentSection = null;
+              s1Rows.forEach(row => {
+                let label = String(row[15] || '').toUpperCase();
+                let val = row[16] || 0;
+                
+                if (label.includes('AC#1') || label.includes('AC1')) {
+                  currentSection = 'AC1';
+                  if (!vAc1Total) vAc1Total = val;
+                }
+                else if (label.includes('AC#2') || label.includes('AC2')) {
+                  currentSection = 'AC2';
+                  if (!vAc2Total) vAc2Total = val;
+                }
+                else if (label.includes('202') && currentSection) {
+                  if (currentSection === 'AC1') {
+                    if (label.includes('2023') && !vAc123) vAc123 = val;
+                    if (label.includes('2024') && !vAc124) vAc124 = val;
+                    if (label.includes('2025') && !vAc125) vAc125 = val;
+                    if (label.includes('2026') && !vAc126) vAc126 = val;
+                  } else if (currentSection === 'AC2') {
+                    if (label.includes('2023') && !vAc223) vAc223 = val;
+                    if (label.includes('2024') && !vAc224) vAc224 = val;
+                    if (label.includes('2025') && !vAc225) vAc225 = val;
+                    if (label.includes('2026') && !vAc226) vAc226 = val;
+                  }
+                }
+              });
+            }
 
             // On-Process per project — Metric contains project name
             const vOnMBB = getVal('tme-mbb') || getVal('on-process (2026) tme-mbb');
