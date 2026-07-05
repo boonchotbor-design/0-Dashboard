@@ -2042,7 +2042,7 @@
           }
 
           /* ─── Sheet1 Fallback: AC#1 / AC#2 Plan data from pivot table ─── */
-          if (!p4.length || !document.getElementById('dtlAC12023').textContent.replace(/-/g,'').trim()) {
+          if (!p4.length || !(document.getElementById('dtlAC1Total')?.textContent || '').replace(/-/g,'').trim()) {
             const s1sheet = wb.Sheets['Sheet1'];
             if (s1sheet) {
               const s1Rows = XLSX.utils.sheet_to_json(s1sheet, { header: 1, defval: '' });
