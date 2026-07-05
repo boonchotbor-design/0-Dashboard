@@ -1738,7 +1738,7 @@
                 !String(r['Metric']).toLowerCase().includes('total')
               );
               if (rows.length > 0) {
-                actPlan = rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
+                actPlan = rows.reduce((acc, r) => acc + (Number(getV(r)) || 0), 0);
               }
             }
             if (actPlan === null) actPlan = getSum('action plan');
@@ -2005,7 +2005,7 @@
             const vRemAC1done25 = getValByTitle('ac1 done remain', '2025');
             const vRemAC1done26 = getValByTitle('ac1 done remain', '2026');
             const ac1doneRows = p4.filter(r => String(r['Metric']).toLowerCase().includes('ac1 done remain'));
-            const vRemAC1doneTotal = ac1doneRows.length > 0 ? ac1doneRows.reduce((a, r) => a + (Number(r[V]) || 0), 0) : null;
+            const vRemAC1doneTotal = ac1doneRows.length > 0 ? ac1doneRows.reduce((a, r) => a + (Number(getV(r)) || 0), 0) : null;
 
             // Slide 27 – UNFULFILL REMAIN
             const vRemUnfulfill23 = getValByTitleRegex(/unfulfill remain/i, '2023') || getValByTitle('unfulfill remain', '2023');
@@ -2013,7 +2013,7 @@
             const vRemUnfulfill25 = getValByTitleRegex(/unfulfill remain/i, '2025') || getValByTitle('unfulfill remain', '2025');
             const vRemUnfulfill26 = getValByTitleRegex(/unfulfill remain/i, '2026') || getValByTitle('unfulfill remain', '2026');
             const unfulfillRows = p4.filter(r => String(r['Metric']).toLowerCase().includes('unfulfill remain'));
-            const vRemUnfulfillTotal = unfulfillRows.length > 0 ? unfulfillRows.reduce((a, r) => a + (Number(r[V]) || 0), 0) : null;
+            const vRemUnfulfillTotal = unfulfillRows.length > 0 ? unfulfillRows.reduce((a, r) => a + (Number(getV(r)) || 0), 0) : null;
 
             // Slide 27 – Summary of REMAIN
             let vRem3PillarsTotal = getVal('summary of remain') || getVal('summary of remain (3 pillars)') || getVal('remain / total');
