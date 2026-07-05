@@ -964,17 +964,14 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">💰</span>
           Actual Acceptance
         </div>
-        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">120,451 ฿</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">125,040 ฿</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">175,890 ฿</span>
-        </div>
+        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK27</span><span class="fin-val green" id="dtlActWK27">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(16,185,129,.3)">
           <span class="fin-label" style="font-weight:600;color:#6ee7b7">JUNE Total</span>
-          <span class="fin-val green" style="font-weight:700" id="dtlActJUNE">421,381 ฿</span>
+          <span class="fin-val green" style="font-weight:700" id="dtlActJUNE">-</span>
         </div>
       </div>
 
@@ -988,43 +985,27 @@
         <div class="fin-row"><span class="fin-label">TRUE-TUC (JAN-JUNE)</span><span class="fin-val green" id="dtlActTrueTuc">-</span></div>
       </div>
 
-      <!-- Card 2: AC1 Plan -->
+      <!-- Card 2: AC1 Plan WK27 (single total) -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
           AC#1 Plan WK27
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber" id="dtlAC12023">10,370 ฿</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber" id="dtlAC12024">-</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber" id="dtlAC12025">13,165 ฿</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber" id="dtlAC12026">41,220 ฿</span>
-        </div>
-        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
-          <span class="fin-val amber" style="font-weight:700" id="dtlAC1Total">64,754 ฿</span>
+          <span class="fin-val amber" style="font-weight:700" id="dtlAC1Total">-</span>
         </div>
       </div>
 
-      <!-- Card 3: AC2 Plan -->
+      <!-- Card 3: AC2 Plan WK27 (single total) -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
           AC#2 Plan WK27
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22023">43,613 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22024">12,892 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22025">43,148 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22026">115,382 ฿</span></div>
-        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;">
           <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
-          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2Total">215,035 ฿</span>
+          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2Total">-</span>
         </div>
       </div>
 
@@ -1972,15 +1953,19 @@
             const vOnTRE = getVal('tre-dismantle') || getVal('on-process (2026) tre-dismantle');
 
             const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
+            const vActWK27 = getVal('actual acceptance wk27');
             setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
-            setEl('dtlActWK26', vAct26); setEl('dtlActJUNE', vActJune);
+            setEl('dtlActWK26', vAct26); setEl('dtlActWK27', vActWK27); setEl('dtlActJUNE', vActJune);
             
             const vActHuawei = getValByTitleRegex(/actual acceptance total/i, 'huawei');
             const vActTrue = getValByTitleRegex(/actual acceptance total/i, 'true-tuc');
             setEl('dtlActHuawei', vActHuawei); setEl('dtlActTrueTuc', vActTrue);
             
-            setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126); setEl('dtlAC1Total', vAc1Total);
-            setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226); setEl('dtlAC2Total', vAc2Total);
+            // WK27 cards now show only total (single row in Excel)
+            const vAc1WK27Total = getVal('action plan ac#1 wk27');
+            const vAc2WK27Total = getVal('action plan ac#2 wk27');
+            setEl('dtlAC1Total', vAc1WK27Total || vAc1Total);
+            setEl('dtlAC2Total', vAc2WK27Total || vAc2Total);
             setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
             setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
             
