@@ -1701,16 +1701,16 @@
           const p4 = p4raw ? XLSX.utils.sheet_to_json(p4raw, { defval: '' }) : [];
           if (p4.length) {
             importedSheets.push('Part 4');
-            const V = 'Value (THB)';
+            const getV = (row) => { const k = Object.keys(row).find(key => key.trim() === 'Value (THB)' || key.trim() === 'Amount (THB)' || key.trim() === 'Value'); return k ? row[k] : null; };
             const getVal = (kw) => {
               const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
-              return row ? row[V] : null;
+              return row ? getV(row) : null;
             };
 
             const getSum = (kw) => {
               const rows = p4.filter(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
               if (rows.length === 0) return null;
-              return rows.reduce((acc, r) => acc + (Number(r[V]) || 0), 0);
+              return rows.reduce((acc, r) => acc + (Number(getV(r)) || 0), 0);
             };
 
             const income = getVal('estimate final income') || getVal('estimate income');
@@ -1719,14 +1719,14 @@
             // For backlog, we probably only want one match (e.g., Remaining Backlog)
             const backlog = getVal('remain to claim') || getVal('backlog');
             const ac2tgt = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))
-              ? p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))[V] : null;
+              ? getV(p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))) : null;
 
             const getValByTitle = (metricKw, titleKw) => {
               const row = p4.find(r =>
                 String(r['Metric']).toLowerCase().includes(metricKw.toLowerCase()) &&
                 String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
               );
-              return row ? row[V] : null;
+              return row ? getV(row) : null;
             };
 
             let actPlan = getValByTitle('action plan ac#2', 'total');
@@ -1912,20 +1912,20 @@
                 metricRegex.test(String(r['Metric']).toLowerCase()) &&
                 String(r['Slide Title'] || '').toLowerCase().includes(titleKw.toLowerCase())
               );
-              return row ? row[V] : null;
+              return row ? getV(row) : null;
             };
 
             // AC#1 plan by year — Metric = 'Action Plan AC#1 WK27', year in Slide Title
-            let vAc123 = getValByTitleRegex(/action plan ac#?1/, '2023');
-            let vAc124 = getValByTitleRegex(/action plan ac#?1/, '2024');
-            let vAc125 = getValByTitleRegex(/action plan ac#?1/, '2025');
-            let vAc126 = getValByTitleRegex(/action plan ac#?1/, '2026');
+            let vAc123 = getValByTitleRegex(/action plan ac#?1 wk27/i, '2023');
+            let vAc124 = getValByTitleRegex(/action plan ac#?1 wk27/i, '2024');
+            let vAc125 = getValByTitleRegex(/action plan ac#?1 wk27/i, '2025');
+            let vAc126 = getValByTitleRegex(/action plan ac#?1 wk27/i, '2026');
 
             // AC#2 plan by year — Metric = 'Action Plan AC#2 WK27', year in Slide Title
-            let vAc223 = getValByTitleRegex(/action plan ac#?2/, '2023');
-            let vAc224 = getValByTitleRegex(/action plan ac#?2/, '2024');
-            let vAc225 = getValByTitleRegex(/action plan ac#?2/, '2025');
-            let vAc226 = getValByTitleRegex(/action plan ac#?2/, '2026');
+            let vAc223 = getValByTitleRegex(/action plan ac#?2 wk27/i, '2023');
+            let vAc224 = getValByTitleRegex(/action plan ac#?2 wk27/i, '2024');
+            let vAc225 = getValByTitleRegex(/action plan ac#?2 wk27/i, '2025');
+            let vAc226 = getValByTitleRegex(/action plan ac#?2 wk27/i, '2026');
 
             // Totals for AC#1 and AC#2 plans
             let vAc1Total = getValByTitleRegex(/action plan ac#?1/, 'total');
@@ -2084,18 +2084,18 @@
                 if (el && (!el.textContent || el.textContent === '-')) el.textContent = fmtBaht(val);
               };
               if (ac1.total) {
-                setElIfEmpty('dtlAC12023', ac1['2023']);
-                setElIfEmpty('dtlAC12024', ac1['2024']);
-                setElIfEmpty('dtlAC12025', ac1['2025']);
-                setElIfEmpty('dtlAC12026', ac1['2026']);
-                setElIfEmpty('dtlAC1Total', ac1.total);
+                setElIfEmpty('dtlAC1WK28_2023', ac1['2023']);
+                setElIfEmpty('dtlAC1WK28_2024', ac1['2024']);
+                setElIfEmpty('dtlAC1WK28_2025', ac1['2025']);
+                setElIfEmpty('dtlAC1WK28_2026', ac1['2026']);
+                setElIfEmpty('dtlAC1WK28Total', ac1.total);
               }
               if (ac2.total) {
-                setElIfEmpty('dtlAC22023', ac2['2023']);
-                setElIfEmpty('dtlAC22024', ac2['2024']);
-                setElIfEmpty('dtlAC22025', ac2['2025']);
-                setElIfEmpty('dtlAC22026', ac2['2026']);
-                setElIfEmpty('dtlAC2Total', ac2.total);
+                setElIfEmpty('dtlAC2WK28_2023', ac2['2023']);
+                setElIfEmpty('dtlAC2WK28_2024', ac2['2024']);
+                setElIfEmpty('dtlAC2WK28_2025', ac2['2025']);
+                setElIfEmpty('dtlAC2WK28_2026', ac2['2026']);
+                setElIfEmpty('dtlAC2WK28Total', ac2.total);
               }
               console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
             }
