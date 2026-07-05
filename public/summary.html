@@ -740,6 +740,24 @@
 
     </div>
 
+    <!-- ── Executive Bottom Line (Part 1) ── -->
+    <div class="card" style="margin-bottom: 28px; border-left: 4px solid var(--accent-blue);">
+      <div class="card-title">
+        <span class="icon" style="--card-icon-bg:rgba(99,102,241,.15)">💡</span>
+        Executive Bottom Line
+      </div>
+      <div class="main-grid" style="margin-bottom: 0;">
+        <div class="prog-item">
+          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-blue); margin-bottom: 6px;">HAE M1 Avg: <span id="execHaeM1" style="font-weight: 800; font-size: 1.1rem; color: var(--text-primary);">1.55</span> <span style="font-size: 0.8rem; font-weight: 400; color: var(--text-secondary)">days</span></div>
+          <p id="execHaeM1Notes" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">หน้างานยังคงเดินหน้าอย่างรวดเร็ว แต่ระบบเอกสารยังมีปัญหาคอขวด</p>
+        </div>
+        <div class="prog-item">
+          <div style="font-size: .8rem; font-weight: 600; color: var(--accent-purple); margin-bottom: 6px;">TME M1 Avg: <span id="execTmeM1" style="font-weight: 800; font-size: 1.1rem; color: var(--text-primary);">1.66</span> <span style="font-size: 0.8rem; font-weight: 400; color: var(--text-secondary)">days</span></div>
+          <p id="execTmeM1Notes" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">ข้อมูลดิบอาจมีความคลาดเคลื่อนในระบบ</p>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Row 1: Backlog Trend + Site Donut ── -->
     <p class="section-title">📈 Financial &amp; Project Overview</p>
     <div class="main-grid" style="grid-template-columns:2fr 1fr">
@@ -751,6 +769,20 @@
         </div>
         <div class="chart-wrap" style="height:220px">
           <canvas id="backlogChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Backlog Week 26 VS Backlog Week 27 -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">⚖️</span>
+          Backlog Week 26 VS Week 27
+        </div>
+        <div class="fin-row"><span class="fin-label">Week 26</span><span class="fin-val amber" id="blWk26">-</span></div>
+        <div class="fin-row"><span class="fin-label">Week 27</span><span class="fin-val amber" id="blWk27">-</span></div>
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
+          <span class="fin-label" style="font-weight:600;color:#fcd34d">Difference</span>
+          <span class="fin-val" style="font-weight:700" id="blDiff">-</span>
         </div>
       </div>
 
@@ -780,6 +812,41 @@
 
     </div>
 
+    <!-- ── Additional Part 1 Overview Cards ── -->
+    <div class="main-grid col-3" style="margin-bottom: 28px;">
+      <!-- Smart QC Overview -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">✅</span>
+          Smart QC Overview
+        </div>
+        <div class="fin-row"><span class="fin-label">Inspected Sites</span><span class="fin-val green" id="qcInspected">-</span></div>
+        <div class="fin-row"><span class="fin-label">Pass Rate</span><span class="fin-val green" id="qcPassRate">-</span></div>
+      </div>
+
+      <!-- Operation Error & Defect Analysis -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(239,68,68,.15)">⚠️</span>
+          Operation Error &amp; Defect Analysis
+        </div>
+        <p id="qcDefectNotes" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">
+          No major defects reported.
+        </p>
+      </div>
+
+      <!-- Improvement Plan for On-Site Quality -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📈</span>
+          Improvement Plan for On-Site Quality
+        </div>
+        <p id="qcImprovementNotes" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">
+          Continuous monitoring implemented.
+        </p>
+      </div>
+    </div>
+
     <!-- ── Row 2: HAE/TME + Financials + Doc Status ── -->
     <div class="main-grid col-3">
 
@@ -787,7 +854,7 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">🏢</span>
-          Project × Type Work
+          Portfolio Performance Snapshot
         </div>
 
         <!-- Divider label -->
@@ -856,15 +923,15 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">💹</span>
-          Financial Summary
+          Financial Health Overview
         </div>
-        <div class="fin-row"><span class="fin-label">Estimated Final Income</span><span class="fin-val green"
+        <div class="fin-row"><span class="fin-label">Estimate Final Income</span><span class="fin-val green"
             id="finIncome">3,757,963 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">Accounts Receivable (AR)</span><span class="fin-val amber"
+        <div class="fin-row"><span class="fin-label">AR (Commerce)</span><span class="fin-val amber"
             id="finAR">1,071,666 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">Accounts Payable (AP)</span><span class="fin-val red"
+        <div class="fin-row"><span class="fin-label">AP (Payment)</span><span class="fin-val red"
             id="finAP">275,715 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">Remaining Backlog</span><span class="fin-val amber"
+        <div class="fin-row"><span class="fin-label">Unfulfilled Revenue (Remain)</span><span class="fin-val amber"
             id="finBacklog">2,410,583 ฿</span></div>
       </div>
 
@@ -911,6 +978,16 @@
         </div>
       </div>
 
+      <!-- Card 1b: Actual Acceptance TOTAL -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📈</span>
+          Actual Acceptance TOTAL
+        </div>
+        <div class="fin-row"><span class="fin-label">HUAWEI (JAN-JUNE)</span><span class="fin-val green" id="dtlActHuawei">-</span></div>
+        <div class="fin-row"><span class="fin-label">TRUE-TUC (JAN-JUNE)</span><span class="fin-val green" id="dtlActTrueTuc">-</span></div>
+      </div>
+
       <!-- Card 2: AC1 Plan -->
       <div class="card">
         <div class="card-title">
@@ -951,6 +1028,38 @@
         </div>
       </div>
 
+      <!-- Card 2b: AC1 Plan WK28 -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
+          Plan: Acceptance AC#1 Plan WK28
+        </div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber" id="dtlAC1WK28_2023">-</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber" id="dtlAC1WK28_2024">-</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber" id="dtlAC1WK28_2025">-</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber" id="dtlAC1WK28_2026">-</span></div>
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
+          <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
+          <span class="fin-val amber" style="font-weight:700" id="dtlAC1WK28Total">-</span>
+        </div>
+      </div>
+
+      <!-- Card 3b: AC2 Plan WK28 -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
+          Plan: Acceptance AC#2 Plan WK28
+        </div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2023">-</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2024">-</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2025">-</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2026">-</span></div>
+        <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
+          <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
+          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2WK28Total">-</span>
+        </div>
+      </div>
+
       <!-- Card 4: Install On-Process -->
       <div class="card">
         <div class="card-title">
@@ -969,6 +1078,31 @@
             id="dtlOnProcTRE">-</span></div>
       </div>
 
+    </div>
+
+    <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
+    <p class="section-title">📊 SO WEEK 27 VS WEEK 28</p>
+    <div class="card" style="margin-bottom:28px">
+      <div class="card-title">
+        <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">⚖️</span>
+        SO Comparison (Sheet1)
+      </div>
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>WK27 REVENUE</th>
+            <th>WK27 REMAIN</th>
+            <th>WK28 REVENUE</th>
+            <th>WK28 REMAIN</th>
+          </tr>
+        </thead>
+        <tbody id="soCompareBody">
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">No data imported</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- ── Slide 27: REMAIN Summary ── -->
@@ -1030,13 +1164,25 @@
     </div>
 
     <!-- ── Row 3: PE Aging + Doc Owners ── -->
-    <p class="section-title">👤 Team Performance</p>
+    <p class="section-title">👤 Team Performance &amp; Aging Analysis</p>
+
+    <!-- The Execution Paradox -->
+    <div class="card" style="margin-bottom: 20px; border-color: rgba(245,158,11,0.3); background: linear-gradient(180deg, rgba(245,158,11,0.05) 0%, rgba(22,29,46,1) 100%);">
+      <div class="card-title" style="margin-bottom: 8px;">
+        <span class="icon" style="--card-icon-bg:rgba(245,158,11,.2)">⚡</span>
+        The Execution Paradox
+      </div>
+      <p id="executionParadoxNotes" style="font-size: .85rem; color: #fcd34d; font-weight: 500; line-height: 1.5; margin-bottom: 0;">
+        หน้างานทำได้เร็ว แต่กระบวนการตรวจรับเอกสารล่าช้า
+      </p>
+    </div>
+
     <div class="main-grid">
 
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">⏱️</span>
-          PE Aging Summary
+          1st &amp; 2nd Milestone AGING Analysis
         </div>
         <table class="dash-table">
           <thead>
@@ -1102,7 +1248,7 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">📋</span>
-          Document Owners
+          DOC Owner
         </div>
         <table class="dash-table">
           <thead>
@@ -1216,33 +1362,35 @@
         </table>
       </div>
 
-      <!-- Card: Acceptance Raw Data -->
+      <!-- Acceptance AC#1 Performance -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📄</span>
-          Acceptance AC#1 &amp; AC#2 (Raw)
+          Acceptance AC#1 Performance
         </div>
-        <table class="dash-table">
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Amount (SUM)</th>
-              <th>Aging (AVG)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="color:var(--text-primary); font-weight:500;">AC#1</td>
-              <td id="rawAc1Amt">-</td>
-              <td><span class="badge badge-amber" id="rawAc1Aging">-</span></td>
-            </tr>
-            <tr>
-              <td style="color:var(--text-primary); font-weight:500;">AC#2</td>
-              <td id="rawAc2Amt">-</td>
-              <td><span class="badge badge-amber" id="rawAc2Aging">-</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc1Aging">-</span></div>
+      </div>
+
+      <!-- Acceptance AC#2 Performance -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📄</span>
+          Acceptance AC#2 Performance
+        </div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc2Aging">-</span></div>
+      </div>
+
+      <!-- Work Type Analysis -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">🧩</span>
+          Work Type Analysis
+        </div>
+        <p id="workTypeNotes" style="font-size: .78rem; color: var(--text-secondary); line-height: 1.4;">
+          Breakdown of work type by HAE, TME, MBB, IPRAN
+        </p>
       </div>
 
     </div>
@@ -1255,7 +1403,7 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">🛡️</span>
-          EHS Compliance &amp; Safety Status
+          EHS Compliance &amp; Safety
         </div>
         <div class="prog-item" style="margin-bottom: 20px;">
           <div style="font-size: .8rem; font-weight: 600; color: var(--accent-green); margin-bottom: 6px;">Zero Accident
@@ -1441,6 +1589,11 @@
             if (haeM1) {
               document.getElementById('kpiHaeAging').innerHTML = Number(haeM1).toFixed(2) + '<span class="unit">days</span>';
               document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1 ? Number(tmeM1).toFixed(2) : '-'} days`;
+              
+              const execHaeM1El = document.getElementById('execHaeM1');
+              if (execHaeM1El) execHaeM1El.textContent = Number(haeM1).toFixed(2);
+              const execTmeM1El = document.getElementById('execTmeM1');
+              if (execTmeM1El) execTmeM1El.textContent = tmeM1 ? Number(tmeM1).toFixed(2) : '-';
             }
           }
 
