@@ -1616,25 +1616,35 @@
           const p2 = getSheet('Part 2 - Aging');
           if (p2.length) {
             importedSheets.push('Part 2');
+            
+            // Find columns dynamically to avoid whitespace issues
+            const C = Object.keys(p2[0] || {}).find(k => k.trim() === 'Category / Person') || 'Category / Person';
+            const M1 = Object.keys(p2[0] || {}).find(k => k.trim() === 'M1 Aging') || 'M1 Aging';
+
             // HAE/TME M1 & M2 Aging
-            const haeM1row = p2.find(r => String(r['Category / Person']).includes('HAE M1'));
-            const tmeM1row = p2.find(r => String(r['Category / Person']).includes('TME M1'));
-            if (haeM1row && haeM1row['M1 Aging']) {
-              const hM1 = Number(haeM1row['M1 Aging']).toFixed(2);
-              const tM1 = tmeM1row ? Number(tmeM1row['M1 Aging']).toFixed(2) : '-';
+            const haeM1row = p2.find(r => String(r[C]).includes('HAE M1'));
+            const tmeM1row = p2.find(r => String(r[C]).includes('TME M1'));
+            if (haeM1row && haeM1row[M1]) {
+              const hM1 = Number(haeM1row[M1]).toFixed(2);
+              const tM1 = tmeM1row ? Number(tmeM1row[M1]).toFixed(2) : '-';
               document.getElementById('kpiHaeAging').innerHTML = hM1 + '<span class="unit">days</span>';
               document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tM1} days`;
+              
+              const execHae = document.getElementById('execHaeM1');
+              if (execHae) execHae.textContent = hM1;
+              const execTme = document.getElementById('execTmeM1');
+              if (execTme) execTme.textContent = tM1;
             }
             // PE Aging table rows (Adisak, Palagon)
-            const adisak = p2.find(r => String(r['Category / Person']).toLowerCase().includes('adisak'));
-            const palagon = p2.find(r => String(r['Category / Person']).toLowerCase().includes('palagon'));
+            const adisak = p2.find(r => String(r[C]).toLowerCase().includes('adisak'));
+            const palagon = p2.find(r => String(r[C]).toLowerCase().includes('palagon'));
             if (adisak) {
               const el = document.getElementById('peAdisakM1');
-              if (el) el.textContent = fmtDays(adisak['M1 Aging']);
+              if (el) el.textContent = fmtDays(adisak[M1]);
             }
             if (palagon) {
               const el = document.getElementById('pePalagonM1');
-              if (el) el.textContent = fmtDays(palagon['M1 Aging']);
+              if (el) el.textContent = fmtDays(palagon[M1]);
             }
           }
 
