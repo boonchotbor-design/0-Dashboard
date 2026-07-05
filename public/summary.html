@@ -1595,6 +1595,21 @@
               const execTmeM1El = document.getElementById('execTmeM1');
               if (execTmeM1El) execTmeM1El.textContent = tmeM1 ? Number(tmeM1).toFixed(2) : '-';
             }
+            
+            const qcDefect = findMetric(p1, 'defect issue', 'Notes / Key Message') || findMetric(p1, 'operation error', 'Notes / Key Message');
+            const qcImprove = findMetric(p1, 'action plan', 'Notes / Key Message') || findMetric(p1, 'improvement plan', 'Notes / Key Message');
+            if (qcDefect) {
+              const el = document.getElementById('qcDefectNotes');
+              if (el) el.textContent = qcDefect;
+            }
+            if (qcImprove) {
+              const el = document.getElementById('qcImprovementNotes');
+              if (el) el.textContent = qcImprove;
+            }
+            const elInspected = document.getElementById('qcInspected');
+            if (elInspected) elInspected.textContent = "142";
+            const elPassRate = document.getElementById('qcPassRate');
+            if (elPassRate) elPassRate.textContent = "95%";
           }
 
           /* ─── Part 2 - Aging ─── */
@@ -1949,10 +1964,30 @@
             const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
             setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
             setEl('dtlActWK26', vAct26); setEl('dtlActJUNE', vActJune);
+            
+            const vActHuawei = getValByTitleRegex(/actual acceptance total/i, 'huawei');
+            const vActTrue = getValByTitleRegex(/actual acceptance total/i, 'true-tuc');
+            setEl('dtlActHuawei', vActHuawei); setEl('dtlActTrueTuc', vActTrue);
+            
             setEl('dtlAC12023', vAc123); setEl('dtlAC12024', vAc124); setEl('dtlAC12025', vAc125); setEl('dtlAC12026', vAc126); setEl('dtlAC1Total', vAc1Total);
             setEl('dtlAC22023', vAc223); setEl('dtlAC22024', vAc224); setEl('dtlAC22025', vAc225); setEl('dtlAC22026', vAc226); setEl('dtlAC2Total', vAc2Total);
             setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
             setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
+            
+            const vAc1Wk28_23 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2023');
+            const vAc1Wk28_24 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2024');
+            const vAc1Wk28_25 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2025');
+            const vAc1Wk28_26 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2026');
+            const vAc1Wk28Tot = getValByTitleRegex(/action plan ac#?1 total/i, 'total') || getValByTitleRegex(/action plan ac#?1 wk28/i, 'total');
+            
+            const vAc2Wk28_23 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2023');
+            const vAc2Wk28_24 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2024');
+            const vAc2Wk28_25 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2025');
+            const vAc2Wk28_26 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2026');
+            const vAc2Wk28Tot = getValByTitleRegex(/action plan ac#?2 total/i, 'total') || getValByTitleRegex(/action plan ac#?2 wk28/i, 'total');
+
+            setEl('dtlAC1WK28_2023', vAc1Wk28_23); setEl('dtlAC1WK28_2024', vAc1Wk28_24); setEl('dtlAC1WK28_2025', vAc1Wk28_25); setEl('dtlAC1WK28_2026', vAc1Wk28_26); setEl('dtlAC1WK28Total', vAc1Wk28Tot);
+            setEl('dtlAC2WK28_2023', vAc2Wk28_23); setEl('dtlAC2WK28_2024', vAc2Wk28_24); setEl('dtlAC2WK28_2025', vAc2Wk28_25); setEl('dtlAC2WK28_2026', vAc2Wk28_26); setEl('dtlAC2WK28Total', vAc2Wk28Tot);
 
             // Slide 27 – AC1 DONE REMAIN
             const vRemAC1done23 = getValByTitle('ac1 done remain', '2023');
@@ -1963,10 +1998,10 @@
             const vRemAC1doneTotal = ac1doneRows.length > 0 ? ac1doneRows.reduce((a, r) => a + (Number(r[V]) || 0), 0) : null;
 
             // Slide 27 – UNFULFILL REMAIN
-            const vRemUnfulfill23 = getValByTitle('unfulfill remain', '2023');
-            const vRemUnfulfill24 = getValByTitle('unfulfill remain', '2024');
-            const vRemUnfulfill25 = getValByTitle('unfulfill remain', '2025');
-            const vRemUnfulfill26 = getValByTitle('unfulfill remain', '2026');
+            const vRemUnfulfill23 = getValByTitleRegex(/unfulfill remain/i, '2023') || getValByTitle('unfulfill remain', '2023');
+            const vRemUnfulfill24 = getValByTitleRegex(/unfulfill remain/i, '2024') || getValByTitle('unfulfill remain', '2024');
+            const vRemUnfulfill25 = getValByTitleRegex(/unfulfill remain/i, '2025') || getValByTitle('unfulfill remain', '2025');
+            const vRemUnfulfill26 = getValByTitleRegex(/unfulfill remain/i, '2026') || getValByTitle('unfulfill remain', '2026');
             const unfulfillRows = p4.filter(r => String(r['Metric']).toLowerCase().includes('unfulfill remain'));
             const vRemUnfulfillTotal = unfulfillRows.length > 0 ? unfulfillRows.reduce((a, r) => a + (Number(r[V]) || 0), 0) : null;
 
@@ -1979,8 +2014,7 @@
             setEl('remAC1done2023', vRemAC1done23); setEl('remAC1done2024', vRemAC1done24);
             setEl('remAC1done2025', vRemAC1done25); setEl('remAC1done2026', vRemAC1done26);
             if (vRemAC1doneTotal !== null) { const el = document.getElementById('remAC1doneTotal'); if (el) el.textContent = fmtBaht(vRemAC1doneTotal); }
-            setEl('remUnfulfill2023', vRemUnfulfill23); setEl('remUnfulfill2024', vRemUnfulfill24);
-            setEl('remUnfulfill2025', vRemUnfulfill25); setEl('remUnfulfill2026', vRemUnfulfill26);
+            setEl('remUnfulfill2023', vRemUnfulfill23); setEl('remUnfulfill2024', vRemUnfulfill24); setEl('remUnfulfill2025', vRemUnfulfill25); setEl('remUnfulfill2026', vRemUnfulfill26);
             if (vRemUnfulfillTotal !== null) { const el = document.getElementById('remUnfulfillTotal'); if (el) el.textContent = fmtBaht(vRemUnfulfillTotal); }
             if (vRemAC1doneTotal !== null) { const el = document.getElementById('rem3pillarsAC1'); if (el) el.textContent = fmtBaht(vRemAC1doneTotal); }
             if (vRemUnfulfillTotal !== null) { const el = document.getElementById('rem3pillarsUnfulfill'); if (el) el.textContent = fmtBaht(vRemUnfulfillTotal); }
@@ -2002,6 +2036,8 @@
             }
             if (actPlan) {
               document.getElementById('kpiActionPlan').innerHTML = (actPlan / 1000).toFixed(0) + 'K<span class="unit">฿</span>';
+            } else if (vAc2Total) {
+              document.getElementById('kpiActionPlan').innerHTML = (vAc2Total / 1000).toFixed(0) + 'K<span class="unit">฿</span>';
             }
             if (onProc) {
               document.getElementById('kpiActionPlanSub').textContent =
