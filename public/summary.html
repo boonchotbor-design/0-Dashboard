@@ -1161,6 +1161,21 @@
     <div class="main-grid">
 
       <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">⏱️</span>
+          1st &amp; 2nd Milestone AGING Analysis
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Sites</th>
+              <th>M1 Avg</th>
+              <th>M2 Avg</th>
+              <th>HAE MBB</th>
+              <th>TME IPRAN</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao</td>
@@ -1606,21 +1621,17 @@
               if (execTme) execTme.textContent = tM1;
             }
             // PE Aging table rows (Adisak, Palagon)
-            const adisak = p2.find(r => String(r[C]).toLowerCase().includes('adisak'));
-            const palagon = p2.find(r => String(r[C]).toLowerCase().includes('palagon'));
+            const adisakRow = p2.find(r => String(r[C]).toLowerCase().includes('adisak') && String(r[C]).toLowerCase().includes('average m1+m2'));
+            const palagonRow = p2.find(r => String(r[C]).toLowerCase().includes('palagon') && String(r[C]).toLowerCase().includes('average m1+m2'));
             
-            const updatePeData = (prefix, row) => {
-                if (!row) return;
-                const setEl = (id, val) => { const el = document.getElementById(prefix + id); if (el) el.textContent = val; };
-                setEl('Sites', row[SITES] || '0');
-                setEl('M1', fmtDays(row[M1]));
-                setEl('M2', fmtDays(row[M2]));
-                setEl('Hae', row[HAE_MBB] || '0');
-                setEl('Tme', row[TME_IPRAN] || '0');
-            };
-            
-            updatePeData('peAdisak', adisak);
-            updatePeData('pePalagon', palagon);
+            if (adisakRow && adisakRow[M1]) {
+                const el = document.getElementById('peAdisakM1');
+                if (el) el.textContent = fmtDays(adisakRow[M1]);
+            }
+            if (palagonRow && palagonRow[M1]) {
+                const el = document.getElementById('pePalagonM1');
+                if (el) el.textContent = fmtDays(palagonRow[M1]);
+            }
           }
 
           /* ─── Part 3 - Doc Management ─── */
