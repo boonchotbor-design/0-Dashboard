@@ -1149,27 +1149,31 @@
     <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
     <p class="section-title">📊 SO WEEK 27 VS WEEK 28</p>
     <div class="card" style="margin-bottom:28px">
-      <div class="card-title">
-        <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">⚖️</span>
-        SO Comparison (Sheet1)
+      <div class="card-title" style="display:flex; justify-content:space-between;">
+        <div>
+          <span class="icon" style="--card-icon-bg:rgba(99,102,241,.15)">⚖️</span>
+          SO Comparison (Sheet1)
+        </div>
       </div>
       <table class="dash-table">
         <thead>
           <tr>
-            <th>Year</th>
-            <th id="soWk1Head" colspan="2">WK27 Revenue / Remain</th>
-            <th id="soWk2Head" colspan="2">WK28 Revenue / Remain</th>
+            <th rowspan="2">YEAR</th>
+            <th colspan="2" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">WK27 (Sum of REMAIN)</th>
+            <th colspan="2" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">WK28 (Sum of REMAIN)</th>
+            <th colspan="2" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">Diff (WK28 - WK27)</th>
           </tr>
           <tr>
-            <th></th>
-            <th>Revenue</th><th>Remain</th>
-            <th>Revenue</th><th>Remain</th>
+            <th style="text-align: right; color:#fcd34d;">AC1 DONE</th>
+            <th style="text-align: right; color:#fcd34d;">UNFULFILL</th>
+            <th style="text-align: right; color:#93c5fd;">AC1 DONE</th>
+            <th style="text-align: right; color:#93c5fd;">UNFULFILL</th>
+            <th style="text-align: right;">AC1 DONE</th>
+            <th style="text-align: right;">UNFULFILL</th>
           </tr>
         </thead>
-        <tbody id="soCompareBody">
-          <tr>
-            <td colspan="5" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">No data imported</td>
-          </tr>
+        <tbody id="soComparisonBody">
+          <tr><td colspan="7" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No data imported</td></tr>
         </tbody>
       </table>
     </div>
