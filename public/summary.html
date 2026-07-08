@@ -1940,8 +1940,8 @@
             let patSite = -1, patAging = -1, patOwner = -1;
             let reworkSite = -1, reworkAging = -1, reworkOwner = -1;
             
-            // Scan the first few rows (e.g. up to row 5) to find the main headers
-            for (let i = 0; i < Math.min(6, p7Rows.length); i++) {
+            // Scan the first few rows (e.g. up to row 30) to find the main headers
+            for (let i = 0; i < Math.min(30, p7Rows.length); i++) {
               const row = p7Rows[i];
               if (!row) continue;
               for (let c = 0; c < row.length; c++) {
