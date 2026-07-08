@@ -1299,16 +1299,9 @@
               <th>Avg Aging</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="teamInstallBody">
             <tr>
-              <td style="color:var(--text-primary);font-weight:500">WK25</td>
-              <td id="docInstallAmtWK25">145,743 ฿</td>
-              <td><span class="badge badge-amber" id="docInstallAgeWK25">7d</span></td>
-            </tr>
-            <tr>
-              <td style="color:var(--text-primary);font-weight:500">WK26</td>
-              <td id="docInstallAmtWK26">117,805 ฿</td>
-              <td><span class="badge badge-green" id="docInstallAgeWK26">5d</span></td>
+              <td colspan="3" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No data imported</td>
             </tr>
           </tbody>
         </table>
@@ -1767,20 +1760,28 @@
               const el = document.getElementById('docApichartAC1');
               if (el) el.textContent = fmtDays(apichart['Avg Aging']);
             }
-            // Overall Team Install
-            const inst25 = p3.find(r => String(r['Owner / Type']).includes('WK25'));
-            const inst26 = p3.find(r => String(r['Owner / Type']).includes('WK26'));
-            if (inst25) {
-              const amtEl = document.getElementById('docInstallAmtWK25');
-              if (amtEl) amtEl.textContent = inst25['Amount (THB)'] ? fmtBaht(inst25['Amount (THB)']) : '-';
-              const ageEl = document.getElementById('docInstallAgeWK25');
-              if (ageEl) ageEl.textContent = fmtDays(inst25['Avg Aging']);
-            }
-            if (inst26) {
-              const amtEl = document.getElementById('docInstallAmtWK26');
-              if (amtEl) amtEl.textContent = inst26['Amount (THB)'] ? fmtBaht(inst26['Amount (THB)']) : '-';
-              const ageEl = document.getElementById('docInstallAgeWK26');
-              if (ageEl) ageEl.textContent = fmtDays(inst26['Avg Aging']);
+            // Overall Team Install dynamically
+            const teamRows = p3.filter(r => String(r['Owner / Type'] || '').toLowerCase().includes('overall team install'));
+            if (teamRows.length > 0) {
+              const tb = document.getElementById('teamInstallBody');
+              if (tb) {
+                let html = '';
+                // Keep only the last 2 rows if there are many, or all if few
+                const showRows = teamRows.slice(-2);
+                showRows.forEach((r, i) => {
+                  const amt = r['Amount (THB)'] ? fmtBaht(r['Amount (THB)']) : '-';
+                  const age = r['Avg Aging'];
+                  const ageStr = fmtDays(age);
+                  const badgeClass = (age <= 5) ? 'badge-green' : (age <= 7 ? 'badge-amber' : 'badge-red');
+                  const title = String(r['Owner / Type']).replace(/overall team install/i, '').trim() || `WK${26+i}`;
+                  html += `<tr>
+                    <td style="color:var(--text-primary);font-weight:500">${title}</td>
+                    <td>${amt}</td>
+                    <td><span class="badge ${badgeClass}">${ageStr}</span></td>
+                  </tr>`;
+                });
+                tb.innerHTML = html;
+              }
             }
           }
 
@@ -1817,6 +1818,20 @@
               if (el_wk1v)  el_wk1v.textContent = fmt(wk1Val);
               if (el_wk2v)  el_wk2v.textContent = fmt(wk2Val);
               if (el_diff)  { el_diff.textContent = (diff >= 0 ? '+' : '') + fmt(diff); el_diff.style.color = diff >= 0 ? '#10b981' : '#ef4444'; }
+              
+              // Update Backlog Trend Chart dynamically
+              if (window.backlogChart) {
+                const dataArr = window.backlogChart.data.datasets[0].data;
+                const labelArr = window.backlogChart.data.labels;
+                // Replace the last two data points
+                if (dataArr.length >= 2) {
+                  dataArr[dataArr.length - 2] = wk1Val;
+                  dataArr[dataArr.length - 1] = wk2Val;
+                  labelArr[labelArr.length - 2] = wk1Label;
+                  labelArr[labelArr.length - 1] = wk2Label;
+                  window.backlogChart.update();
+                }
+              }
             }
 
             const getSum = (kw) => {
@@ -2413,48 +2428,6 @@
           }
 
           /* ─── Update Charts dynamically ─── */
-          if (p4.length) {
-            const backlogKeys = Object.keys(p4).map(k => String(p4[k]?.Metric || '')).filter(m => m.toLowerCase().includes('backlog week'));
-            backlogKeys.sort(); // Assuming chronological order
-            let bwk1 = 2084224.68, bwk2 = 64754.4;
-            let name1 = 'Week 26', name2 = 'Week 27';
-            
-            if (backlogKeys.length >= 2) {
-                const k1 = backlogKeys[backlogKeys.length - 2];
-                const k2 = backlogKeys[backlogKeys.length - 1];
-                name1 = k1.replace(/backlog/i, '').trim();
-                name2 = k2.replace(/backlog/i, '').trim();
-                bwk1 = p4.find(r => String(r.Metric) === k1)?.['Value (THB)'] || 0;
-                bwk2 = p4.find(r => String(r.Metric) === k2)?.['Value (THB)'] || 0;
-            } else if (backlogKeys.length === 1) {
-                const k1 = backlogKeys[0];
-                name2 = k1.replace(/backlog/i, '').trim();
-                bwk2 = p4.find(r => String(r.Metric) === k1)?.['Value (THB)'] || 0;
-            }
-            
-            // Update Backlog card text and values
-            const setElText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-            setElText('blWkLabel', `Backlog ${name1} VS ${name2}`);
-            setElText('blWk1Label', name1);
-            setElText('blWk2Label', name2);
-            setElText('blWk1Val', fmtBaht(bwk1));
-            setElText('blWk2Val', fmtBaht(bwk2));
-            
-            const diff = bwk2 - bwk1;
-            const diffEl = document.getElementById('blDiff');
-            if (diffEl) {
-                diffEl.textContent = fmtBaht(diff);
-                diffEl.style.color = diff > 0 ? '#10b981' : '#ef4444';
-            }
-
-            if (window.backlogChart) {
-              const data = window.backlogChart.data.datasets[0].data;
-              // Update W26 (index 7) and W27 (index 8) explicitly
-              data[7] = bwk1;
-              data[8] = bwk2;
-              window.backlogChart.update();
-            }
-          }
           if (p3.length) {
             const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
             const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
