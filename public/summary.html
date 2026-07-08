@@ -1424,23 +1424,20 @@
       <table class="dash-table">
         <thead>
           <tr>
-            <th>Year</th>
-            <th id="soWk1Head" colspan="2">WK27 Revenue / Remain</th>
-            <th id="soWk2Head" colspan="2">WK28 Revenue / Remain</th>
+            <th rowspan="2">Year</th>
+            <th id="soWk1Head" colspan="2" style="text-align:center;color:#60a5fa">WK27</th>
+            <th id="soWk2Head" colspan="2" style="text-align:center;color:#34d399">WK28</th>
           </tr>
           <tr>
-            <th></th>
-            <th>Revenue</th>
-            <th>Remain</th>
-            <th>Revenue</th>
-            <th>Remain</th>
+            <th style="text-align:center">AC1 DONE Remain</th>
+            <th style="text-align:center">UNFULFILL Remain</th>
+            <th style="text-align:center">AC1 DONE Remain</th>
+            <th style="text-align:center">UNFULFILL Remain</th>
           </tr>
         </thead>
         <tbody id="soCompareBody">
           <tr>
-            <td colspan="5"
-              style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">No data
-              imported</td>
+            <td colspan="5" style="text-align:center;color:var(--text-secondary);font-style:italic;padding:12px">No data imported</td>
           </tr>
         </tbody>
       </table>
@@ -1538,15 +1535,23 @@
         <table class="dash-table">
           <thead>
             <tr>
-              <th>Work Type</th>
-              <th style="text-align:center;">จำนวน Site</th>
-              <th style="text-align:center;">Average M1</th>
-              <th style="text-align:center;">Average M2</th>
+              <th rowspan="2">Work Type</th>
+              <th rowspan="2" style="text-align:center">จำนวน Site</th>
+              <th colspan="3" style="text-align:center;color:#60a5fa">Average M1 (days)</th>
+              <th colspan="3" style="text-align:center;color:#34d399">Average M2 (days)</th>
+            </tr>
+            <tr>
+              <th style="text-align:center">Avg</th>
+              <th style="text-align:center">Min</th>
+              <th style="text-align:center">Max</th>
+              <th style="text-align:center">Avg</th>
+              <th style="text-align:center">Min</th>
+              <th style="text-align:center">Max</th>
             </tr>
           </thead>
           <tbody id="milestoneWorkTypeBody">
             <tr>
-              <td colspan="4" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No data imported</td>
+              <td colspan="8" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px">No data imported</td>
             </tr>
           </tbody>
         </table>
@@ -2562,50 +2567,55 @@
                 setElIfEmpty('dtlAC2WK28_2026', ac2['2026']);
                 setElIfEmpty('dtlAC2WK28Total', ac2.total);
               }
+              
               console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
+            }
+          }
 
-              // SO Comparison from Sheet1 pivot table
-              // Structure: Row 0 = 'WEEK27', Row 10 = 'WEEK28', year rows in between at col 0
-              // WK27: col0=year, col1=AC1Done_count, col2=AC1Done_Revenue, col3=AC1Done_Remain, col4=Fulfilled_count, col5=Fulfilled_Revenue, col6=Fulfilled_Remain, col7=Unfulfill_count, col8=Unfulfill_Revenue, col9=Unfulfill_Remain, col11=Total_Revenue, col12=Total_Remain
-              let wk27Label = '', wk28Label = '';
-              const soWk27 = [], soWk28 = [];
-              let currentWk = null;
-              s1Rows.forEach(row => {
-                const cell0 = String(row[0] || '').trim();
-                if (/^WEEK\s*\d+$/i.test(cell0)) {
-                  if (!wk27Label) { wk27Label = cell0; currentWk = 'wk27'; }
-                  else { wk28Label = cell0; currentWk = 'wk28'; }
-                } else if (currentWk && /^202\d$/.test(cell0)) {
-                  const rev = Number(row[11] || row[5] || 0);
-                  const rem = Number(row[12] || row[6] || 0);
-                  if (currentWk === 'wk27') soWk27.push({ year: cell0, revenue: rev, remain: rem });
-                  else soWk28.push({ year: cell0, revenue: rev, remain: rem });
-                }
-              });
-
-              // Update SO comparison table header labels
-              const soWk1Head = document.getElementById('soWk1Head');
-              const soWk2Head = document.getElementById('soWk2Head');
-              if (soWk1Head && wk27Label) soWk1Head.colSpan = 2, soWk1Head.textContent = wk27Label + ' Revenue / Remain';
-              if (soWk2Head && wk28Label) soWk2Head.colSpan = 2, soWk2Head.textContent = wk28Label + ' Revenue / Remain';
-
-              const soBody = document.getElementById('soCompareBody');
-              if (soBody && (soWk27.length > 0 || soWk28.length > 0)) {
-                const years = [...new Set([...soWk27.map(r => r.year), ...soWk28.map(r => r.year)])];
-                let html = '';
-                years.forEach(yr => {
-                  const w27 = soWk27.find(r => r.year === yr) || { revenue: 0, remain: 0 };
-                  const w28 = soWk28.find(r => r.year === yr) || { revenue: 0, remain: 0 };
-                  html += `<tr>
-                    <td style="color:#f0f6ff;font-weight:600">${yr}</td>
-                    <td style="color:#10b981">${fmtBaht(w27.revenue)}</td>
-                    <td style="color:#f59e0b">${fmtBaht(w27.remain)}</td>
-                    <td style="color:#10b981">${fmtBaht(w28.revenue)}</td>
-                    <td style="color:#f59e0b">${fmtBaht(w28.remain)}</td>
-                  </tr>`;
-                });
-                soBody.innerHTML = html;
+          /* ─── Sheet1: SO Comparison (always run) ─── */
+          const s1sheetSO = wb.Sheets['Sheet1'];
+          if (s1sheetSO) {
+            const s1RowsSO = XLSX.utils.sheet_to_json(s1sheetSO, { header: 1, defval: '' });
+            // Col 0=Year, Col 3=AC1 DONE Sum of REMAIN, Col 9=UNFULFILL Sum of REMAIN
+            let wk27Label = '', wk28Label = '';
+            const soWk27 = [], soWk28 = [];
+            let currentWk = null;
+            s1RowsSO.forEach(row => {
+              const cell0 = String(row[0] || '').trim();
+              if (/^WEEK\s*\d+$/i.test(cell0)) {
+                if (!wk27Label) { wk27Label = cell0; currentWk = 'wk27'; }
+                else { wk28Label = cell0; currentWk = 'wk28'; }
+              } else if (currentWk && /^202\d$/.test(cell0)) {
+                const ac1Remain = Number(row[3] || 0);
+                const unfRemain = Number(row[9] || 0);
+                if (currentWk === 'wk27') soWk27.push({ year: cell0, ac1: ac1Remain, unf: unfRemain });
+                else soWk28.push({ year: cell0, ac1: ac1Remain, unf: unfRemain });
               }
+            });
+
+            const soWk1Head = document.getElementById('soWk1Head');
+            const soWk2Head = document.getElementById('soWk2Head');
+            if (soWk1Head && wk27Label) soWk1Head.textContent = wk27Label;
+            if (soWk2Head && wk28Label) soWk2Head.textContent = wk28Label;
+
+            const soBody = document.getElementById('soCompareBody');
+            if (soBody && (soWk27.length > 0 || soWk28.length > 0)) {
+              const years = [...new Set([...soWk27.map(r => r.year), ...soWk28.map(r => r.year)])].sort();
+              let html = '';
+              years.forEach(yr => {
+                const w27 = soWk27.find(r => r.year === yr) || { ac1: 0, unf: 0 };
+                const w28 = soWk28.find(r => r.year === yr) || { ac1: 0, unf: 0 };
+                const hiliteAc1 = w28.ac1 > w27.ac1 ? 'color:#f87171' : 'color:#34d399';
+                const hiliteUnf = w28.unf > w27.unf ? 'color:#f87171' : 'color:#34d399';
+                html += `<tr>
+                  <td style="color:#f0f6ff;font-weight:600">${yr}</td>
+                  <td style="color:#f59e0b;text-align:right">${w27.ac1 > 0 ? fmtBaht(w27.ac1) : '-'}</td>
+                  <td style="color:#f87171;text-align:right">${w27.unf > 0 ? fmtBaht(w27.unf) : '-'}</td>
+                  <td style="${hiliteAc1};text-align:right">${w28.ac1 > 0 ? fmtBaht(w28.ac1) : '-'}</td>
+                  <td style="${hiliteUnf};text-align:right">${w28.unf > 0 ? fmtBaht(w28.unf) : '-'}</td>
+                </tr>`;
+              });
+              soBody.innerHTML = html;
             }
           }
 
@@ -2697,9 +2707,9 @@
               // ── Milestone Table: BP(67)=group, BD(55)=M1, BE(56)=M2 from 2026 sheet ──
               {
                 const mGroups = {
-                  'HAE-MBB':   { sites: 0, sumM1: 0, cntM1: 0, sumM2: 0, cntM2: 0 },
-                  'TME-MBB':   { sites: 0, sumM1: 0, cntM1: 0, sumM2: 0, cntM2: 0 },
-                  'TME-IPRAN': { sites: 0, sumM1: 0, cntM1: 0, sumM2: 0, cntM2: 0 }
+                  'HAE-MBB':   { sites: 0, sumM1: 0, cntM1: 0, minM1: Infinity, maxM1: 0, sumM2: 0, cntM2: 0, minM2: Infinity, maxM2: 0 },
+                  'TME-MBB':   { sites: 0, sumM1: 0, cntM1: 0, minM1: Infinity, maxM1: 0, sumM2: 0, cntM2: 0, minM2: Infinity, maxM2: 0 },
+                  'TME-IPRAN': { sites: 0, sumM1: 0, cntM1: 0, minM1: Infinity, maxM1: 0, sumM2: 0, cntM2: 0, minM2: Infinity, maxM2: 0 }
                 };
                 for (let i = 3; i < allRows.length; i++) {
                   const row = allRows[i];
@@ -2714,10 +2724,18 @@
                   else if (bp.startsWith('TME') && bp.includes('IPRAN')) grp = 'TME-IPRAN';
                   if (!grp) continue;
                   mGroups[grp].sites++;
-                  if (!isNaN(m1v) && m1v > 0) { mGroups[grp].sumM1 += m1v; mGroups[grp].cntM1++; }
-                  if (!isNaN(m2v) && m2v > 0) { mGroups[grp].sumM2 += m2v; mGroups[grp].cntM2++; }
+                  if (!isNaN(m1v) && m1v > 0) {
+                    mGroups[grp].sumM1 += m1v; mGroups[grp].cntM1++;
+                    if (m1v < mGroups[grp].minM1) mGroups[grp].minM1 = m1v;
+                    if (m1v > mGroups[grp].maxM1) mGroups[grp].maxM1 = m1v;
+                  }
+                  if (!isNaN(m2v) && m2v > 0) {
+                    mGroups[grp].sumM2 += m2v; mGroups[grp].cntM2++;
+                    if (m2v < mGroups[grp].minM2) mGroups[grp].minM2 = m2v;
+                    if (m2v > mGroups[grp].maxM2) mGroups[grp].maxM2 = m2v;
+                  }
                 }
-                const fmtdM   = n => (!n || isNaN(n) || n === 0) ? '-' : Number(n).toFixed(2) + 'd';
+                const fmtdM   = n => (!n || isNaN(n) || n === 0 || !isFinite(n)) ? '-' : Number(n).toFixed(2) + 'd';
                 const bcolorM = n => (!n || isNaN(n) || n === 0) ? 'badge-blue' : (n > 10 ? 'badge-amber' : 'badge-green');
                 let mHtml = '';
                 Object.entries(mGroups).forEach(([label, g]) => {
@@ -2727,7 +2745,11 @@
                     <td style="color:var(--text-primary);font-weight:500">${label}</td>
                     <td style="text-align:center"><span class="badge badge-blue">${g.sites}</span></td>
                     <td style="text-align:center"><span class="badge ${bcolorM(avgM1)}">${fmtdM(avgM1)}</span></td>
+                    <td style="text-align:center"><span class="badge badge-green">${fmtdM(g.minM1)}</span></td>
+                    <td style="text-align:center"><span class="badge badge-amber">${fmtdM(g.maxM1)}</span></td>
                     <td style="text-align:center"><span class="badge ${bcolorM(avgM2)}">${fmtdM(avgM2)}</span></td>
+                    <td style="text-align:center"><span class="badge badge-green">${fmtdM(g.minM2)}</span></td>
+                    <td style="text-align:center"><span class="badge badge-amber">${fmtdM(g.maxM2)}</span></td>
                   </tr>`;
                 });
                 const mTbody = document.getElementById('milestoneWorkTypeBody');
