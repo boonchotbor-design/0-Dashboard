@@ -2853,7 +2853,7 @@
             'legendCompleted', 'legendOnProcess', 'legendRemaining',
             'totalSitesText', 'projectBreakdownText',
             'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
-            'soCompareBody',
+            'soComparisonBody', 'milestoneWorkTypeBody',
             'blWkLabel', 'blWk1Label', 'blWk2Label', 'blWk1Val', 'blWk2Val', 'blDiff',
             'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
           ];
@@ -2889,7 +2889,7 @@
 
     // Restore state from LocalStorage on load
     window.addEventListener('DOMContentLoaded', () => {
-      const DASH_VERSION = 'v6';
+      const DASH_VERSION = 'v7';
       const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
       // Remove stale versions
       ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5'].forEach(k => localStorage.removeItem(k));
