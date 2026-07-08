@@ -1072,10 +1072,13 @@
         <thead>
           <tr>
             <th>Year</th>
-            <th>WK27 REVENUE</th>
-            <th>WK27 REMAIN</th>
-            <th>WK28 REVENUE</th>
-            <th>WK28 REMAIN</th>
+            <th id="soWk1Head" colspan="2">WK27 Revenue / Remain</th>
+            <th id="soWk2Head" colspan="2">WK28 Revenue / Remain</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Revenue</th><th>Remain</th>
+            <th>Revenue</th><th>Remain</th>
           </tr>
         </thead>
         <tbody id="soCompareBody">
@@ -1598,40 +1601,55 @@
           if (p2.length) {
             importedSheets.push('Part 2');
             
-            // Find columns dynamically to avoid whitespace issues
-            const C = Object.keys(p2[0] || {}).find(k => k.trim() === 'Category / Person') || 'Category / Person';
-            const M1 = Object.keys(p2[0] || {}).find(k => k.trim() === 'M1 Aging') || 'M1 Aging';
-            const M2 = Object.keys(p2[0] || {}).find(k => k.trim() === 'M2 Aging') || 'M2 Aging';
-            const SITES = Object.keys(p2[0] || {}).find(k => k.trim() === 'Total Sites' || k.trim() === 'Sites') || 'Total Sites';
-            const HAE_MBB = Object.keys(p2[0] || {}).find(k => String(k).toUpperCase().includes('HAE MBB') || String(k).toUpperCase().includes('HAE-MBB')) || 'HAE MBB';
-            const TME_IPRAN = Object.keys(p2[0] || {}).find(k => String(k).toUpperCase().includes('TME IPRAN') || String(k).toUpperCase().includes('TME-IPRAN')) || 'TME IPRAN';
+            // Find columns dynamically — Excel header row: Slide No, Slide Title, Category/Person, M1 Aging, Notes
+            const allKeys2 = Object.keys(p2[0] || {});
+            const C = allKeys2.find(k => k.trim() === 'Category / Person') || 'Category / Person';
+            const M1 = allKeys2.find(k => k.trim() === 'M1 Aging') || 'M1 Aging';
 
-            // HAE/TME M1 & M2 Aging
-            const haeM1row = p2.find(r => String(r[C]).includes('HAE M1'));
-            const tmeM1row = p2.find(r => String(r[C]).includes('TME M1'));
-            if (haeM1row && haeM1row[M1]) {
+            // HAE M1 Aging from row with 'HAE M1' in Category/Person
+            const haeM1row = p2.find(r => /HAE\s*M1/i.test(String(r[C])));
+            const tmeM1row = p2.find(r => /TME\s*M1/i.test(String(r[C])) && !/IPRAN/i.test(String(r[C])));
+            const tmeM2MBBrow = p2.find(r => /TME\s*M2/i.test(String(r[C])) && /MBB/i.test(String(r[C])));
+            const haeM2row  = p2.find(r => /HAE\s*M2/i.test(String(r[C])));
+
+            if (haeM1row) {
               const hM1 = Number(haeM1row[M1]).toFixed(2);
               const tM1 = tmeM1row ? Number(tmeM1row[M1]).toFixed(2) : '-';
               document.getElementById('kpiHaeAging').innerHTML = hM1 + '<span class="unit">days</span>';
               document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tM1} days`;
-              
               const execHae = document.getElementById('execHaeM1');
               if (execHae) execHae.textContent = hM1;
               const execTme = document.getElementById('execTmeM1');
               if (execTme) execTme.textContent = tM1;
             }
-            // PE Aging table rows (Adisak, Palagon)
-            const adisakRow = p2.find(r => String(r[C]).toLowerCase().includes('adisak') && String(r[C]).toLowerCase().includes('average m1+m2'));
-            const palagonRow = p2.find(r => String(r[C]).toLowerCase().includes('palagon') && String(r[C]).toLowerCase().includes('average m1+m2'));
-            
-            if (adisakRow && adisakRow[M1]) {
-                const el = document.getElementById('peAdisakM1');
-                if (el) el.textContent = fmtDays(adisakRow[M1]);
+
+            // PE rows: Adisak Average M1+M2, Palagon Average M1+M2
+            const adisakAvg  = p2.find(r => /adisak/i.test(String(r[C])) && /average/i.test(String(r[C])));
+            const palagonAvg = p2.find(r => /palagon/i.test(String(r[C])) && /average/i.test(String(r[C])));
+            // Palagon HAE and TME rows for M2 and site counts
+            const palagonHAE = p2.find(r => /palagon/i.test(String(r[C])) && /HAE/i.test(String(r[C])) && !/average/i.test(String(r[C])));
+            const palagonTME = p2.find(r => /palagon/i.test(String(r[C])) && /TME/i.test(String(r[C])) && !/average/i.test(String(r[C])));
+
+            if (adisakAvg) {
+              const el = document.getElementById('peAdisakM1');
+              if (el) el.textContent = fmtDays(adisakAvg[M1]);
             }
-            if (palagonRow && palagonRow[M1]) {
-                const el = document.getElementById('pePalagonM1');
-                if (el) el.textContent = fmtDays(palagonRow[M1]);
+            if (palagonAvg) {
+              const el = document.getElementById('pePalagonM1');
+              if (el) el.textContent = fmtDays(palagonAvg[M1]);
             }
+            // HAE MBB sites and TME columns from Palagon detail rows
+            const palHAESites = palagonHAE ? (palagonHAE[M1] || '-') : '-';
+            const palTMESites = palagonTME ? (palagonTME[M1] || '-') : '-';
+            const elPHae = document.getElementById('pePalagonHae');
+            if (elPHae && palagonHAE) elPHae.textContent = palagonHAE[M1] !== '' ? Number(palagonHAE[M1]).toFixed(2) + 'd' : '-';
+            const elPTme = document.getElementById('pePalagonTme');
+            if (elPTme && palagonTME) elPTme.textContent = palagonTME[M1] !== '' ? Number(palagonTME[M1]).toFixed(2) + 'd' : '-';
+            // M2 from HAE M2 and TME M2 rows
+            const elAM2 = document.getElementById('peAdisakM2');
+            if (elAM2 && haeM2row) elAM2.textContent = fmtDays(haeM2row[M1]);
+            const elPM2 = document.getElementById('pePalagonM2');
+            if (elPM2 && tmeM2MBBrow) elPM2.textContent = fmtDays(tmeM2MBBrow[M1]);
           }
 
           /* ─── Part 3 - Doc Management ─── */
@@ -1682,7 +1700,6 @@
           }
 
           /* ─── Part 4 - Financials ─── */
-          // Also try the 'Financials & Recovery' sheet name used in Dashboard_Data_Template.xlsx
           const p4raw = wb.Sheets['Part 4 - Financials'] || wb.Sheets['Financials & Recovery'] || wb.Sheets['Financials'];
           const p4 = p4raw ? XLSX.utils.sheet_to_json(p4raw, { defval: '' }) : [];
           if (p4.length) {
@@ -1692,6 +1709,30 @@
               const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
               return row ? getV(row) : null;
             };
+
+            // ── Backlog Week X vs Week Y ──
+            // Excel rows: Metric = 'Backlog Week 27', 'Backlog Week 28' inside Slide Title 'Backlog Backlog Week 27 VS Backlog Week 28'
+            const blRows = p4.filter(r => /backlog week/i.test(String(r['Metric'])));
+            if (blRows.length >= 2) {
+              const wk1Label = String(blRows[0]['Metric'] || '').replace(/backlog/i,'').trim(); // 'Week 27'
+              const wk2Label = String(blRows[1]['Metric'] || '').replace(/backlog/i,'').trim(); // 'Week 28'
+              const wk1Val = Number(getV(blRows[0]) || 0);
+              const wk2Val = Number(getV(blRows[1]) || 0);
+              const diff = wk2Val - wk1Val;
+              const fmt = v => Number(v).toLocaleString('th-TH', {maximumFractionDigits:0}) + ' ฿';
+              const el_label = document.getElementById('blWkLabel');
+              const el_wk1l  = document.getElementById('blWk1Label');
+              const el_wk2l  = document.getElementById('blWk2Label');
+              const el_wk1v  = document.getElementById('blWk1Val');
+              const el_wk2v  = document.getElementById('blWk2Val');
+              const el_diff  = document.getElementById('blDiff');
+              if (el_label) el_label.textContent = `Backlog ${wk1Label} VS ${wk2Label}`;
+              if (el_wk1l)  el_wk1l.textContent = wk1Label;
+              if (el_wk2l)  el_wk2l.textContent = wk2Label;
+              if (el_wk1v)  el_wk1v.textContent = fmt(wk1Val);
+              if (el_wk2v)  el_wk2v.textContent = fmt(wk2Val);
+              if (el_diff)  { el_diff.textContent = (diff >= 0 ? '+' : '') + fmt(diff); el_diff.style.color = diff >= 0 ? '#10b981' : '#ef4444'; }
+            }
 
             const getSum = (kw) => {
               const rows = p4.filter(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
@@ -2089,41 +2130,47 @@
               }
               console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
               
-              // Also parse SO Comparison from Sheet1
-              const soData = [];
-              // In Sheet1, we need to extract rows that match SO WEEK format (usually around column P to U)
-              // Looking for rows that have year, WK27 REVENUE, WK27 REMAIN, WK28 REVENUE, WK28 REMAIN
-              let soSection = false;
+              // SO Comparison from Sheet1 pivot table
+              // Structure: Row 0 = 'WEEK27', Row 10 = 'WEEK28', year rows in between at col 0
+              // WK27: col0=year, col1=AC1Done_count, col2=AC1Done_Revenue, col3=AC1Done_Remain, col4=Fulfilled_count, col5=Fulfilled_Revenue, col6=Fulfilled_Remain, col7=Unfulfill_count, col8=Unfulfill_Revenue, col9=Unfulfill_Remain, col11=Total_Revenue, col12=Total_Remain
+              let wk27Label = '', wk28Label = '';
+              const soWk27 = [], soWk28 = [];
+              let currentWk = null;
               s1Rows.forEach(row => {
-                  const label = String(row[15] || '').toUpperCase().trim();
-                  if (label.includes('SO COMPARISON') || label.includes('SO WEEK')) {
-                      soSection = true;
-                  } else if (label.includes('GRAND TOTAL')) {
-                      soSection = false;
-                  } else if (soSection && /^202\d$/.test(label)) {
-                      soData.push({
-                          year: label,
-                          wk1Rev: Number(row[16] || 0),
-                          wk1Rem: Number(row[17] || 0),
-                          wk2Rev: Number(row[18] || 0),
-                          wk2Rem: Number(row[19] || 0)
-                      });
-                  }
+                const cell0 = String(row[0] || '').trim();
+                if (/^WEEK\s*\d+$/i.test(cell0)) {
+                  if (!wk27Label) { wk27Label = cell0; currentWk = 'wk27'; }
+                  else { wk28Label = cell0; currentWk = 'wk28'; }
+                } else if (currentWk && /^202\d$/.test(cell0)) {
+                  const rev = Number(row[11] || row[5] || 0);
+                  const rem = Number(row[12] || row[6] || 0);
+                  if (currentWk === 'wk27') soWk27.push({ year: cell0, revenue: rev, remain: rem });
+                  else soWk28.push({ year: cell0, revenue: rev, remain: rem });
+                }
               });
-              
+
+              // Update SO comparison table header labels
+              const soWk1Head = document.getElementById('soWk1Head');
+              const soWk2Head = document.getElementById('soWk2Head');
+              if (soWk1Head && wk27Label) soWk1Head.colSpan = 2, soWk1Head.textContent = wk27Label + ' Revenue / Remain';
+              if (soWk2Head && wk28Label) soWk2Head.colSpan = 2, soWk2Head.textContent = wk28Label + ' Revenue / Remain';
+
               const soBody = document.getElementById('soCompareBody');
-              if (soBody && soData.length > 0) {
-                  let html = '';
-                  soData.forEach(item => {
-                      html += `<tr>
-                          <td style="color:#f0f6ff; font-weight:600">${item.year}</td>
-                          <td style="color:#10b981">${fmtBaht(item.wk1Rev)}</td>
-                          <td style="color:#f59e0b">${fmtBaht(item.wk1Rem)}</td>
-                          <td style="color:#10b981">${fmtBaht(item.wk2Rev)}</td>
-                          <td style="color:#f59e0b">${fmtBaht(item.wk2Rem)}</td>
-                      </tr>`;
-                  });
-                  soBody.innerHTML = html;
+              if (soBody && (soWk27.length > 0 || soWk28.length > 0)) {
+                const years = [...new Set([...soWk27.map(r => r.year), ...soWk28.map(r => r.year)])];
+                let html = '';
+                years.forEach(yr => {
+                  const w27 = soWk27.find(r => r.year === yr) || { revenue: 0, remain: 0 };
+                  const w28 = soWk28.find(r => r.year === yr) || { revenue: 0, remain: 0 };
+                  html += `<tr>
+                    <td style="color:#f0f6ff;font-weight:600">${yr}</td>
+                    <td style="color:#10b981">${fmtBaht(w27.revenue)}</td>
+                    <td style="color:#f59e0b">${fmtBaht(w27.remain)}</td>
+                    <td style="color:#10b981">${fmtBaht(w28.revenue)}</td>
+                    <td style="color:#f59e0b">${fmtBaht(w28.remain)}</td>
+                  </tr>`;
+                });
+                soBody.innerHTML = html;
               }
             }
           }
