@@ -2914,7 +2914,7 @@
       const DASH_VERSION = 'v7';
       const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
       // Remove stale versions
-      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5'].forEach(k => localStorage.removeItem(k));
+      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6'].forEach(k => localStorage.removeItem(k));
       const saved = localStorage.getItem(DASH_KEY);
       if (saved) {
         try {
@@ -2986,6 +2986,8 @@
           'legendCompleted', 'legendOnProcess', 'legendRemaining',
           'totalSitesText', 'projectBreakdownText',
           'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
+          'soComparisonBody', 'milestoneWorkTypeBody',
+          'soWk1Head', 'soWk2Head',
           'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
         ];
         const vals = {};
@@ -3002,7 +3004,7 @@
             doc: window.docChart ? [[...window.docChart.data.datasets[0].data], [...window.docChart.data.datasets[1].data]] : []
           }
         };
-        localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v7', JSON.stringify(dashState));
 
         // Show success
         const st = document.getElementById('importStatus');
