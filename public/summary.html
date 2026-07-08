@@ -608,21 +608,57 @@
       filter: brightness(1.1);
     }
 
-    .tb-btn-import { background: linear-gradient(135deg, #1d4ed8, #3b82f6); color: #fff; }
-    .tb-btn-pdf    { background: linear-gradient(135deg, #991b1b, #ef4444); color: #fff; }
-    .tb-btn-ppt    { background: linear-gradient(135deg, #92400e, #f59e0b); color: #fff; }
-    .tb-btn-save   { background: linear-gradient(135deg, #065f46, #10b981); color: #fff; display: none; }
-    .tb-btn-save.show { display: inline-flex; animation: fadeInBtn .3s ease; }
+    .tb-btn-import {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: #fff;
+    }
 
-    @keyframes fadeInBtn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-    #file-input { display: none; }
+    .tb-btn-pdf {
+      background: linear-gradient(135deg, #991b1b, #ef4444);
+      color: #fff;
+    }
+
+    .tb-btn-ppt {
+      background: linear-gradient(135deg, #92400e, #f59e0b);
+      color: #fff;
+    }
+
+    .tb-btn-save {
+      background: linear-gradient(135deg, #065f46, #10b981);
+      color: #fff;
+      display: none;
+    }
+
+    .tb-btn-save.show {
+      display: inline-flex;
+      animation: fadeInBtn .3s ease;
+    }
+
+    @keyframes fadeInBtn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    #file-input {
+      display: none;
+    }
 
     .import-status {
-      font-size: .7rem; color: #6ee7b7; font-weight: 500;
+      font-size: .7rem;
+      color: #6ee7b7;
+      font-weight: 500;
       padding: 4px 12px;
       background: rgba(16, 185, 129, .12);
       border: 1px solid rgba(16, 185, 129, .3);
-      border-radius: 6px; display: none;
+      border-radius: 6px;
+      display: none;
     }
 
     /* ── Executive Section Divider ── */
@@ -632,27 +668,40 @@
       gap: 14px;
       margin: 36px 0 18px;
     }
+
     .exec-section-icon {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
-      display: grid; place-items: center;
+      display: grid;
+      place-items: center;
       font-size: 17px;
       flex-shrink: 0;
-      box-shadow: 0 4px 16px rgba(0,0,0,.3);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .3);
     }
-    .exec-section-text { flex: 1; }
+
+    .exec-section-text {
+      flex: 1;
+    }
+
     .exec-section-text h2 {
-      font-size: .95rem; font-weight: 700;
+      font-size: .95rem;
+      font-weight: 700;
       color: var(--text-primary);
       letter-spacing: .02em;
     }
+
     .exec-section-text p {
-      font-size: .7rem; color: var(--text-muted);
-      margin-top: 2px; font-weight: 400;
+      font-size: .7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 400;
     }
+
     .exec-section-line {
-      flex: 1; height: 1px;
-      background: linear-gradient(90deg, rgba(255,255,255,.12), transparent);
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, .12), transparent);
     }
 
     /* ── Premium KPI Card enhancements ── */
@@ -666,6 +715,7 @@
       transition: transform .25s, border-color .25s, box-shadow .25s;
       cursor: default;
     }
+
     .kpi-card::after {
       content: '';
       position: absolute;
@@ -675,10 +725,11 @@
       opacity: .05;
       pointer-events: none;
     }
+
     .kpi-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(99,179,237,.35);
-      box-shadow: 0 16px 48px rgba(0,0,0,.45), 0 0 0 1px rgba(99,179,237,.1);
+      border-color: rgba(99, 179, 237, .35);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .45), 0 0 0 1px rgba(99, 179, 237, .1);
     }
 
     /* ── Premium Card ── */
@@ -691,86 +742,216 @@
       overflow: hidden;
       transition: border-color .2s, box-shadow .2s;
     }
-    .card:hover { border-color: rgba(255,255,255,.12); }
 
-    .card-glow-blue  { border-left: 3px solid #3b82f6; }
-    .card-glow-green { border-left: 3px solid #10b981; }
-    .card-glow-amber { border-left: 3px solid #f59e0b; }
-    .card-glow-purple{ border-left: 3px solid #8b5cf6; }
-    .card-glow-red   { border-left: 3px solid #ef4444; }
-    .card-glow-cyan  { border-left: 3px solid #06b6d4; }
+    .card:hover {
+      border-color: rgba(255, 255, 255, .12);
+    }
+
+    .card-glow-blue {
+      border-left: 3px solid #3b82f6;
+    }
+
+    .card-glow-green {
+      border-left: 3px solid #10b981;
+    }
+
+    .card-glow-amber {
+      border-left: 3px solid #f59e0b;
+    }
+
+    .card-glow-purple {
+      border-left: 3px solid #8b5cf6;
+    }
+
+    .card-glow-red {
+      border-left: 3px solid #ef4444;
+    }
+
+    .card-glow-cyan {
+      border-left: 3px solid #06b6d4;
+    }
 
     /* ── Status chips ── */
     .status-chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 10px; border-radius: 99px;
-      font-size: .65rem; font-weight: 700; letter-spacing: .04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .04em;
       text-transform: uppercase;
     }
-    .chip-green  { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.25); }
-    .chip-amber  { background: rgba(245,158,11,.15);  color: #fcd34d; border: 1px solid rgba(245,158,11,.25); }
-    .chip-red    { background: rgba(239,68,68,.15);   color: #fca5a5; border: 1px solid rgba(239,68,68,.25); }
-    .chip-blue   { background: rgba(59,130,246,.15);  color: #93c5fd; border: 1px solid rgba(59,130,246,.25); }
-    .chip-purple { background: rgba(139,92,246,.15);  color: #c4b5fd; border: 1px solid rgba(139,92,246,.25); }
+
+    .chip-green {
+      background: rgba(16, 185, 129, .15);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, .25);
+    }
+
+    .chip-amber {
+      background: rgba(245, 158, 11, .15);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, .25);
+    }
+
+    .chip-red {
+      background: rgba(239, 68, 68, .15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, .25);
+    }
+
+    .chip-blue {
+      background: rgba(59, 130, 246, .15);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, .25);
+    }
+
+    .chip-purple {
+      background: rgba(139, 92, 246, .15);
+      color: #c4b5fd;
+      border: 1px solid rgba(139, 92, 246, .25);
+    }
 
     /* ── Metric highlight row ── */
     .metric-row {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 11px 0;
-      border-bottom: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
     }
-    .metric-row:last-child { border-bottom: none; }
-    .metric-label { font-size: .76rem; color: var(--text-secondary); font-weight: 500; }
-    .metric-value { font-size: .88rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
-    .metric-value.green  { color: #34d399; }
-    .metric-value.amber  { color: #fbbf24; }
-    .metric-value.red    { color: #f87171; }
-    .metric-value.blue   { color: #93c5fd; }
-    .metric-value.purple { color: #c4b5fd; }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-label {
+      font-size: .76rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-size: .88rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-primary);
+    }
+
+    .metric-value.green {
+      color: #34d399;
+    }
+
+    .metric-value.amber {
+      color: #fbbf24;
+    }
+
+    .metric-value.red {
+      color: #f87171;
+    }
+
+    .metric-value.blue {
+      color: #93c5fd;
+    }
+
+    .metric-value.purple {
+      color: #c4b5fd;
+    }
 
     /* ── Big Number Display ── */
     .big-num {
-      font-size: 2rem; font-weight: 800;
-      color: var(--text-primary); line-height: 1;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
       font-family: 'JetBrains Mono', monospace;
     }
-    .big-num .unit { font-size: 1rem; font-weight: 500; color: var(--text-secondary); margin-left: 4px; }
-    .big-num-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+
+    .big-num .unit {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    .big-num-label {
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
 
     /* ── Table improvements ── */
     .dash-table th {
       padding: 9px 12px;
-      background: rgba(255,255,255,.02);
+      background: rgba(255, 255, 255, .02);
       color: var(--text-muted);
       font-weight: 700;
       font-size: .65rem;
       letter-spacing: .1em;
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255,255,255,.07);
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
     }
+
     .dash-table td {
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.03);
+      border-bottom: 1px solid rgba(255, 255, 255, .03);
       color: var(--text-secondary);
       font-size: .78rem;
     }
-    .dash-table tr:last-child td { border-bottom: none; }
-    .dash-table tr:hover td { background: rgba(255,255,255,.025); color: var(--text-primary); }
+
+    .dash-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .dash-table tr:hover td {
+      background: rgba(255, 255, 255, .025);
+      color: var(--text-primary);
+    }
 
     /* ── SLA Progress Bar ── */
-    .sla-bar-wrap { background: rgba(255,255,255,.05); border-radius: 99px; height: 5px; margin-top: 4px; overflow: hidden; }
-    .sla-bar-fill { height: 100%; border-radius: 99px; transition: width 1s ease; }
+    .sla-bar-wrap {
+      background: rgba(255, 255, 255, .05);
+      border-radius: 99px;
+      height: 5px;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+
+    .sla-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 1s ease;
+    }
 
     /* ── Executive header bar (top of each section block) ── */
     .exec-card-header {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 18px;
       padding-bottom: 14px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
     }
-    .exec-card-header .title { font-size: .88rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
-    .exec-card-header .subtitle { font-size: .68rem; color: var(--text-muted); margin-top: 2px; }
 
+    .exec-card-header .title {
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exec-card-header .subtitle {
+      font-size: .68rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
   </style>
 </head>
 
@@ -782,20 +963,28 @@
   <div class="container">
 
     <!-- ── Header ── -->
-    <header style="background:rgba(14,20,36,.85);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px 28px;margin-bottom:32px;box-shadow:0 8px 40px rgba(0,0,0,.4);">
+    <header
+      style="background:rgba(14,20,36,.85);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px 28px;margin-bottom:32px;box-shadow:0 8px 40px rgba(0,0,0,.4);">
       <div class="header-left">
-        <div class="logo" style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#06b6d4);display:grid;place-items:center;font-size:22px;box-shadow:0 4px 20px rgba(59,130,246,.4);">📊</div>
+        <div class="logo"
+          style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#06b6d4);display:grid;place-items:center;font-size:22px;box-shadow:0 4px 20px rgba(59,130,246,.4);">
+          📊</div>
         <div class="header-title">
-          <h1 style="font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#f0f6ff,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.01em">Strategic Performance Dashboard</h1>
-          <p style="font-size:.75rem;color:var(--text-muted);margin-top:3px;font-weight:400;">Project 2026 &nbsp;·&nbsp; HAE &amp; TME Recovery Plan &nbsp;·&nbsp; Executive View</p>
+          <h1
+            style="font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#f0f6ff,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.01em">
+            Strategic Performance Dashboard</h1>
+          <p style="font-size:.75rem;color:var(--text-muted);margin-top:3px;font-weight:400;">Project 2026 &nbsp;·&nbsp;
+            HAE &amp; TME Recovery Plan &nbsp;·&nbsp; Executive View</p>
         </div>
       </div>
       <div class="header-right">
-        <span class="week-badge" id="weekBadge" contenteditable="true" spellcheck="false" title="Click to edit">WEEK 26 · 2026</span>
+        <span class="week-badge" id="weekBadge" contenteditable="true" spellcheck="false" title="Click to edit">WEEK 26
+          · 2026</span>
         <span class="live-dot">LIVE</span>
         <div class="toolbar">
           <input type="file" id="file-input" accept=".xlsx,.xls" />
-          <button class="tb-btn tb-btn-import" onclick="document.getElementById('file-input').click()">📂 Import Excel</button>
+          <button class="tb-btn tb-btn-import" onclick="document.getElementById('file-input').click()">📂 Import
+            Excel</button>
           <button class="tb-btn tb-btn-pdf" onclick="exportPDF()">📄 Export PDF</button>
           <button class="tb-btn tb-btn-ppt" onclick="exportPPT()">📊 Export PPT</button>
           <button class="tb-btn tb-btn-save" id="btnSave" onclick="saveDashboard()">💾 Save</button>
@@ -807,7 +996,10 @@
     <!-- ── KPI Cards ── -->
     <div class="exec-section">
       <div class="exec-section-icon" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);">📌</div>
-      <div class="exec-section-text"><h2>Key Performance Indicators</h2><p>Real-time snapshot · Updated on import</p></div>
+      <div class="exec-section-text">
+        <h2>Key Performance Indicators</h2>
+        <p>Real-time snapshot · Updated on import</p>
+      </div>
       <div class="exec-section-line"></div>
     </div>
     <div class="kpi-grid">
@@ -863,7 +1055,8 @@
     </div>
 
     <!-- ── Executive Bottom Line (Part 1) ── -->
-    <div class="card card-glow-blue" style="margin-bottom:28px;background:linear-gradient(135deg,rgba(29,78,216,.08),rgba(6,182,212,.04));">
+    <div class="card card-glow-blue"
+      style="margin-bottom:28px;background:linear-gradient(135deg,rgba(29,78,216,.08),rgba(6,182,212,.04));">
       <div class="exec-card-header">
         <div>
           <div class="title"><span style="font-size:18px;">💡</span> Executive Bottom Line</div>
@@ -875,18 +1068,22 @@
         <div>
           <div class="big-num-label">HAE M1 Avg Aging</div>
           <div style="display:flex;align-items:baseline;gap:10px;">
-            <div class="big-num" style="color:#93c5fd;"><span id="execHaeM1">1.55</span><span class="unit">days</span></div>
+            <div class="big-num" style="color:#93c5fd;"><span id="execHaeM1">1.55</span><span class="unit">days</span>
+            </div>
             <span class="status-chip chip-green">✓ On Track</span>
           </div>
-          <p id="execHaeM1Notes" style="font-size:.76rem;color:var(--text-muted);line-height:1.6;margin-top:8px;">หน้างานยังคงเดินหน้าอย่างรวดเร็ว แต่ระบบเอกสารยังมีปัญหาคอขวด</p>
+          <p id="execHaeM1Notes" style="font-size:.76rem;color:var(--text-muted);line-height:1.6;margin-top:8px;">
+            หน้างานยังคงเดินหน้าอย่างรวดเร็ว แต่ระบบเอกสารยังมีปัญหาคอขวด</p>
         </div>
         <div>
           <div class="big-num-label">TME M1 Avg Aging</div>
           <div style="display:flex;align-items:baseline;gap:10px;">
-            <div class="big-num" style="color:#c4b5fd;"><span id="execTmeM1">1.66</span><span class="unit">days</span></div>
+            <div class="big-num" style="color:#c4b5fd;"><span id="execTmeM1">1.66</span><span class="unit">days</span>
+            </div>
             <span class="status-chip chip-amber">⚠ Monitor</span>
           </div>
-          <p id="execTmeM1Notes" style="font-size:.76rem;color:var(--text-muted);line-height:1.6;margin-top:8px;">ข้อมูลดิบอาจมีความคลาดเคลื่อนในระบบ</p>
+          <p id="execTmeM1Notes" style="font-size:.76rem;color:var(--text-muted);line-height:1.6;margin-top:8px;">
+            ข้อมูลดิบอาจมีความคลาดเคลื่อนในระบบ</p>
         </div>
       </div>
     </div>
@@ -894,7 +1091,10 @@
     <!-- ── Row 1: Backlog Trend + Site Donut ── -->
     <div class="exec-section">
       <div class="exec-section-icon" style="background:linear-gradient(135deg,#065f46,#10b981);">📈</div>
-      <div class="exec-section-text"><h2>Financial &amp; Project Overview</h2><p>Backlog trend, site completion &amp; weekly comparison</p></div>
+      <div class="exec-section-text">
+        <h2>Financial &amp; Project Overview</h2>
+        <p>Backlog trend, site completion &amp; weekly comparison</p>
+      </div>
       <div class="exec-section-line"></div>
     </div>
     <div class="main-grid" style="grid-template-columns:2fr 1fr">
@@ -915,8 +1115,10 @@
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">⚖️</span>
           <span id="blWkLabel">Backlog Week 26 VS Week 27</span>
         </div>
-        <div class="fin-row"><span class="fin-label" id="blWk1Label">Week 26</span><span class="fin-val amber" id="blWk1Val">-</span></div>
-        <div class="fin-row"><span class="fin-label" id="blWk2Label">Week 27</span><span class="fin-val amber" id="blWk2Val">-</span></div>
+        <div class="fin-row"><span class="fin-label" id="blWk1Label">Week 26</span><span class="fin-val amber"
+            id="blWk1Val">-</span></div>
+        <div class="fin-row"><span class="fin-label" id="blWk2Label">Week 27</span><span class="fin-val amber"
+            id="blWk2Val">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">Difference</span>
           <span class="fin-val" style="font-weight:700" id="blDiff">-</span>
@@ -953,25 +1155,38 @@
     <div class="main-grid col-3" style="margin-bottom:28px;">
       <div class="card card-glow-green">
         <div class="exec-card-header">
-          <div><div class="title">✅ Smart QC Overview</div><div class="subtitle">Quality control inspection status</div></div>
+          <div>
+            <div class="title">✅ Smart QC Overview</div>
+            <div class="subtitle">Quality control inspection status</div>
+          </div>
           <span class="status-chip chip-green">Active</span>
         </div>
-        <div class="metric-row"><span class="metric-label">Inspected Sites</span><span class="metric-value green" id="qcInspected">-</span></div>
-        <div class="metric-row"><span class="metric-label">Pass Rate</span><span class="metric-value green" id="qcPassRate">-</span></div>
+        <div class="metric-row"><span class="metric-label">Inspected Sites</span><span class="metric-value green"
+            id="qcInspected">-</span></div>
+        <div class="metric-row"><span class="metric-label">Pass Rate</span><span class="metric-value green"
+            id="qcPassRate">-</span></div>
       </div>
       <div class="card card-glow-red">
         <div class="exec-card-header">
-          <div><div class="title">⚠️ Operation Error &amp; Defect</div><div class="subtitle">On-site quality issues detected</div></div>
+          <div>
+            <div class="title">⚠️ Operation Error &amp; Defect</div>
+            <div class="subtitle">On-site quality issues detected</div>
+          </div>
           <span class="status-chip chip-amber">Monitor</span>
         </div>
-        <p id="qcDefectNotes" style="font-size:.78rem;color:var(--text-secondary);line-height:1.6;">No major defects reported.</p>
+        <p id="qcDefectNotes" style="font-size:.78rem;color:var(--text-secondary);line-height:1.6;">No major defects
+          reported.</p>
       </div>
       <div class="card card-glow-blue">
         <div class="exec-card-header">
-          <div><div class="title">📈 Improvement Plan</div><div class="subtitle">On-site quality action items</div></div>
+          <div>
+            <div class="title">📈 Improvement Plan</div>
+            <div class="subtitle">On-site quality action items</div>
+          </div>
           <span class="status-chip chip-blue">In Progress</span>
         </div>
-        <p id="qcImprovementNotes" style="font-size:.78rem;color:var(--text-secondary);line-height:1.6;">Continuous monitoring implemented.</p>
+        <p id="qcImprovementNotes" style="font-size:.78rem;color:var(--text-secondary);line-height:1.6;">Continuous
+          monitoring implemented.</p>
       </div>
     </div>
 
@@ -980,57 +1195,92 @@
       <!-- HAE vs TME Portfolio -->
       <div class="card card-glow-purple">
         <div class="exec-card-header">
-          <div><div class="title">🏢 Portfolio Performance</div><div class="subtitle">HAE &amp; TME breakdown by project type</div></div>
+          <div>
+            <div class="title">🏢 Portfolio Performance</div>
+            <div class="subtitle">HAE &amp; TME breakdown by project type</div>
+          </div>
           <span class="status-chip chip-purple">Part 1</span>
         </div>
-        <div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">HAE</div>
+        <div
+          style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">
+          HAE</div>
         <div class="prog-item">
-          <div class="prog-header"><span class="label">🔵 HAE-MBB</span><span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px;">119 sites</span>2,100,030 ฿</span></div>
-          <div class="prog-bar"><div class="prog-fill" style="width:85%;--fill-color:#3b82f6"></div></div>
+          <div class="prog-header"><span class="label">🔵 HAE-MBB</span><span class="val"><span
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;">119 sites</span>2,100,030 ฿</span>
+          </div>
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:85%;--fill-color:#3b82f6"></div>
+          </div>
         </div>
-        <div style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px;">TME</div>
+        <div
+          style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;margin:14px 0 10px;">
+          TME</div>
         <div class="prog-item">
-          <div class="prog-header"><span class="label">🟣 TME-MBB</span><span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px;">11 sites</span>104,547 ฿</span></div>
-          <div class="prog-bar"><div class="prog-fill" style="width:43%;--fill-color:#8b5cf6"></div></div>
+          <div class="prog-header"><span class="label">🟣 TME-MBB</span><span class="val"><span
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;">11 sites</span>104,547 ฿</span></div>
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:43%;--fill-color:#8b5cf6"></div>
+          </div>
         </div>
         <div class="prog-item">
-          <div class="prog-header"><span class="label">🟡 TME-IPRAN</span><span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px;">54 sites</span>100,000 ฿</span></div>
-          <div class="prog-bar"><div class="prog-fill" style="width:30%;--fill-color:#f59e0b"></div></div>
+          <div class="prog-header"><span class="label">🟡 TME-IPRAN</span><span class="val"><span
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;">54 sites</span>100,000 ฿</span></div>
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:30%;--fill-color:#f59e0b"></div>
+          </div>
         </div>
         <div class="prog-item">
-          <div class="prog-header"><span class="label">🔴 TME-BATTERY</span><span class="val"><span style="color:var(--text-muted);font-weight:400;margin-right:6px;">12 sites</span>40,445 ฿</span></div>
-          <div class="prog-bar"><div class="prog-fill" style="width:17%;--fill-color:#ef4444"></div></div>
+          <div class="prog-header"><span class="label">🔴 TME-BATTERY</span><span class="val"><span
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;">12 sites</span>40,445 ฿</span></div>
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:17%;--fill-color:#ef4444"></div>
+          </div>
         </div>
-        <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.72rem;">
-          <span style="color:var(--text-muted)" id="totalSitesText">Total Sites <strong style="color:var(--text-primary)">208</strong></span>
-          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6">130</strong> · TME <strong style="color:#8b5cf6">77</strong></span>
+        <div
+          style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.72rem;">
+          <span style="color:var(--text-muted)" id="totalSitesText">Total Sites <strong
+              style="color:var(--text-primary)">208</strong></span>
+          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6">130</strong>
+            · TME <strong style="color:#8b5cf6">77</strong></span>
         </div>
       </div>
 
       <!-- Financial Summary -->
       <div class="card card-glow-amber">
         <div class="exec-card-header">
-          <div><div class="title">💹 Financial Health Overview</div><div class="subtitle">Revenue, AR/AP &amp; Remaining Backlog</div></div>
+          <div>
+            <div class="title">💹 Financial Health Overview</div>
+            <div class="subtitle">Revenue, AR/AP &amp; Remaining Backlog</div>
+          </div>
           <span class="status-chip chip-amber">Part 4</span>
         </div>
-        <div class="metric-row"><span class="metric-label">Estimate Final Income</span><span class="metric-value green" id="finIncome">3,757,963 ฿</span></div>
-        <div class="metric-row"><span class="metric-label">AR (Commerce)</span><span class="metric-value amber" id="finAR">1,071,666 ฿</span></div>
-        <div class="metric-row"><span class="metric-label">AP (Payment)</span><span class="metric-value red" id="finAP">275,715 ฿</span></div>
-        <div class="metric-row"><span class="metric-label">Unfulfilled Revenue (Remain)</span><span class="metric-value amber" id="finBacklog">2,410,583 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">Estimate Final Income</span><span class="metric-value green"
+            id="finIncome">3,757,963 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">AR (Commerce)</span><span class="metric-value amber"
+            id="finAR">1,071,666 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">AP (Payment)</span><span class="metric-value red"
+            id="finAP">275,715 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">Unfulfilled Revenue (Remain)</span><span
+            class="metric-value amber" id="finBacklog">2,410,583 ฿</span></div>
       </div>
 
       <!-- Document Status -->
       <div class="card card-glow-cyan">
         <div class="exec-card-header">
-          <div><div class="title">📄 Document Status</div><div class="subtitle">AC#1 &amp; AC#2 acceptance aging</div></div>
+          <div>
+            <div class="title">📄 Document Status</div>
+            <div class="subtitle">AC#1 &amp; AC#2 acceptance aging</div>
+          </div>
           <span class="status-chip chip-blue">Part 3</span>
         </div>
         <div class="chart-wrap" style="height:180px">
           <canvas id="docChart"></canvas>
         </div>
         <div style="margin-top:12px">
-          <div class="metric-row"><span class="metric-label">AC1 Avg Aging</span><span class="metric-value amber" id="finAC1Aging">9.7 days</span></div>
-          <div class="metric-row"><span class="metric-label">AC2 Avg Aging</span><span class="metric-value red" id="finAC2Aging">11.5 days</span></div>
+          <div class="metric-row"><span class="metric-label">AC1 Avg Aging</span><span class="metric-value amber"
+              id="finAC1Aging">9.7 days</span></div>
+          <div class="metric-row"><span class="metric-label">AC2 Avg Aging</span><span class="metric-value red"
+              id="finAC2Aging">11.5 days</span></div>
         </div>
       </div>
     </div>
@@ -1038,7 +1288,10 @@
     <!-- ── Row 2.5: Detailed Financials (Part 4) ── -->
     <div class="exec-section">
       <div class="exec-section-icon" style="background:linear-gradient(135deg,#92400e,#f59e0b);">📊</div>
-      <div class="exec-section-text"><h2>Financial Details — Part 4 Breakdown</h2><p>Acceptance plan, On-Process &amp; Revenue tracking</p></div>
+      <div class="exec-section-text">
+        <h2>Financial Details — Part 4 Breakdown</h2>
+        <p>Acceptance plan, On-Process &amp; Revenue tracking</p>
+      </div>
       <div class="exec-section-line"></div>
     </div>
     <div class="grid-4">
@@ -1073,11 +1326,16 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">💰</span>
           Actual Acceptance
         </div>
-        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK27</span><span class="fin-val green" id="dtlActWK27">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">WK27</span><span class="fin-val green" id="dtlActWK27">-</span>
+        </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(16,185,129,.3)">
           <span class="fin-label" style="font-weight:600;color:#6ee7b7">JUNE Total</span>
           <span class="fin-val green" style="font-weight:700" id="dtlActJUNE">-</span>
@@ -1090,8 +1348,10 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📈</span>
           Actual Acceptance TOTAL
         </div>
-        <div class="fin-row"><span class="fin-label">HUAWEI (JAN-JUNE)</span><span class="fin-val green" id="dtlActHuawei">-</span></div>
-        <div class="fin-row"><span class="fin-label">TRUE-TUC (JAN-JUNE)</span><span class="fin-val green" id="dtlActTrueTuc">-</span></div>
+        <div class="fin-row"><span class="fin-label">HUAWEI (JAN-JUNE)</span><span class="fin-val green"
+            id="dtlActHuawei">-</span></div>
+        <div class="fin-row"><span class="fin-label">TRUE-TUC (JAN-JUNE)</span><span class="fin-val green"
+            id="dtlActTrueTuc">-</span></div>
       </div>
 
       <!-- Card 2b: AC1 Plan WK28 -->
@@ -1100,10 +1360,14 @@
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
           Plan: Acceptance AC#1 Plan WK28
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber" id="dtlAC1WK28_2023">-</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber" id="dtlAC1WK28_2024">-</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber" id="dtlAC1WK28_2025">-</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber" id="dtlAC1WK28_2026">-</span></div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber"
+            id="dtlAC1WK28_2023">-</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber"
+            id="dtlAC1WK28_2024">-</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber"
+            id="dtlAC1WK28_2025">-</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber"
+            id="dtlAC1WK28_2026">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
           <span class="fin-val amber" style="font-weight:700" id="dtlAC1WK28Total">-</span>
@@ -1116,10 +1380,14 @@
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
           Plan: Acceptance AC#2 Plan WK28
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2023">-</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2024">-</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2025">-</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd" id="dtlAC2WK28_2026">-</span></div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC2WK28_2023">-</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC2WK28_2024">-</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC2WK28_2025">-</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC2WK28_2026">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
           <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
           <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2WK28Total">-</span>
@@ -1149,31 +1417,31 @@
     <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
     <p class="section-title">📊 SO WEEK 27 VS WEEK 28</p>
     <div class="card" style="margin-bottom:28px">
-      <div class="card-title" style="display:flex; justify-content:space-between;">
-        <div>
-          <span class="icon" style="--card-icon-bg:rgba(99,102,241,.15)">⚖️</span>
-          SO Comparison (Sheet1)
-        </div>
+      <div class="card-title">
+        <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">⚖️</span>
+        SO Comparison (Sheet1)
       </div>
       <table class="dash-table">
         <thead>
           <tr>
-            <th rowspan="2">YEAR</th>
-            <th colspan="2" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">WK27 (Sum of REMAIN)</th>
-            <th colspan="2" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">WK28 (Sum of REMAIN)</th>
-            <th colspan="2" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">Diff (WK28 - WK27)</th>
+            <th>Year</th>
+            <th id="soWk1Head" colspan="2">WK27 Revenue / Remain</th>
+            <th id="soWk2Head" colspan="2">WK28 Revenue / Remain</th>
           </tr>
           <tr>
-            <th style="text-align: right; color:#fcd34d;">AC1 DONE</th>
-            <th style="text-align: right; color:#fcd34d;">UNFULFILL</th>
-            <th style="text-align: right; color:#93c5fd;">AC1 DONE</th>
-            <th style="text-align: right; color:#93c5fd;">UNFULFILL</th>
-            <th style="text-align: right;">AC1 DONE</th>
-            <th style="text-align: right;">UNFULFILL</th>
+            <th></th>
+            <th>Revenue</th>
+            <th>Remain</th>
+            <th>Revenue</th>
+            <th>Remain</th>
           </tr>
         </thead>
-        <tbody id="soComparisonBody">
-          <tr><td colspan="7" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No data imported</td></tr>
+        <tbody id="soCompareBody">
+          <tr>
+            <td colspan="5"
+              style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">No data
+              imported</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -1188,10 +1456,14 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">✅</span>
           AC1 DONE REMAIN
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val green" id="remAC1done2023">45,713 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val green" id="remAC1done2024">12,892 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val green" id="remAC1done2025">28,959 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val green" id="remAC1done2026">88,617 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val green" id="remAC1done2023">45,713
+            ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val green" id="remAC1done2024">12,892
+            ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val green" id="remAC1done2025">28,959
+            ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val green" id="remAC1done2026">88,617
+            ฿</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(16,185,129,.3)">
           <span class="fin-label" style="font-weight:600;color:#6ee7b7">รวม</span>
           <span class="fin-val green" style="font-weight:700" id="remAC1doneTotal">176,181 ฿</span>
@@ -1204,10 +1476,14 @@
           <span class="icon" style="--card-icon-bg:rgba(239,68,68,.15)">⚠️</span>
           UNFULFILL REMAIN
         </div>
-        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val red" id="remUnfulfill2023">112,782 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val red" id="remUnfulfill2024">60,400 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val red" id="remUnfulfill2025">77,207 ฿</span></div>
-        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val red" id="remUnfulfill2026">2,053,060 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val red" id="remUnfulfill2023">112,782
+            ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val red" id="remUnfulfill2024">60,400
+            ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val red" id="remUnfulfill2025">77,207
+            ฿</span></div>
+        <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val red"
+            id="remUnfulfill2026">2,053,060 ฿</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(239,68,68,.3)">
           <span class="fin-label" style="font-weight:600;color:#f87171">รวม</span>
           <span class="fin-val red" style="font-weight:700" id="remUnfulfillTotal">2,303,449 ฿</span>
@@ -1240,19 +1516,21 @@
     <p class="section-title">👤 Team Performance &amp; Aging Analysis</p>
 
     <!-- The Execution Paradox -->
-    <div class="card" style="margin-bottom: 20px; border-color: rgba(245,158,11,0.3); background: linear-gradient(180deg, rgba(245,158,11,0.05) 0%, rgba(22,29,46,1) 100%);">
+    <div class="card"
+      style="margin-bottom: 20px; border-color: rgba(245,158,11,0.3); background: linear-gradient(180deg, rgba(245,158,11,0.05) 0%, rgba(22,29,46,1) 100%);">
       <div class="card-title" style="margin-bottom: 8px;">
         <span class="icon" style="--card-icon-bg:rgba(245,158,11,.2)">⚡</span>
         The Execution Paradox
       </div>
-      <p id="executionParadoxNotes" style="font-size: .85rem; color: #fcd34d; font-weight: 500; line-height: 1.5; margin-bottom: 0;">
+      <p id="executionParadoxNotes"
+        style="font-size: .85rem; color: #fcd34d; font-weight: 500; line-height: 1.5; margin-bottom: 0;">
         หน้างานทำได้เร็ว แต่กระบวนการตรวจรับเอกสารล่าช้า
       </p>
     </div>
 
     <div class="main-grid">
-      <div class="col-left">
-        <div class="card">
+
+      <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">⏱️</span>
           1st &amp; 2nd Milestone AGING Analysis
@@ -1289,7 +1567,8 @@
         </table>
       </div>
 
-        <div class="card">
+      <!-- Card: Overall Team Install -->
+      <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">🛠️</span>
           Overall Team Install
@@ -1304,7 +1583,8 @@
           </thead>
           <tbody id="teamInstallBody">
             <tr>
-              <td colspan="3" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No data imported</td>
+              <td colspan="3" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No
+                data imported</td>
             </tr>
           </tbody>
         </table>
@@ -1351,10 +1631,7 @@
         </table>
       </div>
 
-        <!-- Card: Overall Team Install -->
-      </div>
-      <div class="col-right">
-        <!-- Card: SLA Onprocess -->
+      <!-- Card: SLA Onprocess -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(239,68,68,.15)">🚨</span>
@@ -1363,24 +1640,36 @@
 
         <!-- EXECUTIVE SUMMARY -->
         <div style="display:flex; gap: 12px; margin-bottom: 20px;">
-          <div style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+          <div
+            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
             <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">SMART QC SUMMARY</div>
-            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green" id="sumQcDone">-</span></div>
-            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber" id="sumQcLate">-</span></div>
-            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd" id="sumQcPend">-</span></div>
-            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444" id="sumQcOver">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
+                id="sumQcDone">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
+                id="sumQcLate">-</span></div>
+            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
+                id="sumQcPend">-</span></div>
+            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
+                id="sumQcOver">-</span></div>
           </div>
-          <div style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+          <div
+            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
             <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">PAT SUBCON SUMMARY</div>
-            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green" id="sumPatDone">-</span></div>
-            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber" id="sumPatLate">-</span></div>
-            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd" id="sumPatPend">-</span></div>
-            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444" id="sumPatOver">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
+                id="sumPatDone">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
+                id="sumPatLate">-</span></div>
+            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
+                id="sumPatPend">-</span></div>
+            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
+                id="sumPatOver">-</span></div>
           </div>
         </div>
 
         <!-- SMART QC -->
-        <div style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">Action Required: SMART QC</div>
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Action Required: SMART QC</div>
         <table class="dash-table" style="margin-bottom: 16px;">
           <thead>
             <tr>
@@ -1397,7 +1686,9 @@
         </table>
 
         <!-- PAT SUBCON -->
-        <div style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">Action Required: PAT SUBCON</div>
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Action Required: PAT SUBCON</div>
         <table class="dash-table" style="margin-bottom: 16px;">
           <thead>
             <tr>
@@ -1407,13 +1698,17 @@
           </thead>
           <tbody id="slaPatSubconBody">
             <tr>
-              <td colspan="2" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites are up to date 🎉</td>
+              <td colspan="2"
+                style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites
+                are up to date 🎉</td>
             </tr>
           </tbody>
         </table>
 
         <!-- PAT NOT PASS -->
-        <div style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">Rework Required: PAT NOT PASS</div>
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Rework Required: PAT NOT PASS</div>
         <table class="dash-table">
           <thead>
             <tr>
@@ -1454,8 +1749,10 @@
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📄</span>
           Acceptance AC#1 Performance
         </div>
-        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc1Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber"
+            id="rawAc1Aging">-</span></div>
       </div>
 
       <!-- Acceptance AC#2 Performance -->
@@ -1464,8 +1761,10 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📄</span>
           Acceptance AC#2 Performance
         </div>
-        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc2Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span>
+        </div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber"
+            id="rawAc2Aging">-</span></div>
       </div>
 
       <!-- Work Type Analysis -->
@@ -1478,7 +1777,7 @@
           Breakdown of work type by HAE, TME, MBB, IPRAN
         </p>
       </div>
-      </div>
+
     </div>
 
     <!-- ── Row 4: Safety & Conclusion (Part 5 & 6) ── -->
@@ -1675,13 +1974,13 @@
             if (haeM1) {
               document.getElementById('kpiHaeAging').innerHTML = Number(haeM1).toFixed(2) + '<span class="unit">days</span>';
               document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1 ? Number(tmeM1).toFixed(2) : '-'} days`;
-              
+
               const execHaeM1El = document.getElementById('execHaeM1');
               if (execHaeM1El) execHaeM1El.textContent = Number(haeM1).toFixed(2);
               const execTmeM1El = document.getElementById('execTmeM1');
               if (execTmeM1El) execTmeM1El.textContent = tmeM1 ? Number(tmeM1).toFixed(2) : '-';
             }
-            
+
             const qcDefect = findMetric(p1, 'defect issue', 'Notes / Key Message') || findMetric(p1, 'operation error', 'Notes / Key Message');
             const qcImprove = findMetric(p1, 'action plan', 'Notes / Key Message') || findMetric(p1, 'improvement plan', 'Notes / Key Message');
             if (qcDefect) {
@@ -1702,7 +2001,7 @@
           const p2 = getSheet('Part 2 - Aging');
           if (p2.length) {
             importedSheets.push('Part 2');
-            
+
             // Find columns dynamically — Excel header row: Slide No, Slide Title, Category/Person, M1 Aging, Notes
             const allKeys2 = Object.keys(p2[0] || {});
             const C = allKeys2.find(k => k.trim() === 'Category / Person') || 'Category / Person';
@@ -1712,7 +2011,7 @@
             const haeM1row = p2.find(r => /HAE\s*M1/i.test(String(r[C])));
             const tmeM1row = p2.find(r => /TME\s*M1/i.test(String(r[C])) && !/IPRAN/i.test(String(r[C])));
             const tmeM2MBBrow = p2.find(r => /TME\s*M2/i.test(String(r[C])) && /MBB/i.test(String(r[C])));
-            const haeM2row  = p2.find(r => /HAE\s*M2/i.test(String(r[C])));
+            const haeM2row = p2.find(r => /HAE\s*M2/i.test(String(r[C])));
 
             if (haeM1row) {
               const hM1 = Number(haeM1row[M1]).toFixed(2);
@@ -1726,7 +2025,7 @@
             }
 
             // PE rows: Adisak Average M1+M2, Palagon Average M1+M2
-            const adisakAvg  = p2.find(r => /adisak/i.test(String(r[C])) && /average/i.test(String(r[C])));
+            const adisakAvg = p2.find(r => /adisak/i.test(String(r[C])) && /average/i.test(String(r[C])));
             const palagonAvg = p2.find(r => /palagon/i.test(String(r[C])) && /average/i.test(String(r[C])));
             // Palagon HAE and TME rows for M2 and site counts
             const palagonHAE = p2.find(r => /palagon/i.test(String(r[C])) && /HAE/i.test(String(r[C])) && !/average/i.test(String(r[C])));
@@ -1797,7 +2096,7 @@
                   const age = r['Avg Aging'];
                   const ageStr = fmtDays(age);
                   const badgeClass = (age <= 5) ? 'badge-green' : (age <= 7 ? 'badge-amber' : 'badge-red');
-                  const title = String(r['Owner / Type']).replace(/overall team install/i, '').trim() || `WK${26+i}`;
+                  const title = String(r['Owner / Type']).replace(/overall team install/i, '').trim() || `WK${26 + i}`;
                   html += `<tr>
                     <td style="color:var(--text-primary);font-weight:500">${title}</td>
                     <td>${amt}</td>
@@ -1824,25 +2123,25 @@
             // Excel rows: Metric = 'Backlog Week 27', 'Backlog Week 28' inside Slide Title 'Backlog Backlog Week 27 VS Backlog Week 28'
             const blRows = p4.filter(r => /backlog week/i.test(String(r['Metric'])));
             if (blRows.length >= 2) {
-              const wk1Label = String(blRows[0]['Metric'] || '').replace(/backlog/i,'').trim(); // 'Week 27'
-              const wk2Label = String(blRows[1]['Metric'] || '').replace(/backlog/i,'').trim(); // 'Week 28'
+              const wk1Label = String(blRows[0]['Metric'] || '').replace(/backlog/i, '').trim(); // 'Week 27'
+              const wk2Label = String(blRows[1]['Metric'] || '').replace(/backlog/i, '').trim(); // 'Week 28'
               const wk1Val = Number(getV(blRows[0]) || 0);
               const wk2Val = Number(getV(blRows[1]) || 0);
               const diff = wk2Val - wk1Val;
-              const fmt = v => Number(v).toLocaleString('th-TH', {maximumFractionDigits:0}) + ' ฿';
+              const fmt = v => Number(v).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
               const el_label = document.getElementById('blWkLabel');
-              const el_wk1l  = document.getElementById('blWk1Label');
-              const el_wk2l  = document.getElementById('blWk2Label');
-              const el_wk1v  = document.getElementById('blWk1Val');
-              const el_wk2v  = document.getElementById('blWk2Val');
-              const el_diff  = document.getElementById('blDiff');
+              const el_wk1l = document.getElementById('blWk1Label');
+              const el_wk2l = document.getElementById('blWk2Label');
+              const el_wk1v = document.getElementById('blWk1Val');
+              const el_wk2v = document.getElementById('blWk2Val');
+              const el_diff = document.getElementById('blDiff');
               if (el_label) el_label.textContent = `Backlog ${wk1Label} VS ${wk2Label}`;
-              if (el_wk1l)  el_wk1l.textContent = wk1Label;
-              if (el_wk2l)  el_wk2l.textContent = wk2Label;
-              if (el_wk1v)  el_wk1v.textContent = fmt(wk1Val);
-              if (el_wk2v)  el_wk2v.textContent = fmt(wk2Val);
-              if (el_diff)  { el_diff.textContent = (diff >= 0 ? '+' : '') + fmt(diff); el_diff.style.color = diff >= 0 ? '#10b981' : '#ef4444'; }
-              
+              if (el_wk1l) el_wk1l.textContent = wk1Label;
+              if (el_wk2l) el_wk2l.textContent = wk2Label;
+              if (el_wk1v) el_wk1v.textContent = fmt(wk1Val);
+              if (el_wk2v) el_wk2v.textContent = fmt(wk2Val);
+              if (el_diff) { el_diff.textContent = (diff >= 0 ? '+' : '') + fmt(diff); el_diff.style.color = diff >= 0 ? '#10b981' : '#ef4444'; }
+
               // Update Backlog Trend Chart dynamically
               if (window.backlogChart) {
                 const dataArr = window.backlogChart.data.datasets[0].data;
@@ -1895,246 +2194,183 @@
             if (actPlan === null) actPlan = getSum('action plan');
 
             /* ─── Part 7 - SLA On-Process ─── */
-          const p7Name = wb.SheetNames.find(n => {
-            const normalized = n.toUpperCase().replace(/[\s-_]+/g, '');
-            return normalized.includes('PART7') || normalized.includes('SLAONPROCESS');
-          });
-          const p7 = p7Name ? wb.Sheets[p7Name] : null;
-          if (p7) {
-            importedSheets.push('Part 7');
-            const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
-            
-            // Find the header row and the column index of the first Site DUID dynamically
-            let startRow = -1;
-            let colBIndex = 1;
-            for (let i = 0; i < p7Rows.length; i++) {
-              const row = p7Rows[i];
-              if (row) {
-                const idx = row.findIndex(cell => {
-                  const val = String(cell || '').toUpperCase().replace(/\s+/g, ' ');
-                  return val.includes('SITE DUID') || val.includes('SITE_DUID');
-                });
-                if (idx >= 0) {
-                  colBIndex = idx;
-                  startRow = i + 1;
-                  break;
+            const p7Name = wb.SheetNames.find(n => {
+              const normalized = n.toUpperCase().replace(/[\s-_]+/g, '');
+              return normalized.includes('PART7') || normalized.includes('SLAONPROCESS');
+            });
+            const p7 = p7Name ? wb.Sheets[p7Name] : null;
+            if (p7) {
+              importedSheets.push('Part 7');
+              const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
+
+              // Find the header row and the column index of the first Site DUID dynamically
+              let startRow = -1;
+              let colBIndex = 1;
+              for (let i = 0; i < p7Rows.length; i++) {
+                const row = p7Rows[i];
+                if (row) {
+                  const idx = row.findIndex(cell => {
+                    const val = String(cell || '').toUpperCase().replace(/\s+/g, ' ');
+                    return val.includes('SITE DUID') || val.includes('SITE_DUID');
+                  });
+                  if (idx >= 0) {
+                    colBIndex = idx;
+                    startRow = i + 1;
+                    break;
+                  }
                 }
               }
-            }
 
-            console.log('SLA On-Process Import Debug:', {
-              totalRows: p7Rows.length,
-              headerRowIdx: startRow - 1,
-              colBIndex: colBIndex
-            });
+              console.log('SLA On-Process Import Debug:', {
+                totalRows: p7Rows.length,
+                headerRowIdx: startRow - 1,
+                colBIndex: colBIndex
+              });
 
-            // Fallback if header row is not found
-            if (startRow === -1) {
-              startRow = Math.min(28, p7Rows.length);
-              console.warn('SLA On-Process: Header row SITE DUID not found, falling back to startRow:', startRow);
-            }
+              // Fallback if header row is not found
+              if (startRow === -1) {
+                startRow = Math.min(28, p7Rows.length);
+                console.warn('SLA On-Process: Header row SITE DUID not found, falling back to startRow:', startRow);
+              }
 
-            const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
-              const result = [];
-              for (let i = startRow; i < p7Rows.length; i++) {
+              const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
+                const result = [];
+                for (let i = startRow; i < p7Rows.length; i++) {
+                  const row = p7Rows[i];
+                  if (!row) continue;
+                  const site = String(row[siteCol] || '').trim();
+                  if (!site) continue;  // skip blank rows, don't break (other cols may still have data)
+
+                  if (site.toLowerCase().includes('all sites are up to date') || site.toLowerCase().includes('up to date')) {
+                    result.push({ site: site, upToDate: true });
+                    break;
+                  }
+
+                  let aging = String(row[agingCol] || '').trim();
+                  // Normalize aging: "3 วัน" -> "3d", plain number -> "3d"
+                  aging = aging.replace(/\s*วัน\s*/g, 'd');
+                  if (aging && !isNaN(aging)) aging = aging + 'd';
+                  if (!aging) aging = '-';
+
+                  const owner = ownerCol !== undefined ? String(row[ownerCol] || '').trim() : '';
+                  result.push({ site, aging, owner });
+                }
+                return result;
+              };
+
+              // Find column indices dynamically
+              let smartQcSite = -1, smartQcAging = -1;
+              let patSite = -1, patAging = -1, patOwner = -1;
+              let reworkSite = -1, reworkAging = -1, reworkOwner = -1;
+
+              // Scan the first few rows (e.g. up to row 30) to find the main headers
+              for (let i = 0; i < Math.min(30, p7Rows.length); i++) {
                 const row = p7Rows[i];
                 if (!row) continue;
-                const site = String(row[siteCol] || '').trim();
-                if (!site) continue;  // skip blank rows, don't break (other cols may still have data)
-                
-                if (site.toLowerCase().includes('all sites are up to date') || site.toLowerCase().includes('up to date')) {
-                  result.push({ site: site, upToDate: true });
-                  break;
-                }
-                
-                let aging = String(row[agingCol] || '').trim();
-                // Normalize aging: "3 วัน" -> "3d", plain number -> "3d"
-                aging = aging.replace(/\s*วัน\s*/g, 'd');
-                if (aging && !isNaN(aging)) aging = aging + 'd';
-                if (!aging) aging = '-';
-                
-                const owner = ownerCol !== undefined ? String(row[ownerCol] || '').trim() : '';
-                result.push({ site, aging, owner });
-              }
-              return result;
-            };
-
-            // Find column indices dynamically
-            let smartQcSite = -1, smartQcAging = -1;
-            let patSite = -1, patAging = -1, patOwner = -1;
-            let reworkSite = -1, reworkAging = -1, reworkOwner = -1;
-            
-            // Scan the first few rows (e.g. up to row 30) to find the main headers
-            for (let i = 0; i < Math.min(30, p7Rows.length); i++) {
-              const row = p7Rows[i];
-              if (!row) continue;
-              for (let c = 0; c < row.length; c++) {
-                const val = String(row[c] || '').toUpperCase().replace(/\s+/g, ' ');
-                if (val.includes('SMART QC')) {
-                  smartQcSite = c;
-                  smartQcAging = c + 1;
-                }
-                if (val.includes('PAT SUBCON')) {
-                  patSite = c;
-                  patAging = c + 1;
-                  patOwner = c + 2;
-                }
-                if (val.includes('REWORK REQUIRED') || val.includes('PAT NOT PASS')) {
-                  reworkSite = c;
-                  reworkAging = c + 1;
-                  reworkOwner = c + 2;
+                for (let c = 0; c < row.length; c++) {
+                  const val = String(row[c] || '').toUpperCase().replace(/\s+/g, ' ');
+                  if (val.includes('SMART QC')) {
+                    smartQcSite = c;
+                    smartQcAging = c + 1;
+                  }
+                  if (val.includes('PAT SUBCON')) {
+                    patSite = c;
+                    patAging = c + 1;
+                    patOwner = c + 2;
+                  }
+                  if (val.includes('REWORK REQUIRED') || val.includes('PAT NOT PASS')) {
+                    reworkSite = c;
+                    reworkAging = c + 1;
+                    reworkOwner = c + 2;
+                  }
                 }
               }
-            }
 
-            // Fallbacks if not found by top header, try to use relative to first 'SITE DUID'
-            if (smartQcSite === -1) {
-              smartQcSite = colBIndex; smartQcAging = colBIndex + 1;
-              patSite = colBIndex + 4; patAging = colBIndex + 5; patOwner = colBIndex + 6;
-              reworkSite = colBIndex + 8; reworkAging = colBIndex + 9; reworkOwner = colBIndex + 10;
-            }
+              // Fallbacks if not found by top header, try to use relative to first 'SITE DUID'
+              if (smartQcSite === -1) {
+                smartQcSite = colBIndex; smartQcAging = colBIndex + 1;
+                patSite = colBIndex + 4; patAging = colBIndex + 5; patOwner = colBIndex + 6;
+                reworkSite = colBIndex + 8; reworkAging = colBIndex + 9; reworkOwner = colBIndex + 10;
+              }
 
-            const smartQcData = smartQcSite >= 0 ? parseSlaColumn(smartQcSite, smartQcAging) : [];
-            const patSubconData = patSite >= 0 ? parseSlaColumn(patSite, patAging, patOwner) : [];
-            const reworkData = reworkSite >= 0 ? parseSlaColumn(reworkSite, reworkAging, reworkOwner) : [];
+              const smartQcData = smartQcSite >= 0 ? parseSlaColumn(smartQcSite, smartQcAging) : [];
+              const patSubconData = patSite >= 0 ? parseSlaColumn(patSite, patAging, patOwner) : [];
+              const reworkData = reworkSite >= 0 ? parseSlaColumn(reworkSite, reworkAging, reworkOwner) : [];
 
-            // Parse Executive Summary
-            const extractSum = (colIdx, label) => {
-              if (colIdx < 0) return '-';
-              for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
-                const r = p7Rows[i];
-                if (r && String(r[colIdx] || '').includes(label)) {
-                  return String(r[colIdx + 1] || '0');
+              // Parse Executive Summary
+              const extractSum = (colIdx, label) => {
+                if (colIdx < 0) return '-';
+                for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
+                  const r = p7Rows[i];
+                  if (r && String(r[colIdx] || '').includes(label)) {
+                    return String(r[colIdx + 1] || '0');
+                  }
                 }
+                return '-';
+              };
+
+              const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+              if (smartQcSite >= 0) {
+                setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
+                setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
+                setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
+                setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
               }
-              return '-';
-            };
-
-            const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-            if (smartQcSite >= 0) {
-               setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
-               setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
-               setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
-               setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
-            }
-            if (patSite >= 0) {
-               setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
-               setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
-               setTxt('sumPatPend', extractSum(patSite, 'Pending'));
-               setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
-            }
-
-            console.log('SLA Parsed Data Counts:', {
-              smartQc: smartQcData.length,
-              patSubcon: patSubconData.length,
-              rework: reworkData.length
-            });
-
-            const renderTable = (tbodyId, data, hasOwner) => {
-              const tbody = document.getElementById(tbodyId);
-              if (!tbody) return;
-              if (data.length === 0 || (data.length === 1 && data[0].upToDate)) {
-                 tbody.innerHTML = `<tr><td colspan="${hasOwner ? 3 : 2}" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites are up to date 🎉</td></tr>`;
-                 return;
+              if (patSite >= 0) {
+                setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
+                setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
+                setTxt('sumPatPend', extractSum(patSite, 'Pending'));
+                setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
               }
-              let html = '';
-              data.forEach(item => {
-                let siteColor = tbodyId === 'slaReworkBody' ? '#ef4444' : 'var(--text-primary)';
-                const badgeColor = String(item.aging).includes('0d') ? 'badge-green' : 'badge-amber';
-                let tr = `<tr>
+
+              console.log('SLA Parsed Data Counts:', {
+                smartQc: smartQcData.length,
+                patSubcon: patSubconData.length,
+                rework: reworkData.length
+              });
+
+              const renderTable = (tbodyId, data, hasOwner) => {
+                const tbody = document.getElementById(tbodyId);
+                if (!tbody) return;
+                if (data.length === 0 || (data.length === 1 && data[0].upToDate)) {
+                  tbody.innerHTML = `<tr><td colspan="${hasOwner ? 3 : 2}" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites are up to date 🎉</td></tr>`;
+                  return;
+                }
+                let html = '';
+                data.forEach(item => {
+                  let siteColor = tbodyId === 'slaReworkBody' ? '#ef4444' : 'var(--text-primary)';
+                  const badgeColor = String(item.aging).includes('0d') ? 'badge-green' : 'badge-amber';
+                  let tr = `<tr>
                   <td style="color:${siteColor}; font-size: 0.72rem;">${item.site}</td>
                   <td><span class="badge ${badgeColor}">${item.aging}</span></td>`;
-                if (hasOwner) {
-                  tr += `<td style="color:var(--accent-green); font-size: 0.72rem;">${item.owner}</td>`;
-                }
-                tr += `</tr>`;
-                html += tr;
-              });
-              tbody.innerHTML = html;
-            };
+                  if (hasOwner) {
+                    tr += `<td style="color:var(--accent-green); font-size: 0.72rem;">${item.owner}</td>`;
+                  }
+                  tr += `</tr>`;
+                  html += tr;
+                });
+                tbody.innerHTML = html;
+              };
 
-            renderTable('slaSmartQcBody', smartQcData, false);
-            renderTable('slaPatSubconBody', patSubconData, true);
-            console.log('[DEBUG] reworkData before renderTable:', JSON.stringify(reworkData));
-            renderTable('slaReworkBody', reworkData, true);
-            console.log('[DEBUG] slaReworkBody innerHTML after render:', document.getElementById('slaReworkBody') ? document.getElementById('slaReworkBody').innerHTML.substring(0, 100) : 'NOT FOUND');
-          }
-
-          if (importedSheets.length > 0) {
-
-            // SO Comparison (Sheet1)
-            try {
-              const sheet1 = wb.Sheets['Sheet1'];
-              if (sheet1) {
-                const s1Rows = XLSX.utils.sheet_to_json(sheet1, { header: 1, defval: '' });
-                let html = '';
-                const years = ['2022', '2023', '2024', '2025', '2026', 'Grand Total'];
-                let wk27Start = s1Rows.findIndex(r => r[0] === 'WEEK27');
-                let wk28Start = s1Rows.findIndex(r => r[0] === 'WEEK28');
-
-                if (wk27Start !== -1 && wk28Start !== -1) {
-                  years.forEach(year => {
-                    const r27Idx = s1Rows.findIndex((r, idx) => idx > wk27Start && idx < wk28Start && r[0] === year);
-                    const r28Idx = s1Rows.findIndex((r, idx) => idx > wk28Start && r[0] === year);
-                    
-                    const r27 = r27Idx !== -1 ? s1Rows[r27Idx] : [];
-                    const r28 = r28Idx !== -1 ? s1Rows[r28Idx] : [];
-                    
-                    const getVal = (row, col) => {
-                       const v = row[col];
-                       if(v === '' || v === undefined) return 0;
-                       return Number(String(v).replace(/[^0-9.-]/g, '')) || 0;
-                    };
-
-                    const wk27Ac1 = getVal(r27, 3);
-                    const wk27Un = getVal(r27, 9);
-                    const wk28Ac1 = getVal(r28, 3);
-                    const wk28Un = getVal(r28, 9);
-                    const diffAc1 = wk28Ac1 - wk27Ac1;
-                    const diffUn = wk28Un - wk27Un;
-
-                    const fmt = (n) => n === 0 ? '-' : Number(n).toLocaleString('th-TH', { maximumFractionDigits: 0 });
-                    
-                    const diffColor = (n) => {
-                       if(n > 0) return 'color:#10b981'; // Green
-                       if(n < 0) return 'color:#ef4444'; // Red
-                       return 'color:var(--text-secondary)';
-                    };
-                    
-                    const isTotal = year === 'Grand Total';
-                    const rowStyle = isTotal ? 'font-weight: 700; background: rgba(255,255,255,0.03);' : '';
-                    const labelColor = isTotal ? 'var(--text-primary)' : 'var(--text-primary)';
-
-                    html += `<tr style="${rowStyle}">
-                      <td style="color:${labelColor}">${year}</td>
-                      <td style="text-align: right;">${fmt(wk27Ac1)}</td>
-                      <td style="text-align: right;">${fmt(wk27Un)}</td>
-                      <td style="text-align: right;">${fmt(wk28Ac1)}</td>
-                      <td style="text-align: right;">${fmt(wk28Un)}</td>
-                      <td style="text-align: right; ${diffColor(diffAc1)}">${diffAc1 > 0 ? '+' : ''}${fmt(diffAc1)}</td>
-                      <td style="text-align: right; ${diffColor(diffUn)}">${diffUn > 0 ? '+' : ''}${fmt(diffUn)}</td>
-                    </tr>`;
-                  });
-                  
-                  const tbody = document.getElementById('soComparisonBody');
-                  if(tbody) tbody.innerHTML = html;
-                }
-              }
-            } catch(e) {
-              console.warn('Sheet1 SO Comparison parsing error:', e.message);
+              renderTable('slaSmartQcBody', smartQcData, false);
+              renderTable('slaPatSubconBody', patSubconData, true);
+              console.log('[DEBUG] reworkData before renderTable:', JSON.stringify(reworkData));
+              renderTable('slaReworkBody', reworkData, true);
+              console.log('[DEBUG] slaReworkBody innerHTML after render:', document.getElementById('slaReworkBody') ? document.getElementById('slaReworkBody').innerHTML.substring(0, 100) : 'NOT FOUND');
             }
 
-            // Update charts (wrapped in try-catch to prevent blocking)
-            try { window.backlogChart.update(); } catch(e) { console.warn('backlogChart update failed:', e.message); }
-            try { window.siteDonut.update(); } catch(e) { console.warn('siteDonut update failed:', e.message); }
-            try { window.docChart.update(); } catch(e) { console.warn('docChart update failed:', e.message); }
+            if (importedSheets.length > 0) {
+              // Update charts (wrapped in try-catch to prevent blocking)
+              try { window.backlogChart.update(); } catch (e) { console.warn('backlogChart update failed:', e.message); }
+              try { window.siteDonut.update(); } catch (e) { console.warn('siteDonut update failed:', e.message); }
+              try { window.docChart.update(); } catch (e) { console.warn('docChart update failed:', e.message); }
 
-            document.getElementById('importStatus').style.display = 'inline-block';
-            setTimeout(() => document.getElementById('importStatus').style.display = 'none', 3000);
-            
-            // Allow save
-            document.getElementById('btnSave').classList.add('show');
-          }
+              document.getElementById('importStatus').style.display = 'inline-block';
+              setTimeout(() => document.getElementById('importStatus').style.display = 'none', 3000);
+
+              // Allow save
+              document.getElementById('btnSave').classList.add('show');
+            }
 
             let onProc = getSum('on-process');
             if (onProc === null) onProc = getSum('on process');
@@ -2179,7 +2415,7 @@
               s1Rows.forEach(row => {
                 let label = String(row[15] || '').toUpperCase();
                 let val = row[16] || 0;
-                
+
                 if (label.includes('AC#1') || label.includes('AC1')) {
                   currentSection = 'AC1';
                   if (!vAc1Total) vAc1Total = val;
@@ -2215,11 +2451,11 @@
             const vActWK27 = getVal('actual acceptance wk27');
             setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
             setEl('dtlActWK26', vAct26); setEl('dtlActWK27', vActWK27); setEl('dtlActJUNE', vActJune);
-            
+
             const vActHuawei = getValByTitleRegex(/actual acceptance total/i, 'huawei');
             const vActTrue = getValByTitleRegex(/actual acceptance total/i, 'true-tuc');
             setEl('dtlActHuawei', vActHuawei); setEl('dtlActTrueTuc', vActTrue);
-            
+
             // WK27 cards now show only total (single row in Excel)
             const vAc1WK27Total = getVal('action plan ac#1 wk27');
             const vAc2WK27Total = getVal('action plan ac#2 wk27');
@@ -2227,13 +2463,13 @@
             setEl('dtlAC2Total', vAc2WK27Total || vAc2Total);
             setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
             setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
-            
+
             const vAc1Wk28_23 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2023');
             const vAc1Wk28_24 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2024');
             const vAc1Wk28_25 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2025');
             const vAc1Wk28_26 = getValByTitleRegex(/action plan ac#?1 wk28/i, '2026');
             const vAc1Wk28Tot = getValByTitleRegex(/action plan ac#?1 total/i, 'total') || getValByTitleRegex(/action plan ac#?1 wk28/i, 'total');
-            
+
             const vAc2Wk28_23 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2023');
             const vAc2Wk28_24 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2024');
             const vAc2Wk28_25 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2025');
@@ -2301,7 +2537,7 @@
           }
 
           /* ─── Sheet1 Fallback: AC#1 / AC#2 Plan data from pivot table ─── */
-          if (!p4.length || !(document.getElementById('dtlAC1Total')?.textContent || '').replace(/-/g,'').trim()) {
+          if (!p4.length || !(document.getElementById('dtlAC1Total')?.textContent || '').replace(/-/g, '').trim()) {
             const s1sheet = wb.Sheets['Sheet1'];
             if (s1sheet) {
               const s1Rows = XLSX.utils.sheet_to_json(s1sheet, { header: 1, defval: '' });
@@ -2309,7 +2545,7 @@
               let section = null;
               const ac1 = {}, ac2 = {};
               s1Rows.forEach(row => {
-                const label = String(row[15] || '').toUpperCase().replace(/\s+/g,' ').trim();
+                const label = String(row[15] || '').toUpperCase().replace(/\s+/g, ' ').trim();
                 const val = Number(row[18] || row[16] || 0) || 0;
                 if (label.includes('ACCTANCE PLAN AC#1') || label.includes('ACTION PLAN AC#1') || label.includes('AC1 WK')) {
                   section = 'AC1'; ac1.total = val;
@@ -2342,7 +2578,7 @@
                 setElIfEmpty('dtlAC2WK28Total', ac2.total);
               }
               console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
-              
+
               // SO Comparison from Sheet1 pivot table
               // Structure: Row 0 = 'WEEK27', Row 10 = 'WEEK28', year rows in between at col 0
               // WK27: col0=year, col1=AC1Done_count, col2=AC1Done_Revenue, col3=AC1Done_Remain, col4=Fulfilled_count, col5=Fulfilled_Revenue, col6=Fulfilled_Remain, col7=Unfulfill_count, col8=Unfulfill_Revenue, col9=Unfulfill_Remain, col11=Total_Revenue, col12=Total_Remain
@@ -2473,6 +2709,46 @@
                 setBadge('pePalagonTme', palagonTme);
               }
 
+              // ── Milestone Table by Work Type (HAE-MBB / TME-MBB / TME-IPRAN) ──
+              const wtIdx = headers.findIndex(h => String(h).toUpperCase() === 'WORK TYPE');
+              if (wtIdx >= 0 && window.milestoneData) {
+                for (let i = 3; i < allRows.length; i++) {
+                  const row = allRows[i];
+                  if (!row || !row[projIdx]) continue;
+                  const proj = String(row[projIdx]).toUpperCase();
+                  const wt   = String(row[wtIdx] || '').toUpperCase();
+                  if (proj.includes('HAE') && wt.includes('MBB'))   window.milestoneData.haeMbb.sites++;
+                  if (proj.includes('TME') && wt.includes('MBB'))   window.milestoneData.tmeMbb.sites++;
+                  if (proj.includes('TME') && wt.includes('IPRAN')) window.milestoneData.tmeIpran.sites++;
+                }
+
+                const fmtd   = n  => (n === null || n === undefined || isNaN(n)) ? '-' : Number(n).toFixed(2) + 'd';
+                const bcolor = n  => (!n || isNaN(n)) ? 'badge-blue' : (n > 10 ? 'badge-amber' : 'badge-green');
+                const md = window.milestoneData;
+                const mHtml = `
+                  <tr>
+                    <td style="color:var(--text-primary);font-weight:500">HAE-MBB</td>
+                    <td style="text-align:center"><span class="badge badge-blue">${md.haeMbb.sites}</span></td>
+                    <td style="text-align:center"><span class="badge ${bcolor(md.haeMbb.m1)}">${fmtd(md.haeMbb.m1)}</span></td>
+                    <td style="text-align:center"><span class="badge ${bcolor(md.haeMbb.m2)}">${fmtd(md.haeMbb.m2)}</span></td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-primary);font-weight:500">TME-MBB</td>
+                    <td style="text-align:center"><span class="badge badge-blue">${md.tmeMbb.sites}</span></td>
+                    <td style="text-align:center"><span class="badge ${bcolor(md.tmeMbb.m1)}">${fmtd(md.tmeMbb.m1)}</span></td>
+                    <td style="text-align:center"><span class="badge ${bcolor(md.tmeMbb.m2)}">${fmtd(md.tmeMbb.m2)}</span></td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-primary);font-weight:500">TME-IPRAN</td>
+                    <td style="text-align:center"><span class="badge badge-blue">${md.tmeIpran.sites}</span></td>
+                    <td style="text-align:center"><span class="badge ${bcolor(md.tmeIpran.m1)}">${fmtd(md.tmeIpran.m1)}</span></td>
+                    <td style="text-align:center"><span class="badge ${bcolor(md.tmeIpran.m2)}">${fmtd(md.tmeIpran.m2)}</span></td>
+                  </tr>
+                `;
+                const mTbody = document.getElementById('milestoneWorkTypeBody');
+                if (mTbody) mTbody.innerHTML = mHtml;
+              }
+
               // Parse AC#1 and AC#2 raw amounts and agings
               let sumAc1Amt = 0, countAc1Aging = 0, sumAc1Aging = 0;
               let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
@@ -2480,7 +2756,7 @@
               for (let i = 3; i < allRows.length; i++) {
                 const row = allRows[i];
                 if (!row) continue;
-                
+
                 // Col BH (59)
                 const amt1 = Number(String(row[59] || '').replace(/[^0-9.-]/g, ''));
                 if (!isNaN(amt1) && amt1 > 0) sumAc1Amt += amt1;
@@ -2492,21 +2768,21 @@
                 // Col BJ (61)
                 const aging1Str = String(row[61] || '');
                 if (aging1Str.trim() !== '') {
-                    const aging1 = Number(aging1Str.replace(/[^0-9.-]/g, ''));
-                    if (!isNaN(aging1)) {
-                        sumAc1Aging += aging1;
-                        countAc1Aging++;
-                    }
+                  const aging1 = Number(aging1Str.replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(aging1)) {
+                    sumAc1Aging += aging1;
+                    countAc1Aging++;
+                  }
                 }
 
                 // Col BM (64)
                 const aging2Str = String(row[64] || '');
                 if (aging2Str.trim() !== '') {
-                    const aging2 = Number(aging2Str.replace(/[^0-9.-]/g, ''));
-                    if (!isNaN(aging2)) {
-                        sumAc2Aging += aging2;
-                        countAc2Aging++;
-                    }
+                  const aging2 = Number(aging2Str.replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(aging2)) {
+                    sumAc2Aging += aging2;
+                    countAc2Aging++;
+                  }
                 }
               }
 
@@ -2597,9 +2873,9 @@
             'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
           ];
           const vals = {};
-          VALUE_IDS.forEach(id => { 
-            const el = document.getElementById(id); 
-            if (el) vals[id] = el.tagName === 'TBODY' ? el.innerHTML : el.textContent; 
+          VALUE_IDS.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) vals[id] = el.tagName === 'TBODY' ? el.innerHTML : el.textContent;
           });
           const dashState = {
             vals,
@@ -2639,7 +2915,7 @@
           // Only restore individual value elements, NOT inner HTML (to preserve new cards)
           if (state.vals) {
             Object.entries(state.vals).forEach(([id, txt]) => {
-              const el = document.getElementById(id); 
+              const el = document.getElementById(id);
               if (el) {
                 if (el.tagName === 'TBODY') el.innerHTML = txt;
                 else el.textContent = txt;
@@ -2678,37 +2954,37 @@
       btn.disabled = true;
 
       try {
-          const VALUE_IDS = [
-            'weekBadge',
-            'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
-            'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
-            'kpiHaeAging', 'kpiHaeAgingSub',
-            'kpiQC', 'kpiQCSub',
-            'kpiActionPlan', 'kpiActionPlanSub',
-            'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
-            'finAC1Aging', 'finAC2Aging',
-            'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
-            'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
-            'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
-            'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
-            'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
-            'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
-            'rem3pillarsAC1', 'rem3pillarsUnfulfill', 'rem3pillarsTotal',
-            'peAdisakSites', 'peAdisakM1', 'peAdisakM2', 'peAdisakHae', 'peAdisakTme',
-            'pePalagonSites', 'pePalagonM1', 'pePalagonM2', 'pePalagonHae', 'pePalagonTme',
-            'docInstallAmtWK25', 'docInstallAgeWK25', 'docInstallAmtWK26', 'docInstallAgeWK26',
-            'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
-            'ehsZeroAccident', 'ehsHighRisk',
-            'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
-            'legendCompleted', 'legendOnProcess', 'legendRemaining',
-            'totalSitesText', 'projectBreakdownText',
-            'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
-            'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
-          ];
+        const VALUE_IDS = [
+          'weekBadge',
+          'kpiTotalSites', 'kpiTotalSitesSub', 'kpiTotalSitesTrend',
+          'kpiIncome', 'kpiIncomeSub', 'kpiBacklog', 'kpiBacklogSub',
+          'kpiHaeAging', 'kpiHaeAgingSub',
+          'kpiQC', 'kpiQCSub',
+          'kpiActionPlan', 'kpiActionPlanSub',
+          'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
+          'finAC1Aging', 'finAC2Aging',
+          'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
+          'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
+          'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
+          'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
+          'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
+          'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
+          'rem3pillarsAC1', 'rem3pillarsUnfulfill', 'rem3pillarsTotal',
+          'peAdisakSites', 'peAdisakM1', 'peAdisakM2', 'peAdisakHae', 'peAdisakTme',
+          'pePalagonSites', 'pePalagonM1', 'pePalagonM2', 'pePalagonHae', 'pePalagonTme',
+          'docInstallAmtWK25', 'docInstallAgeWK25', 'docInstallAmtWK26', 'docInstallAgeWK26',
+          'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
+          'ehsZeroAccident', 'ehsHighRisk',
+          'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
+          'legendCompleted', 'legendOnProcess', 'legendRemaining',
+          'totalSitesText', 'projectBreakdownText',
+          'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
+          'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
+        ];
         const vals = {};
-        VALUE_IDS.forEach(id => { 
-          const el = document.getElementById(id); 
-          if (el) vals[id] = el.tagName === 'TBODY' ? el.innerHTML : el.textContent; 
+        VALUE_IDS.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) vals[id] = el.tagName === 'TBODY' ? el.innerHTML : el.textContent;
         });
         const dashState = {
           vals,
