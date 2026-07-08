@@ -1046,7 +1046,7 @@
 
       <div class="kpi-card fade-in" style="--kpi-grad:linear-gradient(135deg,#7f1d1d,#dc2626)">
         <div class="kpi-icon" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)">🎯</div>
-        <div class="kpi-label">June AC2 Action Plan WK26</div>
+        <div class="kpi-label" id="lblKpiActionPlan">June AC2 Action Plan</div>
         <div class="kpi-value" id="kpiActionPlan">242K<span class="unit">฿</span></div>
         <div class="kpi-sub" id="kpiActionPlanSub">Target 192.6K · On Process 737K</div>
         <span class="kpi-trend trend-up">Ahead</span>
@@ -1300,7 +1300,7 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
-          AC#1 Plan WK27
+          AC#1 Plan <span id="lblAc1PrevWk"></span>
         </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
@@ -1312,7 +1312,7 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
-          AC#2 Plan WK27
+          AC#2 Plan <span id="lblAc2PrevWk"></span>
         </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;">
           <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
@@ -1326,15 +1326,15 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">💰</span>
           Actual Acceptance
         </div>
-        <div class="fin-row"><span class="fin-label">WK23</span><span class="fin-val green" id="dtlActWK23">-</span>
+        <div class="fin-row"><span class="fin-label" id="lblActWk1">WK23</span><span class="fin-val green" id="dtlActWk1">-</span>
         </div>
-        <div class="fin-row"><span class="fin-label">WK24</span><span class="fin-val green" id="dtlActWK24">-</span>
+        <div class="fin-row"><span class="fin-label" id="lblActWk2">WK24</span><span class="fin-val green" id="dtlActWk2">-</span>
         </div>
-        <div class="fin-row"><span class="fin-label">WK25</span><span class="fin-val green" id="dtlActWK25">-</span>
+        <div class="fin-row"><span class="fin-label" id="lblActWk3">WK25</span><span class="fin-val green" id="dtlActWk3">-</span>
         </div>
-        <div class="fin-row"><span class="fin-label">WK26</span><span class="fin-val green" id="dtlActWK26">-</span>
+        <div class="fin-row"><span class="fin-label" id="lblActWk4">WK26</span><span class="fin-val green" id="dtlActWk4">-</span>
         </div>
-        <div class="fin-row"><span class="fin-label">WK27</span><span class="fin-val green" id="dtlActWK27">-</span>
+        <div class="fin-row"><span class="fin-label" id="lblActWk5">WK27</span><span class="fin-val green" id="dtlActWk5">-</span>
         </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(16,185,129,.3)">
           <span class="fin-label" style="font-weight:600;color:#6ee7b7">JUNE Total</span>
@@ -1358,19 +1358,19 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
-          Plan: Acceptance AC#1 Plan WK28
+          Plan: Acceptance AC#1 <span id="lblAc1LatestWk"></span>
         </div>
         <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val amber"
-            id="dtlAC1WK28_2023">-</span></div>
+            id="dtlAC1Latest_2023">-</span></div>
         <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val amber"
-            id="dtlAC1WK28_2024">-</span></div>
+            id="dtlAC1Latest_2024">-</span></div>
         <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val amber"
-            id="dtlAC1WK28_2025">-</span></div>
+            id="dtlAC1Latest_2025">-</span></div>
         <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val amber"
-            id="dtlAC1WK28_2026">-</span></div>
+            id="dtlAC1Latest_2026">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">TOTAL</span>
-          <span class="fin-val amber" style="font-weight:700" id="dtlAC1WK28Total">-</span>
+          <span class="fin-val amber" style="font-weight:700" id="dtlAC1LatestTotal">-</span>
         </div>
       </div>
 
@@ -1378,19 +1378,19 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
-          Plan: Acceptance AC#2 Plan WK28
+          Plan: Acceptance AC#2 <span id="lblAc2LatestWk"></span>
         </div>
         <div class="fin-row"><span class="fin-label">2023</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC2WK28_2023">-</span></div>
+            id="dtlAC2Latest_2023">-</span></div>
         <div class="fin-row"><span class="fin-label">2024</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC2WK28_2024">-</span></div>
+            id="dtlAC2Latest_2024">-</span></div>
         <div class="fin-row"><span class="fin-label">2025</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC2WK28_2025">-</span></div>
+            id="dtlAC2Latest_2025">-</span></div>
         <div class="fin-row"><span class="fin-label">2026</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC2WK28_2026">-</span></div>
+            id="dtlAC2Latest_2026">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
           <span class="fin-label" style="font-weight:600;color:#93c5fd">TOTAL</span>
-          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2WK28Total">-</span>
+          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2LatestTotal">-</span>
         </div>
       </div>
 
@@ -2466,8 +2466,8 @@
             const vAc2Wk28_26 = getValByTitleRegex(/action plan ac#?2 wk28/i, '2026');
             const vAc2Wk28Tot = getValByTitleRegex(/action plan ac#?2 total/i, 'total') || getValByTitleRegex(/action plan ac#?2 wk28/i, 'total');
 
-            setEl('dtlAC1WK28_2023', vAc1Wk28_23); setEl('dtlAC1WK28_2024', vAc1Wk28_24); setEl('dtlAC1WK28_2025', vAc1Wk28_25); setEl('dtlAC1WK28_2026', vAc1Wk28_26); setEl('dtlAC1WK28Total', vAc1Wk28Tot);
-            setEl('dtlAC2WK28_2023', vAc2Wk28_23); setEl('dtlAC2WK28_2024', vAc2Wk28_24); setEl('dtlAC2WK28_2025', vAc2Wk28_25); setEl('dtlAC2WK28_2026', vAc2Wk28_26); setEl('dtlAC2WK28Total', vAc2Wk28Tot);
+            setEl('dtlAC1Latest_2023', vAc1Wk28_23); setEl('dtlAC1Latest_2024', vAc1Wk28_24); setEl('dtlAC1Latest_2025', vAc1Wk28_25); setEl('dtlAC1Latest_2026', vAc1Wk28_26); setEl('dtlAC1LatestTotal', vAc1Wk28Tot);
+            setEl('dtlAC2Latest_2023', vAc2Wk28_23); setEl('dtlAC2Latest_2024', vAc2Wk28_24); setEl('dtlAC2Latest_2025', vAc2Wk28_25); setEl('dtlAC2Latest_2026', vAc2Wk28_26); setEl('dtlAC2LatestTotal', vAc2Wk28Tot);
 
             // Slide 27 – AC1 DONE REMAIN
             const vRemAC1done23 = getValByTitle('ac1 done remain', '2023');
@@ -2554,18 +2554,18 @@
                 if (el && (!el.textContent || el.textContent === '-')) el.textContent = fmtBaht(val);
               };
               if (ac1.total) {
-                setElIfEmpty('dtlAC1WK28_2023', ac1['2023']);
-                setElIfEmpty('dtlAC1WK28_2024', ac1['2024']);
-                setElIfEmpty('dtlAC1WK28_2025', ac1['2025']);
-                setElIfEmpty('dtlAC1WK28_2026', ac1['2026']);
-                setElIfEmpty('dtlAC1WK28Total', ac1.total);
+                setElIfEmpty('dtlAC1Latest_2023', ac1['2023']);
+                setElIfEmpty('dtlAC1Latest_2024', ac1['2024']);
+                setElIfEmpty('dtlAC1Latest_2025', ac1['2025']);
+                setElIfEmpty('dtlAC1Latest_2026', ac1['2026']);
+                setElIfEmpty('dtlAC1LatestTotal', ac1.total);
               }
               if (ac2.total) {
-                setElIfEmpty('dtlAC2WK28_2023', ac2['2023']);
-                setElIfEmpty('dtlAC2WK28_2024', ac2['2024']);
-                setElIfEmpty('dtlAC2WK28_2025', ac2['2025']);
-                setElIfEmpty('dtlAC2WK28_2026', ac2['2026']);
-                setElIfEmpty('dtlAC2WK28Total', ac2.total);
+                setElIfEmpty('dtlAC2Latest_2023', ac2['2023']);
+                setElIfEmpty('dtlAC2Latest_2024', ac2['2024']);
+                setElIfEmpty('dtlAC2Latest_2025', ac2['2025']);
+                setElIfEmpty('dtlAC2Latest_2026', ac2['2026']);
+                setElIfEmpty('dtlAC2LatestTotal', ac2.total);
               }
               
               console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
@@ -2857,13 +2857,15 @@
             'kpiHaeAging', 'kpiHaeAgingSub',
             'kpiQC', 'kpiQCSub',
             'kpiActionPlan', 'kpiActionPlanSub',
+            'lblKpiActionPlan', 'lblActWk1', 'lblActWk2', 'lblActWk3', 'lblActWk4', 'lblActWk5',
+            'lblAc1PrevWk', 'lblAc2PrevWk', 'lblAc1LatestWk', 'lblAc2LatestWk',
             'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
             'finAC1Aging', 'finAC2Aging',
-            'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActWK27', 'dtlActJUNE', 'dtlActHuawei', 'dtlActTrueTuc',
+            'dtlActWk1', 'dtlActWk2', 'dtlActWk3', 'dtlActWk4', 'dtlActWk5', 'dtlActJUNE', 'dtlActHuawei', 'dtlActTrueTuc',
             'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
-            'dtlAC1WK28_2023', 'dtlAC1WK28_2024', 'dtlAC1WK28_2025', 'dtlAC1WK28_2026', 'dtlAC1WK28Total',
+            'dtlAC1Latest_2023', 'dtlAC1Latest_2024', 'dtlAC1Latest_2025', 'dtlAC1Latest_2026', 'dtlAC1LatestTotal',
             'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
-            'dtlAC2WK28_2023', 'dtlAC2WK28_2024', 'dtlAC2WK28_2025', 'dtlAC2WK28_2026', 'dtlAC2WK28Total',
+            'dtlAC2Latest_2023', 'dtlAC2Latest_2024', 'dtlAC2Latest_2025', 'dtlAC2Latest_2026', 'dtlAC2LatestTotal',
             'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
             'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
             'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
@@ -2975,6 +2977,8 @@
           'kpiHaeAging', 'kpiHaeAgingSub',
           'kpiQC', 'kpiQCSub',
           'kpiActionPlan', 'kpiActionPlanSub',
+            'lblKpiActionPlan', 'lblActWk1', 'lblActWk2', 'lblActWk3', 'lblActWk4', 'lblActWk5',
+            'lblAc1PrevWk', 'lblAc2PrevWk', 'lblAc1LatestWk', 'lblAc2LatestWk',
           'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
           'finAC1Aging', 'finAC2Aging',
           'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
