@@ -776,10 +776,10 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">⚖️</span>
-          Backlog Week 26 VS Week 27
+          <span id="blWkLabel">Backlog Week 26 VS Week 27</span>
         </div>
-        <div class="fin-row"><span class="fin-label">Week 26</span><span class="fin-val amber" id="blWk26">-</span></div>
-        <div class="fin-row"><span class="fin-label">Week 27</span><span class="fin-val amber" id="blWk27">-</span></div>
+        <div class="fin-row"><span class="fin-label" id="blWk1Label">Week 26</span><span class="fin-val amber" id="blWk1Val">-</span></div>
+        <div class="fin-row"><span class="fin-label" id="blWk2Label">Week 27</span><span class="fin-val amber" id="blWk2Val">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">Difference</span>
           <span class="fin-val" style="font-weight:700" id="blDiff">-</span>
@@ -1161,21 +1161,6 @@
     <div class="main-grid">
 
       <div class="card">
-        <div class="card-title">
-          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">⏱️</span>
-          1st &amp; 2nd Milestone AGING Analysis
-        </div>
-        <table class="dash-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Sites</th>
-              <th>M1 Avg</th>
-              <th>M2 Avg</th>
-              <th>HAE MBB</th>
-              <th>TME IPRAN</th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao</td>
@@ -1601,6 +1586,10 @@
             // Find columns dynamically to avoid whitespace issues
             const C = Object.keys(p2[0] || {}).find(k => k.trim() === 'Category / Person') || 'Category / Person';
             const M1 = Object.keys(p2[0] || {}).find(k => k.trim() === 'M1 Aging') || 'M1 Aging';
+            const M2 = Object.keys(p2[0] || {}).find(k => k.trim() === 'M2 Aging') || 'M2 Aging';
+            const SITES = Object.keys(p2[0] || {}).find(k => k.trim() === 'Total Sites' || k.trim() === 'Sites') || 'Total Sites';
+            const HAE_MBB = Object.keys(p2[0] || {}).find(k => String(k).toUpperCase().includes('HAE MBB') || String(k).toUpperCase().includes('HAE-MBB')) || 'HAE MBB';
+            const TME_IPRAN = Object.keys(p2[0] || {}).find(k => String(k).toUpperCase().includes('TME IPRAN') || String(k).toUpperCase().includes('TME-IPRAN')) || 'TME IPRAN';
 
             // HAE/TME M1 & M2 Aging
             const haeM1row = p2.find(r => String(r[C]).includes('HAE M1'));
@@ -1619,14 +1608,19 @@
             // PE Aging table rows (Adisak, Palagon)
             const adisak = p2.find(r => String(r[C]).toLowerCase().includes('adisak'));
             const palagon = p2.find(r => String(r[C]).toLowerCase().includes('palagon'));
-            if (adisak) {
-              const el = document.getElementById('peAdisakM1');
-              if (el) el.textContent = fmtDays(adisak[M1]);
-            }
-            if (palagon) {
-              const el = document.getElementById('pePalagonM1');
-              if (el) el.textContent = fmtDays(palagon[M1]);
-            }
+            
+            const updatePeData = (prefix, row) => {
+                if (!row) return;
+                const setEl = (id, val) => { const el = document.getElementById(prefix + id); if (el) el.textContent = val; };
+                setEl('Sites', row[SITES] || '0');
+                setEl('M1', fmtDays(row[M1]));
+                setEl('M2', fmtDays(row[M2]));
+                setEl('Hae', row[HAE_MBB] || '0');
+                setEl('Tme', row[TME_IPRAN] || '0');
+            };
+            
+            updatePeData('peAdisak', adisak);
+            updatePeData('pePalagon', palagon);
           }
 
           /* ─── Part 3 - Doc Management ─── */
@@ -2083,6 +2077,43 @@
                 setElIfEmpty('dtlAC2WK28Total', ac2.total);
               }
               console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
+              
+              // Also parse SO Comparison from Sheet1
+              const soData = [];
+              // In Sheet1, we need to extract rows that match SO WEEK format (usually around column P to U)
+              // Looking for rows that have year, WK27 REVENUE, WK27 REMAIN, WK28 REVENUE, WK28 REMAIN
+              let soSection = false;
+              s1Rows.forEach(row => {
+                  const label = String(row[15] || '').toUpperCase().trim();
+                  if (label.includes('SO COMPARISON') || label.includes('SO WEEK')) {
+                      soSection = true;
+                  } else if (label.includes('GRAND TOTAL')) {
+                      soSection = false;
+                  } else if (soSection && /^202\d$/.test(label)) {
+                      soData.push({
+                          year: label,
+                          wk1Rev: Number(row[16] || 0),
+                          wk1Rem: Number(row[17] || 0),
+                          wk2Rev: Number(row[18] || 0),
+                          wk2Rem: Number(row[19] || 0)
+                      });
+                  }
+              });
+              
+              const soBody = document.getElementById('soCompareBody');
+              if (soBody && soData.length > 0) {
+                  let html = '';
+                  soData.forEach(item => {
+                      html += `<tr>
+                          <td style="color:#f0f6ff; font-weight:600">${item.year}</td>
+                          <td style="color:#10b981">${fmtBaht(item.wk1Rev)}</td>
+                          <td style="color:#f59e0b">${fmtBaht(item.wk1Rem)}</td>
+                          <td style="color:#10b981">${fmtBaht(item.wk2Rev)}</td>
+                          <td style="color:#f59e0b">${fmtBaht(item.wk2Rem)}</td>
+                      </tr>`;
+                  });
+                  soBody.innerHTML = html;
+              }
             }
           }
 
@@ -2240,17 +2271,44 @@
 
           /* ─── Update Charts dynamically ─── */
           if (p4.length) {
-            const v23 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK23'))?.['Value (THB)'] || 0;
-            const v24 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK24'))?.['Value (THB)'] || 0;
-            const v25 = p4.find(r => String(r.Metric).includes('Actual Acceptance WK25'))?.['Value (THB)'] || 0;
-            const b26 = p4.find(r => String(r.Metric).includes('Backlog Week 26'))?.['Value (THB)'] || 2084224.68;
-            const b27 = p4.find(r => String(r.Metric).includes('Backlog Week 27'))?.['Value (THB)'] || 64754.4;
+            const backlogKeys = Object.keys(p4).map(k => String(p4[k]?.Metric || '')).filter(m => m.toLowerCase().includes('backlog week'));
+            backlogKeys.sort(); // Assuming chronological order
+            let bwk1 = 2084224.68, bwk2 = 64754.4;
+            let name1 = 'Week 26', name2 = 'Week 27';
+            
+            if (backlogKeys.length >= 2) {
+                const k1 = backlogKeys[backlogKeys.length - 2];
+                const k2 = backlogKeys[backlogKeys.length - 1];
+                name1 = k1.replace(/backlog/i, '').trim();
+                name2 = k2.replace(/backlog/i, '').trim();
+                bwk1 = p4.find(r => String(r.Metric) === k1)?.['Value (THB)'] || 0;
+                bwk2 = p4.find(r => String(r.Metric) === k2)?.['Value (THB)'] || 0;
+            } else if (backlogKeys.length === 1) {
+                const k1 = backlogKeys[0];
+                name2 = k1.replace(/backlog/i, '').trim();
+                bwk2 = p4.find(r => String(r.Metric) === k1)?.['Value (THB)'] || 0;
+            }
+            
+            // Update Backlog card text and values
+            const setElText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+            setElText('blWkLabel', `Backlog ${name1} VS ${name2}`);
+            setElText('blWk1Label', name1);
+            setElText('blWk2Label', name2);
+            setElText('blWk1Val', fmtBaht(bwk1));
+            setElText('blWk2Val', fmtBaht(bwk2));
+            
+            const diff = bwk2 - bwk1;
+            const diffEl = document.getElementById('blDiff');
+            if (diffEl) {
+                diffEl.textContent = fmtBaht(diff);
+                diffEl.style.color = diff > 0 ? '#10b981' : '#ef4444';
+            }
 
             if (window.backlogChart) {
               const data = window.backlogChart.data.datasets[0].data;
               // Update W26 (index 7) and W27 (index 8) explicitly
-              data[7] = b26;
-              data[8] = b27;
+              data[7] = bwk1;
+              data[8] = bwk2;
               window.backlogChart.update();
             }
           }
@@ -2305,6 +2363,8 @@
             'legendCompleted', 'legendOnProcess', 'legendRemaining',
             'totalSitesText', 'projectBreakdownText',
             'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
+            'soCompareBody',
+            'blWkLabel', 'blWk1Label', 'blWk2Label', 'blWk1Val', 'blWk2Val', 'blDiff',
             'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
           ];
           const vals = {};
