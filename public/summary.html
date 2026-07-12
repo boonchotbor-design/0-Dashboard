@@ -2536,6 +2536,7 @@
             const vActHuawei = getVal('actual acceptance total (jan-july) huawei');
             const vActTrue = getVal('actual acceptance total (jan-july) true-tuc');
             
+            const fmtB = v => v ? fmtBaht(v) : '-';
             setUI('dtlActWk1', fmtB(vAct23));
             setUI('dtlActWk2', fmtB(vAct24));
             setUI('dtlActWk3', fmtB(vAct25));
@@ -2719,8 +2720,6 @@
             setBadge('rawAc2AgingMax', isFinite(maxAc2Aging) ? maxAc2Aging + 'd' : '-');
 
 
-            const fmtB = v => v ? fmtBaht(v) : '-';
-            
             // Set AC#1 Prev Breakdown
             setUI('dtlAC12023', fmtB(vAc123));
             setUI('dtlAC12024', fmtB(vAc124));
