@@ -1711,6 +1711,201 @@
             <tr>
               <td style="color:#ef4444; font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Modernize_EXP_ER</td>
               <td><span class="badge badge-amber">1d</span></td>
+        <span class="icon" style="--card-icon-bg:rgba(245,158,11,.2)">⚡</span>
+        The Execution Paradox
+      </div>
+      <p id="executionParadoxNotes"
+        style="font-size: .85rem; color: #fcd34d; font-weight: 500; line-height: 1.5; margin-bottom: 0;">
+        หน้างานทำได้เร็ว แต่กระบวนการตรวจรับเอกสารล่าช้า
+      </p>
+    </div>
+
+    <div class="main-grid">
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">⏱️</span>
+          1st &amp; 2nd Milestone AGING Analysis
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Work Type</th>
+              <th rowspan="2" style="text-align:center">จำนวน Site</th>
+              <th colspan="3" style="text-align:center;color:#60a5fa">Average M1 (days)</th>
+              <th colspan="3" style="text-align:center;color:#34d399">Average M2 (days)</th>
+            </tr>
+            <tr>
+              <th style="text-align:center">Avg</th>
+              <th style="text-align:center">Min</th>
+              <th style="text-align:center">Max</th>
+              <th style="text-align:center">Avg</th>
+              <th style="text-align:center">Min</th>
+              <th style="text-align:center">Max</th>
+            </tr>
+          </thead>
+          <tbody id="milestoneWorkTypeBody">
+            <tr>
+              <td colspan="8" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px">No data imported</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card: Overall Team Install -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">🛠️</span>
+          Overall Team Install
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Amount (THB)</th>
+              <th>Avg Aging</th>
+            </tr>
+          </thead>
+          <tbody id="teamInstallBody">
+            <tr>
+              <td colspan="3" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No
+                data imported</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">📋</span>
+          DOC Owner
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Sites</th>
+              <th>AC1 Amount</th>
+              <th>AC1 Aging</th>
+              <th>AC2 Aging</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
+              <td><span class="badge badge-purple">41</span></td>
+              <td>693,559 ฿</td>
+              <td><span class="badge badge-amber" id="docHathairatAC1">15.98d</span></td>
+              <td><span class="badge badge-amber">33.15d</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Sermsiri Bampentam</td>
+              <td><span class="badge badge-purple">50</span></td>
+              <td>113,164 ฿</td>
+              <td><span class="badge badge-green">15.46d</span></td>
+              <td><span class="badge badge-amber" id="docSermsiriAC2">49d</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Apichart Kampuang</td>
+              <td><span class="badge badge-purple">26</span></td>
+              <td>138,325 ฿</td>
+              <td><span class="badge badge-green" id="docApichartAC1">14.88d</span></td>
+              <td><span class="badge badge-green">0d</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card: SLA Onprocess -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(239,68,68,.15)">🚨</span>
+          SLA On-Process
+        </div>
+
+        <!-- EXECUTIVE SUMMARY -->
+        <div style="display:flex; gap: 12px; margin-bottom: 20px;">
+          <div
+            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">SMART QC SUMMARY</div>
+            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
+                id="sumQcDone">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
+                id="sumQcLate">-</span></div>
+            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
+                id="sumQcPend">-</span></div>
+            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
+                id="sumQcOver">-</span></div>
+          </div>
+          <div
+            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">PAT SUBCON SUMMARY</div>
+            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
+                id="sumPatDone">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
+                id="sumPatLate">-</span></div>
+            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
+                id="sumPatPend">-</span></div>
+            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
+                id="sumPatOver">-</span></div>
+          </div>
+        </div>
+
+        <!-- SMART QC -->
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Action Required: SMART QC</div>
+        <table class="dash-table" style="margin-bottom: 16px;">
+          <thead>
+            <tr>
+              <th>Site DUID</th>
+              <th style="width: 50px;">Aging</th>
+            </tr>
+          </thead>
+          <tbody id="slaSmartQcBody">
+            <tr>
+              <td style="color:var(--text-primary); font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Ph1_EXP_ER</td>
+              <td><span class="badge badge-amber">3d</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- PAT SUBCON -->
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Action Required: PAT SUBCON</div>
+        <table class="dash-table" style="margin-bottom: 16px;">
+          <thead>
+            <tr>
+              <th>Site DUID</th>
+              <th style="width: 50px;">Aging</th>
+            </tr>
+          </thead>
+          <tbody id="slaPatSubconBody">
+            <tr>
+              <td colspan="2"
+                style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites
+                are up to date 🎉</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- PAT NOT PASS -->
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Rework Required: PAT NOT PASS</div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Site DUID</th>
+              <th style="width: 50px;">Aging</th>
+              <th>Assign</th>
+            </tr>
+          </thead>
+          <tbody id="slaReworkBody">
+            <tr>
+              <td style="color:#ef4444; font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Modernize_EXP_ER</td>
+              <td><span class="badge badge-amber">1d</span></td>
               <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
             </tr>
             <tr>
@@ -1728,7 +1923,6 @@
               <td><span class="badge badge-amber">1d</span></td>
               <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
             </tr>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -1739,10 +1933,10 @@
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📄</span>
           Acceptance AC#1 Performance
         </div>
-        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber"
-            id="rawAc1Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc1Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MIN)</span><span class="fin-val green" id="rawAc1AgingMin">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MAX)</span><span class="fin-val" style="color:#ef4444" id="rawAc1AgingMax">-</span></div>
       </div>
 
       <!-- Acceptance AC#2 Performance -->
@@ -1751,10 +1945,10 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📄</span>
           Acceptance AC#2 Performance
         </div>
-        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span>
-        </div>
-        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber"
-            id="rawAc2Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc2Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MIN)</span><span class="fin-val green" id="rawAc2AgingMin">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MAX)</span><span class="fin-val" style="color:#ef4444" id="rawAc2AgingMax">-</span></div>
       </div>
 
       <!-- Work Type Analysis -->
@@ -2114,11 +2308,10 @@
             };
 
             // ── Backlog Week X vs Week Y ──
-            // Excel rows: Metric = 'Backlog Week 27', 'Backlog Week 28' inside Slide Title 'Backlog Backlog Week 27 VS Backlog Week 28'
             const blRows = p4.filter(r => /backlog week/i.test(String(r['Metric'])));
             if (blRows.length >= 2) {
-              const wk1Label = String(blRows[0]['Metric'] || '').replace(/backlog/i, '').trim(); // 'Week 27'
-              const wk2Label = String(blRows[1]['Metric'] || '').replace(/backlog/i, '').trim(); // 'Week 28'
+              const wk1Label = String(blRows[0]['Metric'] || '').replace(/backlog/i, '').trim(); 
+              const wk2Label = String(blRows[1]['Metric'] || '').replace(/backlog/i, '').trim(); 
               const wk1Val = Number(getV(blRows[0]) || 0);
               const wk2Val = Number(getV(blRows[1]) || 0);
               const diff = wk2Val - wk1Val;
@@ -2136,11 +2329,9 @@
               if (el_wk2v) el_wk2v.textContent = fmt(wk2Val);
               if (el_diff) { el_diff.textContent = (diff >= 0 ? '+' : '') + fmt(diff); el_diff.style.color = diff >= 0 ? '#10b981' : '#ef4444'; }
 
-              // Update Backlog Trend Chart dynamically
               if (window.backlogChart) {
                 const dataArr = window.backlogChart.data.datasets[0].data;
                 const labelArr = window.backlogChart.data.labels;
-                // Replace the last two data points
                 if (dataArr.length >= 2) {
                   dataArr[dataArr.length - 2] = wk1Val;
                   dataArr[dataArr.length - 1] = wk2Val;
@@ -2160,7 +2351,6 @@
             const income = getVal('estimate final income') || getVal('estimate income');
             const ar = getVal('ar (commerce)') || getVal('ar');
             const ap = getVal('ap') || getVal('accounts payable');
-            // For backlog, we probably only want one match (e.g., Remaining Backlog)
             const backlog = getVal('remain to claim') || getVal('backlog');
             const ac2tgt = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))
               ? getV(p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))) : null;
@@ -2175,7 +2365,6 @@
 
             let actPlan = getValByTitle('action plan ac#2', 'total');
             if (actPlan === null) {
-              // Sum only individual year rows, exclude TOTAL rows
               const rows = p4.filter(r =>
                 String(r['Metric']).toLowerCase().includes('action plan ac#2') &&
                 !String(r['Slide Title'] || '').toLowerCase().includes('total') &&
@@ -2186,8 +2375,20 @@
               }
             }
             if (actPlan === null) actPlan = getSum('action plan');
+            const fmtBaht = v => Number(v || 0).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
+            const setUI = (id, val) => { const el = document.getElementById(id); if (el && val !== null) el.textContent = val; };
+            setUI('finIncome', fmtBaht(income));
+            setUI('finAR', fmtBaht(ar));
+            setUI('finAP', fmtBaht(ap));
+            setUI('finBacklog', fmtBaht(backlog));
+            if (ac2tgt !== null) setUI('finAC2Target', fmtBaht(ac2tgt));
+            if (actPlan !== null) setUI('finActionPlan', fmtBaht(actPlan));
 
-            /* ─── Part 7 - SLA On-Process ─── */
+
+          } // end if (p4.length)
+
+          /* ─── Part 7 - SLA On-Process ─── */
+
             const p7Name = wb.SheetNames.find(n => {
               const normalized = n.toUpperCase().replace(/[\s-_]+/g, '');
               return normalized.includes('PART7') || normalized.includes('SLAONPROCESS');
@@ -2197,7 +2398,6 @@
               importedSheets.push('Part 7');
               const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
 
-              // Find the header row and the column index of the first Site DUID dynamically
               let startRow = -1;
               let colBIndex = 1;
               for (let i = 0; i < p7Rows.length; i++) {
@@ -2215,16 +2415,8 @@
                 }
               }
 
-              console.log('SLA On-Process Import Debug:', {
-                totalRows: p7Rows.length,
-                headerRowIdx: startRow - 1,
-                colBIndex: colBIndex
-              });
-
-              // Fallback if header row is not found
               if (startRow === -1) {
                 startRow = Math.min(28, p7Rows.length);
-                console.warn('SLA On-Process: Header row SITE DUID not found, falling back to startRow:', startRow);
               }
 
               const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
@@ -2233,7 +2425,7 @@
                   const row = p7Rows[i];
                   if (!row) continue;
                   const site = String(row[siteCol] || '').trim();
-                  if (!site) continue;  // skip blank rows, don't break (other cols may still have data)
+                  if (!site) continue; 
 
                   if (site.toLowerCase().includes('all sites are up to date') || site.toLowerCase().includes('up to date')) {
                     result.push({ site: site, upToDate: true });
@@ -2241,7 +2433,6 @@
                   }
 
                   let aging = String(row[agingCol] || '').trim();
-                  // Normalize aging: "3 วัน" -> "3d", plain number -> "3d"
                   aging = aging.replace(/\s*วัน\s*/g, 'd');
                   if (aging && !isNaN(aging)) aging = aging + 'd';
                   if (!aging) aging = '-';
@@ -2252,12 +2443,10 @@
                 return result;
               };
 
-              // Find column indices dynamically
               let smartQcSite = -1, smartQcAging = -1;
               let patSite = -1, patAging = -1, patOwner = -1;
               let reworkSite = -1, reworkAging = -1, reworkOwner = -1;
 
-              // Scan the first few rows (e.g. up to row 30) to find the main headers
               for (let i = 0; i < Math.min(30, p7Rows.length); i++) {
                 const row = p7Rows[i];
                 if (!row) continue;
@@ -2280,7 +2469,6 @@
                 }
               }
 
-              // Fallbacks if not found by top header, try to use relative to first 'SITE DUID'
               if (smartQcSite === -1) {
                 smartQcSite = colBIndex; smartQcAging = colBIndex + 1;
                 patSite = colBIndex + 4; patAging = colBIndex + 5; patOwner = colBIndex + 6;
@@ -2291,7 +2479,6 @@
               const patSubconData = patSite >= 0 ? parseSlaColumn(patSite, patAging, patOwner) : [];
               const reworkData = reworkSite >= 0 ? parseSlaColumn(reworkSite, reworkAging, reworkOwner) : [];
 
-              // Parse Executive Summary
               const extractSum = (colIdx, label) => {
                 if (colIdx < 0) return '-';
                 for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
@@ -2316,12 +2503,6 @@
                 setTxt('sumPatPend', extractSum(patSite, 'Pending'));
                 setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
               }
-
-              console.log('SLA Parsed Data Counts:', {
-                smartQc: smartQcData.length,
-                patSubcon: patSubconData.length,
-                rework: reworkData.length
-              });
 
               const renderTable = (tbodyId, data, hasOwner) => {
                 const tbody = document.getElementById(tbodyId);
@@ -2348,16 +2529,13 @@
 
               renderTable('slaSmartQcBody', smartQcData, false);
               renderTable('slaPatSubconBody', patSubconData, true);
-              console.log('[DEBUG] reworkData before renderTable:', JSON.stringify(reworkData));
               renderTable('slaReworkBody', reworkData, true);
-              console.log('[DEBUG] slaReworkBody innerHTML after render:', document.getElementById('slaReworkBody') ? document.getElementById('slaReworkBody').innerHTML.substring(0, 100) : 'NOT FOUND');
             }
 
             if (importedSheets.length > 0) {
-              // Update charts (wrapped in try-catch to prevent blocking)
-              try { window.backlogChart.update(); } catch (e) { console.warn('backlogChart update failed:', e.message); }
-              try { window.siteDonut.update(); } catch (e) { console.warn('siteDonut update failed:', e.message); }
-              try { window.docChart.update(); } catch (e) { console.warn('docChart update failed:', e.message); }
+              try { window.backlogChart.update(); } catch (e) { }
+              try { window.siteDonut.update(); } catch (e) { }
+              try { window.docChart.update(); } catch (e) { }
 
               document.getElementById('importStatus').style.display = 'inline-block';
               setTimeout(() => document.getElementById('importStatus').style.display = 'none', 3000);
@@ -2369,16 +2547,12 @@
             let onProc = getSum('on-process');
             if (onProc === null) onProc = getSum('on process');
 
-
-
-            // Actual Acceptance by week (Dynamic)
             const vAct23 = getVal(`actual acceptance wk${reportWeek - 4}`);
             const vAct24 = getVal(`actual acceptance wk${reportWeek - 3}`);
             const vAct25 = getVal(`actual acceptance wk${reportWeek - 2}`);
             const vAct26 = getVal(`actual acceptance wk${reportWeek - 1}`);
             const vActJune = getVal('actual acceptance june');
             
-            // Update UI labels
             const setLbl = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
             setLbl('lblActWk1', `WK${reportWeek - 4}`);
             setLbl('lblActWk2', `WK${reportWeek - 3}`);
@@ -2394,25 +2568,21 @@
               return row ? getV(row) : null;
             };
 
-            // AC#1 plan by year — Dynamic for reportWeek - 1
-            let reAc1Prev = new RegExp(`action plan ac#?1 wk${reportWeek - 1}`, 'i');
+            let reAc1Prev = new RegExp(`action plan ac#?1 wk${reportWeek}`, 'i');
             let vAc123 = getValByTitleRegex(reAc1Prev, '2023');
             let vAc124 = getValByTitleRegex(reAc1Prev, '2024');
             let vAc125 = getValByTitleRegex(reAc1Prev, '2025');
             let vAc126 = getValByTitleRegex(reAc1Prev, '2026');
 
-            // AC#2 plan by year — Dynamic for reportWeek - 1
-            let reAc2Prev = new RegExp(`action plan ac#?2 wk${reportWeek - 1}`, 'i');
+            let reAc2Prev = new RegExp(`action plan ac#?2 wk${reportWeek}`, 'i');
             let vAc223 = getValByTitleRegex(reAc2Prev, '2023');
             let vAc224 = getValByTitleRegex(reAc2Prev, '2024');
             let vAc225 = getValByTitleRegex(reAc2Prev, '2025');
             let vAc226 = getValByTitleRegex(reAc2Prev, '2026');
 
-            // Totals for AC#1 and AC#2 plans
             let vAc1Total = getValByTitleRegex(/action plan ac#?1/, 'total');
             let vAc2Total = getValByTitleRegex(/action plan ac#?2/, 'total');
 
-            // Fallback to reading from Sheet1 pivot table if data is missing in Part 4
             const sheet1 = wb.Sheets['Sheet1'];
             if (sheet1) {
               const s1Rows = XLSX.utils.sheet_to_json(sheet1, { header: 1, defval: '' });
@@ -2445,406 +2615,87 @@
               });
             }
 
-            // On-Process per project — Metric contains project name
-            const vOnMBB = getVal('tme-mbb') || getVal('on-process (2026) tme-mbb');
-            const vOnIPRAN = getVal('tme-ipran') || getVal('on-process (2026) tme-ipran');
-            const vOnBATT = getVal('tme-battery') || getVal('on-process (2026) tme-battery');
-            const vOnHAEMBB = getVal('hae-mbb') || getVal('on-process (2026) hae-mbb');
-            const vOnTRE = getVal('tre-dismantle') || getVal('on-process (2026) tre-dismantle');
+            // ── AC#1 / AC#2 raw data from 2026 sheet (dynamic header indices) ──
+            const sheet2026 = getSheet(/2026/);
+            let sumAc1Amt = 0, countAc1Aging = 0, sumAc1Aging = 0;
+            let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
+            let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
+            let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
 
-            const setEl = (id, val) => { if (val !== null) { const el = document.getElementById(id); if (el) el.textContent = fmtBaht(val); } };
-            const vActWK27 = getVal(`actual acceptance wk${reportWeek}`);
-            setEl('dtlActWK23', vAct23); setEl('dtlActWK24', vAct24); setEl('dtlActWK25', vAct25);
-            setEl('dtlActWK26', vAct26); setEl('dtlActWK27', vActWK27); setEl('dtlActJUNE', vActJune);
+            if (sheet2026 && sheet2026.length > 1) {
+              const headers = sheet2026[0];
+              const ac1AmtIdx = headers.findIndex(h => String(h).toUpperCase() === 'ACTUAL ACCEPTANCE#1');
+              const ac2AmtIdx = headers.findIndex(h => String(h).toUpperCase() === 'ACTUAL ACCEPTANCE#2');
+              const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase() === 'AGING#1');
+              const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase() === 'AGING#2');
 
-            const vActHuawei = getValByTitleRegex(/actual acceptance total/i, 'huawei');
-            const vActTrue = getValByTitleRegex(/actual acceptance total/i, 'true-tuc');
-            setEl('dtlActHuawei', vActHuawei); setEl('dtlActTrueTuc', vActTrue);
-
-            // WK-1 cards now show only total (single row in Excel)
-            const vAc1WK27Total = getVal(`action plan ac#1 wk${reportWeek - 1}`);
-            const vAc2WK27Total = getVal(`action plan ac#2 wk${reportWeek - 1}`);
-            
-            // Update labels dynamically for AC tables
-            setLbl('lblAc1PrevWk', `WK${reportWeek - 1}`);
-            setLbl('lblAc2PrevWk', `WK${reportWeek - 1}`);
-            setLbl('lblAc1LatestWk', `WK${reportWeek}`);
-            setLbl('lblAc2LatestWk', `WK${reportWeek}`);
-
-            setEl('dtlAC1Total', vAc1WK27Total || vAc1Total);
-            setEl('dtlAC2Total', vAc2WK27Total || vAc2Total);
-            setEl('dtlOnProcMBB', vOnMBB); setEl('dtlOnProcIPRAN', vOnIPRAN); setEl('dtlOnProcBATT', vOnBATT);
-            setEl('dtlOnProcHAEMBB', vOnHAEMBB); setEl('dtlOnProcTRE', vOnTRE);
-
-            let reAc1Latest = new RegExp(`action plan ac#?1 wk${reportWeek}`, 'i');
-            const vAc1Wk28_23 = getValByTitleRegex(reAc1Latest, '2023');
-            const vAc1Wk28_24 = getValByTitleRegex(reAc1Latest, '2024');
-            const vAc1Wk28_25 = getValByTitleRegex(reAc1Latest, '2025');
-            const vAc1Wk28_26 = getValByTitleRegex(reAc1Latest, '2026');
-            const vAc1Wk28Tot = getValByTitleRegex(/action plan ac#?1 total/i, 'total') || getValByTitleRegex(reAc1Latest, 'total');
-
-            let reAc2Latest = new RegExp(`action plan ac#?2 wk${reportWeek}`, 'i');
-            const vAc2Wk28_23 = getValByTitleRegex(reAc2Latest, '2023');
-            const vAc2Wk28_24 = getValByTitleRegex(reAc2Latest, '2024');
-            const vAc2Wk28_25 = getValByTitleRegex(reAc2Latest, '2025');
-            const vAc2Wk28_26 = getValByTitleRegex(reAc2Latest, '2026');
-            const vAc2Wk28Tot = getValByTitleRegex(/action plan ac#?2 total/i, 'total') || getValByTitleRegex(reAc2Latest, 'total');
-
-            setEl('dtlAC1Latest_2023', vAc1Wk28_23); setEl('dtlAC1Latest_2024', vAc1Wk28_24); setEl('dtlAC1Latest_2025', vAc1Wk28_25); setEl('dtlAC1Latest_2026', vAc1Wk28_26); setEl('dtlAC1LatestTotal', vAc1Wk28Tot);
-            setEl('dtlAC2Latest_2023', vAc2Wk28_23); setEl('dtlAC2Latest_2024', vAc2Wk28_24); setEl('dtlAC2Latest_2025', vAc2Wk28_25); setEl('dtlAC2Latest_2026', vAc2Wk28_26); setEl('dtlAC2LatestTotal', vAc2Wk28Tot);
-            // Slide 27 – AC1 DONE REMAIN
-            const vRemAC1done23 = getValByTitle('ac1 done remain', '2023');
-            const vRemAC1done24 = getValByTitle('ac1 done remain', '2024');
-            const vRemAC1done25 = getValByTitle('ac1 done remain', '2025');
-            const vRemAC1done26 = getValByTitle('ac1 done remain', '2026');
-            const ac1doneRows = p4.filter(r => String(r['Metric']).toLowerCase().includes('ac1 done remain'));
-            const vRemAC1doneTotal = ac1doneRows.length > 0 ? ac1doneRows.reduce((a, r) => a + (Number(getV(r)) || 0), 0) : null;
-
-            // Slide 27 – UNFULFILL REMAIN
-            const vRemUnfulfill23 = getValByTitleRegex(/unfulfill remain/i, '2023') || getValByTitle('unfulfill remain', '2023');
-            const vRemUnfulfill24 = getValByTitleRegex(/unfulfill remain/i, '2024') || getValByTitle('unfulfill remain', '2024');
-            const vRemUnfulfill25 = getValByTitleRegex(/unfulfill remain/i, '2025') || getValByTitle('unfulfill remain', '2025');
-            const vRemUnfulfill26 = getValByTitleRegex(/unfulfill remain/i, '2026') || getValByTitle('unfulfill remain', '2026');
-            const unfulfillRows = p4.filter(r => String(r['Metric']).toLowerCase().includes('unfulfill remain'));
-            const vRemUnfulfillTotal = unfulfillRows.length > 0 ? unfulfillRows.reduce((a, r) => a + (Number(getV(r)) || 0), 0) : null;
-
-            // Slide 27 – Summary of REMAIN
-            let vRem3PillarsTotal = getVal('summary of remain') || getVal('summary of remain (3 pillars)') || getVal('remain / total');
-            if (vRemAC1doneTotal !== null && vRemUnfulfillTotal !== null) {
-              vRem3PillarsTotal = vRemAC1doneTotal + vRemUnfulfillTotal;
-            }
-
-            setEl('remAC1done2023', vRemAC1done23); setEl('remAC1done2024', vRemAC1done24);
-            setEl('remAC1done2025', vRemAC1done25); setEl('remAC1done2026', vRemAC1done26);
-            if (vRemAC1doneTotal !== null) { const el = document.getElementById('remAC1doneTotal'); if (el) el.textContent = fmtBaht(vRemAC1doneTotal); }
-            setEl('remUnfulfill2023', vRemUnfulfill23); setEl('remUnfulfill2024', vRemUnfulfill24); setEl('remUnfulfill2025', vRemUnfulfill25); setEl('remUnfulfill2026', vRemUnfulfill26);
-            if (vRemUnfulfillTotal !== null) { const el = document.getElementById('remUnfulfillTotal'); if (el) el.textContent = fmtBaht(vRemUnfulfillTotal); }
-            if (vRemAC1doneTotal !== null) { const el = document.getElementById('rem3pillarsAC1'); if (el) el.textContent = fmtBaht(vRemAC1doneTotal); }
-            if (vRemUnfulfillTotal !== null) { const el = document.getElementById('rem3pillarsUnfulfill'); if (el) el.textContent = fmtBaht(vRemUnfulfillTotal); }
-            setEl('rem3pillarsTotal', vRem3PillarsTotal);
-
-            if (income) {
-              document.getElementById('kpiIncome').innerHTML = (income / 1000000).toFixed(2) + '<span class="unit">M ฿</span>';
-              document.getElementById('finIncome').textContent = fmtBaht(income);
-            }
-            if (ar) {
-              document.getElementById('finAR').textContent = fmtBaht(ar);
-              document.getElementById('kpiIncomeSub').textContent =
-                `AR ${ar >= 1000000 ? (ar / 1000000).toFixed(2) + 'M' : (ar / 1000).toFixed(0) + 'K'} · AP ${ap ? (ap / 1000).toFixed(0) + 'K' : '-'}`;
-            }
-            if (ap) document.getElementById('finAP').textContent = fmtBaht(ap);
-            if (backlog) {
-              document.getElementById('kpiBacklog').innerHTML = (backlog / 1000000).toFixed(2) + '<span class="unit">M ฿</span>';
-              document.getElementById('finBacklog').textContent = fmtBaht(backlog);
-            }
-            if (actPlan) {
-              document.getElementById('kpiActionPlan').innerHTML = (actPlan / 1000).toFixed(0) + 'K<span class="unit">฿</span>';
-            } else if (vAc2Total) {
-              document.getElementById('kpiActionPlan').innerHTML = (vAc2Total / 1000).toFixed(0) + 'K<span class="unit">฿</span>';
-            }
-            if (onProc) {
-              document.getElementById('kpiActionPlanSub').textContent =
-                `On Process ${(onProc / 1000).toFixed(0)}K · Target ${ac2tgt ? (ac2tgt / 1000).toFixed(1) + 'K' : '-'}`;
-            }
-            if (ac2tgt) document.getElementById('finAC2Target').textContent = fmtBaht(ac2tgt);
-          }
-
-          /* ─── Sheet1 Fallback: AC#1 / AC#2 Plan data from pivot table ─── */
-          if (!p4.length || !(document.getElementById('dtlAC1Total')?.textContent || '').replace(/-/g, '').trim()) {
-            const s1sheet = wb.Sheets['Sheet1'];
-            if (s1sheet) {
-              const s1Rows = XLSX.utils.sheet_to_json(s1sheet, { header: 1, defval: '' });
-              // Data is in column 15 (P) = label, column 16 (Q) = HUAWEI value, column 18 (S) = Grand Total
-              let section = null;
-              const ac1 = {}, ac2 = {};
-              s1Rows.forEach(row => {
-                const label = String(row[15] || '').toUpperCase().replace(/\s+/g, ' ').trim();
-                const val = Number(row[18] || row[16] || 0) || 0;
-                if (label.includes('ACCTANCE PLAN AC#1') || label.includes('ACTION PLAN AC#1') || label.includes('AC1 WK')) {
-                  section = 'AC1'; ac1.total = val;
-                } else if (label.includes('ACTION PLAN AC#2') || label.includes('ACCTANCE PLAN AC#2') || label.includes('AC2 WK')) {
-                  section = 'AC2'; ac2.total = val;
-                } else if (label.includes('ACCEPTANCE PLAN JULY') || label.includes('GRAND TOTAL')) {
-                  section = null; // stop collecting
-                } else if (section && /^202\d$/.test(label)) {
-                  if (section === 'AC1') ac1[label] = val;
-                  if (section === 'AC2') ac2[label] = val;
-                }
-              });
-
-              const setElIfEmpty = (id, val) => {
-                const el = document.getElementById(id);
-                if (el && (!el.textContent || el.textContent === '-')) el.textContent = fmtBaht(val);
-              };
-              if (ac1.total) {
-                setElIfEmpty('dtlAC1Latest_2023', ac1['2023']);
-                setElIfEmpty('dtlAC1Latest_2024', ac1['2024']);
-                setElIfEmpty('dtlAC1Latest_2025', ac1['2025']);
-                setElIfEmpty('dtlAC1Latest_2026', ac1['2026']);
-                setElIfEmpty('dtlAC1LatestTotal', ac1.total);
-              }
-              if (ac2.total) {
-                setElIfEmpty('dtlAC2Latest_2023', ac2['2023']);
-                setElIfEmpty('dtlAC2Latest_2024', ac2['2024']);
-                setElIfEmpty('dtlAC2Latest_2025', ac2['2025']);
-                setElIfEmpty('dtlAC2Latest_2026', ac2['2026']);
-                setElIfEmpty('dtlAC2LatestTotal', ac2.total);
-              }
-              
-              console.log('Sheet1 fallback AC1:', ac1, 'AC2:', ac2);
-            }
-          }
-
-          /* ─── Sheet1: SO Comparison (always run) ─── */
-          const s1sheetSO = wb.Sheets['Sheet1'];
-          if (s1sheetSO) {
-            const s1RowsSO = XLSX.utils.sheet_to_json(s1sheetSO, { header: 1, defval: '' });
-            // Col 0=Year, Col 3=AC1 DONE Sum of REMAIN, Col 9=UNFULFILL Sum of REMAIN
-            let wk27Label = '', wk28Label = '';
-            const soWk27 = [], soWk28 = [];
-            let currentWk = null;
-            s1RowsSO.forEach(row => {
-              const cell0 = String(row[0] || '').trim();
-              if (/^WEEK\s*\d+$/i.test(cell0)) {
-                if (!wk27Label) { wk27Label = cell0; currentWk = 'wk27'; }
-                else { wk28Label = cell0; currentWk = 'wk28'; }
-              } else if (currentWk && /^202\d$/.test(cell0)) {
-                const ac1Remain = Number(row[3] || 0);
-                const unfRemain = Number(row[9] || 0);
-                if (currentWk === 'wk27') soWk27.push({ year: cell0, ac1: ac1Remain, unf: unfRemain });
-                else soWk28.push({ year: cell0, ac1: ac1Remain, unf: unfRemain });
-              }
-            });
-
-            const soWk1Head = document.getElementById('soWk1Head');
-            const soWk2Head = document.getElementById('soWk2Head');
-            if (soWk1Head && wk27Label) soWk1Head.textContent = wk27Label;
-            if (soWk2Head && wk28Label) soWk2Head.textContent = wk28Label;
-
-            const soBody = document.getElementById('soCompareBody');
-            if (soBody && (soWk27.length > 0 || soWk28.length > 0)) {
-              const years = [...new Set([...soWk27.map(r => r.year), ...soWk28.map(r => r.year)])].sort();
-              let html = '';
-              years.forEach(yr => {
-                const w27 = soWk27.find(r => r.year === yr) || { ac1: 0, unf: 0 };
-                const w28 = soWk28.find(r => r.year === yr) || { ac1: 0, unf: 0 };
-                const hiliteAc1 = w28.ac1 > w27.ac1 ? 'color:#f87171' : 'color:#34d399';
-                const hiliteUnf = w28.unf > w27.unf ? 'color:#f87171' : 'color:#34d399';
-                html += `<tr>
-                  <td style="color:#f0f6ff;font-weight:600">${yr}</td>
-                  <td style="color:#f59e0b;text-align:right">${w27.ac1 > 0 ? fmtBaht(w27.ac1) : '-'}</td>
-                  <td style="color:#f87171;text-align:right">${w27.unf > 0 ? fmtBaht(w27.unf) : '-'}</td>
-                  <td style="${hiliteAc1};text-align:right">${w28.ac1 > 0 ? fmtBaht(w28.ac1) : '-'}</td>
-                  <td style="${hiliteUnf};text-align:right">${w28.unf > 0 ? fmtBaht(w28.unf) : '-'}</td>
-                </tr>`;
-              });
-              soBody.innerHTML = html;
-            }
-          }
-
-          /* ─── Part 5 - Safety ─── */
-
-          const p5 = getSheet('Part 5 - Safety');
-          if (p5.length) {
-            importedSheets.push('Part 5');
-            const zeroAcc = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('zero accident'));
-            const highRisk = p5.find(r => String(r['Topic / Metric']).toLowerCase().includes('issues & prevention') || String(r['Topic / Metric']).toLowerCase().includes('high-risk'));
-            if (zeroAcc) document.getElementById('ehsZeroAccident').textContent = zeroAcc['Status / Detail'] || '-';
-            if (highRisk) document.getElementById('ehsHighRisk').textContent = highRisk['Status / Detail'] || '-';
-          }
-
-          /* ─── Part 6 - Conclusion ─── */
-          const p6 = getSheet('Part 6 - Conclusion');
-          if (p6.length) {
-            importedSheets.push('Part 6');
-            const row = p6[0];
-            if (row) {
-              if (row['Action Item']) document.getElementById('conclusionAction').textContent = row['Action Item'];
-              if (row['Assignee']) document.getElementById('conclusionAssignee').textContent = row['Assignee'];
-              if (row['Deadline / Notes']) document.getElementById('conclusionDeadline').textContent = row['Deadline / Notes'];
-            }
-          }
-
-          /* ─── Sheet 2026 (raw site data) ─── */
-          const raw2026 = wb.SheetNames.includes('2026') ? wb.Sheets['2026'] : null;
-          if (raw2026) {
-            importedSheets.push('2026');
-            const allRows = XLSX.utils.sheet_to_json(raw2026, { defval: '', header: 1 });
-            const headers = allRows[2];  // headers are in row index 2
-            if (headers) {
-              const projIdx = headers.findIndex(h => String(h).toUpperCase().includes('PROJECT'));
-              const statusIdx = headers.findIndex(h => String(h).toUpperCase().includes('STATUS WORK'));
-
-              let hae = 0, tme = 0, completed = 0, onProcess = 0, totalSites = 0;
-              for (let i = 3; i < allRows.length; i++) {
-                const row = allRows[i];
-                if (!row || !row[projIdx]) continue;
-                const proj = String(row[projIdx]).toUpperCase();
-                const isHae = proj.includes('HAE');
-                const isTme = proj.includes('TME');
-                if (isHae || isTme) {
-                  totalSites++;
-                  if (isHae) hae++;
-                  if (isTme) tme++;
-
-                  if (statusIdx >= 0) {
-                    const st = String(row[statusIdx]).toUpperCase();
-                    if (st.includes('COMPLETED')) completed++;
-                    else if (st.includes('ON PROCESS')) onProcess++;
-                  }
-                }
-              }
-
-              // Update PE dynamically if PE column exists
-              const peIdx = headers.findIndex(h => String(h).toUpperCase() === 'PE' || String(h).toUpperCase().includes('PIC') || String(h).toUpperCase().includes('OWNER'));
-              if (peIdx >= 0) {
-                let adisakHae = 0, adisakTme = 0, adisakTmeMbb = 0, palagonHae = 0, palagonTme = 0, palagonTmeMbb = 0;
-                for (let i = 3; i < allRows.length; i++) {
-                  const row = allRows[i];
-                  if (!row || !row[projIdx]) continue;
-                  const pe = String(row[peIdx] || '').toUpperCase();
-                  const proj = String(row[projIdx]).toUpperCase();
-                  if (pe.includes('ADISAK')) {
-                    if (proj.includes('HAE')) adisakHae++;
-                    if (proj.includes('TME')) {
-                      adisakTme++;
-                      if (proj.includes('MBB')) adisakTmeMbb++;
-                    }
-                  } else if (pe.includes('PALAGON') || pe.includes('PHALAGON')) {
-                    if (proj.includes('HAE')) palagonHae++;
-                    if (proj.includes('TME')) {
-                      palagonTme++;
-                      if (proj.includes('MBB')) palagonTmeMbb++;
-                    }
-                  }
-                }
-                const setBadge = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-                setBadge('peAdisakSites', adisakHae + adisakTme);
-                setBadge('peAdisakHae', adisakHae);
-                setBadge('peAdisakTme', adisakTme); // You can use adisakTmeMbb if needed
-                setBadge('pePalagonSites', palagonHae + palagonTme);
-                setBadge('pePalagonHae', palagonHae);
-                setBadge('pePalagonTme', palagonTme);
-              }
-
-              // ── Milestone Table: BP(67)=group, BD(55)=M1, BE(56)=M2 from 2026 sheet ──
-              {
-                const mGroups = {
-                  'HAE-MBB':   { sites: 0, sumM1: 0, cntM1: 0, minM1: Infinity, maxM1: 0, sumM2: 0, cntM2: 0, minM2: Infinity, maxM2: 0 },
-                  'TME-MBB':   { sites: 0, sumM1: 0, cntM1: 0, minM1: Infinity, maxM1: 0, sumM2: 0, cntM2: 0, minM2: Infinity, maxM2: 0 },
-                  'TME-IPRAN': { sites: 0, sumM1: 0, cntM1: 0, minM1: Infinity, maxM1: 0, sumM2: 0, cntM2: 0, minM2: Infinity, maxM2: 0 }
-                };
-                for (let i = 3; i < allRows.length; i++) {
-                  const row = allRows[i];
-                  if (!row) continue;
-                  const bp  = String(row[67] || '').toUpperCase().replace(/[\s-]/g, '');
-                  if (!bp) continue;
-                  const m1v = Number(row[55]);
-                  const m2v = Number(row[56]);
-                  let grp = null;
-                  if      (bp.startsWith('HAE') && bp.includes('MBB'))   grp = 'HAE-MBB';
-                  else if (bp.startsWith('TME') && bp.includes('MBB'))   grp = 'TME-MBB';
-                  else if (bp.startsWith('TME') && bp.includes('IPRAN')) grp = 'TME-IPRAN';
-                  if (!grp) continue;
-                  mGroups[grp].sites++;
-                  if (!isNaN(m1v) && m1v > 0) {
-                    mGroups[grp].sumM1 += m1v; mGroups[grp].cntM1++;
-                    if (m1v < mGroups[grp].minM1) mGroups[grp].minM1 = m1v;
-                    if (m1v > mGroups[grp].maxM1) mGroups[grp].maxM1 = m1v;
-                  }
-                  if (!isNaN(m2v) && m2v > 0) {
-                    mGroups[grp].sumM2 += m2v; mGroups[grp].cntM2++;
-                    if (m2v < mGroups[grp].minM2) mGroups[grp].minM2 = m2v;
-                    if (m2v > mGroups[grp].maxM2) mGroups[grp].maxM2 = m2v;
-                  }
-                }
-                const fmtdM   = n => (!n || isNaN(n) || n === 0 || !isFinite(n)) ? '-' : Number(n).toFixed(2) + 'd';
-                const bcolorM = n => (!n || isNaN(n) || n === 0) ? 'badge-blue' : (n > 10 ? 'badge-amber' : 'badge-green');
-                let mHtml = '';
-                Object.entries(mGroups).forEach(([label, g]) => {
-                  const avgM1 = g.cntM1 > 0 ? g.sumM1 / g.cntM1 : null;
-                  const avgM2 = g.cntM2 > 0 ? g.sumM2 / g.cntM2 : null;
-                  mHtml += `<tr>
-                    <td style="color:var(--text-primary);font-weight:500">${label}</td>
-                    <td style="text-align:center"><span class="badge badge-blue">${g.sites}</span></td>
-                    <td style="text-align:center"><span class="badge ${bcolorM(avgM1)}">${fmtdM(avgM1)}</span></td>
-                    <td style="text-align:center"><span class="badge badge-green">${fmtdM(g.minM1)}</span></td>
-                    <td style="text-align:center"><span class="badge badge-amber">${fmtdM(g.maxM1)}</span></td>
-                    <td style="text-align:center"><span class="badge ${bcolorM(avgM2)}">${fmtdM(avgM2)}</span></td>
-                    <td style="text-align:center"><span class="badge badge-green">${fmtdM(g.minM2)}</span></td>
-                    <td style="text-align:center"><span class="badge badge-amber">${fmtdM(g.maxM2)}</span></td>
-                  </tr>`;
-                });
-                const mTbody = document.getElementById('milestoneWorkTypeBody');
-                if (mTbody && mHtml) mTbody.innerHTML = mHtml;
-              }
-
-              // Parse AC#1 and AC#2 raw amounts and agings
-              let sumAc1Amt = 0, countAc1Aging = 0, sumAc1Aging = 0;
-              let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
-
-              for (let i = 3; i < allRows.length; i++) {
-                const row = allRows[i];
+              for (let i = 1; i < sheet2026.length; i++) {
+                const row = sheet2026[i];
                 if (!row) continue;
-
-                // Col BH (59)
-                const amt1 = Number(String(row[59] || '').replace(/[^0-9.-]/g, ''));
-                if (!isNaN(amt1) && amt1 > 0) sumAc1Amt += amt1;
-
-                // Col BK (62)
-                const amt2 = Number(String(row[62] || '').replace(/[^0-9.-]/g, ''));
-                if (!isNaN(amt2) && amt2 > 0) sumAc2Amt += amt2;
-
-                // Col BJ (61)
-                const aging1Str = String(row[61] || '');
-                if (aging1Str.trim() !== '') {
-                  const aging1 = Number(aging1Str.replace(/[^0-9.-]/g, ''));
-                  if (!isNaN(aging1)) {
-                    sumAc1Aging += aging1;
+                
+                // AC#1 Amt
+                if (ac1AmtIdx > -1 && row[ac1AmtIdx] !== undefined && row[ac1AmtIdx] !== null) {
+                  const val = Number(String(row[ac1AmtIdx]).replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(val)) sumAc1Amt += val;
+                }
+                // AC#1 Aging
+                if (ac1AgingIdx > -1 && row[ac1AgingIdx] !== undefined && row[ac1AgingIdx] !== null && String(row[ac1AgingIdx]).trim() !== '') {
+                  const val = Number(String(row[ac1AgingIdx]).replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(val)) {
+                    sumAc1Aging += val;
                     countAc1Aging++;
+                    if (val < minAc1Aging) minAc1Aging = val;
+                    if (val > maxAc1Aging) maxAc1Aging = val;
                   }
                 }
-
-                // Col BM (64)
-                const aging2Str = String(row[64] || '');
-                if (aging2Str.trim() !== '') {
-                  const aging2 = Number(aging2Str.replace(/[^0-9.-]/g, ''));
-                  if (!isNaN(aging2)) {
-                    sumAc2Aging += aging2;
+                
+                // AC#2 Amt
+                if (ac2AmtIdx > -1 && row[ac2AmtIdx] !== undefined && row[ac2AmtIdx] !== null) {
+                  const val = Number(String(row[ac2AmtIdx]).replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(val)) sumAc2Amt += val;
+                }
+                // AC#2 Aging
+                if (ac2AgingIdx > -1 && row[ac2AgingIdx] !== undefined && row[ac2AgingIdx] !== null && String(row[ac2AgingIdx]).trim() !== '') {
+                  const val = Number(String(row[ac2AgingIdx]).replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(val)) {
+                    sumAc2Aging += val;
                     countAc2Aging++;
+                    if (val < minAc2Aging) minAc2Aging = val;
+                    if (val > maxAc2Aging) maxAc2Aging = val;
                   }
                 }
               }
-
-              const avgAc1Aging = countAc1Aging > 0 ? (sumAc1Aging / countAc1Aging) : 0;
-              const avgAc2Aging = countAc2Aging > 0 ? (sumAc2Aging / countAc2Aging) : 0;
-
-              const setBadge = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-              setBadge('rawAc1Amt', sumAc1Amt > 0 ? fmtBaht(sumAc1Amt) : '-');
-              setBadge('rawAc2Amt', sumAc2Amt > 0 ? fmtBaht(sumAc2Amt) : '-');
-              setBadge('rawAc1Aging', avgAc1Aging > 0 ? avgAc1Aging.toFixed(2) + 'd' : '-');
-              setBadge('rawAc2Aging', avgAc2Aging > 0 ? avgAc2Aging.toFixed(2) + 'd' : '-');
-
-              // Update UI elements
-              document.getElementById('kpiTotalSites').textContent = totalSites;
-              document.getElementById('kpiTotalSitesSub').textContent = `HAE ${hae} · TME ${tme} · Completed ${completed}`;
-              const pct = totalSites > 0 ? (completed / totalSites * 100).toFixed(1) : '-';
-              document.getElementById('kpiTotalSitesTrend').textContent = pct !== '-' ? pct + '% Done' : 'In Progress';
-
-              const totalSitesText = document.getElementById('totalSitesText');
-              if (totalSitesText) totalSitesText.innerHTML = `Total Sites <strong style="color:var(--text-primary)">${totalSites}</strong>`;
-              const projectBreakdownText = document.getElementById('projectBreakdownText');
-              if (projectBreakdownText) projectBreakdownText.innerHTML = `HAE <strong style="color:#3b82f6">${hae}</strong> · TME <strong style="color:#8b5cf6">${tme}</strong>`;
-
-              // Update the legend counts in the DOM
-              const compEl = document.getElementById('legendCompleted');
-              if (compEl) compEl.textContent = completed;
-              const opEl = document.getElementById('legendOnProcess');
-              if (opEl) opEl.textContent = onProcess;
-              const remEl = document.getElementById('legendRemaining');
-              if (remEl) remEl.textContent = Math.max(0, totalSites - completed - onProcess);
             }
-          }
+
+            const avgAc1Aging = countAc1Aging > 0 ? (sumAc1Aging / countAc1Aging) : 0;
+            const avgAc2Aging = countAc2Aging > 0 ? (sumAc2Aging / countAc2Aging) : 0;
+
+            const setBadge = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            setBadge('rawAc1Amt', sumAc1Amt > 0 ? fmtBaht(sumAc1Amt) : '-');
+            setBadge('rawAc2Amt', sumAc2Amt > 0 ? fmtBaht(sumAc2Amt) : '-');
+            setBadge('rawAc1Aging', avgAc1Aging > 0 ? avgAc1Aging.toFixed(2) + 'd' : '-');
+            setBadge('rawAc2Aging', avgAc2Aging > 0 ? avgAc2Aging.toFixed(2) + 'd' : '-');
+            setBadge('rawAc1AgingMin', isFinite(minAc1Aging) ? minAc1Aging + 'd' : '-');
+            setBadge('rawAc1AgingMax', isFinite(maxAc1Aging) ? maxAc1Aging + 'd' : '-');
+            setBadge('rawAc2AgingMin', isFinite(minAc2Aging) ? minAc2Aging + 'd' : '-');
+            setBadge('rawAc2AgingMax', isFinite(maxAc2Aging) ? maxAc2Aging + 'd' : '-');
+
+
+            const fmtB = v => v ? fmtBaht(v) : '-';
+            
+            // Set AC#1 Prev Breakdown
+            setUI('dtlAC12023', fmtB(vAc123));
+            setUI('dtlAC12024', fmtB(vAc124));
+            setUI('dtlAC12025', fmtB(vAc125));
+            setUI('dtlAC12026', fmtB(vAc126));
+            setUI('dtlAC1Total', fmtB((Number(vAc123)||0)+(Number(vAc124)||0)+(Number(vAc125)||0)+(Number(vAc126)||0)));
+
+            // Set AC#2 Prev Breakdown
+            setUI('dtlAC22023', fmtB(vAc223));
+            setUI('dtlAC22024', fmtB(vAc224));
+            setUI('dtlAC22025', fmtB(vAc225));
+            setUI('dtlAC22026', fmtB(vAc226));
+            setUI('dtlAC2Total', fmtB((Number(vAc223)||0)+(Number(vAc224)||0)+(Number(vAc225)||0)+(Number(vAc226)||0)));
 
           /* ─── Update Charts dynamically ─── */
           if (p3.length) {
