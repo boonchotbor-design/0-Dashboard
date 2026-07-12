@@ -2557,6 +2557,21 @@
             setLbl('lblActWk3', `WK${reportWeek - 2}`);
             setLbl('lblActWk4', `WK${reportWeek - 1}`);
             setLbl('lblActWk5', `WK${reportWeek}`);
+            const vActHuawei = getVal('actual acceptance total (jan-july) huawei');
+            const vActTrue = getVal('actual acceptance total (jan-july) true-tuc');
+            
+            setUI('dtlActWk1', fmtB(vAct23));
+            setUI('dtlActWk2', fmtB(vAct24));
+            setUI('dtlActWk3', fmtB(vAct25));
+            setUI('dtlActWk4', fmtB(vAct26));
+            
+            const actWk5 = getVal(`actual acceptance wk${reportWeek}`);
+            setUI('dtlActWk5', fmtB(actWk5));
+            
+            setUI('dtlActJUNE', fmtB(vActJune));
+            setUI('dtlActHuawei', fmtB(vActHuawei));
+            setUI('dtlActTrueTuc', fmtB(vActTrue));
+
 
             const getValByTitleRegex = (metricRegex, titleKw) => {
               const row = p4.find(r =>
@@ -2566,13 +2581,13 @@
               return row ? getV(row) : null;
             };
 
-            let reAc1Prev = new RegExp(`action plan ac#?1 wk${reportWeek}`, 'i');
+            let reAc1Prev = new RegExp('Acceptance AC#?1 Plan', 'i');
             let vAc123 = getValByTitleRegex(reAc1Prev, '2023');
             let vAc124 = getValByTitleRegex(reAc1Prev, '2024');
             let vAc125 = getValByTitleRegex(reAc1Prev, '2025');
             let vAc126 = getValByTitleRegex(reAc1Prev, '2026');
 
-            let reAc2Prev = new RegExp(`action plan ac#?2 wk${reportWeek}`, 'i');
+            let reAc2Prev = new RegExp('Acceptance AC#?2 Plan', 'i');
             let vAc223 = getValByTitleRegex(reAc2Prev, '2023');
             let vAc224 = getValByTitleRegex(reAc2Prev, '2024');
             let vAc225 = getValByTitleRegex(reAc2Prev, '2025');
@@ -2582,84 +2597,133 @@
             let vAc2Total = getValByTitleRegex(/action plan ac#?2/, 'total');
 
             const sheet1 = wb.Sheets['Sheet1'];
-            if (sheet1) {
+                        if (sheet1) {
               const s1Rows = XLSX.utils.sheet_to_json(sheet1, { header: 1, defval: '' });
-              let currentSection = null;
-              s1Rows.forEach(row => {
-                let label = String(row[15] || '').toUpperCase();
-                let val = row[16] || 0;
+              
+              // 1. Get week names from row 0
+              let wk1Name = 'WK27';
+              let wk2Name = 'WK28';
+              if (s1Rows[0] && String(s1Rows[0][0]).includes('WEEK')) {
+                wk2Name = String(s1Rows[0][0]);
+                let wNum = parseInt(wk2Name.replace(/\D/g, ''));
+                if (!isNaN(wNum)) wk1Name = 'WK' + (wNum - 1);
+              }
+              setUI('soWk1Head', wk1Name);
+              setUI('soWk2Head', wk2Name);
 
-                if (label.includes('AC#1') || label.includes('AC1')) {
-                  currentSection = 'AC1';
-                  if (!vAc1Total) vAc1Total = val;
-                }
-                else if (label.includes('AC#2') || label.includes('AC2')) {
-                  currentSection = 'AC2';
-                  if (!vAc2Total) vAc2Total = val;
-                }
-                else if (label.includes('202') && currentSection) {
-                  if (currentSection === 'AC1') {
-                    if (label.includes('2023') && !vAc123) vAc123 = val;
-                    if (label.includes('2024') && !vAc124) vAc124 = val;
-                    if (label.includes('2025') && !vAc125) vAc125 = val;
-                    if (label.includes('2026') && !vAc126) vAc126 = val;
-                  } else if (currentSection === 'AC2') {
-                    if (label.includes('2023') && !vAc223) vAc223 = val;
-                    if (label.includes('2024') && !vAc224) vAc224 = val;
-                    if (label.includes('2025') && !vAc225) vAc225 = val;
-                    if (label.includes('2026') && !vAc226) vAc226 = val;
+              // 2. Build SO Compare Body and Extract REMAIN
+              let soHtml = '';
+              
+              const years = ['2023', '2024', '2025', '2026', 'Grand Total'];
+              let remAC1Total = 0;
+              let remUnfulfillTotal = 0;
+
+              for (let y of years) {
+                // Find row for this year
+                const r = s1Rows.find(row => String(row[0]).trim() === y);
+                if (r) {
+                  const wk1Ac1 = r[3] ? Number(r[3]) : 0;
+                  const wk2Ac1 = r[6] ? Number(r[6]) : 0;
+                  const wk2Unfulfill = r[9] ? Number(r[9]) : 0;
+
+                  // Build HTML row
+                  const title = y === 'Grand Total' ? 'Total' : y;
+                  const boldClass = y === 'Grand Total' ? 'font-weight:700;' : '';
+                  
+                  soHtml += `<tr style="${boldClass}">
+                    <td>${title}</td>
+                    <td style="color:#3b82f6">${fmtBaht(wk1Ac1)}</td>
+                    <td style="color:#ef4444">-</td>
+                    <td style="color:#10b981">${fmtBaht(wk2Ac1)}</td>
+                    <td style="color:#f59e0b">${fmtBaht(wk2Unfulfill)}</td>
+                  </tr>`;
+
+                  // Update REMAIN fields
+                  if (y !== 'Grand Total') {
+                    setUI(`remAC1done${y}`, fmtBaht(wk2Ac1));
+                    setUI(`remUnfulfill${y}`, fmtBaht(wk2Unfulfill));
+                    remAC1Total += wk2Ac1;
+                    remUnfulfillTotal += wk2Unfulfill;
                   }
+                } else {
+                  // Fill empty if not found
+                  const title = y === 'Grand Total' ? 'Total' : y;
+                  const boldClass = y === 'Grand Total' ? 'font-weight:700;' : '';
+                  soHtml += `<tr style="${boldClass}">
+                    <td>${title}</td>
+                    <td>-</td><td>-</td><td>-</td><td>-</td>
+                  </tr>`;
                 }
-              });
+              }
+              
+              setUI('soCompareBody', soHtml, true);
+              setUI('remAC1doneTotal', fmtBaht(remAC1Total));
+              setUI('remUnfulfillTotal', fmtBaht(remUnfulfillTotal));
+              
+              // 3 Pillars
+              setUI('rem3pillarsAC1', fmtBaht(remAC1Total));
+              setUI('rem3pillarsUnfulfill', fmtBaht(remUnfulfillTotal));
+              setUI('rem3pillarsTotal', fmtBaht(remAC1Total + remUnfulfillTotal));
             }
 
             // ── AC#1 / AC#2 raw data from 2026 sheet (dynamic header indices) ──
-            const sheet2026 = getSheet(/2026/);
+            const s26Name = wb.SheetNames.find(n => /2026/i.test(n));
             let sumAc1Amt = 0, countAc1Aging = 0, sumAc1Aging = 0;
             let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
             let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
             let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
 
-            if (sheet2026 && sheet2026.length > 1) {
-              const headers = sheet2026[0];
-              const ac1AmtIdx = headers.findIndex(h => String(h).toUpperCase() === 'ACTUAL ACCEPTANCE#1');
-              const ac2AmtIdx = headers.findIndex(h => String(h).toUpperCase() === 'ACTUAL ACCEPTANCE#2');
-              const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase() === 'AGING#1');
-              const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase() === 'AGING#2');
+            if (s26Name) {
+              const s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
+              let headerRowIdx = -1;
+              for (let i = 0; i < Math.min(10, s26Rows.length); i++) {
+                if (s26Rows[i].some(c => String(c).toUpperCase().includes('WON CODE') || String(c).toUpperCase().includes('AGING#1'))) {
+                  headerRowIdx = i;
+                  break;
+                }
+              }
+              
+              if (headerRowIdx > -1) {
+                const headers = s26Rows[headerRowIdx];
+                const ac1AmtIdx = headers.findIndex(h => String(h).toUpperCase().includes('AC#1 AMOUNT'));
+                const ac2AmtIdx = headers.findIndex(h => String(h).toUpperCase().includes('AC#2 AMOUNT'));
+                const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#1'));
+                const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#2'));
 
-              for (let i = 1; i < sheet2026.length; i++) {
-                const row = sheet2026[i];
-                if (!row) continue;
-                
-                // AC#1 Amt
-                if (ac1AmtIdx > -1 && row[ac1AmtIdx] !== undefined && row[ac1AmtIdx] !== null) {
-                  const val = Number(String(row[ac1AmtIdx]).replace(/[^0-9.-]/g, ''));
-                  if (!isNaN(val)) sumAc1Amt += val;
-                }
-                // AC#1 Aging
-                if (ac1AgingIdx > -1 && row[ac1AgingIdx] !== undefined && row[ac1AgingIdx] !== null && String(row[ac1AgingIdx]).trim() !== '') {
-                  const val = Number(String(row[ac1AgingIdx]).replace(/[^0-9.-]/g, ''));
-                  if (!isNaN(val)) {
-                    sumAc1Aging += val;
-                    countAc1Aging++;
-                    if (val < minAc1Aging) minAc1Aging = val;
-                    if (val > maxAc1Aging) maxAc1Aging = val;
+                for (let i = headerRowIdx + 1; i < s26Rows.length; i++) {
+                  const row = s26Rows[i];
+                  if (!row || row.length === 0) continue;
+                  
+                  // AC#1 Amt
+                  if (ac1AmtIdx > -1 && row[ac1AmtIdx] !== undefined && row[ac1AmtIdx] !== '') {
+                    const val = Number(String(row[ac1AmtIdx]).replace(/[^0-9.-]/g, ''));
+                    if (!isNaN(val)) sumAc1Amt += val;
                   }
-                }
-                
-                // AC#2 Amt
-                if (ac2AmtIdx > -1 && row[ac2AmtIdx] !== undefined && row[ac2AmtIdx] !== null) {
-                  const val = Number(String(row[ac2AmtIdx]).replace(/[^0-9.-]/g, ''));
-                  if (!isNaN(val)) sumAc2Amt += val;
-                }
-                // AC#2 Aging
-                if (ac2AgingIdx > -1 && row[ac2AgingIdx] !== undefined && row[ac2AgingIdx] !== null && String(row[ac2AgingIdx]).trim() !== '') {
-                  const val = Number(String(row[ac2AgingIdx]).replace(/[^0-9.-]/g, ''));
-                  if (!isNaN(val)) {
-                    sumAc2Aging += val;
-                    countAc2Aging++;
-                    if (val < minAc2Aging) minAc2Aging = val;
-                    if (val > maxAc2Aging) maxAc2Aging = val;
+                  // AC#1 Aging
+                  if (ac1AgingIdx > -1 && row[ac1AgingIdx] !== undefined && String(row[ac1AgingIdx]).trim() !== '') {
+                    const val = Number(String(row[ac1AgingIdx]).replace(/[^0-9.-]/g, ''));
+                    if (!isNaN(val)) {
+                      sumAc1Aging += val;
+                      countAc1Aging++;
+                      if (val < minAc1Aging) minAc1Aging = val;
+                      if (val > maxAc1Aging) maxAc1Aging = val;
+                    }
+                  }
+                  
+                  // AC#2 Amt
+                  if (ac2AmtIdx > -1 && row[ac2AmtIdx] !== undefined && row[ac2AmtIdx] !== '') {
+                    const val = Number(String(row[ac2AmtIdx]).replace(/[^0-9.-]/g, ''));
+                    if (!isNaN(val)) sumAc2Amt += val;
+                  }
+                  // AC#2 Aging
+                  if (ac2AgingIdx > -1 && row[ac2AgingIdx] !== undefined && String(row[ac2AgingIdx]).trim() !== '') {
+                    const val = Number(String(row[ac2AgingIdx]).replace(/[^0-9.-]/g, ''));
+                    if (!isNaN(val)) {
+                      sumAc2Aging += val;
+                      countAc2Aging++;
+                      if (val < minAc2Aging) minAc2Aging = val;
+                      if (val > maxAc2Aging) maxAc2Aging = val;
+                    }
                   }
                 }
               }
