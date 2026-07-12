@@ -2385,8 +2385,6 @@
             if (actPlan !== null) setUI('finActionPlan', fmtBaht(actPlan));
 
 
-          } // end if (p4.length)
-
           /* ─── Part 7 - SLA On-Process ─── */
 
             const p7Name = wb.SheetNames.find(n => {
@@ -2697,7 +2695,10 @@
             setUI('dtlAC22026', fmtB(vAc226));
             setUI('dtlAC2Total', fmtB((Number(vAc223)||0)+(Number(vAc224)||0)+(Number(vAc225)||0)+(Number(vAc226)||0)));
 
+          } // end if (p4.length)
+
           /* ─── Update Charts dynamically ─── */
+
           if (p3.length) {
             const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
             const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
