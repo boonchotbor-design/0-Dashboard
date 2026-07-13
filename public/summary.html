@@ -2016,12 +2016,7 @@
               if (execTme) execTme.textContent = tM1;
             }
 
-            // PE rows: Adisak Average M1+M2, Palagon Average M1+M2
-            const adisakAvg = p2.find(r => /adisak/i.test(String(r[C])) && /average/i.test(String(r[C])));
-            const palagonAvg = p2.find(r => /palagon/i.test(String(r[C])) && /average/i.test(String(r[C])));
-            // Palagon HAE and TME rows for M2 and site counts
-            const palagonHAE = p2.find(r => /palagon/i.test(String(r[C])) && /HAE/i.test(String(r[C])) && !/average/i.test(String(r[C])));
-            const palagonTME = p2.find(r => /palagon/i.test(String(r[C])) && /TME/i.test(String(r[C])) && !/average/i.test(String(r[C])));
+
 
             if (adisakAvg) {
               const el = document.getElementById('peAdisakM1');
