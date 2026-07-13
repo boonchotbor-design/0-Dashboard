@@ -1990,11 +1990,19 @@
             const C = allKeys2.find(k => k.trim() === 'Category / Person') || 'Category / Person';
             const M1 = allKeys2.find(k => k.trim() === 'M1 Aging') || 'M1 Aging';
 
-            // HAE M1 Aging from row with 'HAE M1' in Category/Person
-            const haeM1row = p2.find(r => /HAE\s*M1/i.test(String(r[C])));
-            const tmeM1row = p2.find(r => /TME\s*M1/i.test(String(r[C])) && !/IPRAN/i.test(String(r[C])));
-            const tmeM2MBBrow = p2.find(r => /TME\s*M2/i.test(String(r[C])) && /MBB/i.test(String(r[C])));
-            const haeM2row = p2.find(r => /HAE\s*M2/i.test(String(r[C])));
+            // HAE M1: match any row with 'HAE' but NOT 'M2' (handles both 'HAE' and 'HAE M1')
+            const haeM1row = p2.find(r => /HAE/i.test(String(r[C])) && !/M2/i.test(String(r[C])));
+            // TME M1: match any row with 'TME' but NOT 'M2' and NOT 'IPRAN'
+            const tmeM1row = p2.find(r => /TME/i.test(String(r[C])) && !/M2/i.test(String(r[C])) && !/IPRAN/i.test(String(r[C])) && !/MBB/i.test(String(r[C])));
+            // M2 rows
+            const tmeM2MBBrow = p2.find(r => /TME/i.test(String(r[C])) && /M2/i.test(String(r[C])) && /MBB/i.test(String(r[C])));
+            const haeM2row    = p2.find(r => /HAE/i.test(String(r[C])) && /M2/i.test(String(r[C])));
+            // PE rows: match Adisak/Palagon with or without 'Average'
+            const adisakAvg  = p2.find(r => /adisak/i.test(String(r[C])) && !/HAE/i.test(String(r[C])) && !/TME/i.test(String(r[C])));
+            const palagonAvg = p2.find(r => /palagon/i.test(String(r[C])) && !/HAE/i.test(String(r[C])) && !/TME/i.test(String(r[C])));
+            // Palagon HAE / TME split rows (optional detail rows)
+            const palagonHAE = p2.find(r => /palagon/i.test(String(r[C])) && /HAE/i.test(String(r[C])));
+            const palagonTME = p2.find(r => /palagon/i.test(String(r[C])) && /TME/i.test(String(r[C])));
 
             if (haeM1row) {
               const parseM1 = v => Number(String(v || '').replace(/[^0-9.-]/g, ''));
