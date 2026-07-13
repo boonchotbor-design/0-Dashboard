@@ -29,14 +29,18 @@ xlsx.utils.book_append_sheet(wb, xlsx.utils.aoa_to_sheet(part2Data), "Part 2 - A
 
 // Part 3: Document Management (Slides 13-19)
 const part3Data = [
-  ['Slide No', 'Slide Title', 'Owner / Type', 'Amount (THB)', 'Done (THB)', 'Avg Aging', 'Notes'],
-  ['Slide 13', 'Document Owner Performance', 'Overall Team', '', '', '', 'ภาระงานและประสิทธิภาพของทีมเอกสาร'],
-  ['Slide 14', 'DOC Owner: Hathairat Singkaew', 'Hathairat', '', '', '', 'จำนวนงานที่ค้างส่งและ Aging เฉลี่ย'],
-  ['Slide 15', 'DOC Owner: Sermsiri Bampentam', 'Sermsiri (IPRAN/TME)', '', '', '', 'เจาะลึกงาน IPRAN/TME'],
-  ['Slide 16', 'DOC Owner: Apichart Kampuang', 'Apichart (MBB/HAE)', '', '', '', 'ภาพรวมงาน MBB/HAE'],
-  ['Slide 17', 'Acceptance AC#1 Performance', 'AC#1 (JAN-DEC)', '1510000', '8290000', '', 'AC#1 Amount = 1.51M | Done = 8.29M'],
-  ['Slide 18', 'Acceptance AC#2 Performance', 'AC#2 (JAN-DEC)', '349000', '4700000', '', 'AC#2 Amount = 349K | Done = 4.70M'],
-  ['Slide 19', 'Work Type Analysis', 'MBB vs IRR/IPTAN', '', '', '', 'เปรียบเทียบความคล่องตัวในการปิดเอกสาร']
+  ['Slide No', 'Slide Title', 'Owner / Type', 'Sites', 'Amount (THB)', 'AC2 Amount', 'Done (THB)', 'Avg Aging', 'Notes'],
+  ['Slide 13', 'Document Owner Performance', 'AC#1 (JAN-DEC)', '', '1510000', '', '8290000', '', 'AC#1 Total Amount / Done'],
+  ['Slide 13', 'Document Owner Performance', 'AC#2 (JAN-DEC)', '', '349000', '', '4700000', '', 'AC#2 Total Amount / Done'],
+  ['Slide 14', 'DOC Owner: Hathairat Singkaew', 'Hathairat AC1', '41', '693559', '', '', '', 'AC#1 Aging สำหรับ น.ส.หทัยรัตน์'],
+  ['Slide 14', 'DOC Owner: Hathairat Singkaew', 'Hathairat AC2', '', '', '0', '', '', 'AC#2 Aging / Amount สำหรับ น.ส.หทัยรัตน์'],
+  ['Slide 15', 'DOC Owner: Sermsiri Bampentam', 'Sermsiri AC1', '50', '113164', '', '', '', 'AC#1 Aging สำหรับ Sermsiri (IPRAN/TME)'],
+  ['Slide 15', 'DOC Owner: Sermsiri Bampentam', 'Sermsiri AC2', '', '', '0', '', '', 'AC#2 Aging / Amount สำหรับ Sermsiri'],
+  ['Slide 16', 'DOC Owner: Apichart Kampuang', 'Apichart AC1', '26', '138325', '', '', '', 'AC#1 Aging สำหรับ Apichart (MBB/HAE)'],
+  ['Slide 16', 'DOC Owner: Apichart Kampuang', 'Apichart AC2', '', '', '0', '', '', 'AC#2 Aging / Amount สำหรับ Apichart'],
+  ['Slide 19', 'Overall Team Install WK27', 'Overall Team Install WK27', '45', '113101', '', '', '6', 'WK27: จำนวน site / Amount / Avg Aging'],
+  ['Slide 19', 'Overall Team Install WK28', 'Overall Team Install WK28', '62', '201167', '', '', '11', 'WK28: จำนวน site / Amount / Avg Aging'],
+  ['Slide 19', 'Work Type Analysis', 'MBB vs IRR/IPTAN', '', '', '', '', '', 'เปรียบเทียบความคล่องตัวในการปิดเอกสาร']
 ];
 xlsx.utils.book_append_sheet(wb, xlsx.utils.aoa_to_sheet(part3Data), "Part 3 - Doc Management");
 

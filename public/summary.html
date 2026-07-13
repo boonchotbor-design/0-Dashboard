@@ -1571,13 +1571,14 @@
           <thead>
             <tr>
               <th>Week</th>
+              <th>Sites</th>
               <th>Amount (THB)</th>
               <th>Avg Aging</th>
             </tr>
           </thead>
           <tbody id="teamInstallBody">
             <tr>
-              <td colspan="3" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No
+              <td colspan="4" style="text-align:center;font-style:italic;color:var(--text-secondary);padding:12px;">No
                 data imported</td>
             </tr>
           </tbody>
@@ -1596,22 +1597,25 @@
               <th>Sites</th>
               <th>AC1 Amount</th>
               <th>AC1 Aging</th>
+              <th>AC2 Amount</th>
               <th>AC2 Aging</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="docOwnerBody">
             <tr>
               <td style="color:var(--text-primary);font-weight:500">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
               <td><span class="badge badge-purple">41</span></td>
               <td>693,559 ฿</td>
               <td><span class="badge badge-amber" id="docHathairatAC1">15.98d</span></td>
-              <td><span class="badge badge-amber">33.15d</span></td>
+              <td id="docHathairatAC2Amt">-</td>
+              <td><span class="badge badge-amber" id="docHathairatAC2">33.15d</span></td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Sermsiri Bampentam</td>
               <td><span class="badge badge-purple">50</span></td>
               <td>113,164 ฿</td>
-              <td><span class="badge badge-green">15.46d</span></td>
+              <td><span class="badge badge-green" id="docSermsiriAC1">15.46d</span></td>
+              <td id="docSermsiriAC2Amt">-</td>
               <td><span class="badge badge-amber" id="docSermsiriAC2">49d</span></td>
             </tr>
             <tr>
@@ -1619,7 +1623,8 @@
               <td><span class="badge badge-purple">26</span></td>
               <td>138,325 ฿</td>
               <td><span class="badge badge-green" id="docApichartAC1">14.88d</span></td>
-              <td><span class="badge badge-green">0d</span></td>
+              <td id="docApichartAC2Amt">-</td>
+              <td><span class="badge badge-green" id="docApichartAC2">-</span></td>
             </tr>
           </tbody>
         </table>
@@ -2041,23 +2046,38 @@
               const el = document.getElementById('finAC2Aging');
               if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
             }
-            // Doc Owners
-            const hathairat = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('hathairat'));
-            const sermsiri = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('sermsiri'));
-            const apichart = p3.find(r => String(r['Owner / Type']).toLowerCase().includes('apichart'));
-            if (hathairat) {
-              const el = document.getElementById('docHathairatAC1');
-              if (el) el.textContent = fmtDays(hathairat['Avg Aging']);
-            }
-            if (sermsiri) {
-              const el = document.getElementById('docSermsiriAC2');
-              if (el) el.textContent = fmtDays(sermsiri['Avg Aging']);
-            }
-            if (apichart) {
-              const el = document.getElementById('docApichartAC1');
-              if (el) el.textContent = fmtDays(apichart['Avg Aging']);
-            }
-            // Overall Team Install dynamically
+            // Doc Owners — match by name AND AC type (AC1 / AC2) for separate aging
+            const docOwnerNames = [
+              { key: 'hathairat', ids: { ac1: 'docHathairatAC1', ac2: 'docHathairatAC2', ac2Amt: 'docHathairatAC2Amt' } },
+              { key: 'sermsiri',  ids: { ac1: 'docSermsiriAC1',  ac2: 'docSermsiriAC2',  ac2Amt: 'docSermsiriAC2Amt' } },
+              { key: 'apichart',  ids: { ac1: 'docApichartAC1',  ac2: 'docApichartAC2',  ac2Amt: 'docApichartAC2Amt' } },
+            ];
+            docOwnerNames.forEach(({ key, ids }) => {
+              // Try to find separate AC1 row and AC2 row for this person
+              const rowAC1 = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key) && /AC.?1/i.test(String(r['Owner / Type'])));
+              const rowAC2 = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key) && /AC.?2/i.test(String(r['Owner / Type'])));
+              // Fallback: single row for this person (no AC suffix)
+              const rowAny = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key));
+
+              const aging1 = rowAC1 ? rowAC1['Avg Aging'] : (rowAny ? rowAny['Avg Aging'] : null);
+              const aging2 = rowAC2 ? rowAC2['Avg Aging'] : null;
+              const amt2   = rowAC2 ? (rowAC2['Amount (THB)'] || rowAC2['AC2 Amount'] || null) : null;
+
+              if (aging1 !== null && aging1 !== '') {
+                const el = document.getElementById(ids.ac1);
+                if (el) el.textContent = fmtDays(aging1);
+              }
+              if (aging2 !== null && aging2 !== '') {
+                const el = document.getElementById(ids.ac2);
+                if (el) el.textContent = fmtDays(aging2);
+              }
+              if (amt2 !== null && amt2 !== '') {
+                const el = document.getElementById(ids.ac2Amt);
+                if (el) el.textContent = fmtBaht(amt2);
+              }
+            });
+
+            // Overall Team Install dynamically — add Sites column
             const teamRows = p3.filter(r => String(r['Owner / Type'] || '').toLowerCase().includes('overall team install'));
             if (teamRows.length > 0) {
               const tb = document.getElementById('teamInstallBody');
@@ -2066,6 +2086,8 @@
                 // Keep only the last 2 rows if there are many, or all if few
                 const showRows = teamRows.slice(-2);
                 showRows.forEach((r, i) => {
+                  const sites = r['Sites'] || r['Count'] || r['จำนวน Site'] || r['จำนวนไซต์'] || '';
+                  const sitesStr = sites !== '' ? String(sites) : '-';
                   const amt = r['Amount (THB)'] ? fmtBaht(r['Amount (THB)']) : '-';
                   const age = r['Avg Aging'];
                   const ageStr = fmtDays(age);
@@ -2073,6 +2095,7 @@
                   const title = String(r['Owner / Type']).replace(/overall team install/i, '').trim() || `WK${26 + i}`;
                   html += `<tr>
                     <td style="color:var(--text-primary);font-weight:500">${title}</td>
+                    <td><span class="badge badge-purple">${sitesStr}</span></td>
                     <td>${amt}</td>
                     <td><span class="badge ${badgeClass}">${ageStr}</span></td>
                   </tr>`;
@@ -2593,6 +2616,8 @@
             let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
             let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
             let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
+            // Completed / On Process / Remaining from 2026 sheet
+            let countCompleted = 0, countOnProcess = 0, countRemaining = 0;
 
             if (s26Name) {
               const s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
@@ -2610,6 +2635,9 @@
                 const ac2AmtIdx = headers.findIndex(h => String(h).toUpperCase().includes('AC#2 AMOUNT'));
                 const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#1'));
                 const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#2'));
+                // Find STATUS column for Completed / On Process / Remaining
+                const statusIdx = headers.findIndex(h => /^status$/i.test(String(h).trim()) || /สถานะ/.test(String(h)));
+                const ac2StatusIdx = headers.findIndex(h => /AC.?2.*STATUS|STATUS.*AC.?2/i.test(String(h)));
 
                 for (let i = headerRowIdx + 1; i < s26Rows.length; i++) {
                   const row = s26Rows[i];
@@ -2626,7 +2654,8 @@
                     if (!isNaN(val)) {
                       sumAc1Aging += val;
                       countAc1Aging++;
-                      if (val < minAc1Aging) minAc1Aging = val;
+                      // Exclude 0 from MIN — only track positive aging days
+                      if (val > 0 && val < minAc1Aging) minAc1Aging = val;
                       if (val > maxAc1Aging) maxAc1Aging = val;
                     }
                   }
@@ -2642,11 +2671,39 @@
                     if (!isNaN(val)) {
                       sumAc2Aging += val;
                       countAc2Aging++;
-                      if (val < minAc2Aging) minAc2Aging = val;
+                      // Exclude 0 from MIN — only track positive aging days
+                      if (val > 0 && val < minAc2Aging) minAc2Aging = val;
                       if (val > maxAc2Aging) maxAc2Aging = val;
                     }
                   }
+                  // Completed / On Process / Remaining from STATUS column
+                  if (statusIdx > -1 || ac2StatusIdx > -1) {
+                    const colIdx = statusIdx > -1 ? statusIdx : ac2StatusIdx;
+                    const status = String(row[colIdx] || '').trim().toLowerCase();
+                    if (status === 'completed' || status === 'done' || status === 'เสร็จแล้ว') countCompleted++;
+                    else if (status === 'on process' || status === 'in progress' || status === 'กำลังดำเนินการ') countOnProcess++;
+                    else if (status === 'remaining' || status === 'pending' || status === 'ยังไม่ดำเนินการ' || status === 'not started') countRemaining++;
+                  }
                 }
+              }
+            }
+
+            // Update Site Donut legend if STATUS column found
+            if (countCompleted + countOnProcess + countRemaining > 0) {
+              const elComp = document.getElementById('legendCompleted');
+              const elOnProc = document.getElementById('legendOnProcess');
+              const elRem = document.getElementById('legendRemaining');
+              if (elComp) elComp.textContent = countCompleted;
+              if (elOnProc) elOnProc.textContent = countOnProcess;
+              if (elRem) elRem.textContent = countRemaining;
+              // Also update the KPI sub-label
+              const elKpiSub = document.getElementById('kpiTotalSitesSub');
+              if (elKpiSub) {
+                const total = countCompleted + countOnProcess + countRemaining;
+                document.getElementById('kpiTotalSites') && (document.getElementById('kpiTotalSites').textContent = total);
+                const pct = total > 0 ? ((countCompleted / total) * 100).toFixed(1) : 0;
+                const elTrend = document.getElementById('kpiTotalSitesTrend');
+                if (elTrend) elTrend.textContent = pct + '% Done';
               }
             }
 
@@ -2739,12 +2796,16 @@
             'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody', 'teamInstallBody',
             'soCompareBody', 'milestoneWorkTypeBody', 'soWk1Head', 'soWk2Head',
             'blWkLabel', 'blWk1Label', 'blWk2Label', 'blWk1Val', 'blWk2Val', 'blDiff',
-            'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging',
+            'rawAc1Amt', 'rawAc1Aging', 'rawAc1AgingMin', 'rawAc1AgingMax',
+            'rawAc2Amt', 'rawAc2Aging', 'rawAc2AgingMin', 'rawAc2AgingMax',
             'execHaeM1', 'execHaeM1Notes', 'execTmeM1', 'execTmeM1Notes',
             'qcInspected', 'qcPassRate', 'qcDefectNotes', 'qcImprovementNotes',
             'executionParadoxNotes', 'workTypeNotes',
             'sumQcDone', 'sumQcLate', 'sumQcPend', 'sumQcOver',
-            'sumPatDone', 'sumPatLate', 'sumPatPend', 'sumPatOver'
+            'sumPatDone', 'sumPatLate', 'sumPatPend', 'sumPatOver',
+            'docHathairatAC1', 'docHathairatAC2', 'docHathairatAC2Amt',
+            'docSermsiriAC1', 'docSermsiriAC2', 'docSermsiriAC2Amt',
+            'docApichartAC1', 'docApichartAC2', 'docApichartAC2Amt'
           ];
           const vals = {};
           VALUE_IDS.forEach(id => {
@@ -2849,7 +2910,9 @@
           'peAdisakSites', 'peAdisakM1', 'peAdisakM2', 'peAdisakHae', 'peAdisakTme',
           'pePalagonSites', 'pePalagonM1', 'pePalagonM2', 'pePalagonHae', 'pePalagonTme',
           'docInstallAmtWK25', 'docInstallAgeWK25', 'docInstallAmtWK26', 'docInstallAgeWK26',
-          'docHathairatAC1', 'docSermsiriAC2', 'docApichartAC1',
+          'docHathairatAC1', 'docHathairatAC2', 'docHathairatAC2Amt',
+          'docSermsiriAC1', 'docSermsiriAC2', 'docSermsiriAC2Amt',
+          'docApichartAC1', 'docApichartAC2', 'docApichartAC2Amt',
           'ehsZeroAccident', 'ehsHighRisk',
           'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
           'legendCompleted', 'legendOnProcess', 'legendRemaining',
@@ -2857,7 +2920,8 @@
           'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody',
           'soComparisonBody', 'milestoneWorkTypeBody',
           'soWk1Head', 'soWk2Head',
-          'rawAc1Amt', 'rawAc1Aging', 'rawAc2Amt', 'rawAc2Aging'
+          'rawAc1Amt', 'rawAc1Aging', 'rawAc1AgingMin', 'rawAc1AgingMax',
+          'rawAc2Amt', 'rawAc2Aging', 'rawAc2AgingMin', 'rawAc2AgingMax'
         ];
         const vals = {};
         VALUE_IDS.forEach(id => {
