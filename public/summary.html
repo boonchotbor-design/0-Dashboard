@@ -2494,23 +2494,34 @@
               if (weekBlocks.length >= 2) {
                 wk1Name = weekBlocks[0].label;
                 wk2Name = weekBlocks[1].label;
-                // Extract data rows from each block (skip header rows within block)
-                const getBlockRows = (startIdx) => {
+                // Extract data rows from each block
+                const getBlockRows = (startIdx, endIdx) => {
                   const result = [];
-                  for (let i = startIdx + 1; i < s1Rows.length; i++) {
+                  const limit = endIdx || s1Rows.length;
+                  for (let i = startIdx + 1; i < limit; i++) {
                     const row = s1Rows[i];
-                    if (!row || !row[0]) break;
-                    if (String(row[0]).toUpperCase().startsWith('WEEK')) break;
-                    result.push(row);
+                    if (row && row[0] && ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(row[0]).trim())) {
+                      result.push(row);
+                    }
                   }
                   return result;
                 };
-                wk1Rows = getBlockRows(weekBlocks[0].startIdx);
-                wk2Rows = getBlockRows(weekBlocks[1].startIdx);
+                wk1Rows = getBlockRows(weekBlocks[0].startIdx, weekBlocks[1].startIdx);
+                wk2Rows = getBlockRows(weekBlocks[1].startIdx, s1Rows.length);
               } else if (weekBlocks.length === 1) {
                 wk1Name = 'WK' + (parseInt(weekBlocks[0].label.replace(/\D/g, '')) - 1);
                 wk2Name = weekBlocks[0].label;
                 wk1Rows = [];
+                const getBlockRows = (startIdx) => {
+                  const result = [];
+                  for (let i = startIdx + 1; i < s1Rows.length; i++) {
+                    const row = s1Rows[i];
+                    if (row && row[0] && ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(row[0]).trim())) {
+                      result.push(row);
+                    }
+                  }
+                  return result;
+                };
                 wk2Rows = getBlockRows(weekBlocks[0].startIdx);
               }
 
@@ -2527,17 +2538,24 @@
               let remUnfulfillTotal = 0;
 
               for (let y of years) {
-                const r1 = wk1Rows.find(row => String(row[0]).trim() === y);
-                const r2 = wk2Rows.find(row => String(row[0]).trim() === y);
+                // Handle 'Grand Tota' truncation from Excel if present
+                const r1 = wk1Rows.find(row => {
+                  const title = String(row[0]).trim();
+                  return title === y || (y === 'Grand Total' && title === 'Grand Tota');
+                });
+                const r2 = wk2Rows.find(row => {
+                  const title = String(row[0]).trim();
+                  return title === y || (y === 'Grand Total' && title === 'Grand Tota');
+                });
                 const title = y === 'Grand Total' ? 'Total' : y;
                 const boldStyle = y === 'Grand Total' ? 'font-weight:700;' : '';
 
-                // WK1: col[3]=AC1 DONE Remain, col[6]=Unfulfill Remain
-                // WK2: col[3]=AC1 DONE Remain, col[6]=Unfulfill Remain (same structure per block)
+                // WK1: col[3]=AC1 DONE Remain, col[9]=Unfulfill Remain
+                // WK2: col[3]=AC1 DONE Remain, col[9]=Unfulfill Remain
                 const wk1Ac1 = r1 ? (Number(r1[3]) || 0) : 0;
-                const wk1Unfulfill = r1 ? (Number(r1[6]) || 0) : 0;
+                const wk1Unfulfill = r1 ? (Number(r1[9]) || 0) : 0;
                 const wk2Ac1 = r2 ? (Number(r2[3]) || 0) : 0;
-                const wk2Unfulfill = r2 ? (Number(r2[6]) || 0) : 0;
+                const wk2Unfulfill = r2 ? (Number(r2[9]) || 0) : 0;
 
                 soHtml += `<tr style="${boldStyle}">
                   <td>${title}</td>
