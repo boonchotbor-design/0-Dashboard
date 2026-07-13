@@ -2082,7 +2082,14 @@
           const p4 = p4raw ? XLSX.utils.sheet_to_json(p4raw, { defval: '' }) : [];
           if (p4.length) {
             importedSheets.push('Part 4');
-            const getV = (row) => { const k = Object.keys(row).find(key => key.trim() === 'Value (THB)' || key.trim() === 'Amount (THB)' || key.trim() === 'Value'); return k ? row[k] : null; };
+            const getV = (row) => {
+              // Handle column keys with/without leading/trailing spaces
+              const k = Object.keys(row).find(key => {
+                const t = key.trim();
+                return t === 'Value (THB)' || t === 'Amount (THB)' || t === 'Value';
+              });
+              return k ? row[k] : null;
+            };
             const getVal = (kw) => {
               const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
               return row ? getV(row) : null;
@@ -2131,10 +2138,8 @@
 
             const income = getVal('estimate final income') || getVal('estimate income');
             const ar = getVal('ar (commerce)') || getVal('ar');
-            const ap = getVal('ap') || getVal('accounts payable');
-            const backlog = getVal('remain to claim') || getVal('backlog');
-            const ac2tgt = getVal('ac#2') && p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))
-              ? getV(p4.find(r => String(r['Metric']).toLowerCase().includes('ac#2') && String(r['Slide Title'] || '').toLowerCase().includes('target'))) : null;
+            const ap = getVal('ap (payment)') || getVal('ap') || getVal('accounts payable');
+            const backlog = getVal('remain to claim') || getVal('backlog week');
 
             const getValByTitle = (metricKw, titleKw) => {
               const row = p4.find(r =>
@@ -2144,7 +2149,19 @@
               return row ? getV(row) : null;
             };
 
-            let actPlan = getValByTitle('action plan ac#2', 'total');
+            // Action Plan — try new naming 'Action Plan TOTAL WKxx' then old naming
+            let actPlan = null;
+            const apTotalRows = p4.filter(r => /action plan total wk\d+/i.test(String(r['Metric'])));
+            if (apTotalRows.length > 0) {
+              // Take latest week (sort by WK number)
+              apTotalRows.sort((a, b) => {
+                const wa = parseInt(String(a['Metric']).replace(/\D/g,'')) || 0;
+                const wb2 = parseInt(String(b['Metric']).replace(/\D/g,'')) || 0;
+                return wb2 - wa;
+              });
+              actPlan = getV(apTotalRows[0]);
+            }
+            if (actPlan === null) actPlan = getValByTitle('action plan ac#2', 'total');
             if (actPlan === null) {
               const rows = p4.filter(r =>
                 String(r['Metric']).toLowerCase().includes('action plan ac#2') &&
@@ -2158,12 +2175,41 @@
             if (actPlan === null) actPlan = getSum('action plan');
             const fmtBaht = v => Number(v || 0).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
             const setUI = (id, val) => { const el = document.getElementById(id); if (el && val !== null) el.textContent = val; };
+
+            // On-Process (Install On-Process items from Slide 19)
+            const onProcRows = p4.filter(r => /on-process/i.test(String(r['Metric'])));
+            let onProcTotal = null;
+            if (onProcRows.length > 0) {
+              onProcTotal = onProcRows.reduce((acc, r) => acc + (Number(getV(r)) || 0), 0);
+              // Map individual rows to their UI elements
+              onProcRows.forEach(r => {
+                const m = String(r['Metric']);
+                if (/TME-MBB/i.test(m)) setUI('dtlOnProcMBB', fmtBaht(getV(r)));
+                else if (/TME-IPRAN/i.test(m)) setUI('dtlOnProcIPRAN', fmtBaht(getV(r)));
+                else if (/TME-BATT/i.test(m) || /BATTERY/i.test(m)) setUI('dtlOnProcBATT', fmtBaht(getV(r)));
+                else if (/HAE-MBB/i.test(m)) setUI('dtlOnProcHAEMBB', fmtBaht(getV(r)));
+                else if (/TRE/i.test(m)) setUI('dtlOnProcTRE', fmtBaht(getV(r)));
+              });
+            }
             setUI('finIncome', fmtBaht(income));
             setUI('finAR', fmtBaht(ar));
             setUI('finAP', fmtBaht(ap));
             setUI('finBacklog', fmtBaht(backlog));
-            if (ac2tgt !== null) setUI('finAC2Target', fmtBaht(ac2tgt));
+            if (onProcTotal !== null) setUI('finOnProcess', fmtBaht(onProcTotal));
             if (actPlan !== null) setUI('finActionPlan', fmtBaht(actPlan));
+
+            // KPI Action Plan card — use latest WK actPlan total
+            if (actPlan !== null) {
+              const kpiAP = document.getElementById('kpiActionPlan');
+              if (kpiAP) {
+                const v = Number(actPlan);
+                kpiAP.innerHTML = v >= 1000000
+                  ? (v/1000000).toFixed(2) + '<span class="unit">M ฿</span>'
+                  : Math.round(v/1000) + '<span class="unit">K ฿</span>';
+              }
+            }
+
+
 
 
           /* ─── Part 7 - SLA On-Process ─── */
@@ -2258,30 +2304,49 @@
               const patSubconData = patSite >= 0 ? parseSlaColumn(patSite, patAging, patOwner) : [];
               const reworkData = reworkSite >= 0 ? parseSlaColumn(reworkSite, reworkAging, reworkOwner) : [];
 
-              const extractSum = (colIdx, label) => {
-                if (colIdx < 0) return '-';
-                for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
-                  const r = p7Rows[i];
-                  if (r && String(r[colIdx] || '').includes(label)) {
-                    return String(r[colIdx + 1] || '0');
-                  }
-                }
-                return '-';
-              };
+              // Part 7 structure: rows 0-1 = headers, rows 2-5 = summary data
+              // Col 0-2: SMART QC (status | count | avgAging)
+              // Col 4-6: PAT SUBCON (status | count | avgAging)
+              const slaFixedRows = p7Rows.slice(2, 6); // rows[2]=Done in SLA, [3]=Done Late, [4]=Pending, [5]=Over SLA
 
               const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-              if (smartQcSite >= 0) {
-                setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
-                setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
-                setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
-                setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
+
+              // Try fixed row extraction first (new file format)
+              if (slaFixedRows.length >= 4) {
+                setTxt('sumQcDone', String(slaFixedRows[0][1] ?? '-'));
+                setTxt('sumQcLate', String(slaFixedRows[1][1] ?? '-'));
+                setTxt('sumQcPend', String(slaFixedRows[2][1] ?? '-'));
+                setTxt('sumQcOver', String(slaFixedRows[3][1] ?? '-'));
+                setTxt('sumPatDone', String(slaFixedRows[0][5] ?? '-'));
+                setTxt('sumPatLate', String(slaFixedRows[1][5] ?? '-'));
+                setTxt('sumPatPend', String(slaFixedRows[2][5] ?? '-'));
+                setTxt('sumPatOver', String(slaFixedRows[3][5] ?? '-'));
+              } else {
+                // Fallback: search-based extraction (old format)
+                const extractSum = (colIdx, label) => {
+                  if (colIdx < 0) return '-';
+                  for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
+                    const r = p7Rows[i];
+                    if (r && String(r[colIdx] || '').includes(label)) {
+                      return String(r[colIdx + 1] || '0');
+                    }
+                  }
+                  return '-';
+                };
+                if (smartQcSite >= 0) {
+                  setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
+                  setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
+                  setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
+                  setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
+                }
+                if (patSite >= 0) {
+                  setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
+                  setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
+                  setTxt('sumPatPend', extractSum(patSite, 'Pending'));
+                  setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
+                }
               }
-              if (patSite >= 0) {
-                setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
-                setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
-                setTxt('sumPatPend', extractSum(patSite, 'Pending'));
-                setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
-              }
+
 
               const renderTable = (tbodyId, data, hasOwner) => {
                 const tbody = document.getElementById(tbodyId);
@@ -2325,36 +2390,45 @@
 
             let onProc = getSum('on-process');
             if (onProc === null) onProc = getSum('on process');
+            if (onProc === null) onProc = getSum('on-process (2026)');
 
-            const vAct23 = getVal(`actual acceptance wk${reportWeek - 4}`);
-            const vAct24 = getVal(`actual acceptance wk${reportWeek - 3}`);
-            const vAct25 = getVal(`actual acceptance wk${reportWeek - 2}`);
-            const vAct26 = getVal(`actual acceptance wk${reportWeek - 1}`);
-            const vActJune = getVal('actual acceptance june');
-            
+            // ── Actual Acceptance WK — read dynamically from Metric names ──
+            const actWkRowsAll = p4
+              .filter(r => /^actual acceptance wk\d+$/i.test(String(r['Metric']).trim()))
+              .map(r => ({
+                wk: parseInt(String(r['Metric']).replace(/\D/g, '')),
+                val: getV(r)
+              }))
+              .filter(x => !isNaN(x.wk))
+              .sort((a, b) => a.wk - b.wk);
+
             const setLbl = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
-            setLbl('lblActWk1', `WK${reportWeek - 4}`);
-            setLbl('lblActWk2', `WK${reportWeek - 3}`);
-            setLbl('lblActWk3', `WK${reportWeek - 2}`);
-            setLbl('lblActWk4', `WK${reportWeek - 1}`);
-            setLbl('lblActWk5', `WK${reportWeek}`);
-            const vActHuawei = getVal('actual acceptance total (jan-july) huawei');
-            const vActTrue = getVal('actual acceptance total (jan-july) true-tuc');
-            
-            const fmtB = v => v ? fmtBaht(v) : '-';
-            setUI('dtlActWk1', fmtB(vAct23));
-            setUI('dtlActWk2', fmtB(vAct24));
-            setUI('dtlActWk3', fmtB(vAct25));
-            setUI('dtlActWk4', fmtB(vAct26));
-            
-            const actWk5 = getVal(`actual acceptance wk${reportWeek}`);
-            setUI('dtlActWk5', fmtB(actWk5));
-            
-            setUI('dtlActJUNE', fmtB(vActJune));
+            const fmtB = v => (v !== null && v !== '' && v !== undefined) ? fmtBaht(v) : '-';
+
+            // Fill up to 5 week slots from the dynamically found rows
+            const wkSlotIds = ['dtlActWk1','dtlActWk2','dtlActWk3','dtlActWk4','dtlActWk5'];
+            const lblSlotIds = ['lblActWk1','lblActWk2','lblActWk3','lblActWk4','lblActWk5'];
+            actWkRowsAll.slice(-5).forEach((row, i) => {
+              setLbl(lblSlotIds[i], `WK${row.wk}`);
+              setUI(wkSlotIds[i], fmtB(row.val));
+            });
+            // Clear remaining slots if fewer than 5 weeks found
+            for (let i = actWkRowsAll.slice(-5).length; i < 5; i++) {
+              setLbl(lblSlotIds[i], `WK-`);
+              setUI(wkSlotIds[i], '-');
+            }
+
+            const vActHuawei = getVal('actual acceptance total (jan-july) huawei')
+              || getVal('actual acceptance total huawei');
+            const vActTrue = getVal('actual acceptance total (jan-july) true-tuc')
+              || getVal('actual acceptance total true-tuc');
+
+            setUI('dtlActJUNE', fmtB(getVal('actual acceptance june')));
             setUI('dtlActHuawei', fmtB(vActHuawei));
             setUI('dtlActTrueTuc', fmtB(vActTrue));
 
 
+            // Match by Slide Title containing year (2023–2026) — supports both old and new naming
             const getValByTitleRegex = (metricRegex, titleKw) => {
               const row = p4.find(r =>
                 metricRegex.test(String(r['Metric']).toLowerCase()) &&
@@ -2363,20 +2437,25 @@
               return row ? getV(row) : null;
             };
 
-            let reAc1Prev = new RegExp('Acceptance AC#?1 Plan', 'i');
-            let vAc123 = getValByTitleRegex(reAc1Prev, '2023');
-            let vAc124 = getValByTitleRegex(reAc1Prev, '2024');
-            let vAc125 = getValByTitleRegex(reAc1Prev, '2025');
-            let vAc126 = getValByTitleRegex(reAc1Prev, '2026');
+            // AC#1 — try both new naming ('Action Plan AC#1') and old ('Acceptance AC#1 Plan')
+            const reAc1 = /action plan ac#?1|acceptance ac#?1 plan/i;
+            const vAc123 = getValByTitleRegex(reAc1, '(2023)') ?? getValByTitleRegex(reAc1, '2023');
+            const vAc124 = getValByTitleRegex(reAc1, '(2024)') ?? getValByTitleRegex(reAc1, '2024');
+            const vAc125 = getValByTitleRegex(reAc1, '(2025)') ?? getValByTitleRegex(reAc1, '2025');
+            const vAc126 = getValByTitleRegex(reAc1, '(2026)') ?? getValByTitleRegex(reAc1, '2026');
 
-            let reAc2Prev = new RegExp('Acceptance AC#?2 Plan', 'i');
-            let vAc223 = getValByTitleRegex(reAc2Prev, '2023');
-            let vAc224 = getValByTitleRegex(reAc2Prev, '2024');
-            let vAc225 = getValByTitleRegex(reAc2Prev, '2025');
-            let vAc226 = getValByTitleRegex(reAc2Prev, '2026');
+            // AC#2 — try both new and old naming
+            const reAc2 = /action plan ac#?2|acceptance ac#?2 plan/i;
+            const vAc223 = getValByTitleRegex(reAc2, '(2023)') ?? getValByTitleRegex(reAc2, '2023');
+            const vAc224 = getValByTitleRegex(reAc2, '(2024)') ?? getValByTitleRegex(reAc2, '2024');
+            const vAc225 = getValByTitleRegex(reAc2, '(2025)') ?? getValByTitleRegex(reAc2, '2025');
+            const vAc226 = getValByTitleRegex(reAc2, '(2026)') ?? getValByTitleRegex(reAc2, '2026');
 
-            let vAc1Total = getValByTitleRegex(/action plan ac#?1/, 'total');
-            let vAc2Total = getValByTitleRegex(/action plan ac#?2/, 'total');
+            // Totals — try '(TOTAL)' first, then 'total'
+            const reAc1Total = /action plan ac#?1 total|action plan ac#?1/i;
+            const reAc2Total = /action plan ac#?2 total|action plan ac#?2/i;
+            const vAc1Total = getValByTitleRegex(reAc1Total, '(total)') ?? getValByTitleRegex(reAc1Total, 'total');
+            const vAc2Total = getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
 
             const sheet1 = wb.Sheets['Sheet1'];
                         if (sheet1) {
