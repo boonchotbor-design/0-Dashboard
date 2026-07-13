@@ -2685,8 +2685,8 @@
                     if (!isNaN(val)) {
                       sumAc1Aging += val;
                       countAc1Aging++;
-                      // Exclude 0 from MIN — only track positive aging days
-                      if (val > 0 && val < minAc1Aging) minAc1Aging = val;
+                      // Include 0 in MIN aging — 0 days is a valid quick completion
+                      if (val >= 0 && val < minAc1Aging) minAc1Aging = val;
                       if (val > maxAc1Aging) maxAc1Aging = val;
                     }
                   }
@@ -2702,8 +2702,8 @@
                     if (!isNaN(val)) {
                       sumAc2Aging += val;
                       countAc2Aging++;
-                      // Exclude 0 from MIN — only track positive aging days
-                      if (val > 0 && val < minAc2Aging) minAc2Aging = val;
+                      // Include 0 in MIN aging — 0 days is a valid quick completion
+                      if (val >= 0 && val < minAc2Aging) minAc2Aging = val;
                       if (val > maxAc2Aging) maxAc2Aging = val;
                     }
                   }
@@ -2742,14 +2742,16 @@
             const avgAc2Aging = countAc2Aging > 0 ? (sumAc2Aging / countAc2Aging) : 0;
 
             const setBadge = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            const showMinMax = (val) => (val === Infinity || val === -Infinity) ? '-' : val.toFixed(2) + 'd';
+
             setBadge('rawAc1Amt', sumAc1Amt > 0 ? fmtBaht(sumAc1Amt) : '-');
             setBadge('rawAc2Amt', sumAc2Amt > 0 ? fmtBaht(sumAc2Amt) : '-');
             setBadge('rawAc1Aging', avgAc1Aging > 0 ? avgAc1Aging.toFixed(2) + 'd' : '-');
             setBadge('rawAc2Aging', avgAc2Aging > 0 ? avgAc2Aging.toFixed(2) + 'd' : '-');
-            setBadge('rawAc1AgingMin', isFinite(minAc1Aging) ? minAc1Aging + 'd' : '-');
-            setBadge('rawAc1AgingMax', isFinite(maxAc1Aging) ? maxAc1Aging + 'd' : '-');
-            setBadge('rawAc2AgingMin', isFinite(minAc2Aging) ? minAc2Aging + 'd' : '-');
-            setBadge('rawAc2AgingMax', isFinite(maxAc2Aging) ? maxAc2Aging + 'd' : '-');
+            setBadge('rawAc1AgingMin', showMinMax(minAc1Aging));
+            setBadge('rawAc1AgingMax', showMinMax(maxAc1Aging));
+            setBadge('rawAc2AgingMin', showMinMax(minAc2Aging));
+            setBadge('rawAc2AgingMax', showMinMax(maxAc2Aging));
 
 
             // Set AC#1 Prev Breakdown
