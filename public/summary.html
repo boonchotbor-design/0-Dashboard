@@ -1604,24 +1604,24 @@
           <tbody id="docOwnerBody">
             <tr>
               <td style="color:var(--text-primary);font-weight:500">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
-              <td><span class="badge badge-purple">41</span></td>
-              <td>693,559 ฿</td>
+              <td><span class="badge badge-purple" id="docHathairatSites">41</span></td>
+              <td id="docHathairatAC1Amt">693,559 ฿</td>
               <td><span class="badge badge-amber" id="docHathairatAC1">15.98d</span></td>
               <td id="docHathairatAC2Amt">-</td>
               <td><span class="badge badge-amber" id="docHathairatAC2">33.15d</span></td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Sermsiri Bampentam</td>
-              <td><span class="badge badge-purple">50</span></td>
-              <td>113,164 ฿</td>
+              <td><span class="badge badge-purple" id="docSermsiriSites">50</span></td>
+              <td id="docSermsiriAC1Amt">113,164 ฿</td>
               <td><span class="badge badge-green" id="docSermsiriAC1">15.46d</span></td>
               <td id="docSermsiriAC2Amt">-</td>
               <td><span class="badge badge-amber" id="docSermsiriAC2">49d</span></td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Apichart Kampuang</td>
-              <td><span class="badge badge-purple">26</span></td>
-              <td>138,325 ฿</td>
+              <td><span class="badge badge-purple" id="docApichartSites">26</span></td>
+              <td id="docApichartAC1Amt">138,325 ฿</td>
               <td><span class="badge badge-green" id="docApichartAC1">14.88d</span></td>
               <td id="docApichartAC2Amt">-</td>
               <td><span class="badge badge-green" id="docApichartAC2">-</span></td>
@@ -2048,9 +2048,9 @@
             }
             // Doc Owners — match by name AND AC type (AC1 / AC2) for separate aging
             const docOwnerNames = [
-              { key: 'hathairat', ids: { ac1: 'docHathairatAC1', ac2: 'docHathairatAC2', ac2Amt: 'docHathairatAC2Amt' } },
-              { key: 'sermsiri',  ids: { ac1: 'docSermsiriAC1',  ac2: 'docSermsiriAC2',  ac2Amt: 'docSermsiriAC2Amt' } },
-              { key: 'apichart',  ids: { ac1: 'docApichartAC1',  ac2: 'docApichartAC2',  ac2Amt: 'docApichartAC2Amt' } },
+              { key: 'hathairat', ids: { sites: 'docHathairatSites', ac1Amt: 'docHathairatAC1Amt', ac1: 'docHathairatAC1', ac2: 'docHathairatAC2', ac2Amt: 'docHathairatAC2Amt' } },
+              { key: 'sermsiri',  ids: { sites: 'docSermsiriSites', ac1Amt: 'docSermsiriAC1Amt', ac1: 'docSermsiriAC1',  ac2: 'docSermsiriAC2',  ac2Amt: 'docSermsiriAC2Amt' } },
+              { key: 'apichart',  ids: { sites: 'docApichartSites', ac1Amt: 'docApichartAC1Amt', ac1: 'docApichartAC1',  ac2: 'docApichartAC2',  ac2Amt: 'docApichartAC2Amt' } },
             ];
             docOwnerNames.forEach(({ key, ids }) => {
               // Try to find separate AC1 row and AC2 row for this person
@@ -2058,6 +2058,20 @@
               const rowAC2 = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key) && /AC.?2/i.test(String(r['Owner / Type'])));
               // Fallback: single row for this person (no AC suffix)
               const rowAny = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key));
+
+              const rowTarget = rowAC1 || rowAny;
+              if (rowTarget) {
+                 const sites = rowTarget['Sites'] || rowTarget['Count'] || rowTarget['จำนวน Site'] || rowTarget['จำนวนไซต์'];
+                 if (sites !== undefined && sites !== '') {
+                   const el = document.getElementById(ids.sites);
+                   if (el) el.textContent = sites;
+                 }
+                 const amt1 = rowTarget['Amount (THB)'] || rowTarget['AC1 Amount'];
+                 if (amt1 !== undefined && amt1 !== '') {
+                   const el = document.getElementById(ids.ac1Amt);
+                   if (el) el.textContent = fmtBaht(amt1);
+                 }
+              }
 
               const aging1 = rowAC1 ? rowAC1['Avg Aging'] : (rowAny ? rowAny['Avg Aging'] : null);
               const aging2 = rowAC2 ? rowAC2['Avg Aging'] : null;
@@ -2803,9 +2817,9 @@
             'executionParadoxNotes', 'workTypeNotes',
             'sumQcDone', 'sumQcLate', 'sumQcPend', 'sumQcOver',
             'sumPatDone', 'sumPatLate', 'sumPatPend', 'sumPatOver',
-            'docHathairatAC1', 'docHathairatAC2', 'docHathairatAC2Amt',
-            'docSermsiriAC1', 'docSermsiriAC2', 'docSermsiriAC2Amt',
-            'docApichartAC1', 'docApichartAC2', 'docApichartAC2Amt'
+            'docHathairatSites', 'docHathairatAC1Amt', 'docHathairatAC1', 'docHathairatAC2', 'docHathairatAC2Amt',
+            'docSermsiriSites', 'docSermsiriAC1Amt', 'docSermsiriAC1', 'docSermsiriAC2', 'docSermsiriAC2Amt',
+            'docApichartSites', 'docApichartAC1Amt', 'docApichartAC1', 'docApichartAC2', 'docApichartAC2Amt'
           ];
           const vals = {};
           VALUE_IDS.forEach(id => {
@@ -2900,7 +2914,7 @@
             'lblAc1PrevWk', 'lblAc2PrevWk', 'lblAc1LatestWk', 'lblAc2LatestWk',
           'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
           'finAC1Aging', 'finAC2Aging',
-          'dtlActWK23', 'dtlActWK24', 'dtlActWK25', 'dtlActWK26', 'dtlActJUNE',
+          'dtlActWk1', 'dtlActWk2', 'dtlActWk3', 'dtlActWk4', 'dtlActWk5', 'dtlActJUNE',
           'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
           'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
           'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
@@ -2910,9 +2924,9 @@
           'peAdisakSites', 'peAdisakM1', 'peAdisakM2', 'peAdisakHae', 'peAdisakTme',
           'pePalagonSites', 'pePalagonM1', 'pePalagonM2', 'pePalagonHae', 'pePalagonTme',
           'docInstallAmtWK25', 'docInstallAgeWK25', 'docInstallAmtWK26', 'docInstallAgeWK26',
-          'docHathairatAC1', 'docHathairatAC2', 'docHathairatAC2Amt',
-          'docSermsiriAC1', 'docSermsiriAC2', 'docSermsiriAC2Amt',
-          'docApichartAC1', 'docApichartAC2', 'docApichartAC2Amt',
+          'docHathairatSites', 'docHathairatAC1Amt', 'docHathairatAC1', 'docHathairatAC2', 'docHathairatAC2Amt',
+          'docSermsiriSites', 'docSermsiriAC1Amt', 'docSermsiriAC1', 'docSermsiriAC2', 'docSermsiriAC2Amt',
+          'docApichartSites', 'docApichartAC1Amt', 'docApichartAC1', 'docApichartAC2', 'docApichartAC2Amt',
           'ehsZeroAccident', 'ehsHighRisk',
           'conclusionAction', 'conclusionAssignee', 'conclusionDeadline',
           'legendCompleted', 'legendOnProcess', 'legendRemaining',
