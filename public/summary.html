@@ -1950,14 +1950,18 @@
 
             const haeM1 = findMetric(p1, 'hae m1', 'Value');
             const tmeM1 = findMetric(p1, 'tme m1', 'Value');
-            if (haeM1) {
-              document.getElementById('kpiHaeAging').innerHTML = Number(haeM1).toFixed(2) + '<span class="unit">days</span>';
-              document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1 ? Number(tmeM1).toFixed(2) : '-'} days`;
+            // Strip non-numeric characters (e.g. ' วัน') before converting
+            const parseNum = v => v !== null && v !== '' ? Number(String(v).replace(/[^0-9.-]/g, '')) : null;
+            const haeM1num = parseNum(haeM1);
+            const tmeM1num = parseNum(tmeM1);
+            if (haeM1num !== null && !isNaN(haeM1num)) {
+              document.getElementById('kpiHaeAging').innerHTML = haeM1num.toFixed(2) + '<span class="unit">days</span>';
+              document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tmeM1num !== null && !isNaN(tmeM1num) ? tmeM1num.toFixed(2) : '-'} days`;
 
               const execHaeM1El = document.getElementById('execHaeM1');
-              if (execHaeM1El) execHaeM1El.textContent = Number(haeM1).toFixed(2);
+              if (execHaeM1El) execHaeM1El.textContent = haeM1num.toFixed(2);
               const execTmeM1El = document.getElementById('execTmeM1');
-              if (execTmeM1El) execTmeM1El.textContent = tmeM1 ? Number(tmeM1).toFixed(2) : '-';
+              if (execTmeM1El) execTmeM1El.textContent = tmeM1num !== null && !isNaN(tmeM1num) ? tmeM1num.toFixed(2) : '-';
             }
 
             const qcDefect = findMetric(p1, 'defect issue', 'Notes / Key Message') || findMetric(p1, 'operation error', 'Notes / Key Message');
@@ -1993,8 +1997,9 @@
             const haeM2row = p2.find(r => /HAE\s*M2/i.test(String(r[C])));
 
             if (haeM1row) {
-              const hM1 = Number(haeM1row[M1]).toFixed(2);
-              const tM1 = tmeM1row ? Number(tmeM1row[M1]).toFixed(2) : '-';
+              const parseM1 = v => Number(String(v || '').replace(/[^0-9.-]/g, ''));
+              const hM1 = parseM1(haeM1row[M1]).toFixed(2);
+              const tM1 = tmeM1row ? parseM1(tmeM1row[M1]).toFixed(2) : '-';
               document.getElementById('kpiHaeAging').innerHTML = hM1 + '<span class="unit">days</span>';
               document.getElementById('kpiHaeAgingSub').textContent = `TME M1 Avg ${tM1} days`;
               const execHae = document.getElementById('execHaeM1');
@@ -2435,6 +2440,7 @@
             if (onProc === null) onProc = getSum('on-process (2026)');
 
             // ── Actual Acceptance WK — read dynamically from Metric names ──
+            // Filter rows matching 'Actual Acceptance WK##' — also accept value=0
             const actWkRowsAll = p4
               .filter(r => /^actual acceptance wk\d+$/i.test(String(r['Metric']).trim()))
               .map(r => ({
@@ -2445,14 +2451,17 @@
               .sort((a, b) => a.wk - b.wk);
 
             const setLbl = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
-            const fmtB = v => (v !== null && v !== '' && v !== undefined) ? fmtBaht(v) : '-';
+            const fmtB = v => (v !== null && v !== '' && v !== undefined) ? fmtBaht(Number(v)) : '-';
 
             // Fill up to 5 week slots (WK27-WK31) from the dynamically found rows
+            // Fill up to 5 week slots from dynamically found rows
             const wkSlotIds = ['dtlActWk1','dtlActWk2','dtlActWk3','dtlActWk4','dtlActWk5'];
             const lblSlotIds = ['lblActWk1','lblActWk2','lblActWk3','lblActWk4','lblActWk5'];
             actWkRowsAll.slice(-5).forEach((row, i) => {
               setLbl(lblSlotIds[i], `WK${row.wk}`);
-              setUI(wkSlotIds[i], fmtB(row.val));
+              // val may be 0 which is valid — use fmtBaht directly
+              const el = document.getElementById(wkSlotIds[i]);
+              if (el) el.textContent = (row.val !== null && row.val !== '' && row.val !== undefined) ? fmtBaht(Number(row.val)) : '-';
             });
             // Clear remaining slots if fewer than 5 weeks found
             for (let i = actWkRowsAll.slice(-5).length; i < 5; i++) {
