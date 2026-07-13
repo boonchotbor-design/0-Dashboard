@@ -1313,7 +1313,7 @@
         <div class="fin-row"><span class="fin-label" id="lblActWk5">WK27</span><span class="fin-val green" id="dtlActWk5">-</span>
         </div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(16,185,129,.3)">
-          <span class="fin-label" style="font-weight:600;color:#6ee7b7">JUNE Total</span>
+          <span class="fin-label" style="font-weight:600;color:#6ee7b7" id="lblActJulyTotal">JULY Total</span>
           <span class="fin-val green" style="font-weight:700" id="dtlActJUNE">-</span>
         </div>
       </div>
@@ -1324,9 +1324,9 @@
           <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📈</span>
           Actual Acceptance TOTAL
         </div>
-        <div class="fin-row"><span class="fin-label">HUAWEI (JAN-JUNE)</span><span class="fin-val green"
+        <div class="fin-row"><span class="fin-label" id="lblActHuawei">HUAWEI (JAN-JULY)</span><span class="fin-val green"
             id="dtlActHuawei">-</span></div>
-        <div class="fin-row"><span class="fin-label">TRUE-TUC (JAN-JUNE)</span><span class="fin-val green"
+        <div class="fin-row"><span class="fin-label" id="lblActTrueTuc">TRUE-TUC (JAN-JULY)</span><span class="fin-val green"
             id="dtlActTrueTuc">-</span></div>
       </div>
 
@@ -1388,6 +1388,34 @@
             id="dtlOnProcTRE">-</span></div>
       </div>
 
+    </div>
+
+    <!-- ── Acceptance Performance ── -->
+    <p class="section-title">📈 Acceptance Performance</p>
+    <div class="main-grid" style="margin-bottom:28px">
+      <!-- Acceptance AC#1 Performance -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📄</span>
+          Acceptance AC#1 Performance
+        </div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc1Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MIN)</span><span class="fin-val green" id="rawAc1AgingMin">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MAX)</span><span class="fin-val" style="color:#ef4444" id="rawAc1AgingMax">-</span></div>
+      </div>
+
+      <!-- Acceptance AC#2 Performance -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📄</span>
+          Acceptance AC#2 Performance
+        </div>
+        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc2Aging">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MIN)</span><span class="fin-val green" id="rawAc2AgingMin">-</span></div>
+        <div class="fin-row"><span class="fin-label">Aging (MAX)</span><span class="fin-val" style="color:#ef4444" id="rawAc2AgingMax">-</span></div>
+      </div>
     </div>
 
     <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
@@ -1708,29 +1736,6 @@
         </table>
       </div>
 
-      <!-- Acceptance AC#1 Performance -->
-      <div class="card">
-        <div class="card-title">
-          <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">📄</span>
-          Acceptance AC#1 Performance
-        </div>
-        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc1Amt">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc1Aging">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (MIN)</span><span class="fin-val green" id="rawAc1AgingMin">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (MAX)</span><span class="fin-val" style="color:#ef4444" id="rawAc1AgingMax">-</span></div>
-      </div>
-
-      <!-- Acceptance AC#2 Performance -->
-      <div class="card">
-        <div class="card-title">
-          <span class="icon" style="--card-icon-bg:rgba(16,185,129,.15)">📄</span>
-          Acceptance AC#2 Performance
-        </div>
-        <div class="fin-row"><span class="fin-label">Amount (SUM)</span><span class="fin-val" id="rawAc2Amt">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (AVG)</span><span class="fin-val amber" id="rawAc2Aging">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (MIN)</span><span class="fin-val green" id="rawAc2AgingMin">-</span></div>
-        <div class="fin-row"><span class="fin-label">Aging (MAX)</span><span class="fin-val" style="color:#ef4444" id="rawAc2AgingMax">-</span></div>
-      </div>
 
       <!-- Work Type Analysis -->
       <div class="card">
@@ -2405,7 +2410,7 @@
             const setLbl = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
             const fmtB = v => (v !== null && v !== '' && v !== undefined) ? fmtBaht(v) : '-';
 
-            // Fill up to 5 week slots from the dynamically found rows
+            // Fill up to 5 week slots (WK27-WK31) from the dynamically found rows
             const wkSlotIds = ['dtlActWk1','dtlActWk2','dtlActWk3','dtlActWk4','dtlActWk5'];
             const lblSlotIds = ['lblActWk1','lblActWk2','lblActWk3','lblActWk4','lblActWk5'];
             actWkRowsAll.slice(-5).forEach((row, i) => {
@@ -2418,14 +2423,24 @@
               setUI(wkSlotIds[i], '-');
             }
 
-            const vActHuawei = getVal('actual acceptance total (jan-july) huawei')
-              || getVal('actual acceptance total huawei');
-            const vActTrue = getVal('actual acceptance total (jan-july) true-tuc')
-              || getVal('actual acceptance total true-tuc');
+            // JULY TOTAL (replaces JUNE TOTAL)
+            const vActJulyTotal = getVal('actual acceptance july total') || getVal('actual acceptance july');
+            const julyLabelEl = document.querySelector('[id="dtlActJUNE"]')?.previousElementSibling;
+            if (julyLabelEl) julyLabelEl.textContent = 'JULY Total';
+            setUI('dtlActJUNE', fmtB(vActJulyTotal));
 
-            setUI('dtlActJUNE', fmtB(getVal('actual acceptance june')));
+            // HUAWEI (JAN-JULY) and TRUE-TUC (JAN-JULY)
+            const vActHuawei = getVal('actual acceptance total (jan-july) huawei') || getVal('actual acceptance total huawei');
+            const vActTrue = getVal('actual acceptance total (jan-july) true-tuc') || getVal('actual acceptance total true-tuc');
+            // Update labels dynamically to JAN-JULY
+            const huaweiLblEl = document.querySelector('[id="dtlActHuawei"]')?.previousElementSibling;
+            if (huaweiLblEl) huaweiLblEl.textContent = 'HUAWEI (JAN-JULY)';
+            const trueLblEl = document.querySelector('[id="dtlActTrueTuc"]')?.previousElementSibling;
+            if (trueLblEl) trueLblEl.textContent = 'TRUE-TUC (JAN-JULY)';
             setUI('dtlActHuawei', fmtB(vActHuawei));
             setUI('dtlActTrueTuc', fmtB(vActTrue));
+
+
 
 
             // Match by Slide Title containing year (2023–2026) — supports both old and new naming
@@ -2458,74 +2473,101 @@
             const vAc2Total = getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
 
             const sheet1 = wb.Sheets['Sheet1'];
-                        if (sheet1) {
+            if (sheet1) {
               const s1Rows = XLSX.utils.sheet_to_json(sheet1, { header: 1, defval: '' });
-              
-              // 1. Get week names from row 0
-              let wk1Name = 'WK27';
-              let wk2Name = 'WK28';
-              if (s1Rows[0] && String(s1Rows[0][0]).includes('WEEK')) {
-                wk2Name = String(s1Rows[0][0]);
-                let wNum = parseInt(wk2Name.replace(/\D/g, ''));
-                if (!isNaN(wNum)) wk1Name = 'WK' + (wNum - 1);
-              }
-              setUI('soWk1Head', wk1Name);
-              setUI('soWk2Head', wk2Name);
 
-              // 2. Build SO Compare Body and Extract REMAIN
+              // Sheet1 has two pivot blocks: WK28 (rows 0-8) and WK29 (rows 10-18)
+              // Row 0: week label, Row 2: "Row Labels" header, Rows 3-8: data rows
+              // Columns: [0]=Year [3]=wk1 AC1Remain [6]=wk2 AC1Remain [9]=wk2 Unfulfill
+
+              // Find the two week blocks
+              const weekBlocks = [];
+              s1Rows.forEach((row, idx) => {
+                if (row[0] && String(row[0]).toUpperCase().startsWith('WEEK')) {
+                  weekBlocks.push({ label: String(row[0]), startIdx: idx });
+                }
+              });
+
+              let wk1Name = 'WK28', wk2Name = 'WK29';
+              let wk1Rows = [], wk2Rows = [];
+
+              if (weekBlocks.length >= 2) {
+                wk1Name = weekBlocks[0].label;
+                wk2Name = weekBlocks[1].label;
+                // Extract data rows from each block (skip header rows within block)
+                const getBlockRows = (startIdx) => {
+                  const result = [];
+                  for (let i = startIdx + 1; i < s1Rows.length; i++) {
+                    const row = s1Rows[i];
+                    if (!row || !row[0]) break;
+                    if (String(row[0]).toUpperCase().startsWith('WEEK')) break;
+                    result.push(row);
+                  }
+                  return result;
+                };
+                wk1Rows = getBlockRows(weekBlocks[0].startIdx);
+                wk2Rows = getBlockRows(weekBlocks[1].startIdx);
+              } else if (weekBlocks.length === 1) {
+                wk1Name = 'WK' + (parseInt(weekBlocks[0].label.replace(/\D/g, '')) - 1);
+                wk2Name = weekBlocks[0].label;
+                wk1Rows = [];
+                wk2Rows = getBlockRows(weekBlocks[0].startIdx);
+              }
+
+              // Update table headers
+              const soWk1El = document.getElementById('soWk1Head');
+              const soWk2El = document.getElementById('soWk2Head');
+              if (soWk1El) soWk1El.textContent = wk1Name;
+              if (soWk2El) soWk2El.textContent = wk2Name;
+
+              // Build SO Compare HTML — use innerHTML (not textContent) for rendering
               let soHtml = '';
-              
               const years = ['2023', '2024', '2025', '2026', 'Grand Total'];
               let remAC1Total = 0;
               let remUnfulfillTotal = 0;
 
               for (let y of years) {
-                // Find row for this year
-                const r = s1Rows.find(row => String(row[0]).trim() === y);
-                if (r) {
-                  const wk1Ac1 = r[3] ? Number(r[3]) : 0;
-                  const wk2Ac1 = r[6] ? Number(r[6]) : 0;
-                  const wk2Unfulfill = r[9] ? Number(r[9]) : 0;
+                const r1 = wk1Rows.find(row => String(row[0]).trim() === y);
+                const r2 = wk2Rows.find(row => String(row[0]).trim() === y);
+                const title = y === 'Grand Total' ? 'Total' : y;
+                const boldStyle = y === 'Grand Total' ? 'font-weight:700;' : '';
 
-                  // Build HTML row
-                  const title = y === 'Grand Total' ? 'Total' : y;
-                  const boldClass = y === 'Grand Total' ? 'font-weight:700;' : '';
-                  
-                  soHtml += `<tr style="${boldClass}">
-                    <td>${title}</td>
-                    <td style="color:#3b82f6">${fmtBaht(wk1Ac1)}</td>
-                    <td style="color:#ef4444">-</td>
-                    <td style="color:#10b981">${fmtBaht(wk2Ac1)}</td>
-                    <td style="color:#f59e0b">${fmtBaht(wk2Unfulfill)}</td>
-                  </tr>`;
+                // WK1: col[3]=AC1 DONE Remain, col[6]=Unfulfill Remain
+                // WK2: col[3]=AC1 DONE Remain, col[6]=Unfulfill Remain (same structure per block)
+                const wk1Ac1 = r1 ? (Number(r1[3]) || 0) : 0;
+                const wk1Unfulfill = r1 ? (Number(r1[6]) || 0) : 0;
+                const wk2Ac1 = r2 ? (Number(r2[3]) || 0) : 0;
+                const wk2Unfulfill = r2 ? (Number(r2[6]) || 0) : 0;
 
-                  // Update REMAIN fields
-                  if (y !== 'Grand Total') {
-                    setUI(`remAC1done${y}`, fmtBaht(wk2Ac1));
-                    setUI(`remUnfulfill${y}`, fmtBaht(wk2Unfulfill));
-                    remAC1Total += wk2Ac1;
-                    remUnfulfillTotal += wk2Unfulfill;
-                  }
-                } else {
-                  // Fill empty if not found
-                  const title = y === 'Grand Total' ? 'Total' : y;
-                  const boldClass = y === 'Grand Total' ? 'font-weight:700;' : '';
-                  soHtml += `<tr style="${boldClass}">
-                    <td>${title}</td>
-                    <td>-</td><td>-</td><td>-</td><td>-</td>
-                  </tr>`;
+                soHtml += `<tr style="${boldStyle}">
+                  <td>${title}</td>
+                  <td style="color:#3b82f6">${fmtBaht(wk1Ac1)}</td>
+                  <td style="color:#ef4444">${fmtBaht(wk1Unfulfill)}</td>
+                  <td style="color:#10b981">${fmtBaht(wk2Ac1)}</td>
+                  <td style="color:#f59e0b">${fmtBaht(wk2Unfulfill)}</td>
+                </tr>`;
+
+                if (y !== 'Grand Total') {
+                  setUI(`remAC1done${y}`, fmtBaht(wk2Ac1));
+                  setUI(`remUnfulfill${y}`, fmtBaht(wk2Unfulfill));
+                  remAC1Total += wk2Ac1;
+                  remUnfulfillTotal += wk2Unfulfill;
                 }
               }
-              
-              setUI('soCompareBody', soHtml, true);
+
+              // Use innerHTML — critical fix for SO Comparison rendering
+              const soTbody = document.getElementById('soCompareBody');
+              if (soTbody) soTbody.innerHTML = soHtml;
+
               setUI('remAC1doneTotal', fmtBaht(remAC1Total));
               setUI('remUnfulfillTotal', fmtBaht(remUnfulfillTotal));
-              
+
               // 3 Pillars
               setUI('rem3pillarsAC1', fmtBaht(remAC1Total));
               setUI('rem3pillarsUnfulfill', fmtBaht(remUnfulfillTotal));
               setUI('rem3pillarsTotal', fmtBaht(remAC1Total + remUnfulfillTotal));
             }
+
 
             // ── AC#1 / AC#2 raw data from 2026 sheet (dynamic header indices) ──
             const s26Name = wb.SheetNames.find(n => /2026/i.test(n));
