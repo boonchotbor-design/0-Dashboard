@@ -2082,8 +2082,8 @@
               }
 
               const aging1 = rowAC1 ? rowAC1['Avg Aging'] : (rowAny ? rowAny['Avg Aging'] : null);
-              const aging2 = rowAC2 ? rowAC2['Avg Aging'] : null;
-              const amt2   = rowAC2 ? (rowAC2['Amount (THB)'] || rowAC2['AC2 Amount'] || null) : null;
+              const aging2 = rowAC2 ? rowAC2['Avg Aging'] : (rowAny ? rowAny['AC2 Aging'] || null : null);
+              const amt2   = rowAC2 ? (rowAC2['Amount (THB)'] || rowAC2['AC2 Amount'] || null) : (rowAny ? rowAny['AC2 Amount'] || null : null);
 
               if (aging1 !== null && aging1 !== '') {
                 const el = document.getElementById(ids.ac1);
@@ -2108,12 +2108,12 @@
                 // Keep only the last 2 rows if there are many, or all if few
                 const showRows = teamRows.slice(-2);
                 showRows.forEach((r, i) => {
-                  const sites = r['Sites'] || r['Count'] || r['จำนวน Site'] || r['จำนวนไซต์'] || '';
-                  const sitesStr = sites !== '' ? String(sites) : '-';
+                  // In the original template, Sites are actually put in the 'Avg Aging' column
+                  const sites = r['Avg Aging'];
+                  const sitesStr = (sites !== null && sites !== '') ? String(sites) : '-';
                   const amt = r['Amount (THB)'] ? fmtBaht(r['Amount (THB)']) : '-';
-                  const age = r['Avg Aging'];
-                  const ageStr = fmtDays(age);
-                  const badgeClass = (age <= 5) ? 'badge-green' : (age <= 7 ? 'badge-amber' : 'badge-red');
+                  const ageStr = '-';
+                  const badgeClass = 'badge-purple'; // Not applicable since ageStr is '-'
                   const title = String(r['Owner / Type']).replace(/overall team install/i, '').trim() || `WK${26 + i}`;
                   html += `<tr>
                     <td style="color:var(--text-primary);font-weight:500">${title}</td>
@@ -2388,40 +2388,30 @@
 
               const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
-              // Try fixed row extraction first (new file format)
-              if (slaFixedRows.length >= 4) {
-                setTxt('sumQcDone', String(slaFixedRows[0][1] ?? '-'));
-                setTxt('sumQcLate', String(slaFixedRows[1][1] ?? '-'));
-                setTxt('sumQcPend', String(slaFixedRows[2][1] ?? '-'));
-                setTxt('sumQcOver', String(slaFixedRows[3][1] ?? '-'));
-                setTxt('sumPatDone', String(slaFixedRows[0][5] ?? '-'));
-                setTxt('sumPatLate', String(slaFixedRows[1][5] ?? '-'));
-                setTxt('sumPatPend', String(slaFixedRows[2][5] ?? '-'));
-                setTxt('sumPatOver', String(slaFixedRows[3][5] ?? '-'));
-              } else {
-                // Fallback: search-based extraction (old format)
-                const extractSum = (colIdx, label) => {
-                  if (colIdx < 0) return '-';
-                  for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
-                    const r = p7Rows[i];
-                    if (r && String(r[colIdx] || '').includes(label)) {
-                      return String(r[colIdx + 1] || '0');
-                    }
+              // Search-based extraction (robust format)
+              const extractSum = (colIdx, label) => {
+                if (colIdx < 0) return '-';
+                for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
+                  const r = p7Rows[i];
+                  if (r && String(r[colIdx] || '').includes(label)) {
+                    const val = r[colIdx + 1];
+                    return (val !== '' && val !== null && val !== undefined) ? String(val) : '-';
                   }
-                  return '-';
-                };
-                if (smartQcSite >= 0) {
-                  setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
-                  setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
-                  setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
-                  setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
                 }
-                if (patSite >= 0) {
-                  setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
-                  setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
-                  setTxt('sumPatPend', extractSum(patSite, 'Pending'));
-                  setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
-                }
+                return '-';
+              };
+
+              if (smartQcSite >= 0) {
+                setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
+                setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
+                setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
+                setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
+              }
+              if (patSite >= 0) {
+                setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
+                setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
+                setTxt('sumPatPend', extractSum(patSite, 'Pending'));
+                setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
               }
 
 
@@ -2506,8 +2496,10 @@
             setUI('dtlActJUNE', fmtB(vActJulyTotal));
 
             // HUAWEI (JAN-JULY) and TRUE-TUC (JAN-JULY)
-            const vActHuawei = getVal('actual acceptance total (jan-july) huawei') || getVal('actual acceptance total huawei');
-            const vActTrue = getVal('actual acceptance total (jan-july) true-tuc') || getVal('actual acceptance total true-tuc');
+            const hRow = p4.find(r => /huawei/i.test(String(r['Metric']).trim()) || /huawei/i.test(String(r['Slide Title'] || '').trim()));
+            const tRow = p4.find(r => (/true-tuc/i.test(String(r['Metric']).trim()) || /true-tuc/i.test(String(r['Slide Title'] || '').trim())));
+            const vActHuawei = hRow ? getV(hRow) : null;
+            const vActTrue = tRow ? getV(tRow) : null;
             // Update labels dynamically to JAN-JULY
             const huaweiLblEl = document.querySelector('[id="dtlActHuawei"]')?.previousElementSibling;
             if (huaweiLblEl) huaweiLblEl.textContent = 'HUAWEI (JAN-JULY)';
@@ -2576,8 +2568,12 @@
                   const limit = endIdx || s1Rows.length;
                   for (let i = startIdx + 1; i < limit; i++) {
                     const row = s1Rows[i];
-                    if (row && row[0] && ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(row[0]).trim())) {
-                      result.push(row);
+                    if (row && row.some(c => ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(c).trim()))) {
+                      // find the index of the year
+                      const yearIdx = row.findIndex(c => ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(c).trim()));
+                      // align the array so year is at index 0
+                      const alignedRow = row.slice(yearIdx);
+                      result.push(alignedRow);
                     }
                   }
                   return result;
@@ -2592,8 +2588,9 @@
                   const result = [];
                   for (let i = startIdx + 1; i < s1Rows.length; i++) {
                     const row = s1Rows[i];
-                    if (row && row[0] && ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(row[0]).trim())) {
-                      result.push(row);
+                    if (row && row.some(c => ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(c).trim()))) {
+                      const yearIdx = row.findIndex(c => ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(c).trim()));
+                      result.push(row.slice(yearIdx));
                     }
                   }
                   return result;
@@ -2709,8 +2706,8 @@
                     if (!isNaN(val)) {
                       sumAc1Aging += val;
                       countAc1Aging++;
-                      // Include 0 in MIN aging — 0 days is a valid quick completion
-                      if (val >= 0 && val < minAc1Aging) minAc1Aging = val;
+                      // Exclude 0 from MIN aging as per user feedback
+                      if (val > 0 && val < minAc1Aging) minAc1Aging = val;
                       if (val > maxAc1Aging) maxAc1Aging = val;
                     }
                   }
@@ -2726,8 +2723,8 @@
                     if (!isNaN(val)) {
                       sumAc2Aging += val;
                       countAc2Aging++;
-                      // Include 0 in MIN aging — 0 days is a valid quick completion
-                      if (val >= 0 && val < minAc2Aging) minAc2Aging = val;
+                      // Exclude 0 from MIN aging
+                      if (val > 0 && val < minAc2Aging) minAc2Aging = val;
                       if (val > maxAc2Aging) maxAc2Aging = val;
                     }
                   }
