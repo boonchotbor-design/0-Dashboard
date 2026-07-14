@@ -2569,11 +2569,13 @@
                   for (let i = startIdx + 1; i < limit; i++) {
                     const row = s1Rows[i];
                     if (row && row.some(c => ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(c).trim()))) {
-                      // find the index of the year
                       const yearIdx = row.findIndex(c => ['2023','2024','2025','2026','Grand Tota','Grand Total'].includes(String(c).trim()));
-                      // align the array so year is at index 0
                       const alignedRow = row.slice(yearIdx);
-                      result.push(alignedRow);
+                      // Only accept rows with enough columns to have Unfulfill data (col[9])
+                      // This prevents overflow rows from adjacent pivot tables being picked up
+                      if (alignedRow.length >= 10) {
+                        result.push(alignedRow);
+                      }
                     }
                   }
                   return result;
