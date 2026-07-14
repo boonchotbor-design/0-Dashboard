@@ -1144,7 +1144,7 @@
           </div>
           <div class="legend-item">
             <span class="legend-dot" style="background:#374151"></span>
-            Remaining <strong id="legendRemaining" style="margin-left:auto;color:#f0f6ff">2</strong>
+            Cancel <strong id="legendRemaining" style="margin-left:auto;color:#f0f6ff">2</strong>
           </div>
         </div>
       </div>
@@ -1419,7 +1419,7 @@
     </div>
 
     <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
-    <p class="section-title">📊 SO WEEK 27 VS WEEK 28</p>
+    <p class="section-title" id="soSectionTitle">📊 SO WEEK 27 VS WEEK 28</p>
     <div class="card" style="margin-bottom:28px">
       <div class="card-title">
         <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">⚖️</span>
@@ -2604,6 +2604,9 @@
               if (soWk1El) soWk1El.textContent = wk1Name;
               if (soWk2El) soWk2El.textContent = wk2Name;
 
+              const soSecTitle = document.getElementById('soSectionTitle');
+              if (soSecTitle) soSecTitle.textContent = `📊 SO ${wk1Name.toUpperCase()} VS ${wk2Name.toUpperCase()}`;
+
               // Build SO Compare HTML — use innerHTML (not textContent) for rendering
               let soHtml = '';
               const years = ['2023', '2024', '2025', '2026', 'Grand Total'];
@@ -2728,13 +2731,13 @@
                       if (val > maxAc2Aging) maxAc2Aging = val;
                     }
                   }
-                  // Completed / On Process / Remaining from STATUS column
+                  // Completed / On Process / Cancel from STATUS column (Col BF / Col 57 ideally, but we use dynamic statusIdx)
                   if (statusIdx > -1 || ac2StatusIdx > -1) {
                     const colIdx = statusIdx > -1 ? statusIdx : ac2StatusIdx;
                     const status = String(row[colIdx] || '').trim().toLowerCase();
                     if (status === 'completed' || status === 'done' || status === 'เสร็จแล้ว') countCompleted++;
                     else if (status === 'on process' || status === 'in progress' || status === 'กำลังดำเนินการ') countOnProcess++;
-                    else if (status === 'remaining' || status === 'pending' || status === 'ยังไม่ดำเนินการ' || status === 'not started') countRemaining++;
+                    else if (status === 'cancel' || status === 'cancelled' || status === 'ยกเลิก') countRemaining++; // Reusing countRemaining variable for Cancel
                   }
                   
                   // HAE/TME from Type column
