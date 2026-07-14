@@ -2257,10 +2257,37 @@
                   ? (v/1000000).toFixed(2) + '<span class="unit">M ฿</span>'
                   : Math.round(v/1000) + '<span class="unit">K ฿</span>';
               }
+              const targetRow = p4.find(r => /target/i.test(String(r['Metric']).toLowerCase()) && /acceptance plan|target/i.test(String(r['Slide Title']).toLowerCase()));
+              const target = targetRow ? getV(targetRow) : null;
+              if (target !== null || onProcTotal !== null) {
+                const fmtM = val => {
+                  const v = Number(val);
+                  return v >= 1000000 ? (v/1000000).toFixed(1) + 'M' : Math.round(v/1000) + 'K';
+                };
+                const tStr = target !== null ? fmtM(target) : (document.getElementById('kpiActionPlanSub')?.textContent.match(/Target ([\d.]+.)/) || [, '192.6K'])[1];
+                const pStr = onProcTotal !== null ? fmtM(onProcTotal) : (document.getElementById('kpiActionPlanSub')?.textContent.match(/On Process ([\d.]+.)/) || [, '737K'])[1];
+                const elSub = document.getElementById('kpiActionPlanSub');
+                if (elSub) elSub.textContent = `Target ${tStr} · On Process ${pStr}`;
+              }
             }
 
-
-
+            // Update Top KPI Cards: Income and Backlog
+            const fmtM = val => {
+              const v = Number(val);
+              return v >= 1000000 ? (v/1000000).toFixed(2) + 'M' : Math.round(v/1000) + 'K';
+            };
+            if (income !== null) {
+              const el = document.getElementById('kpiIncome');
+              if (el) el.innerHTML = fmtM(income).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
+            }
+            if (ar !== null && ap !== null) {
+              const el = document.getElementById('kpiIncomeSub');
+              if (el) el.textContent = `AR ${fmtM(ar)} · AP ${fmtM(ap)}`;
+            }
+            if (backlog !== null) {
+              const el = document.getElementById('kpiBacklog');
+              if (el) el.innerHTML = fmtM(backlog).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
+            }
 
           /* ─── Part 7 - SLA On-Process ─── */
 
@@ -2644,6 +2671,7 @@
             let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
             // Completed / On Process / Remaining from 2026 sheet
             let countCompleted = 0, countOnProcess = 0, countRemaining = 0;
+            let countHae = 0, countTme = 0;
 
             if (s26Name) {
               const s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
@@ -2664,6 +2692,7 @@
                 // Find STATUS column for Completed / On Process / Remaining
                 const statusIdx = headers.findIndex(h => /^status$/i.test(String(h).trim()) || /สถานะ/.test(String(h)));
                 const ac2StatusIdx = headers.findIndex(h => /AC.?2.*STATUS|STATUS.*AC.?2/i.test(String(h)));
+                const typeIdx = headers.findIndex(h => /owner|type/i.test(String(h)));
 
                 for (let i = headerRowIdx + 1; i < s26Rows.length; i++) {
                   const row = s26Rows[i];
@@ -2710,6 +2739,13 @@
                     else if (status === 'on process' || status === 'in progress' || status === 'กำลังดำเนินการ') countOnProcess++;
                     else if (status === 'remaining' || status === 'pending' || status === 'ยังไม่ดำเนินการ' || status === 'not started') countRemaining++;
                   }
+                  
+                  // HAE/TME from Type column
+                  if (typeIdx > -1) {
+                    const typeStr = String(row[typeIdx] || '').toUpperCase();
+                    if (typeStr.includes('HAE')) countHae++;
+                    else if (typeStr.includes('TME')) countTme++;
+                  }
                 }
               }
             }
@@ -2727,6 +2763,12 @@
               if (elKpiSub) {
                 const total = countCompleted + countOnProcess + countRemaining;
                 document.getElementById('kpiTotalSites') && (document.getElementById('kpiTotalSites').textContent = total);
+                
+                // If we found HAE/TME, use them, otherwise use fallback to old values
+                let haeStr = countHae > 0 ? countHae : (elKpiSub.textContent.match(/HAE (\d+)/) || [, '130'])[1];
+                let tmeStr = countTme > 0 ? countTme : (elKpiSub.textContent.match(/TME (\d+)/) || [, '77'])[1];
+                elKpiSub.textContent = `HAE ${haeStr} · TME ${tmeStr} · Completed ${countCompleted}`;
+                
                 const pct = total > 0 ? ((countCompleted / total) * 100).toFixed(1) : 0;
                 const elTrend = document.getElementById('kpiTotalSitesTrend');
                 if (elTrend) elTrend.textContent = pct + '% Done';
