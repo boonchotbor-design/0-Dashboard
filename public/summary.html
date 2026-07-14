@@ -2669,8 +2669,8 @@
             let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
             let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
             let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
-            // Completed / On Process / Remaining from 2026 sheet
-            let countCompleted = 0, countOnProcess = 0, countRemaining = 0;
+            // Completed / On Process / Cancel from 2026 sheet
+            let countCompleted = 0, countOnProcess = 0, countCancel = 0;
             let countHae = 0, countTme = 0;
 
             if (s26Name) {
@@ -2689,9 +2689,11 @@
                 const ac2AmtIdx = headers.findIndex(h => String(h).toUpperCase().includes('AC#2 AMOUNT'));
                 const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#1'));
                 const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#2'));
-                // Find STATUS column for Completed / On Process / Remaining
-                const statusIdx = headers.findIndex(h => /^status$/i.test(String(h).trim()) || /สถานะ/.test(String(h)));
+                // Find STATUS WORK column (Col BF) for Completed / On Process / Cancel
+                const statusIdx = headers.findIndex(h => /^status(\s+work)?$/i.test(String(h).trim()) || /สถานะ/.test(String(h)));
                 const ac2StatusIdx = headers.findIndex(h => /AC.?2.*STATUS|STATUS.*AC.?2/i.test(String(h)));
+                // Fallback: use column index 57 (BF) if no status column found by name
+                const statusColFinal = statusIdx > -1 ? statusIdx : (ac2StatusIdx > -1 ? ac2StatusIdx : 57);
                 const typeIdx = headers.findIndex(h => /owner|type/i.test(String(h)));
 
                 for (let i = headerRowIdx + 1; i < s26Rows.length; i++) {
@@ -2731,13 +2733,12 @@
                       if (val > maxAc2Aging) maxAc2Aging = val;
                     }
                   }
-                  // Completed / On Process / Cancel from STATUS column (Col BF / Col 57 ideally, but we use dynamic statusIdx)
-                  if (statusIdx > -1 || ac2StatusIdx > -1) {
-                    const colIdx = statusIdx > -1 ? statusIdx : ac2StatusIdx;
-                    const status = String(row[colIdx] || '').trim().toLowerCase();
+                  // Completed / On Process / Cancel from STATUS WORK column (Col BF index 57)
+                  {
+                    const status = String(row[statusColFinal] || '').trim().toLowerCase();
                     if (status === 'completed' || status === 'done' || status === 'เสร็จแล้ว') countCompleted++;
                     else if (status === 'on process' || status === 'in progress' || status === 'กำลังดำเนินการ') countOnProcess++;
-                    else if (status === 'cancel' || status === 'cancelled' || status === 'ยกเลิก') countRemaining++; // Reusing countRemaining variable for Cancel
+                    else if (status === 'cancel' || status === 'cancelled' || status === 'ยกเลิก') countCancel++;
                   }
                   
                   // HAE/TME from Type column
@@ -2750,18 +2751,18 @@
               }
             }
 
-            // Update Site Donut legend if STATUS column found
-            if (countCompleted + countOnProcess + countRemaining > 0) {
+            // Update Site Donut legend if STATUS WORK column found (Col BF: COMPLETED / ON PROCESS / CANCEL)
+            if (countCompleted + countOnProcess + countCancel > 0) {
               const elComp = document.getElementById('legendCompleted');
               const elOnProc = document.getElementById('legendOnProcess');
               const elRem = document.getElementById('legendRemaining');
               if (elComp) elComp.textContent = countCompleted;
               if (elOnProc) elOnProc.textContent = countOnProcess;
-              if (elRem) elRem.textContent = countRemaining;
+              if (elRem) elRem.textContent = countCancel;
               // Also update the KPI sub-label
               const elKpiSub = document.getElementById('kpiTotalSitesSub');
               if (elKpiSub) {
-                const total = countCompleted + countOnProcess + countRemaining;
+                const total = countCompleted + countOnProcess + countCancel;
                 document.getElementById('kpiTotalSites') && (document.getElementById('kpiTotalSites').textContent = total);
                 
                 // If we found HAE/TME, use them, otherwise use fallback to old values
