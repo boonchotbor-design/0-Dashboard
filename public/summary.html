@@ -2550,6 +2550,46 @@
             const vAc1Total = getValByTitleRegex(reAc1Total, '(total)') ?? getValByTitleRegex(reAc1Total, 'total');
             const vAc2Total = getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
 
+            // Set AC#1 Prev Breakdown
+            setUI('dtlAC12023', fmtB(vAc123));
+            setUI('dtlAC12024', fmtB(vAc124));
+            setUI('dtlAC12025', fmtB(vAc125));
+            setUI('dtlAC12026', fmtB(vAc126));
+            setUI('dtlAC1Total', fmtB(vAc1Total));
+            setUI('dtlAC1WK28', fmtB(vAc1Wk28));
+
+            // Set AC#2 Prev Breakdown
+            setUI('dtlAC22023', fmtB(vAc223));
+            setUI('dtlAC22024', fmtB(vAc224));
+            setUI('dtlAC22025', fmtB(vAc225));
+            setUI('dtlAC22026', fmtB(vAc226));
+            setUI('dtlAC2Total', fmtB(vAc2Total));
+            setUI('dtlAC2WK28', fmtB(vAc2Wk28));
+
+            // Update Labels to use reportWeek dynamically
+            const updateLbl = (id, txt) => { const el = document.getElementById(id); if (el && el.previousElementSibling) el.previousElementSibling.textContent = txt; };
+            updateLbl('dtlAC1WK28', 'WK'+(reportWeek-1)+' Plan');
+            updateLbl('dtlAC12023', 'WK'+reportWeek+' Plan (2023)');
+            updateLbl('dtlAC12024', 'WK'+reportWeek+' Plan (2024)');
+            updateLbl('dtlAC12025', 'WK'+reportWeek+' Plan (2025)');
+            updateLbl('dtlAC12026', 'WK'+reportWeek+' Plan (2026)');
+            const ac1TotalLbl = document.getElementById('dtlAC1Total');
+            if(ac1TotalLbl && ac1TotalLbl.previousElementSibling) ac1TotalLbl.previousElementSibling.textContent = 'WK'+reportWeek+' TOTAL';
+
+            updateLbl('dtlAC2WK28', 'WK'+(reportWeek-1)+' Plan');
+            updateLbl('dtlAC22023', 'WK'+reportWeek+' Plan (2023)');
+            updateLbl('dtlAC22024', 'WK'+reportWeek+' Plan (2024)');
+            updateLbl('dtlAC22025', 'WK'+reportWeek+' Plan (2025)');
+            updateLbl('dtlAC22026', 'WK'+reportWeek+' Plan (2026)');
+            const ac2TotalLbl = document.getElementById('dtlAC2Total');
+            if(ac2TotalLbl && ac2TotalLbl.previousElementSibling) ac2TotalLbl.previousElementSibling.textContent = 'WK'+reportWeek+' TOTAL';
+
+            // Update card titles
+            const ac1CardTitle = ac1TotalLbl?.closest('.card')?.querySelector('.card-title');
+            if(ac1CardTitle) ac1CardTitle.innerHTML = `<span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>Plan: Acceptance AC#1 (WK${reportWeek-1} &amp; WK${reportWeek})`;
+            const ac2CardTitle = ac2TotalLbl?.closest('.card')?.querySelector('.card-title');
+            if(ac2CardTitle) ac2CardTitle.innerHTML = `<span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>Plan: Acceptance AC#2 (WK${reportWeek-1} &amp; WK${reportWeek})`;
+
             const sheet1 = wb.Sheets['Sheet1'];
             if (sheet1) {
               const s1Rows = XLSX.utils.sheet_to_json(sheet1, { header: 1, defval: '' });
