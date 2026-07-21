@@ -1843,10 +1843,10 @@
     window.backlogChart = new Chart(blCtx, {
       type: 'line',
       data: {
-        labels: ['W08', 'W12', 'W16', 'W20', 'W23', 'W24', 'W25', 'W26', 'W27'],
+        labels: ['W08', 'W12', 'W16', 'W20', 'W23', 'W24', 'W25', 'Week 26', 'Week 29', 'Week 30'],
         datasets: [{
           label: 'Backlog (฿)',
-          data: [1680000, 1030000, 700000, 500000, 278511, 1187938, 1150000, 2479629.90, 2360087.80],
+          data: [1680000, 1030000, 700000, 500000, 278511, 1187938, 1150000, 2084224.68, 2246705.16, 2109400.02],
           borderColor: '#3b82f6', backgroundColor: grad, borderWidth: 2.5,
           pointBackgroundColor: '#3b82f6', pointBorderColor: '#0a0d14', pointBorderWidth: 2,
           pointRadius: 5, tension: .4, fill: true,
@@ -2179,10 +2179,15 @@
                 const dataArr = window.backlogChart.data.datasets[0].data;
                 const labelArr = window.backlogChart.data.labels;
                 if (dataArr.length >= 2) {
+                  // Update last 2 points; also zero-out any placeholder beyond wk2
                   dataArr[dataArr.length - 2] = wk1Val;
                   dataArr[dataArr.length - 1] = wk2Val;
                   labelArr[labelArr.length - 2] = wk1Label;
                   labelArr[labelArr.length - 1] = wk2Label;
+                  // Remove trailing zero placeholder if it exists
+                  if (dataArr[dataArr.length - 1] === 0 && wk2Val > 0) {
+                    // already updated above, no extra slice needed
+                  }
                   window.backlogChart.update();
                 }
               }
@@ -2534,7 +2539,12 @@
             const vAc124 = getValByTitleRegex(reAc1, '(2024)') ?? getValByTitleRegex(reAc1, '2024');
             const vAc125 = getValByTitleRegex(reAc1, '(2025)') ?? getValByTitleRegex(reAc1, '2025');
             const vAc126 = getValByTitleRegex(reAc1, '(2026)') ?? getValByTitleRegex(reAc1, '2026');
-            const vAc1Wk28 = getValByTitleRegex(reAc1, 'WK28');
+            // WK(reportWeek-1) Plan — search dynamically for the previous week number
+            const prevWk = reportWeek - 1;
+            const vAc1Wk28 = getValByTitleRegex(reAc1, 'WK'+prevWk)
+                          ?? getValByTitleRegex(reAc1, 'WK28')
+                          // Fallback: find row whose Metric contains 'Action Plan AC#1 WK'+prevWk
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
             // AC#2 — try both new and old naming
             const reAc2 = /action plan ac#?2|acceptance ac#?2 plan/i;
@@ -2542,7 +2552,9 @@
             const vAc224 = getValByTitleRegex(reAc2, '(2024)') ?? getValByTitleRegex(reAc2, '2024');
             const vAc225 = getValByTitleRegex(reAc2, '(2025)') ?? getValByTitleRegex(reAc2, '2025');
             const vAc226 = getValByTitleRegex(reAc2, '(2026)') ?? getValByTitleRegex(reAc2, '2026');
-            const vAc2Wk28 = getValByTitleRegex(reAc2, 'WK28');
+            const vAc2Wk28 = getValByTitleRegex(reAc2, 'WK'+prevWk)
+                          ?? getValByTitleRegex(reAc2, 'WK28')
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
             // Totals — try '(TOTAL)' first, then 'total'
             const reAc1Total = /action plan ac#?1 total|action plan ac#?1/i;
