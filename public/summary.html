@@ -2052,8 +2052,9 @@
           const p3 = getSheet('Part 3 - Doc Management');
           if (p3.length) {
             importedSheets.push('Part 3');
-            const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1') || String(r['Owner / Type']).includes('AC1'));
-            const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2') || String(r['Owner / Type']).includes('AC2'));
+            // STRICT match so we don't accidentally grab a DOC Owner row like 'Hathairat AC#1'
+            const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#1'));
+            const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#2'));
             if (ac1row) {
               const el = document.getElementById('finAC1Aging');
               if (el) el.textContent = ac1row['Avg Aging'] ? Number(ac1row['Avg Aging']).toFixed(1) + ' days' : '-';
@@ -2877,8 +2878,8 @@
           /* ─── Update Charts dynamically ─── */
 
           if (p3.length) {
-            const ac1row = p3.find(r => String(r['Owner / Type']).includes('AC#1'));
-            const ac2row = p3.find(r => String(r['Owner / Type']).includes('AC#2'));
+            const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#1'));
+            const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#2'));
             if (window.docChart && ac1row && ac2row) {
               window.docChart.data.datasets[0].data = [
                 getValOrFallback(ac1row['Amount (THB)'], 2307342),
