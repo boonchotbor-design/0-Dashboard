@@ -1309,6 +1309,12 @@
             id="dtlActHuawei">-</span></div>
         <div class="fin-row"><span class="fin-label" id="lblActTrueTuc">TRUE-TUC (JAN-JULY)</span><span class="fin-val green"
             id="dtlActTrueTuc">-</span></div>
+        <!-- Slide 21: Acceptance Target Plan & Actual JULY -->
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)">
+          <div style="font-size:.62rem;font-weight:700;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Slide 21 — July Target</div>
+          <div class="fin-row"><span class="fin-label">Acceptance Target Plan JULY</span><span class="fin-val amber" id="dtlSlide21Plan">-</span></div>
+          <div class="fin-row"><span class="fin-label">Acceptance Target Actual JULY</span><span class="fin-val green" id="dtlSlide21Actual">-</span></div>
+        </div>
       </div>
 
       <!-- Card 2b: AC1 Plan Breakdown -->
@@ -2503,11 +2509,27 @@
               setUI(wkSlotIds[i], '-');
             }
 
-            // JULY TOTAL (replaces JUNE TOTAL)
-            const vActJulyTotal = getVal('actual acceptance july total') || getVal('actual acceptance july');
+            // JULY TOTAL — sum all WK rows found (WK27-WK31)
+            let julyTotalSum = 0;
+            let hasJulyData = false;
+            actWkRowsAll.forEach(row => {
+              const v = Number(row.val);
+              if (!isNaN(v) && row.val !== '' && row.val !== null && row.val !== undefined) {
+                julyTotalSum += v;
+                hasJulyData = true;
+              }
+            });
             const julyLabelEl = document.querySelector('[id="dtlActJUNE"]')?.previousElementSibling;
             if (julyLabelEl) julyLabelEl.textContent = 'JULY Total';
-            setUI('dtlActJUNE', fmtB(vActJulyTotal));
+            setUI('dtlActJUNE', hasJulyData ? fmtBaht(julyTotalSum) : '-');
+
+            // Slide 21 — Acceptance Target Plan & Actual JULY
+            const slide21PlanRow = p4.find(r => /acceptan[ec]e target plan july/i.test(String(r['Metric'])));
+            const slide21ActualRow = p4.find(r => /acceptan[ec]e target actual july/i.test(String(r['Metric'])));
+            const vSlide21Plan = slide21PlanRow ? getV(slide21PlanRow) : null;
+            const vSlide21Actual = slide21ActualRow ? getV(slide21ActualRow) : null;
+            setUI('dtlSlide21Plan', fmtB(vSlide21Plan));
+            setUI('dtlSlide21Actual', fmtB(vSlide21Actual));
 
             // HUAWEI (JAN-JULY) and TRUE-TUC (JAN-JULY)
             const hRow = p4.find(r => /huawei/i.test(String(r['Metric']).trim()) || /huawei/i.test(String(r['Slide Title'] || '').trim()));
