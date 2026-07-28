@@ -2493,20 +2493,18 @@
             const setLbl = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
             const fmtB = v => (v !== null && v !== '' && v !== undefined) ? fmtBaht(Number(v)) : '-';
 
-            // Fill up to 5 week slots (WK27-WK31) from the dynamically found rows
-            // Fill up to 5 week slots from dynamically found rows
+            // Fill exactly WK27 to WK31 for July
             const wkSlotIds = ['dtlActWk1','dtlActWk2','dtlActWk3','dtlActWk4','dtlActWk5'];
             const lblSlotIds = ['lblActWk1','lblActWk2','lblActWk3','lblActWk4','lblActWk5'];
-            actWkRowsAll.slice(-5).forEach((row, i) => {
-              setLbl(lblSlotIds[i], `WK${row.wk}`);
-              // val may be 0 which is valid — use fmtBaht directly
-              const el = document.getElementById(wkSlotIds[i]);
-              if (el) el.textContent = (row.val !== null && row.val !== '' && row.val !== undefined) ? fmtBaht(Number(row.val)) : '-';
-            });
-            // Clear remaining slots if fewer than 5 weeks found
-            for (let i = actWkRowsAll.slice(-5).length; i < 5; i++) {
-              setLbl(lblSlotIds[i], `WK-`);
-              setUI(wkSlotIds[i], '-');
+            for (let i = 0; i < 5; i++) {
+              const targetWk = 27 + i; // WK27, WK28, WK29, WK30, WK31
+              const row = actWkRowsAll.find(r => r.wk === targetWk);
+              setLbl(lblSlotIds[i], `WK${targetWk}`);
+              if (row && row.val !== null && row.val !== '' && row.val !== undefined) {
+                setUI(wkSlotIds[i], fmtBaht(Number(row.val)));
+              } else {
+                setUI(wkSlotIds[i], '-');
+              }
             }
 
             // JULY TOTAL — sum WK27-WK31 only (July range)
