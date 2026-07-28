@@ -2509,10 +2509,10 @@
               setUI(wkSlotIds[i], '-');
             }
 
-            // JULY TOTAL — sum all WK rows found (WK27-WK31)
+            // JULY TOTAL — sum WK27-WK31 only (July range)
             let julyTotalSum = 0;
             let hasJulyData = false;
-            actWkRowsAll.forEach(row => {
+            actWkRowsAll.filter(row => row.wk >= 27 && row.wk <= 31).forEach(row => {
               const v = Number(row.val);
               if (!isNaN(v) && row.val !== '' && row.val !== null && row.val !== undefined) {
                 julyTotalSum += v;
@@ -2524,8 +2524,9 @@
             setUI('dtlActJUNE', hasJulyData ? fmtBaht(julyTotalSum) : '-');
 
             // Slide 21 — Acceptance Target Plan & Actual JULY
-            const slide21PlanRow = p4.find(r => /acceptan[ec]e target plan july/i.test(String(r['Metric'])));
-            const slide21ActualRow = p4.find(r => /acceptan[ec]e target actual july/i.test(String(r['Metric'])));
+            // Note: Excel has typo "Acceptane" (missing 'c') so use acceptanc?e to match both
+            const slide21PlanRow = p4.find(r => /acceptanc?e\s+target\s+plan\s+july/i.test(String(r['Metric'])));
+            const slide21ActualRow = p4.find(r => /acceptanc?e\s+target\s+actual\s+july/i.test(String(r['Metric'])));
             const vSlide21Plan = slide21PlanRow ? getV(slide21PlanRow) : null;
             const vSlide21Actual = slide21ActualRow ? getV(slide21ActualRow) : null;
             setUI('dtlSlide21Plan', fmtB(vSlide21Plan));
