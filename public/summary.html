@@ -2303,33 +2303,6 @@
               }
             }
 
-            // Update Top KPI Cards: Income and Backlog
-            const fmtM = val => {
-              const v = Number(val);
-              return v >= 1000000 ? (v/1000000).toFixed(2) + 'M' : Math.round(v/1000) + 'K';
-            };
-            if (income !== null) {
-              const el = document.getElementById('kpiIncome');
-              if (el) el.innerHTML = fmtM(income).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
-            }
-            const incRow = p4.find(r => /income|revenue/i.test(String(r['Metric'])));
-            const blRows = p4.filter(r => /backlog/i.test(String(r['Metric'])));
-            const blRow = blRows.length > 0 ? blRows[blRows.length - 1] : null;
-            const income = incRow ? getValOrFallback(incRow['Value'], incRow['Amount']) : null;
-            const backlog = blRow ? getValOrFallback(blRow['Value'], blRow['Amount']) : null;
-
-            if (income !== null) {
-              const el = document.getElementById('kpiIncome');
-              if (el) el.innerHTML = fmtM(income).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
-            }
-            if (ar !== null && ap !== null) {
-              const el = document.getElementById('kpiIncomeSub');
-              if (el) el.textContent = `AR ${fmtM(ar)} · AP ${fmtM(ap)}`;
-            }
-            if (backlog !== null) {
-              const el = document.getElementById('kpiBacklog');
-              if (el) el.innerHTML = fmtM(backlog).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
-            }
 
           /* ─── Part 7 - SLA On-Process ─── */
 
