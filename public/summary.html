@@ -1571,35 +1571,91 @@
               <th>Name</th>
               <th>Sites</th>
               <th>AC1 Amount</th>
-              <th>AC1 Aging</th>
+              <th>AC1 Avg</th>
+              <th style="color:#f59e0b">AC1 Min/Max</th>
               <th>AC2 Amount</th>
-              <th>AC2 Aging</th>
+              <th>AC2 Avg</th>
+              <th style="color:#f59e0b">AC2 Min/Max</th>
             </tr>
           </thead>
           <tbody id="docOwnerBody">
             <tr>
               <td style="color:var(--text-primary);font-weight:500">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
-              <td><span class="badge badge-purple" id="docHathairatSites">41</span></td>
-              <td id="docHathairatAC1Amt">693,559 ฿</td>
-              <td><span class="badge badge-amber" id="docHathairatAC1">15.98d</span></td>
+              <td><span class="badge badge-purple" id="docHathairatSites">-</span></td>
+              <td id="docHathairatAC1Amt">-</td>
+              <td><span class="badge badge-amber" id="docHathairatAC1">-</span></td>
+              <td id="docHathairatAC1MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
               <td id="docHathairatAC2Amt">-</td>
-              <td><span class="badge badge-amber" id="docHathairatAC2">33.15d</span></td>
+              <td><span class="badge badge-amber" id="docHathairatAC2">-</span></td>
+              <td id="docHathairatAC2MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Sermsiri Bampentam</td>
-              <td><span class="badge badge-purple" id="docSermsiriSites">50</span></td>
-              <td id="docSermsiriAC1Amt">113,164 ฿</td>
-              <td><span class="badge badge-green" id="docSermsiriAC1">15.46d</span></td>
+              <td><span class="badge badge-purple" id="docSermsiriSites">-</span></td>
+              <td id="docSermsiriAC1Amt">-</td>
+              <td><span class="badge badge-green" id="docSermsiriAC1">-</span></td>
+              <td id="docSermsiriAC1MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
               <td id="docSermsiriAC2Amt">-</td>
-              <td><span class="badge badge-amber" id="docSermsiriAC2">49d</span></td>
+              <td><span class="badge badge-amber" id="docSermsiriAC2">-</span></td>
+              <td id="docSermsiriAC2MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
             </tr>
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Apichart Kampuang</td>
-              <td><span class="badge badge-purple" id="docApichartSites">26</span></td>
-              <td id="docApichartAC1Amt">138,325 ฿</td>
-              <td><span class="badge badge-green" id="docApichartAC1">14.88d</span></td>
+              <td><span class="badge badge-purple" id="docApichartSites">-</span></td>
+              <td id="docApichartAC1Amt">-</td>
+              <td><span class="badge badge-green" id="docApichartAC1">-</span></td>
+              <td id="docApichartAC1MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
               <td id="docApichartAC2Amt">-</td>
               <td><span class="badge badge-green" id="docApichartAC2">-</span></td>
+              <td id="docApichartAC2MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao</td>
+              <td><span class="badge badge-purple" id="docAdisakSites">-</span></td>
+              <td id="docAdisakAC1Amt">-</td>
+              <td><span class="badge badge-amber" id="docAdisakAC1">-</span></td>
+              <td id="docAdisakAC1MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
+              <td id="docAdisakAC2Amt">-</td>
+              <td><span class="badge badge-amber" id="docAdisakAC2">-</span></td>
+              <td id="docAdisakAC2MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card: SLA PE Owner -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(20,184,166,.15)">🏗️</span>
+          SLA PE Owner (2026)
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>PE Owner</th>
+              <th>Sites</th>
+              <th>MS1 Avg</th>
+              <th style="color:#f59e0b">MS1 Min/Max</th>
+              <th>MS2 Avg</th>
+              <th style="color:#f59e0b">MS2 Min/Max</th>
+            </tr>
+          </thead>
+          <tbody id="peOwnerBody">
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao</td>
+              <td><span class="badge badge-purple" id="peAdisakSites">-</span></td>
+              <td><span class="badge badge-green" id="peAdisakMS1Avg">-</span></td>
+              <td id="peAdisakMS1MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
+              <td><span class="badge badge-amber" id="peAdisakMS2Avg">-</span></td>
+              <td id="peAdisakMS2MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Palagon Prommueangma</td>
+              <td><span class="badge badge-purple" id="pePalagonSites">-</span></td>
+              <td><span class="badge badge-green" id="pePalagonMS1Avg">-</span></td>
+              <td id="pePalagonMS1MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
+              <td><span class="badge badge-amber" id="pePalagonMS2Avg">-</span></td>
+              <td id="pePalagonMS2MinMax" style="font-size:.75rem;color:#94a3b8">-</td>
             </tr>
           </tbody>
         </table>
@@ -2069,50 +2125,6 @@
               const el = document.getElementById('finAC2Aging');
               if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
             }
-            // Doc Owners — match by name AND AC type (AC1 / AC2) for separate aging
-            const docOwnerNames = [
-              { key: 'hathairat', ids: { sites: 'docHathairatSites', ac1Amt: 'docHathairatAC1Amt', ac1: 'docHathairatAC1', ac2: 'docHathairatAC2', ac2Amt: 'docHathairatAC2Amt' } },
-              { key: 'sermsiri',  ids: { sites: 'docSermsiriSites', ac1Amt: 'docSermsiriAC1Amt', ac1: 'docSermsiriAC1',  ac2: 'docSermsiriAC2',  ac2Amt: 'docSermsiriAC2Amt' } },
-              { key: 'apichart',  ids: { sites: 'docApichartSites', ac1Amt: 'docApichartAC1Amt', ac1: 'docApichartAC1',  ac2: 'docApichartAC2',  ac2Amt: 'docApichartAC2Amt' } },
-            ];
-            docOwnerNames.forEach(({ key, ids }) => {
-              // Try to find separate AC1 row and AC2 row for this person
-              const rowAC1 = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key) && /AC.?1/i.test(String(r['Owner / Type'])));
-              const rowAC2 = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key) && /AC.?2/i.test(String(r['Owner / Type'])));
-              // Fallback: single row for this person (no AC suffix)
-              const rowAny = p3.find(r => String(r['Owner / Type']).toLowerCase().includes(key));
-
-              const rowTarget = rowAC1 || rowAny;
-              if (rowTarget) {
-                 const sites = rowTarget['Sites'] || rowTarget['Count'] || rowTarget['จำนวน Site'] || rowTarget['จำนวนไซต์'];
-                 if (sites !== undefined && sites !== '') {
-                   const el = document.getElementById(ids.sites);
-                   if (el) el.textContent = sites;
-                 }
-                 const amt1 = rowTarget['Amount (THB)'] || rowTarget['AC1 Amount'];
-                 if (amt1 !== undefined && amt1 !== '') {
-                   const el = document.getElementById(ids.ac1Amt);
-                   if (el) el.textContent = fmtBaht(amt1);
-                 }
-              }
-
-              const aging1 = rowAC1 ? rowAC1['Avg Aging'] : (rowAny ? rowAny['Avg Aging'] : null);
-              const aging2 = rowAC2 ? rowAC2['Avg Aging'] : (rowAny ? rowAny['AC2 Aging'] || null : null);
-              const amt2   = rowAC2 ? (rowAC2['Amount (THB)'] || rowAC2['AC2 Amount'] || null) : (rowAny ? rowAny['AC2 Amount'] || null : null);
-
-              if (aging1 !== null && aging1 !== '') {
-                const el = document.getElementById(ids.ac1);
-                if (el) el.textContent = fmtDays(aging1);
-              }
-              if (aging2 !== null && aging2 !== '') {
-                const el = document.getElementById(ids.ac2);
-                if (el) el.textContent = fmtDays(aging2);
-              }
-              if (amt2 !== null && amt2 !== '') {
-                const el = document.getElementById(ids.ac2Amt);
-                if (el) el.textContent = fmtBaht(amt2);
-              }
-            });
 
             // Overall Team Install dynamically — add Sites column
             const teamRows = p3.filter(r => String(r['Owner / Type'] || '').toLowerCase().includes('overall team install'));
@@ -2296,6 +2308,16 @@
               const v = Number(val);
               return v >= 1000000 ? (v/1000000).toFixed(2) + 'M' : Math.round(v/1000) + 'K';
             };
+            if (income !== null) {
+              const el = document.getElementById('kpiIncome');
+              if (el) el.innerHTML = fmtM(income).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
+            }
+            const incRow = p4.find(r => /income|revenue/i.test(String(r['Metric'])));
+            const blRows = p4.filter(r => /backlog/i.test(String(r['Metric'])));
+            const blRow = blRows.length > 0 ? blRows[blRows.length - 1] : null;
+            const income = incRow ? getValOrFallback(incRow['Value'], incRow['Amount']) : null;
+            const backlog = blRow ? getValOrFallback(blRow['Value'], blRow['Amount']) : null;
+
             if (income !== null) {
               const el = document.getElementById('kpiIncome');
               if (el) el.innerHTML = fmtM(income).replace('M', '<span class="unit">M ฿</span>').replace('K', '<span class="unit">K ฿</span>');
@@ -2493,11 +2515,11 @@
             const setLbl = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
             const fmtB = v => (v !== null && v !== '' && v !== undefined) ? fmtBaht(Number(v)) : '-';
 
-            // Fill exactly WK27 to WK31 for July
             const wkSlotIds = ['dtlActWk1','dtlActWk2','dtlActWk3','dtlActWk4','dtlActWk5'];
             const lblSlotIds = ['lblActWk1','lblActWk2','lblActWk3','lblActWk4','lblActWk5'];
+            const startWk = reportWeek - 4; // Dynamic 5 weeks ending at reportWeek
             for (let i = 0; i < 5; i++) {
-              const targetWk = 27 + i; // WK27, WK28, WK29, WK30, WK31
+              const targetWk = startWk + i;
               const row = actWkRowsAll.find(r => r.wk === targetWk);
               setLbl(lblSlotIds[i], `WK${targetWk}`);
               if (row && row.val !== null && row.val !== '' && row.val !== undefined) {
@@ -2507,19 +2529,19 @@
               }
             }
 
-            // JULY TOTAL — sum WK27-WK31 only (July range)
-            let julyTotalSum = 0;
-            let hasJulyData = false;
-            actWkRowsAll.filter(row => row.wk >= 27 && row.wk <= 31).forEach(row => {
+            // TOTAL — sum of the 5 dynamic weeks
+            let dynamicTotalSum = 0;
+            let hasDynamicData = false;
+            actWkRowsAll.filter(row => row.wk >= startWk && row.wk <= reportWeek).forEach(row => {
               const v = Number(row.val);
               if (!isNaN(v) && row.val !== '' && row.val !== null && row.val !== undefined) {
-                julyTotalSum += v;
-                hasJulyData = true;
+                dynamicTotalSum += v;
+                hasDynamicData = true;
               }
             });
             const julyLabelEl = document.querySelector('[id="dtlActJUNE"]')?.previousElementSibling;
-            if (julyLabelEl) julyLabelEl.textContent = 'JULY Total';
-            setUI('dtlActJUNE', hasJulyData ? fmtBaht(julyTotalSum) : '-');
+            if (julyLabelEl) julyLabelEl.textContent = '5-Week Total';
+            setUI('dtlActJUNE', hasDynamicData ? fmtBaht(dynamicTotalSum) : '-');
 
             // Slide 21 — Acceptance Target Plan & Actual JULY
             // Note: Excel has typo "Acceptane" (missing 'c') so use acceptanc?e to match both
@@ -2555,34 +2577,57 @@
               return row ? getV(row) : null;
             };
 
-            // AC#1 — try both new naming ('Action Plan AC#1') and old ('Acceptance AC#1 Plan')
-            const reAc1 = /action plan ac#?1|acceptance ac#?1 plan/i;
-            const vAc123 = getValByTitleRegex(reAc1, '(2023)') ?? getValByTitleRegex(reAc1, '2023');
-            const vAc124 = getValByTitleRegex(reAc1, '(2024)') ?? getValByTitleRegex(reAc1, '2024');
-            const vAc125 = getValByTitleRegex(reAc1, '(2025)') ?? getValByTitleRegex(reAc1, '2025');
-            const vAc126 = getValByTitleRegex(reAc1, '(2026)') ?? getValByTitleRegex(reAc1, '2026');
-            // WK(reportWeek-1) Plan — search dynamically for the previous week number
+            // Dynamic Plan Breakdown Parsing for the CURRENT reportWeek
+            // Because the new Excel format repeats the Metric name 4 times without Slide Title,
+            // we grab all matching rows for the current reportWeek and assign them 2023,2024,2025,2026 sequentially.
+            const extractBreakdown = (acNum, wkNum) => {
+              const regex = new RegExp(`action plan ac.?${acNum} wk\\s*${wkNum}$`, 'i');
+              const rows = p4.filter(r => regex.test(String(r['Metric']).trim()));
+              if (rows.length === 4) {
+                return [getV(rows[0]), getV(rows[1]), getV(rows[2]), getV(rows[3])];
+              }
+              // Fallback to old Slide Title based lookup
+              const reAc = new RegExp(`action plan ac#?${acNum}|acceptance ac#?${acNum} plan`, 'i');
+              return [
+                getValByTitleRegex(reAc, '(2023)') ?? getValByTitleRegex(reAc, '2023'),
+                getValByTitleRegex(reAc, '(2024)') ?? getValByTitleRegex(reAc, '2024'),
+                getValByTitleRegex(reAc, '(2025)') ?? getValByTitleRegex(reAc, '2025'),
+                getValByTitleRegex(reAc, '(2026)') ?? getValByTitleRegex(reAc, '2026')
+              ];
+            };
+
             const prevWk = reportWeek - 1;
+            const ac1Breakdown = extractBreakdown(1, reportWeek);
+            const vAc123 = ac1Breakdown[0];
+            const vAc124 = ac1Breakdown[1];
+            const vAc125 = ac1Breakdown[2];
+            const vAc126 = ac1Breakdown[3];
+            const reAc1 = /action plan ac#?1|acceptance ac#?1 plan/i;
             const vAc1Wk28 = getValByTitleRegex(reAc1, 'WK'+prevWk)
-                          ?? getValByTitleRegex(reAc1, 'WK28')
-                          // Fallback: find row whose Metric contains 'Action Plan AC#1 WK'+prevWk
-                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
-            // AC#2 — try both new and old naming
+            const ac2Breakdown = extractBreakdown(2, reportWeek);
+            const vAc223 = ac2Breakdown[0];
+            const vAc224 = ac2Breakdown[1];
+            const vAc225 = ac2Breakdown[2];
+            const vAc226 = ac2Breakdown[3];
             const reAc2 = /action plan ac#?2|acceptance ac#?2 plan/i;
-            const vAc223 = getValByTitleRegex(reAc2, '(2023)') ?? getValByTitleRegex(reAc2, '2023');
-            const vAc224 = getValByTitleRegex(reAc2, '(2024)') ?? getValByTitleRegex(reAc2, '2024');
-            const vAc225 = getValByTitleRegex(reAc2, '(2025)') ?? getValByTitleRegex(reAc2, '2025');
-            const vAc226 = getValByTitleRegex(reAc2, '(2026)') ?? getValByTitleRegex(reAc2, '2026');
             const vAc2Wk28 = getValByTitleRegex(reAc2, 'WK'+prevWk)
-                          ?? getValByTitleRegex(reAc2, 'WK28')
-                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
-            // Totals — try '(TOTAL)' first, then 'total'
-            const reAc1Total = /action plan ac#?1 total|action plan ac#?1/i;
-            const reAc2Total = /action plan ac#?2 total|action plan ac#?2/i;
-            const vAc1Total = getValByTitleRegex(reAc1Total, '(total)') ?? getValByTitleRegex(reAc1Total, 'total');
-            const vAc2Total = getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
+            // Totals — search for WK<reportWeek> TOTAL first, then old naming
+            const vAc1Total = (() => {
+              const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+reportWeek+' total', 'i').test(String(row['Metric'])));
+              if(r) return getV(r);
+              const reAc1Total = /action plan ac#?1 total|action plan ac#?1/i;
+              return getValByTitleRegex(reAc1Total, '(total)') ?? getValByTitleRegex(reAc1Total, 'total');
+            })();
+            const vAc2Total = (() => {
+              const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+reportWeek+' total', 'i').test(String(row['Metric'])));
+              if(r) return getV(r);
+              const reAc2Total = /action plan ac#?2 total|action plan ac#?2/i;
+              return getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
+            })();
 
             // Set AC#1 Prev Breakdown
             setUI('dtlAC12023', fmtB(vAc123));
@@ -2758,9 +2803,13 @@
             // Completed / On Process / Cancel from 2026 sheet
             let countCompleted = 0, countOnProcess = 0, countCancel = 0;
             let countHae = 0, countTme = 0;
+            // Expose to outer scope for DOC/PE Owner stats
+            let s26Rows = [], s26HeaderRow = -1;
+            let s26AC1AmtIdx=-1, s26AC2AmtIdx=-1, s26AC1AgingIdx=-1, s26AC2AgingIdx=-1;
+            let s26DocOwnerIdx=-1, s26PEOwnerIdx=-1, s26MS1AgingIdx=-1, s26MS2AgingIdx=-1;
 
             if (s26Name) {
-              const s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
+              s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
               let headerRowIdx = -1;
               for (let i = 0; i < Math.min(10, s26Rows.length); i++) {
                 if (s26Rows[i].some(c => String(c).toUpperCase().includes('WON CODE') || String(c).toUpperCase().includes('AGING#1'))) {
@@ -2768,13 +2817,26 @@
                   break;
                 }
               }
+              s26HeaderRow = headerRowIdx;
               
               if (headerRowIdx > -1) {
                 const headers = s26Rows[headerRowIdx];
-                const ac1AmtIdx = headers.findIndex(h => String(h).toUpperCase().includes('AC#1 AMOUNT'));
-                const ac2AmtIdx = headers.findIndex(h => String(h).toUpperCase().includes('AC#2 AMOUNT'));
+                // Acceptance amounts use column name 'Accaptance AC#1 AMOUNT' (note typo) → match broadly
+                const ac1AmtIdx = headers.findIndex(h => /AC#?1.*AMOUNT|AMOUNT.*AC#?1/i.test(String(h)));
+                const ac2AmtIdx = headers.findIndex(h => /AC#?2.*AMOUNT|AMOUNT.*AC#?2/i.test(String(h)));
                 const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#1'));
                 const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#2'));
+                // Milestone SLA columns — exact names: 'AGING 1st Milestone', 'AGING 2nd Milestone'
+                const ms1AgingIdx = headers.findIndex(h => /AGING\s+1st\s+Milestone/i.test(String(h)));
+                const ms2AgingIdx = headers.findIndex(h => /AGING\s+2nd\s+Milestone/i.test(String(h)));
+                // Owner columns
+                const docOwnerIdx = headers.findIndex(h => /DOC.*Owner|Owner.*DOC/i.test(String(h)));
+                const peOwnerIdx  = headers.findIndex(h => /PE.*Owner|Owner.*PE/i.test(String(h)));
+                // Store in outer scope
+                s26AC1AmtIdx = ac1AmtIdx; s26AC2AmtIdx = ac2AmtIdx;
+                s26AC1AgingIdx = ac1AgingIdx; s26AC2AgingIdx = ac2AgingIdx;
+                s26MS1AgingIdx = ms1AgingIdx; s26MS2AgingIdx = ms2AgingIdx;
+                s26DocOwnerIdx = docOwnerIdx; s26PEOwnerIdx = peOwnerIdx;
                 // Find STATUS WORK column (Col BF) for Completed / On Process / Cancel
                 const statusIdx = headers.findIndex(h => /^status(\s+work)?$/i.test(String(h).trim()) || /สถานะ/.test(String(h)));
                 const ac2StatusIdx = headers.findIndex(h => /AC.?2.*STATUS|STATUS.*AC.?2/i.test(String(h)));
@@ -2877,6 +2939,94 @@
             setBadge('rawAc2AgingMin', showMinMax(minAc2Aging));
             setBadge('rawAc2AgingMax', showMinMax(maxAc2Aging));
 
+            // ─── DOC Owner stats (run HERE, after s26Rows is fully populated) ───
+            if (s26Rows.length > 0 && s26HeaderRow > -1) {
+              const agingBadgeClass2 = (avg) => avg <= 10 ? 'badge-green' : avg <= 20 ? 'badge-amber' : 'badge-red';
+              const docOwnerDefs2 = [
+                { nameMatch: /หทัยรัตน์|hathairat/i, key: 'hathairat', ids: { sites: 'docHathairatSites', ac1Amt: 'docHathairatAC1Amt', ac1: 'docHathairatAC1', ac1mm: 'docHathairatAC1MinMax', ac2: 'docHathairatAC2', ac2Amt: 'docHathairatAC2Amt', ac2mm: 'docHathairatAC2MinMax' } },
+                { nameMatch: /sermsiri/i,              key: 'sermsiri',  ids: { sites: 'docSermsiriSites', ac1Amt: 'docSermsiriAC1Amt', ac1: 'docSermsiriAC1', ac1mm: 'docSermsiriAC1MinMax', ac2: 'docSermsiriAC2', ac2Amt: 'docSermsiriAC2Amt', ac2mm: 'docSermsiriAC2MinMax' } },
+                { nameMatch: /apichart/i,              key: 'apichart',  ids: { sites: 'docApichartSites', ac1Amt: 'docApichartAC1Amt', ac1: 'docApichartAC1', ac1mm: 'docApichartAC1MinMax', ac2: 'docApichartAC2', ac2Amt: 'docApichartAC2Amt', ac2mm: 'docApichartAC2MinMax' } },
+                { nameMatch: /adisak/i,                key: 'adisak',   ids: { sites: 'docAdisakSites', ac1Amt: 'docAdisakAC1Amt', ac1: 'docAdisakAC1', ac1mm: 'docAdisakAC1MinMax', ac2: 'docAdisakAC2', ac2Amt: 'docAdisakAC2Amt', ac2mm: 'docAdisakAC2MinMax' } },
+              ];
+              const docStats2 = {};
+              for (let i = s26HeaderRow + 1; i < s26Rows.length; i++) {
+                const row = s26Rows[i];
+                if (!row || !row[0]) continue;
+                const dName = String(row[s26DocOwnerIdx] || '').trim();
+                if (!dName || dName === 'CANCEL') continue;
+                const m = docOwnerDefs2.find(d => d.nameMatch.test(dName));
+                if (!m) continue;
+                const k = m.key;
+                if (!docStats2[k]) docStats2[k] = { sites: 0, ac1Amts: 0, ac1Ages: [], ac2Amts: 0, ac2Ages: [] };
+                docStats2[k].sites++;
+                const a1a = Number(String(row[s26AC1AmtIdx] || '').replace(/[^0-9.-]/g,''));
+                const a1g = Number(String(row[s26AC1AgingIdx] || '').replace(/[^0-9.-]/g,''));
+                const a2a = Number(String(row[s26AC2AmtIdx] || '').replace(/[^0-9.-]/g,''));
+                const a2g = Number(String(row[s26AC2AgingIdx] || '').replace(/[^0-9.-]/g,''));
+                if (!isNaN(a1a) && a1a > 0) docStats2[k].ac1Amts += a1a;
+                if (!isNaN(a1g) && a1g > 0) docStats2[k].ac1Ages.push(a1g);
+                if (!isNaN(a2a) && a2a > 0) docStats2[k].ac2Amts += a2a;
+                if (!isNaN(a2g) && a2g > 0) docStats2[k].ac2Ages.push(a2g);
+              }
+              docOwnerDefs2.forEach(({ key, ids }) => {
+                const d = docStats2[key];
+                if (!d) return;
+                const sEl = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+                const sBadge = (id, val, cls) => { const e = document.getElementById(id); if (e) { e.textContent = val; e.className = 'badge ' + cls; } };
+                sEl(ids.sites, d.sites);
+                if (d.ac1Amts > 0) sEl(ids.ac1Amt, fmtBaht(d.ac1Amts));
+                if (d.ac1Ages.length) {
+                  const avg = d.ac1Ages.reduce((a,b)=>a+b,0) / d.ac1Ages.length;
+                  sBadge(ids.ac1, avg.toFixed(1)+'d', agingBadgeClass2(avg));
+                  sEl(ids.ac1mm, `↓${Math.min(...d.ac1Ages)}d / ↑${Math.max(...d.ac1Ages)}d`);
+                }
+                if (d.ac2Amts > 0) sEl(ids.ac2Amt, fmtBaht(d.ac2Amts));
+                if (d.ac2Ages.length) {
+                  const avg = d.ac2Ages.reduce((a,b)=>a+b,0) / d.ac2Ages.length;
+                  sBadge(ids.ac2, avg.toFixed(1)+'d', agingBadgeClass2(avg));
+                  sEl(ids.ac2mm, `↓${Math.min(...d.ac2Ages)}d / ↑${Math.max(...d.ac2Ages)}d`);
+                }
+              });
+
+              // PE Owner SLA — MS1 & MS2
+              const peOwnerDefs2 = [
+                { nameMatch: /adisak/i,  key: 'adisak',  ids: { sites: 'peAdisakSites',  ms1Avg: 'peAdisakMS1Avg',  ms1mm: 'peAdisakMS1MinMax',  ms2Avg: 'peAdisakMS2Avg',  ms2mm: 'peAdisakMS2MinMax' } },
+                { nameMatch: /palagon/i, key: 'palagon', ids: { sites: 'pePalagonSites', ms1Avg: 'pePalagonMS1Avg', ms1mm: 'pePalagonMS1MinMax', ms2Avg: 'pePalagonMS2Avg', ms2mm: 'pePalagonMS2MinMax' } },
+              ];
+              const peStats2 = {};
+              for (let i = s26HeaderRow + 1; i < s26Rows.length; i++) {
+                const row = s26Rows[i];
+                if (!row || !row[0]) continue;
+                const pName = String(row[s26PEOwnerIdx] || '').trim();
+                if (!pName || pName === 'CANCEL') continue;
+                const m = peOwnerDefs2.find(d => d.nameMatch.test(pName));
+                if (!m) continue;
+                const k = m.key;
+                if (!peStats2[k]) peStats2[k] = { sites: 0, ms1Ages: [], ms2Ages: [] };
+                peStats2[k].sites++;
+                const ms1v = Number(String(row[s26MS1AgingIdx] || '').replace(/[^0-9.-]/g,''));
+                const ms2v = Number(String(row[s26MS2AgingIdx] || '').replace(/[^0-9.-]/g,''));
+                if (!isNaN(ms1v) && ms1v > 0) peStats2[k].ms1Ages.push(ms1v);
+                if (!isNaN(ms2v) && ms2v > 0) peStats2[k].ms2Ages.push(ms2v);
+              }
+              peOwnerDefs2.forEach(({ key, ids }) => {
+                const d = peStats2[key];
+                if (!d) return;
+                const sEl = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+                const sBadge = (id, val, cls) => { const e = document.getElementById(id); if (e) { e.textContent = val; e.className = 'badge ' + cls; } };
+                sEl(ids.sites, d.sites);
+                if (d.ms1Ages.length) {
+                  const avg = d.ms1Ages.reduce((a,b)=>a+b,0) / d.ms1Ages.length;
+                  sBadge(ids.ms1Avg, avg.toFixed(1)+'d', agingBadgeClass2(avg));
+                  sEl(ids.ms1mm, `↓${Math.min(...d.ms1Ages)}d / ↑${Math.max(...d.ms1Ages)}d`);
+                }
+                if (d.ms2Ages.length) {
+                  const avg = d.ms2Ages.reduce((a,b)=>a+b,0) / d.ms2Ages.length;
+                  sBadge(ids.ms2Avg, avg.toFixed(1)+'d', agingBadgeClass2(avg));
+                  sEl(ids.ms2mm, `↓${Math.min(...d.ms2Ages)}d / ↑${Math.max(...d.ms2Ages)}d`);
+                }
+              });
+            } // end DOC/PE Owner from 2026 sheet
 
             // Set AC#1 Prev Breakdown
             setUI('dtlAC1WK28', fmtB(vAc1Wk28));
