@@ -1393,6 +1393,18 @@
       </div>
     </div>
 
+    <!-- ── Team Install Performance ── -->
+    <p class="section-title">📊 Team Install Performance (Weekly)</p>
+    <div class="card" style="margin-bottom:28px">
+      <div class="card-title">
+        <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">👥</span>
+        Subcontractor Weekly Installation
+      </div>
+      <div class="chart-wrap" style="height:350px; padding-top:16px;">
+        <canvas id="teamWeeklyChart"></canvas>
+      </div>
+    </div>
+
     <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
     <p class="section-title" id="soSectionTitle">📊 SO WEEK 27 VS WEEK 28</p>
     <div class="card" style="margin-bottom:28px">
@@ -1963,6 +1975,23 @@
         scales: {
           x: { grid: { display: false }, ticks: { color: '#64748b' } },
           y: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#64748b', callback: v => v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : (v / 1000).toFixed(0) + 'K' } }
+        }
+      }
+    });
+
+    /* ── Team Weekly Performance Chart ── */
+    window.teamWeeklyChart = new Chart(document.getElementById('teamWeeklyChart').getContext('2d'), {
+      type: 'bar',
+      data: { labels: [], datasets: [] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#64748b' } },
+          tooltip: { backgroundColor: '#1c2540' }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#64748b' }, stacked: true },
+          y: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#64748b' }, stacked: true }
         }
       }
     });
@@ -3000,6 +3029,66 @@
                 }
               });
             } // end DOC/PE Owner from 2026 sheet
+
+            // ── Team Weekly Performance ──
+            if (s26Rows && s26Rows.length > 0 && window.teamWeeklyChart) {
+              const headers = s26Rows[headerRowIdx];
+              const subconIdx = headers.findIndex(h => /subcon/i.test(String(h)));
+              const wkNumIdx = headers.findIndex(h => /WK.*NUM/i.test(String(h)));
+              const typeSubIdx = headers.findIndex(h => /TYPE.*SUB/i.test(String(h)));
+              
+              if (subconIdx > -1 && wkNumIdx > -1) {
+                const teamWeeklyPerformance = {};
+                for (let i = dataStartIdx; i < s26Rows.length; i++) {
+                  const row = s26Rows[i];
+                  if (!row || !row[0]) continue;
+                  
+                  const team = String(row[subconIdx] || '').trim();
+                  const wkStr = row[wkNumIdx];
+                  const typeSub = String(row[typeSubIdx] || '').toUpperCase();
+                  
+                  if (!team || team === 'CANCEL' || typeSub === 'CANCEL') continue;
+                  if (!wkStr || wkStr === 0) continue;
+                  
+                  const wkMatch = String(wkStr).match(/WK(\d+)/i);
+                  const weekLabel = wkMatch ? 'W' + wkMatch[1] : String(wkStr);
+                  
+                  if (!teamWeeklyPerformance[team]) teamWeeklyPerformance[team] = {};
+                  if (!teamWeeklyPerformance[team][weekLabel]) teamWeeklyPerformance[team][weekLabel] = 0;
+                  teamWeeklyPerformance[team][weekLabel]++;
+                }
+                
+                const weeklyMap = {};
+                Object.keys(teamWeeklyPerformance).forEach(team => {
+                  Object.entries(teamWeeklyPerformance[team]).forEach(([wk, count]) => {
+                    if (!weeklyMap[wk]) weeklyMap[wk] = { week: wk };
+                    weeklyMap[wk][team] = count;
+                  });
+                });
+                
+                const teamWeeklyData = Object.values(weeklyMap).sort((a, b) => {
+                  const wA = parseInt(a.week.replace(/[^0-9]/g, '')) || 0;
+                  const wB = parseInt(b.week.replace(/[^0-9]/g, '')) || 0;
+                  return wA - wB;
+                });
+                
+                // Update chart
+                const labels = teamWeeklyData.map(d => d.week);
+                const teams = Array.from(new Set(teamWeeklyData.flatMap(d => Object.keys(d)))).filter(k => k !== 'week');
+                const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#eab308', '#ec4899', '#14b8a6', '#6366f1'];
+                
+                window.teamWeeklyChart.data.labels = labels;
+                window.teamWeeklyChart.data.datasets = teams.map((team, idx) => ({
+                  label: team,
+                  data: teamWeeklyData.map(d => d[team] || 0),
+                  backgroundColor: COLORS[idx % COLORS.length],
+                  borderColor: COLORS[idx % COLORS.length],
+                  borderWidth: 1,
+                  borderRadius: 4
+                }));
+                window.teamWeeklyChart.update();
+              }
+            }
 
             // Set AC#1 Prev Breakdown
             setUI('dtlAC1WK28', fmtB(vAc1Wk28));
