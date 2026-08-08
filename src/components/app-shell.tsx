@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { LayoutDashboard, Presentation, Target, ShieldAlert, FileText, Banknote, Rocket, Settings } from "lucide-react";
+import { LayoutDashboard, Presentation, Target, ShieldAlert, FileText, Banknote, Rocket, Settings, Activity } from "lucide-react";
 
 const slides = [
   { id: 1, title: "Title Slide", icon: Presentation },
@@ -32,6 +32,7 @@ const slides = [
   { id: 28, title: "EHS Compliance", icon: ShieldAlert },
   { id: 29, title: "High-Risk Monitoring", icon: ShieldAlert },
   { id: 30, title: "Next Steps", icon: Target },
+  { id: 31, title: "Team Install Performance", icon: Activity },
 ];
 
 export function AppShell({ children, activeSlide, onSelectSlide }: { children: ReactNode, activeSlide: number, onSelectSlide: (id: number) => void }) {

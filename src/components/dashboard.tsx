@@ -1257,6 +1257,33 @@ export function Dashboard({ activeSlide, data, onImport }: {
         </div>
       );
 
+      // ── Slide 31: Team Install Performance (Weekly) ─────────────────────────
+      case 31: {
+        const teamWeeklyData = d.teamWeeklyData || [];
+        const teamKeys = Array.from(new Set(teamWeeklyData.flatMap((item: any) => Object.keys(item)))).filter(k => k !== 'week');
+        
+        return (
+          <div className="space-y-6 animate-in fade-in duration-500">
+            <SectionTitle>Team Install Performance (Weekly)</SectionTitle>
+            <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5">
+              <h3 className="text-sm font-semibold text-zinc-400 mb-4 uppercase tracking-wider">Subcontractor Weekly Installation</h3>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={teamWeeklyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false}/>
+                  <XAxis dataKey="week" stroke="#71717a" fontSize={12} tickLine={false}/>
+                  <YAxis stroke="#71717a" fontSize={12} tickLine={false}/>
+                  <Tooltip contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: 8 }}/>
+                  <Legend wrapperStyle={{ paddingTop: '20px' }}/>
+                  {teamKeys.map((teamName, idx) => (
+                    <Bar key={String(teamName)} dataKey={String(teamName)} stackId="a" fill={COLORS[idx % COLORS.length]} radius={[0,0,0,0]}/>
+                  ))}
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        );
+      }
+
       // ── Default ─────────────────────────────────────────────────────────────
       default: return (
         <div className="flex flex-col items-center justify-center h-full text-zinc-500">

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือสร้าง Dashboard — Next.js + GitHub + Vercel + Antigravity AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #3b82f6;
+    --accent: #6366f1;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --dark: #0f172a;
+    --dark2: #1e293b;
+    --dark3: #334155;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --bg-code: #f1f5f9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sarabun', sans-serif; font-size: 14px; line-height: 1.75; color: var(--text); background: #fff; max-width: 900px; margin: 0 auto; padding: 40px 48px; }
+
+  /* COVER */
+  .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%); color: white; margin: -40px -48px 0; page-break-after: always; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%, rgba(59,130,246,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(99,102,241,0.15) 0%, transparent 50%); }
+  .cover-inner { position: relative; z-index: 1; }
+  .cover-badge { display: inline-block; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); color: #93c5fd; padding: 6px 20px; border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+  .cover h1 { font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; background: linear-gradient(135deg, #fff 0%, #93c5fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .cover h2 { font-size: 18px; font-weight: 400; color: #94a3b8; margin-bottom: 48px; }
+  .cover-stack { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 48px; }
+  .cover-chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #e2e8f0; padding: 6px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; }
+  .cover-chip.highlight { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); color: #93c5fd; }
+  .cover-meta { display: flex; gap: 32px; justify-content: center; margin-top: 24px; }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+  .cover-meta-value { font-size: 15px; font-weight: 600; color: #cbd5e1; margin-top: 4px; }
+  .cover-divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 2px; margin: 32px auto; }
+
+  /* TOC */
+  .toc-page { page-break-before: always; page-break-after: always; padding-top: 40px; }
+  .toc-title { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+  .toc-title::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, var(--primary), transparent); border-radius: 1px; }
+  .toc-list { list-style: none; }
+  .toc-item { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 14px; }
+  .toc-num { font-weight: 700; color: var(--primary); min-width: 28px; }
+  .toc-text { flex: 1; font-weight: 500; color: var(--dark); }
+  .toc-dots { flex: 1; border-bottom: 1px dotted #cbd5e1; margin: 0 8px; align-self: center; }
+  .toc-page-num { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+  .toc-sub { list-style: none; margin-left: 28px; margin-top: 4px; }
+  .toc-sub-item { display: flex; align-items: center; gap: 6px; padding: 3px 0; font-size: 12px; color: var(--text-muted); }
+  .toc-sub-item::before { content: '·'; color: var(--primary); }
+
+  /* HEADINGS */
+  h2 { font-size: 20px; font-weight: 700; color: var(--dark); margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  h2 .sn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 8px; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  h3 { font-size: 15px; font-weight: 600; color: var(--dark2); margin: 22px 0 10px; padding-left: 12px; border-left: 3px solid var(--primary); }
+  h4 { font-size: 14px; font-weight: 600; color: var(--dark3); margin: 14px 0 6px; }
+  p { margin: 8px 0; }
+  strong { font-weight: 700; color: var(--dark); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* CODE */
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-code); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: #d97706; }
+  pre { background: var(--dark); border-radius: 10px; padding: 18px 22px; margin: 12px 0; overflow-x: auto; page-break-inside: avoid; border: 1px solid #334155; }
+  pre code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: none; border: none; padding: 0; color: #e2e8f0; white-space: pre-wrap; word-break: break-word; }
+
+  /* LISTS */
+  ul, ol { margin: 8px 0; padding-left: 22px; }
+  li { margin: 4px 0; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; page-break-inside: avoid; }
+  thead tr { background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); color: white; }
+  th { padding: 9px 13px; text-align: left; font-weight: 600; font-size: 12px; }
+  td { padding: 8px 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* CALLOUT */
+  .callout { border-radius: 10px; padding: 12px 16px; margin: 12px 0; display: flex; gap: 10px; align-items: flex-start; page-break-inside: avoid; }
+  .callout-icon { font-size: 16px; flex-shrink: 0; line-height: 1.6; }
+  .callout-body { flex: 1; font-size: 13px; }
+  .callout.tip    { background: #f0fdf4; border-left: 4px solid var(--success); }
+  .callout.warn   { background: #fffbeb; border-left: 4px solid var(--warning); }
+  .callout.info   { background: #eff6ff; border-left: 4px solid var(--primary); }
+  .callout.danger { background: #fef2f2; border-left: 4px solid var(--danger); }
+
+  /* STEPS */
+  .steps { counter-reset: sc; list-style: none; padding: 0; }
+  .steps li { counter-increment: sc; display: flex; gap: 12px; align-items: flex-start; margin: 10px 0; padding: 10px 14px; background: #f8fafc; border-radius: 10px; border: 1px solid var(--border); font-size: 13px; }
+  .steps li::before { content: counter(sc); display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; min-width: 26px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border-radius: 50%; font-weight: 700; font-size: 12px; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .card { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 14px; page-break-inside: avoid; }
+  .card-title { font-weight: 700; color: var(--primary); font-size: 13px; margin-bottom: 5px; }
+  .card p { font-size: 12px; color: var(--text-muted); margin: 0; }
+
+  /* STEP BOX */
+  .step-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 14px 0; page-break-inside: avoid; }
+  .step-box h4 { margin-top: 0; border-left: 3px solid var(--danger); padding-left: 10px; color: var(--danger); }
+
+  /* WORKFLOW */
+  .workflow { background: var(--dark); color: #e2e8f0; border-radius: 12px; padding: 20px; margin: 14px 0; page-break-inside: avoid; }
+  .wf-step { display: flex; align-items: flex-start; gap: 12px; margin: 6px 0; padding: 9px 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 3px solid var(--primary); }
+  .wf-num { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; min-width: 24px; background: var(--primary); color: white; border-radius: 50%; font-size: 11px; font-weight: 700; }
+  .wf-body { flex: 1; }
+  .wf-title { font-weight: 600; color: #f1f5f9; font-size: 13px; }
+  .wf-desc { font-size: 11px; color: #94a3b8; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+  .wf-arrow { text-align: center; color: var(--primary); font-size: 16px; margin: 2px 0; }
+
+  /* BADGE */
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 600; margin: 0 2px; }
+  .badge-blue { background: #dbeafe; color: #1d4ed8; }
+  .badge-green { background: #d1fae5; color: #065f46; }
+  .badge-purple { background: #ede9fe; color: #5b21b6; }
+
+  /* BREAK */
+  .sb { page-break-before: always; padding-top: 20px; }
+
+  /* PRINT */
+  @media print {
+    body { padding: 0; max-width: 100%; font-size: 12px; }
+    .cover { margin: 0; }
+    .no-print { display: none !important; }
+    pre, table, .step-box, .workflow, .grid-2 { page-break-inside: avoid; }
+    h2, h3 { page-break-after: avoid; }
+    @page { margin: 15mm 15mm; size: A4; }
+    @page :first { margin: 0; }
+  }
+
+  /* PRINT BTN */
+  .print-btn { position: fixed; bottom: 28px; right: 28px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; padding: 13px 22px; border-radius: 50px; font-size: 15px; font-family: 'Sarabun', sans-serif; font-weight: 600; cursor: pointer; box-shadow: 0 4px 20px rgba(59,130,246,0.45); z-index: 999; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+  .print-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.55); }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ บันทึกเป็น PDF</button>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-badge">📘 คู่มือการพัฒนา Dashboard</div>
+    <h1>สร้าง Dashboard<br>ระดับ Professional</h1>
+    <h2>Next.js · GitHub · Vercel · Antigravity AI</h2>
+    <div class="cover-stack">
+      <span class="cover-chip">🖥️ Next.js 16</span>
+      <span class="cover-chip">⚛️ React 19</span>
+      <span class="cover-chip">🔷 TypeScript</span>
+      <span class="cover-chip">🎨 Tailwind CSS</span>
+      <span class="cover-chip">📊 Recharts</span>
+      <span class="cover-chip">🐙 GitHub</span>
+      <span class="cover-chip">▲ Vercel</span>
+      <span class="cover-chip highlight">🤖 Antigravity AI</span>
+    </div>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="cover-meta-label">เวอร์ชัน</div><div class="cover-meta-value">2.0</div></div>
+      <div class="cover-meta-item"><div class="cover-meta-label">วันที่</div><div class="cover-meta-value">สิงหาคม 2026</div></div>
+      <div class="cover-meta-item"><div class="cover-meta-label">จัดทำโดย</div><div class="cover-meta-value">Antigravity AI</div></div>
+    </div>
+    <p style="margin-top:36px;color:#475569;font-size:13px;">สำหรับสอนเพื่อนร่วมงาน — สามารถนำไปใช้งานได้ทันที</p>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-page">
+  <div class="toc-title">📋 สารบัญ</div>
+  <ul class="toc-list">
+    <li class="toc-item"><span class="toc-num">1.</span><span class="toc-text">ภาพรวม Tech Stack</span><span class="toc-dots"></span><span class="toc-page-num">2</span></li>
+    <li class="toc-item"><span class="toc-num">2.</span><span class="toc-text">ติดตั้ง Program (Node.js · Git · VS Code · Vercel CLI)</span><span class="toc-dots"></span><span class="toc-page-num">3</span></li>
+    <li class="toc-item"><span class="toc-num">3.</span><span class="toc-text">ตั้งค่า GitHub</span><span class="toc-dots"></span><span class="toc-page-num">4</span></li>
+    <li class="toc-item"><span class="toc-num">4.</span><span class="toc-text">สร้างโปรเจกต์ Next.js ใหม่</span><span class="toc-dots"></span><span class="toc-page-num">5</span></li>
+    <li class="toc-item"><span class="toc-num">5.</span><span class="toc-text">โครงสร้างโปรเจกต์ที่ถูกต้อง</span><span class="toc-dots"></span><span class="toc-page-num">6</span></li>
+    <li class="toc-item"><span class="toc-num">6.</span><span class="toc-text">Deploy บน Vercel</span><span class="toc-dots"></span><span class="toc-page-num">7</span></li>
+    <li class="toc-item"><span class="toc-num">7.</span><span class="toc-text">🤖 ติดตั้งและใช้งาน Antigravity AI</span><span class="toc-dots"></span><span class="toc-page-num">8</span></li>
+    <ul class="toc-sub">
+      <li class="toc-sub-item">7.1 ติดตั้ง Extension ใน VS Code</li>
+      <li class="toc-sub-item">7.2 Sign In ครั้งแรก</li>
+      <li class="toc-sub-item">7.3 ทำความรู้จัก UI</li>
+      <li class="toc-sub-item">7.4 เชื่อมกับโปรเจกต์</li>
+      <li class="toc-sub-item">7.5 วิธีสั่งงานแบบต่างๆ</li>
+      <li class="toc-sub-item">7.6 Tips การใช้งาน</li>
+      <li class="toc-sub-item">7.7 Workflow ทีละขั้นตอน</li>
+      <li class="toc-sub-item">7.8 คำสั่งพิเศษที่ใช้บ่อย</li>
+      <li class="toc-sub-item">7.9 ตั้งค่า AGENTS.md</li>
+    </ul>
+    <li class="toc-item"><span class="toc-num">8.</span><span class="toc-text">Super Prompt Templates</span><span class="toc-dots"></span><span class="toc-page-num">11</span></li>
+    <li class="toc-item"><span class="toc-num">9.</span><span class="toc-text">Workflow การทำงานประจำวัน</span><span class="toc-dots"></span><span class="toc-page-num">13</span></li>
+    <li class="toc-item"><span class="toc-num">10.</span><span class="toc-text">Troubleshooting ปัญหาที่พบบ่อย</span><span class="toc-dots"></span><span class="toc-page-num">14</span></li>
+    <li class="toc-item"><span class="toc-num">11.</span><span class="toc-text">Cheat Sheet คำสั่งสำคัญ</span><span class="toc-dots"></span><span class="toc-page-num">15</span></li>
+  </ul>
+</div>
+
+<!-- SECTION 1 -->
+<div class="sb">
+<h2><span class="sn">1</span> ภาพรวม Tech Stack</h2>
+<div class="grid-2">
+  <div class="card"><div class="card-title">🖥️ Next.js 16</div><p>Framework หลัก รองรับ Server-Side Rendering และ App Router</p></div>
+  <div class="card"><div class="card-title">⚛️ React 19 + TypeScript</div><p>UI Library พร้อม Type Safety ช่วยลด Bug ระหว่างพัฒนา</p></div>
+  <div class="card"><div class="card-title">🎨 Tailwind CSS v4</div><p>Utility-first CSS Framework ตกแต่ง UI ได้รวดเร็วมาก</p></div>
+  <div class="card"><div class="card-title">📊 Recharts + shadcn/ui</div><p>Library สำหรับ Chart และ Component UI สำเร็จรูปพร้อมใช้</p></div>
+  <div class="card"><div class="card-title">🐙 GitHub</div><p>เก็บโค้ด + Version Control + ทำงานร่วมกับทีม</p></div>
+  <div class="card"><div class="card-title">▲ Vercel</div><p>Host เว็บไซต์ ฟรี + Auto Deploy ทุกครั้งที่ Push โค้ด</p></div>
+</div>
+<table>
+  <thead><tr><th>เหตุผลที่เลือก Stack นี้</th><th>รายละเอียด</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ฟรี</strong></td><td>GitHub + Vercel มี Free Tier ใช้ได้จริงในงาน Production</td></tr>
+    <tr><td><strong>เร็ว</strong></td><td>Auto Deploy ทุกครั้งที่ Push โค้ด ไม่ต้องทำด้วยตัวเอง</td></tr>
+    <tr><td><strong>ง่าย</strong></td><td>ไม่ต้องตั้งค่า Server เอง Vercel จัดการให้ทั้งหมด</td></tr>
+    <tr><td><strong>Professional</strong></td><td>ใช้ใน Production จริงทั่วโลกโดยบริษัทชั้นนำ</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- SECTION 2 -->
+<div class="sb">
+<h2><span class="sn">2</span> ติดตั้ง Program ที่จำเป็น</h2>
+
+<h3>2.1 Node.js — ต้องทำก่อนสุด</h3>
+<p><strong>Node.js คืออะไร?</strong> คือตัวที่ทำให้เครื่องของเราสามารถรัน JavaScript และจัดการ package ต่างๆ ได้</p>
+<ol class="steps">
+  <li><div>ไปที่ <strong>https://nodejs.org</strong> ดาวน์โหลด <strong>LTS Version</strong> (ปุ่มสีเขียว)</div></li>
+  <li><div>ติดตั้งตามปกติ กด <strong>Next → Next → Install</strong> ตลอด</div></li>
+  <li><div>เปิด PowerShell ตรวจสอบ:
+    <pre><code>node --version    # ควรได้: v20.x.x หรือสูงกว่า
+npm --version     # ควรได้: 10.x.x หรือสูงกว่า</code></pre>
+  </div></li>
+</ol>
+<div class="callout tip"><span class="callout-icon">✅</span><div class="callout-body">ถ้าได้ตัวเลข Version แสดงว่าติดตั้ง Node.js สำเร็จแล้ว</div></div>
+
+<h3>2.2 Git — Version Control</h3>
+<p><strong>Git คืออะไร?</strong> คือตัวที่ช่วยติดตามการเปลี่ยนแปลงของโค้ด และส่งโค้ดไปยัง GitHub</p>
+<ol class="steps">
+  <li><div>ไปที่ <strong>https://git-scm.com/downloads</strong> ดาวน์โหลด Windows version</div></li>
+  <li><div>ติดตั้ง กด Next ตลอด ใช้ default settings</div></li>
+  <li><div>ตรวจสอบ: <code>git --version</code> → ควรได้ <code>git version 2.x.x</code></div></li>
+</ol>
+
+<h3>2.3 VS Code — Code Editor</h3>
+<p><strong>VS Code คืออะไร?</strong> โปรแกรมสำหรับเขียนโค้ด ฟรี รองรับ TypeScript และ React ได้ดีมาก</p>
+<ol class="steps">
+  <li><div>ไปที่ <strong>https://code.visualstudio.com</strong> ดาวน์โหลดและติดตั้ง</div></li>
+  <li><div>กด <code>Ctrl+Shift+X</code> ติดตั้ง Extensions:
+    <br><span class="badge badge-blue">ESLint</span> <span class="badge badge-blue">Prettier</span> <span class="badge badge-blue">Tailwind CSS IntelliSense</span> <span class="badge badge-purple">GitLens</span> <span class="badge badge-green">Auto Rename Tag</span>
+  </div></li>
+</ol>
+
+<h3>2.4 Vercel CLI (เสริม)</h3>
+<pre><code>npm install -g vercel
+vercel --version</code></pre>
+</div>
+
+<!-- SECTION 3 -->
+<div class="sb">
+<h2><span class="sn">3</span> ตั้งค่า GitHub</h2>
+
+<h3>3.1 สมัครบัญชี GitHub</h3>
+<ol class="steps">
+  <li><div>ไปที่ <strong>https://github.com</strong> กด Sign Up</div></li>
+  <li><div>ใส่ Email + Password + Username → ยืนยัน Email</div></li>
+  <li><div>เลือก <strong>Free Plan</strong></div></li>
+</ol>
+
+<h3>3.2 เชื่อม Git กับ GitHub บนเครื่อง</h3>
+<pre><code>git config --global user.name "ชื่อของคุณ"
+git config --global user.email "email@example.com"
+git config --list   # ตรวจสอบ</code></pre>
+
+<h3>3.3 สร้าง Repository ใหม่</h3>
+<ol class="steps">
+  <li><div>กด <strong>"+"</strong> มุมบนขวา → <strong>New repository</strong></div></li>
+  <li><div>ตั้งชื่อ: <code>my-dashboard</code> → เลือก Public → <strong>ไม่ต้องติ๊ก</strong> Initialize with README</div></li>
+  <li><div>กด <strong>Create repository</strong></div></li>
+</ol>
+</div>
+
+<!-- SECTION 4 -->
+<div class="sb">
+<h2><span class="sn">4</span> สร้างโปรเจกต์ Next.js ใหม่</h2>
+
+<h3>4.1 สร้างโปรเจกต์</h3>
+<pre><code>cd C:\Users\[ชื่อUser]\Desktop
+npx create-next-app@latest my-dashboard</code></pre>
+<div class="callout info"><span class="callout-icon">💡</span><div class="callout-body"><strong>ตอบคำถาม:</strong> TypeScript → Yes | ESLint → Yes | Tailwind CSS → Yes | src/ directory → Yes | App Router → Yes | Turbopack → No | Customize alias → No</div></div>
+
+<h3>4.2 เปิดและรันโปรเจกต์</h3>
+<pre><code>cd my-dashboard
+code .          # เปิด VS Code
+npm run dev     # รัน Dev server → เปิด http://localhost:3000</code></pre>
+
+<h3>4.3 ติดตั้ง Libraries ที่จำเป็น</h3>
+<pre><code>npm install recharts
+npm install lucide-react
+npm install class-variance-authority clsx tailwind-merge
+npm install jspdf html2canvas xlsx</code></pre>
+
+<h3>4.4 ติดตั้ง shadcn/ui</h3>
+<pre><code>npx shadcn@latest init
+npx shadcn@latest add card button badge separator dropdown-menu</code></pre>
+</div>
+
+<!-- SECTION 5 -->
+<div class="sb">
+<h2><span class="sn">5</span> โครงสร้างโปรเจกต์ที่ถูกต้อง</h2>
+<pre><code>my-dashboard/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx       ← Layout หลัก (ทุกหน้าใช้ร่วม)
+│   │   ├── page.tsx         ← หน้าแรก (/)
+│   │   └── globals.css      ← CSS Global
+│   ├── components/
+│   │   ├── ui/              ← shadcn components (อย่าแก้)
+│   │   ├── charts/          ← Chart components ต่างๆ
+│   │   └── dashboard/       ← KPICard, Sidebar, Header
+│   ├── data/
+│   │   └── dashboardData.ts ← ข้อมูลทั้งหมด (แก้ตรงนี้)
+│   └── lib/
+│       └── utils.ts         ← Helper functions
+└── public/                  ← รูปภาพ, โลโก้, ไฟล์ static</code></pre>
+<table>
+  <thead><tr><th>ไฟล์/โฟลเดอร์</th><th>หน้าที่</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/app/page.tsx</code></td><td>หน้าหลัก — แก้ตรงนี้เพื่อเพิ่ม/ลด Section</td></tr>
+    <tr><td><code>src/components/</code></td><td>Component ย่อยๆ ที่ใช้ซ้ำได้</td></tr>
+    <tr><td><code>src/data/</code></td><td>ข้อมูลทั้งหมด — แยกออกจาก UI</td></tr>
+    <tr><td><code>public/</code></td><td>รูปภาพ, โลโก้, ไฟล์ download</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- SECTION 6 -->
+<div class="sb">
+<h2><span class="sn">6</span> Deploy บน Vercel</h2>
+
+<h3>6.1 Push โค้ดขึ้น GitHub</h3>
+<pre><code>cd C:\path\to\my-dashboard
+git init
+git add .
+git commit -m "🎉 Initial commit: Dashboard project setup"
+git remote add origin https://github.com/[username]/my-dashboard.git
+git push -u origin main</code></pre>
+
+<h3>6.2 สมัคร Vercel และ Deploy</h3>
+<ol class="steps">
+  <li><div>ไปที่ <strong>https://vercel.com</strong> → Sign Up with GitHub</div></li>
+  <li><div>กด <strong>Add New Project</strong> → เลือก Repository <code>my-dashboard</code></div></li>
+  <li><div>กด <strong>Deploy</strong> (Vercel ตั้งค่าอัตโนมัติ) → รอ 2-3 นาที</div></li>
+  <li><div>ได้ URL: <strong>my-dashboard.vercel.app</strong> ✅</div></li>
+</ol>
+<div class="callout tip"><span class="callout-icon">🚀</span><div class="callout-body"><strong>Auto Deploy!</strong> ทุกครั้งที่ Push โค้ด Vercel จะ Deploy ให้อัตโนมัติ ภายใน 1-2 นาที</div></div>
+<h3>6.3 Workflow หลัง Deploy</h3>
+<pre><code>git add .
+git commit -m "✨ เพิ่ม Chart ยอดขาย"
+git push
+# → Vercel Deploy อัตโนมัติ!</code></pre>
+</div>
+
+<!-- SECTION 7 -->
+<div class="sb">
+<h2><span class="sn">7</span> 🤖 ติดตั้งและใช้งาน Antigravity AI</h2>
+<div class="callout info"><span class="callout-icon">🤖</span><div class="callout-body"><strong>Antigravity</strong> คือ AI Coding Assistant พัฒนาโดย <strong>Google DeepMind</strong> — เขียนโค้ด TypeScript/React, สร้าง Chart, แก้ Bug, Push GitHub, Deploy Vercel ได้ด้วยการพิมพ์คำสั่งภาษาไทยหรืออังกฤษ</div></div>
+<div class="grid-2">
+  <div class="card"><div class="card-title">🧠 ทำอะไรได้บ้าง</div><p>เขียนโค้ด, สร้าง Chart, แก้ Bug, รัน Terminal, Push GitHub, อ่าน Excel, Deploy Vercel</p></div>
+  <div class="card"><div class="card-title">🌐 ภาษาที่รองรับ</div><p>สั่งงานได้ทั้งภาษาไทยและอังกฤษ — AI เข้าใจทั้งสองภาษาได้ดีมาก</p></div>
+</div>
+
+<h3>7.1 ติดตั้ง Extension ใน VS Code</h3>
+<ol class="steps">
+  <li><div>เปิด VS Code → กด <code>Ctrl + Shift + X</code></div></li>
+  <li><div>ค้นหา: <strong>Antigravity</strong> → กด <strong>Install</strong></div></li>
+  <li><div>Reload VS Code — หรือไปที่ <strong>https://antigravity.dev</strong></div></li>
+</ol>
+<div class="callout tip"><span class="callout-icon">✅</span><div class="callout-body">ติดตั้งสำเร็จ: Icon Antigravity จะปรากฏที่ Sidebar ซ้ายของ VS Code</div></div>
+
+<h3>7.2 Sign In ครั้งแรก</h3>
+<ol class="steps">
+  <li><div>คลิก Icon <strong>Antigravity</strong> ที่ Sidebar ซ้าย</div></li>
+  <li><div>กด <strong>Sign In with Google</strong> → ล็อกอินด้วย Google Account</div></li>
+  <li><div>อนุญาตสิทธิ์ → กลับมา VS Code อัตโนมัติ → เห็น Chat Panel = พร้อมใช้ ✅</div></li>
+</ol>
+
+<h3>7.3 ทำความรู้จัก UI</h3>
+<table>
+  <thead><tr><th>ส่วน</th><th>หน้าที่</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Chat Input</strong></td><td>พิมพ์คำสั่งหรือคำถาม (ไทย/อังกฤษ)</td></tr>
+    <tr><td><strong>Response Area</strong></td><td>แสดงโค้ดและคำอธิบายจาก AI</td></tr>
+    <tr><td><strong>Apply Button</strong></td><td>กดเพื่อนำโค้ดไปใส่ไฟล์จริงอัตโนมัติ</td></tr>
+    <tr><td><strong>Approve Command</strong></td><td>อนุมัติ Terminal command ที่ AI ต้องการรัน</td></tr>
+    <tr><td><strong>Artifact Panel</strong></td><td>ดูเอกสาร/แผนที่ AI สร้างไว้</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="sb">
+<h3>7.4 เชื่อมต่อ Antigravity กับโปรเจกต์</h3>
+<div class="callout warn"><span class="callout-icon">⚠️</span><div class="callout-body"><strong>สำคัญ:</strong> ต้องเปิด <strong>โฟลเดอร์โปรเจกต์</strong> (ไม่ใช่แค่ไฟล์เดี่ยว) เพื่อให้ Antigravity อ่านโครงสร้างทั้งหมดได้</div></div>
+<pre><code>code C:\path\to\my-dashboard</code></pre>
+<p><strong>ครั้งแรก — บอก Context ให้ AI รู้จักโปรเจกต์:</strong></p>
+<pre><code>พิมพ์ใน Chat:
+"นี่คือโปรเจกต์ Dashboard สร้างด้วย Next.js 16 + TypeScript + Tailwind + Recharts
+โปรเจกต์อยู่ที่ c:\0_Dashboad
+ช่วยดูโครงสร้างไฟล์ทั้งหมดก่อนได้เลย"</code></pre>
+
+<h3>7.5 วิธีสั่งงาน Antigravity แบบต่างๆ</h3>
+<h4>① Quick Commands — สั้น ตรงประเด็น</h4>
+<pre><code>"เพิ่ม Loading spinner ที่หน้า Dashboard"
+"แก้ Bug ที่ไฟล์ src/components/KPICard.tsx"
+"Push โค้ดขึ้น GitHub commit: แก้ Bug"</code></pre>
+<h4>② Detailed Commands — ละเอียด</h4>
+<pre><code>"สร้าง SalesChart.tsx ใน src/components/charts/
+- ใช้ Recharts BarChart
+- สี actual: #3b82f6, target: #e2e8f0
+- Tooltip แสดง format: 1,234,567 บาท
+- Responsive ทุกหน้าจอ"</code></pre>
+<h4>③ Debug Commands</h4>
+<pre><code>"ดู Error ต่อไปนี้แล้วแก้ให้:
+[วาง Error message]
+ไฟล์ที่มีปัญหา: src/components/Chart.tsx"</code></pre>
+
+<h3>7.6 Tips การใช้งานให้มีประสิทธิภาพ</h3>
+<table>
+  <thead><tr><th>❌ อย่าทำแบบนี้</th><th>✅ ทำแบบนี้แทน</th></tr></thead>
+  <tbody>
+    <tr><td>"แก้ Chart ให้ดีขึ้น"</td><td>"แก้ BarChart ใน SalesChart.tsx — ปัญหา: แท่งทับกัน ต้องการห่าง 8px"</td></tr>
+    <tr><td>ไม่บอก Library ที่ใช้</td><td>"ใช้ Recharts + TypeScript + Tailwind v4"</td></tr>
+    <tr><td>สั่งหลายเรื่องพร้อมกัน</td><td>สั่งทีละเรื่อง รอผลก่อนแล้วค่อยสั่งต่อ</td></tr>
+    <tr><td>ไม่ Approve command</td><td>กด Approve ทุกครั้งที่ AI ขอ (จะติดค้างถ้าไม่กด)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="sb">
+<h3>7.7 Workflow ทีละขั้นตอน — ตัวอย่าง: สร้าง KPI Card</h3>
+<div class="workflow">
+  <div class="wf-step"><div class="wf-num">1</div><div class="wf-body"><div class="wf-title">เปิดโปรเจกต์ใน VS Code</div><div class="wf-desc">code C:\0_Dashboad</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">2</div><div class="wf-body"><div class="wf-title">เปิด Antigravity Chat</div><div class="wf-desc">คลิก Icon ที่ Sidebar ซ้าย</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">3</div><div class="wf-body"><div class="wf-title">พิมพ์ Super Prompt</div><div class="wf-desc">"สร้าง KPI Card ใน src/components/dashboard/KPICard.tsx ..."</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">4</div><div class="wf-body"><div class="wf-title">AI ส่งโค้ดมา → กด [Apply]</div><div class="wf-desc">โค้ดถูก Insert เข้าไฟล์อัตโนมัติ</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">5</div><div class="wf-body"><div class="wf-title">AI ขอรัน Terminal → กด [Approve]</div><div class="wf-desc">npm run dev — ต้องกด Approve ทุกครั้ง</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">6</div><div class="wf-body"><div class="wf-title">ดูผลลัพธ์ที่ Browser</div><div class="wf-desc">http://localhost:3000</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">7</div><div class="wf-body"><div class="wf-title">แก้ไขเพิ่มเติม (ถ้าต้องการ)</div><div class="wf-desc">"ดีแล้ว แต่ขอปรับขนาด Font ตัวเลขให้ใหญ่ขึ้น"</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">8</div><div class="wf-body"><div class="wf-title">Push → Auto Deploy Vercel</div><div class="wf-desc">"Push โค้ดขึ้น GitHub commit: ✨ เพิ่ม KPI Card"</div></div></div>
+</div>
+
+<h3>7.8 คำสั่งพิเศษที่ใช้บ่อย</h3>
+<table>
+  <thead><tr><th>งาน</th><th>พิมพ์ใน Antigravity Chat</th></tr></thead>
+  <tbody>
+    <tr><td><strong>วางแผน/Checklist</strong></td><td>"วางแผนการสร้าง Dashboard สำหรับ [แผนก] แสดงเป็น Checklist"</td></tr>
+    <tr><td><strong>ตรวจสอบโค้ด</strong></td><td>"ดูโค้ดทั้งโปรเจกต์ บอกว่ามีปัญหา Performance/TypeScript/Security อะไร"</td></tr>
+    <tr><td><strong>Deploy</strong></td><td>"Build และ Deploy โปรเจกต์นี้ขึ้น Vercel แล้วบอก URL"</td></tr>
+    <tr><td><strong>อ่าน Excel</strong></td><td>"อ่าน Dashboard_Template.xlsx แปลง Sheet 'Sales' เป็น TypeScript array"</td></tr>
+    <tr><td><strong>Export PDF</strong></td><td>"เพิ่มปุ่ม Export PDF ที่ Header ใช้ jspdf + html2canvas"</td></tr>
+  </tbody>
+</table>
+
+<h3>7.9 ตั้งค่า AGENTS.md — AI จำโปรเจกต์ตลอดเวลา</h3>
+<p>สร้างไฟล์ <code>.agents/AGENTS.md</code> — AI จะอ่านอัตโนมัติทุกครั้งที่เปิดโปรเจกต์:</p>
+<pre><code># Project Context for Antigravity AI
+
+## Tech Stack
+- Next.js 16 App Router | React 19 | TypeScript strict
+- Tailwind CSS v4 | Recharts 3 | shadcn/ui | lucide-react
+
+## Project Rules
+- ข้อมูลทั้งหมดอยู่ใน src/data/ | Component ใน src/components/
+- ห้ามใช้ `any` type | ทุก Chart ต้องใช้ ResponsiveContainer
+
+## Color Palette
+- Primary: #3b82f6 | Success: #10b981 | Warning: #f59e0b
+- Danger: #ef4444 | Background: #0f172a</code></pre>
+</div>
+
+<!-- SECTION 8 -->
+<div class="sb">
+<h2><span class="sn">8</span> Super Prompt Templates</h2>
+<div class="callout info"><span class="callout-icon">🎯</span><div class="callout-body"><strong>โครงสร้าง Super Prompt ที่ดี:</strong> [CONTEXT] + [STACK] + [TASK] + [STYLE] + [DATA] + [CONSTRAINT]</div></div>
+
+<h3>Template 1: สร้าง Dashboard ใหม่จากศูนย์</h3>
+<pre><code>You are an expert Next.js developer building a professional dashboard.
+
+[CONTEXT] Project: [ชื่อ] Dashboard สำหรับ [แผนก]
+[STACK] Next.js 16 | TypeScript | Tailwind v4 | Recharts | shadcn/ui
+[TASK]
+1. Header แสดงชื่อ + วันที่ปัจจุบัน
+2. KPI Cards 4 ใบ: [Metric1], [Metric2], [Metric3], [Metric4]
+3. Bar Chart รายเดือน | Line Chart vs Target
+4. Table Top 10 รายการ
+[DESIGN] Dark navy #0f172a + Blue #3b82f6 | Glass morphism cards
+[CONSTRAINT] ห้ามใช้ any type | ทุก Chart ต้อง Responsive</code></pre>
+
+<h3>Template 2: เพิ่ม Chart ใหม่</h3>
+<pre><code>[CONTEXT] Dashboard Next.js 16 + TypeScript + Recharts + Tailwind
+[TASK] สร้าง [ชื่อ Chart] ใน src/components/charts/[Name].tsx
+- มี Tooltip, Legend, ResponsiveContainer
+- ข้อมูล: { month: 'Jan', actual: 95, target: 100 }
+[STYLE] primary #3b82f6 | secondary #10b981 | height: 300px</code></pre>
+
+<h3>Template 3: แก้ Bug</h3>
+<pre><code>[CONTEXT] Next.js 16 Dashboard — Error ที่ [ไฟล์]
+[ERROR] [วาง Error message ทั้งหมด]
+[CODE] [วางโค้ดที่มีปัญหา]
+[TASK] วิเคราะห์ + แก้ไข + อธิบายสาเหตุ + แนะนำป้องกัน</code></pre>
+
+<h3>Template 4: Export PDF</h3>
+<pre><code>[TASK] เพิ่มปุ่ม Export Dropdown ที่ Header:
+1. Export PDF → jspdf + html2canvas, A4 Landscape, scale: 2
+2. Export PNG → ความละเอียดสูง
+3. Print → window.print() + print CSS
+File name: dashboard-[date]-[time].pdf | แสดง Loading ระหว่าง Export</code></pre>
+
+<h3>Template 5: Filter/Search Real-time</h3>
+<pre><code>[TASK] เพิ่มระบบ Filter:
+1. Filter ตามเวลา: Week/Month/Quarter/Year
+2. Filter ตาม [Category/Department]
+3. Search bar + ปุ่ม Reset + แสดง Active filters เป็น Badge
+4. URL อัปเดตตาม Filter: ?period=Q3&dept=sales
+ใช้ React useState + useSearchParams (ไม่ต้องใช้ Redux)</code></pre>
+</div>
+
+<!-- SECTION 9 -->
+<div class="sb">
+<h2><span class="sn">9</span> Workflow การทำงานประจำวัน</h2>
+<h3>🌅 Daily Workflow</h3>
+<div class="workflow">
+  <div class="wf-step"><div class="wf-num">1</div><div class="wf-body"><div class="wf-title">Pull โค้ดล่าสุด</div><div class="wf-desc">git pull origin main</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">2</div><div class="wf-body"><div class="wf-title">รัน Dev Server</div><div class="wf-desc">npm run dev → http://localhost:3000</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">3</div><div class="wf-body"><div class="wf-title">แก้ไขโค้ดด้วย Antigravity</div><div class="wf-desc">พิมพ์คำสั่ง → Apply → ดูผลใน Browser</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">4</div><div class="wf-body"><div class="wf-title">ทดสอบให้ครบ</div><div class="wf-desc">ทุก Feature | Mobile view | Console ไม่มี Error</div></div></div>
+  <div class="wf-arrow">↓</div>
+  <div class="wf-step"><div class="wf-num">5</div><div class="wf-body"><div class="wf-title">Push → Auto Deploy</div><div class="wf-desc">git add . | git commit -m "..." | git push → Vercel Deploy!</div></div></div>
+</div>
+
+<h3>📝 Convention การตั้งชื่อ Commit</h3>
+<table>
+  <thead><tr><th>Prefix</th><th>ใช้เมื่อ</th><th>ตัวอย่าง</th></tr></thead>
+  <tbody>
+    <tr><td><code>✨ feat:</code></td><td>เพิ่มฟีเจอร์ใหม่</td><td>"✨ เพิ่ม KPI Card สำหรับ Weekly Sales"</td></tr>
+    <tr><td><code>🐛 fix:</code></td><td>แก้ Bug</td><td>"🐛 แก้ Chart ไม่แสดงบน Mobile"</td></tr>
+    <tr><td><code>💄 style:</code></td><td>แก้ UI/CSS</td><td>"💄 ปรับสี Header เป็น Dark Blue"</td></tr>
+    <tr><td><code>♻️ refactor:</code></td><td>ปรับโครงสร้างโค้ด</td><td>"♻️ แยก Chart เป็น Custom Hook"</td></tr>
+    <tr><td><code>📝 docs:</code></td><td>แก้ Documentation</td><td>"📝 อัปเดต README"</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- SECTION 10 -->
+<div class="sb">
+<h2><span class="sn">10</span> Troubleshooting ปัญหาที่พบบ่อย</h2>
+<div class="step-box"><h4>❌ node_modules หาย / npm run dev Error</h4><p>Error: <code>ENOENT: no such file or directory</code></p><pre><code>npm install
+npm run dev</code></pre></div>
+<div class="step-box"><h4>❌ Port 3000 ถูกใช้งานอยู่</h4><p>Error: <code>EADDRINUSE :::3000</code></p><pre><code>npm run dev -- -p 3001</code></pre></div>
+<div class="step-box"><h4>❌ TypeScript Error</h4><p>Error: <code>Type 'string' is not assignable to type 'number'</code><br>แก้ไข: ใช้ <code>Number(value)</code> หรือ <code>parseInt(value)</code></p></div>
+<div class="step-box"><h4>❌ git push Authentication Error</h4><p>GitHub → Settings → Developer settings → Personal access tokens → Generate token → ใช้ Token แทน Password</p></div>
+<div class="step-box"><h4>❌ Vercel Build Failed</h4><p>Vercel Dashboard → Project → Deployments → คลิก Failed → ดู Build Logs → แก้โค้ด → Push ใหม่</p></div>
+<div class="step-box"><h4>❌ Chart ไม่แสดงผล</h4><pre><code>// ✅ ต้องมี ResponsiveContainer + parent ที่มี height:
+&lt;div style={{ width: '100%', height: 300 }}&gt;
+  &lt;ResponsiveContainer width="100%" height="100%"&gt;
+    &lt;BarChart data={data}&gt;...&lt;/BarChart&gt;
+  &lt;/ResponsiveContainer&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- SECTION 11 -->
+<div class="sb">
+<h2><span class="sn">11</span> Cheat Sheet คำสั่งสำคัญ</h2>
+<div class="grid-2">
+  <div>
+    <h3>npm / Node.js</h3>
+    <table>
+      <thead><tr><th>คำสั่ง</th><th>ทำอะไร</th></tr></thead>
+      <tbody>
+        <tr><td><code>npm install</code></td><td>ติดตั้ง packages ทั้งหมด</td></tr>
+        <tr><td><code>npm install [pkg]</code></td><td>เพิ่ม package ใหม่</td></tr>
+        <tr><td><code>npm run dev</code></td><td>รัน Dev server</td></tr>
+        <tr><td><code>npm run build</code></td><td>Build Production</td></tr>
+        <tr><td><code>npm run lint</code></td><td>ตรวจสอบโค้ด</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Git</h3>
+    <table>
+      <thead><tr><th>คำสั่ง</th><th>ทำอะไร</th></tr></thead>
+      <tbody>
+        <tr><td><code>git status</code></td><td>ดูสถานะไฟล์</td></tr>
+        <tr><td><code>git add .</code></td><td>เพิ่มไฟล์ทั้งหมด</td></tr>
+        <tr><td><code>git commit -m ""</code></td><td>บันทึก Commit</td></tr>
+        <tr><td><code>git push</code></td><td>Push ขึ้น GitHub</td></tr>
+        <tr><td><code>git pull</code></td><td>ดึงโค้ดล่าสุด</td></tr>
+        <tr><td><code>git log --oneline</code></td><td>ดูประวัติ Commit</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>VS Code Shortcuts</h3>
+<table>
+  <thead><tr><th>Shortcut</th><th>ทำอะไร</th></tr></thead>
+  <tbody>
+    <tr><td><code>Ctrl + `</code></td><td>เปิด Terminal</td></tr>
+    <tr><td><code>Ctrl + Shift + P</code></td><td>Command Palette</td></tr>
+    <tr><td><code>Ctrl + P</code></td><td>ค้นหาไฟล์</td></tr>
+    <tr><td><code>Ctrl + Shift + F</code></td><td>ค้นหาใน Project ทั้งหมด</td></tr>
+    <tr><td><code>Alt + Shift + F</code></td><td>Format Document</td></tr>
+    <tr><td><code>Ctrl + /</code></td><td>Comment/Uncomment</td></tr>
+    <tr><td><code>Ctrl + Shift + X</code></td><td>เปิด Extensions</td></tr>
+  </tbody>
+</table>
+
+<h3>Links สำคัญ</h3>
+<table>
+  <thead><tr><th>เครื่องมือ</th><th>URL</th></tr></thead>
+  <tbody>
+    <tr><td>Node.js</td><td>https://nodejs.org</td></tr>
+    <tr><td>VS Code</td><td>https://code.visualstudio.com</td></tr>
+    <tr><td>Git</td><td>https://git-scm.com</td></tr>
+    <tr><td>GitHub</td><td>https://github.com</td></tr>
+    <tr><td>Vercel</td><td>https://vercel.com</td></tr>
+    <tr><td><strong>Antigravity AI</strong></td><td><strong>https://antigravity.dev</strong></td></tr>
+    <tr><td>Next.js Docs</td><td>https://nextjs.org/docs</td></tr>
+    <tr><td>Recharts</td><td>https://recharts.org</td></tr>
+    <tr><td>shadcn/ui</td><td>https://ui.shadcn.com</td></tr>
+    <tr><td>Tailwind CSS</td><td>https://tailwindcss.com</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<p style="text-align:center;color:#64748b;font-size:12px;margin-top:20px;">
+  📄 คู่มือสร้าง Dashboard v2.0 · จัดทำโดย Antigravity AI (Google DeepMind) · สิงหาคม 2026<br>
+  สามารถนำไปใช้งานและแจกจ่ายให้เพื่อนร่วมงานได้เลย
+</p>
+</div>
+
+</body>
+</html>

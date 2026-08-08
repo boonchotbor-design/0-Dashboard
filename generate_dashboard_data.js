@@ -233,7 +233,47 @@ const output = {
     { week: 'W25', value: 1150000 },
     { week: 'W26', value: totalRemain },
   ],
+  teamWeeklyPerformance: {},
 };
+
+// ── Team Weekly Performance ────────────────────────────────────────────────
+// Group by SUBCON (col 14) and WK NUM (col 19)
+dataRows.forEach(r => {
+  const team = r[14];
+  const wkStr = r[19];
+  const typeSub = r[16];
+  
+  if (!team || team === 'CANCEL' || typeSub === 'CANCEL') return;
+  if (!wkStr || wkStr === 0) return;
+  
+  // Format week string (e.g. '26WK30' -> 'W30')
+  const wkMatch = String(wkStr).match(/WK(\d+)/);
+  const weekLabel = wkMatch ? `W${wkMatch[1]}` : String(wkStr);
+  
+  if (!output.teamWeeklyPerformance[team]) {
+    output.teamWeeklyPerformance[team] = {};
+  }
+  if (!output.teamWeeklyPerformance[team][weekLabel]) {
+    output.teamWeeklyPerformance[team][weekLabel] = 0;
+  }
+  output.teamWeeklyPerformance[team][weekLabel]++;
+});
+
+// Format for UI consumption (array of objects)
+// { week: 'W30', TeamA: 5, TeamB: 10, ... }
+const weeklyMap = {};
+Object.keys(output.teamWeeklyPerformance).forEach(team => {
+  Object.entries(output.teamWeeklyPerformance[team]).forEach(([wk, count]) => {
+    if (!weeklyMap[wk]) weeklyMap[wk] = { week: wk };
+    weeklyMap[wk][team] = count;
+  });
+});
+
+output.teamWeeklyData = Object.values(weeklyMap).sort((a, b) => {
+  const wA = parseInt(a.week.replace('W', '')) || 0;
+  const wB = parseInt(b.week.replace('W', '')) || 0;
+  return wA - wB;
+});
 
 // Write new dashboard-data.json
 require('fs').writeFileSync('src/data/dashboard-data.json', JSON.stringify(output, null, 2), 'utf8');
