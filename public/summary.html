@@ -1312,8 +1312,8 @@
         <!-- Slide 21: Acceptance Target Plan & Actual JULY -->
         <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)">
           <div style="font-size:.62rem;font-weight:700;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">Slide 21 — July Target</div>
-          <div class="fin-row"><span class="fin-label">Acceptance Target Plan JULY</span><span class="fin-val amber" id="dtlSlide21Plan">-</span></div>
-          <div class="fin-row"><span class="fin-label">Acceptance Target Actual JULY</span><span class="fin-val green" id="dtlSlide21Actual">-</span></div>
+          <div class="fin-row"><span class="fin-label" id="lblSlide21Plan">Acceptance Target Plan JULY</span><span class="fin-val amber" id="dtlSlide21Plan">-</span></div>
+          <div class="fin-row"><span class="fin-label" id="lblSlide21Actual">Acceptance Target Actual JULY</span><span class="fin-val green" id="dtlSlide21Actual">-</span></div>
         </div>
       </div>
 
@@ -2519,14 +2519,18 @@
 
             const wkSlotIds = ['dtlActWk1','dtlActWk2','dtlActWk3','dtlActWk4','dtlActWk5'];
             const lblSlotIds = ['lblActWk1','lblActWk2','lblActWk3','lblActWk4','lblActWk5'];
-            const startWk = reportWeek - 4; // Dynamic 5 weeks ending at reportWeek
+            let displayWeeks = actWkRowsAll.slice(0, 5); // Take the available weeks
             for (let i = 0; i < 5; i++) {
-              const targetWk = startWk + i;
-              const row = actWkRowsAll.find(r => r.wk === targetWk);
-              setLbl(lblSlotIds[i], `WK${targetWk}`);
-              if (row && row.val !== null && row.val !== '' && row.val !== undefined) {
-                setUI(wkSlotIds[i], fmtBaht(Number(row.val)));
+              if (displayWeeks[i]) {
+                const targetWk = displayWeeks[i].wk;
+                setLbl(lblSlotIds[i], `WK${targetWk}`);
+                if (displayWeeks[i].val !== null && displayWeeks[i].val !== '' && displayWeeks[i].val !== undefined) {
+                  setUI(wkSlotIds[i], fmtBaht(Number(displayWeeks[i].val)));
+                } else {
+                  setUI(wkSlotIds[i], '-');
+                }
               } else {
+                setLbl(lblSlotIds[i], `-`);
                 setUI(wkSlotIds[i], '-');
               }
             }
@@ -2534,9 +2538,9 @@
             // TOTAL — sum of the 5 dynamic weeks
             let dynamicTotalSum = 0;
             let hasDynamicData = false;
-            actWkRowsAll.filter(row => row.wk >= startWk && row.wk <= reportWeek).forEach(row => {
+            displayWeeks.forEach(row => {
               const v = Number(row.val);
-              if (!isNaN(v) && row.val !== '' && row.val !== null && row.val !== undefined) {
+              if (!isNaN(v) && row.val !== null && row.val !== undefined) {
                 dynamicTotalSum += v;
                 hasDynamicData = true;
               }
@@ -2545,25 +2549,49 @@
             if (julyLabelEl) julyLabelEl.textContent = '5-Week Total';
             setUI('dtlActJUNE', hasDynamicData ? fmtBaht(dynamicTotalSum) : '-');
 
-            // Slide 21 — Acceptance Target Plan & Actual JULY
-            // Note: Excel has typo "Acceptane" (missing 'c') so use acceptanc?e to match both
-            const slide21PlanRow = p4.find(r => /acceptanc?e\s+target\s+plan\s+july/i.test(String(r['Metric'])));
-            const slide21ActualRow = p4.find(r => /acceptanc?e\s+target\s+actual\s+july/i.test(String(r['Metric'])));
+            // Slide 21 — Acceptance Target Plan & Actual
+            const slide21PlanRow = p4.find(r => /acceptanc?e\s+target\s+plan/i.test(String(r['Metric'])));
+            const slide21ActualRow = p4.find(r => /acceptanc?e\s+target\s+actual/i.test(String(r['Metric'])));
             const vSlide21Plan = slide21PlanRow ? getV(slide21PlanRow) : null;
             const vSlide21Actual = slide21ActualRow ? getV(slide21ActualRow) : null;
             setUI('dtlSlide21Plan', fmtB(vSlide21Plan));
             setUI('dtlSlide21Actual', fmtB(vSlide21Actual));
+            if(slide21PlanRow) {
+                const title = String(slide21PlanRow['Metric'] || '').trim();
+                const monthMatch = title.match(/plan\s+([A-Za-z]+)/i);
+                if(monthMatch) setLbl('lblSlide21Plan', `Acceptance Target Plan ${monthMatch[1].toUpperCase()}`);
+            }
+            if(slide21ActualRow) {
+                const title = String(slide21ActualRow['Metric'] || '').trim();
+                const monthMatch = title.match(/actual\s+([A-Za-z]+)/i);
+                if(monthMatch) setLbl('lblSlide21Actual', `Acceptance Target Actual ${monthMatch[1].toUpperCase()}`);
+            }
 
             // HUAWEI (JAN-JULY) and TRUE-TUC (JAN-JULY)
             const hRow = p4.find(r => /huawei/i.test(String(r['Metric']).trim()) || /huawei/i.test(String(r['Slide Title'] || '').trim()));
             const tRow = p4.find(r => (/true-tuc/i.test(String(r['Metric']).trim()) || /true-tuc/i.test(String(r['Slide Title'] || '').trim())));
             const vActHuawei = hRow ? getV(hRow) : null;
             const vActTrue = tRow ? getV(tRow) : null;
-            // Update labels dynamically to JAN-JULY
-            const huaweiLblEl = document.querySelector('[id="dtlActHuawei"]')?.previousElementSibling;
-            if (huaweiLblEl) huaweiLblEl.textContent = 'HUAWEI (JAN-JULY)';
-            const trueLblEl = document.querySelector('[id="dtlActTrueTuc"]')?.previousElementSibling;
-            if (trueLblEl) trueLblEl.textContent = 'TRUE-TUC (JAN-JULY)';
+            setUI('dtlActHuawei', fmtB(vActHuawei));
+            setUI('dtlActTrueTuc', fmtB(vActTrue));
+
+            // Update labels dynamically
+            if(hRow) {
+                const title = String(hRow['Metric'] || '').trim();
+                const m = title.match(/\((JAN-[A-Z]+)\)/i);
+                if(m) {
+                    const huaweiLblEl = document.querySelector('[id="dtlActHuawei"]')?.previousElementSibling || document.getElementById('lblActHuawei');
+                    if(huaweiLblEl) huaweiLblEl.textContent = `HUAWEI (${m[1].toUpperCase()})`;
+                }
+            }
+            if(tRow) {
+                const title = String(tRow['Metric'] || '').trim();
+                const m = title.match(/\((JAN-[A-Z]+)\)/i);
+                if(m) {
+                    const trueLblEl = document.querySelector('[id="dtlActTrueTuc"]')?.previousElementSibling || document.getElementById('lblActTrueTuc');
+                    if(trueLblEl) trueLblEl.textContent = `TRUE-TUC (${m[1].toUpperCase()})`;
+                }
+            }
             setUI('dtlActHuawei', fmtB(vActHuawei));
             setUI('dtlActTrueTuc', fmtB(vActTrue));
 
@@ -2845,6 +2873,8 @@
                 // Fallback: use column index 57 (BF) if no status column found by name
                 const statusColFinal = statusIdx > -1 ? statusIdx : (ac2StatusIdx > -1 ? ac2StatusIdx : 57);
                 const typeIdx = headers.findIndex(h => /owner|type/i.test(String(h)));
+                const workTypeIdx = headers.findIndex(h => /work\s*type/i.test(String(h)));
+                let workTypeStats = {};
 
                 for (let i = headerRowIdx + 1; i < s26Rows.length; i++) {
                   const row = s26Rows[i];
@@ -2897,7 +2927,61 @@
                     if (typeStr.includes('HAE')) countHae++;
                     else if (typeStr.includes('TME')) countTme++;
                   }
+
+                  // Collect stats for Milestone Work Types
+                  if (workTypeIdx > -1) {
+                    const wt = String(row[workTypeIdx] || '').toUpperCase().trim();
+                    if (wt === 'MBB' || wt === 'IPRAN') {
+                      if(!workTypeStats[wt]) workTypeStats[wt] = { count: 0, m1Sum: 0, m1Count: 0, m1Min: Infinity, m1Max: -Infinity, m2Sum: 0, m2Count: 0, m2Min: Infinity, m2Max: -Infinity };
+                      workTypeStats[wt].count++;
+                      if (ms1AgingIdx > -1 && row[ms1AgingIdx] !== undefined && String(row[ms1AgingIdx]).trim() !== '') {
+                        const val = Number(String(row[ms1AgingIdx]).replace(/[^0-9.-]/g, ''));
+                        if (!isNaN(val)) {
+                          workTypeStats[wt].m1Sum += val;
+                          workTypeStats[wt].m1Count++;
+                          if (val < workTypeStats[wt].m1Min) workTypeStats[wt].m1Min = val;
+                          if (val > workTypeStats[wt].m1Max) workTypeStats[wt].m1Max = val;
+                        }
+                      }
+                      if (ms2AgingIdx > -1 && row[ms2AgingIdx] !== undefined && String(row[ms2AgingIdx]).trim() !== '') {
+                        const val = Number(String(row[ms2AgingIdx]).replace(/[^0-9.-]/g, ''));
+                        if (!isNaN(val)) {
+                          workTypeStats[wt].m2Sum += val;
+                          workTypeStats[wt].m2Count++;
+                          if (val < workTypeStats[wt].m2Min) workTypeStats[wt].m2Min = val;
+                          if (val > workTypeStats[wt].m2Max) workTypeStats[wt].m2Max = val;
+                        }
+                      }
+                    }
+                  }
                 }
+              }
+            }
+
+            // Update Milestone Work Type Table
+            if (Object.keys(workTypeStats).length > 0) {
+              const tbody = document.getElementById('milestoneWorkTypeBody');
+              if (tbody) {
+                let html = '';
+                const fmtMM = v => (v === Infinity || v === -Infinity) ? '-' : v.toFixed(2);
+                ['MBB', 'IPRAN'].forEach(wt => {
+                  const s = workTypeStats[wt];
+                  if (s) {
+                    const m1Avg = s.m1Count > 0 ? (s.m1Sum / s.m1Count).toFixed(2) : '-';
+                    const m2Avg = s.m2Count > 0 ? (s.m2Sum / s.m2Count).toFixed(2) : '-';
+                    html += `<tr>
+                      <td style="color:var(--text-primary);font-weight:600">${wt}</td>
+                      <td style="text-align:center">${s.count}</td>
+                      <td style="text-align:center;color:#93c5fd">${m1Avg}</td>
+                      <td style="text-align:center;color:#bfdbfe">${fmtMM(s.m1Min)}</td>
+                      <td style="text-align:center;color:#bfdbfe">${fmtMM(s.m1Max)}</td>
+                      <td style="text-align:center;color:#6ee7b7">${m2Avg}</td>
+                      <td style="text-align:center;color:#a7f3d0">${fmtMM(s.m2Min)}</td>
+                      <td style="text-align:center;color:#a7f3d0">${fmtMM(s.m2Max)}</td>
+                    </tr>`;
+                  }
+                });
+                if (html) tbody.innerHTML = html;
               }
             }
 
