@@ -2837,6 +2837,7 @@
             let s26Rows = [], s26HeaderRow = -1;
             let s26AC1AmtIdx=-1, s26AC2AmtIdx=-1, s26AC1AgingIdx=-1, s26AC2AgingIdx=-1;
             let s26DocOwnerIdx=-1, s26PEOwnerIdx=-1, s26MS1AgingIdx=-1, s26MS2AgingIdx=-1;
+            let workTypeStats = {};
 
             if (s26Name) {
               s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
@@ -2874,7 +2875,6 @@
                 const statusColFinal = statusIdx > -1 ? statusIdx : (ac2StatusIdx > -1 ? ac2StatusIdx : 57);
                 const typeIdx = headers.findIndex(h => /owner|type/i.test(String(h)));
                 const workTypeIdx = headers.findIndex(h => /work\s*type/i.test(String(h)));
-                let workTypeStats = {};
 
                 for (let i = headerRowIdx + 1; i < s26Rows.length; i++) {
                   const row = s26Rows[i];
