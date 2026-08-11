@@ -2,10 +2,10 @@
   "reportWeek": 26,
   "projectYear": 2026,
   "performance": {
-    "haeM1Avg": 3.46,
-    "tmeM1Avg": 3.52,
-    "overallM1Avg": 3.47,
-    "overallM2Avg": 11.3,
+    "haeM1Avg": 4.03,
+    "tmeM1Avg": 4.32,
+    "overallM1Avg": 4.08,
+    "overallM2Avg": 10.84,
     "smartQC": {
       "passRate": 95,
       "totalInspected": 142
@@ -13,105 +13,105 @@
   },
   "projects": {
     "HAE": {
-      "sites": 170,
-      "income": 3400846,
-      "ar": 1214102.2,
-      "ap": 157755,
-      "remain": 1645813.9
+      "sites": 202,
+      "income": 4021843,
+      "ar": 1709004.2,
+      "ap": 412165,
+      "remain": 1885793
     },
     "TME": {
       "sites": 87,
       "income": 473522.4,
-      "ar": 185444.32,
-      "ap": 117959.5,
-      "remain": 240154.1
+      "ar": 207239.86,
+      "ap": 128463.5,
+      "remain": 102067.2
     }
   },
   "peAging": {
     "adisak": {
       "name": "Adisak Chanmao",
-      "sites": 184,
-      "m1": 3.34,
-      "m2": 11.76,
-      "hae_mbb": 108,
+      "sites": 233,
+      "m1": 3.91,
+      "m2": 11.18,
+      "hae_mbb": 157,
       "hae_iptan": 0,
       "tme_mbb": 1,
       "tme_iptan": 75
     },
     "palagon": {
       "name": "Palagon Prommueangma",
-      "sites": 19,
-      "m1": 4.43,
-      "m2": 6.5,
+      "sites": 21,
+      "m1": 5.56,
+      "m2": 7.39,
       "hae_mbb": 11,
       "hae_iptan": 0,
-      "tme_mbb": 8,
-      "tme_iptan": 0
+      "tme_mbb": 9,
+      "tme_iptan": 1
     }
   },
   "docOwners": {
     "hathairat": {
       "name": "น.ส. หทัยรัตน์ สิงห์แก้ว",
-      "sites": 52,
-      "ac1": 848813.9,
-      "ac2": 195255.6,
-      "avgAging1": 14.98,
-      "avgAging2": 32.19
+      "sites": 73,
+      "ac1": 960469.1,
+      "ac2": 209358.3,
+      "avgAging1": 13.63,
+      "avgAging2": 31.58
     },
     "sermsiri": {
       "name": "Sermsiri Bampentam",
       "sites": 50,
       "ac1": 113164,
-      "ac2": 22014.2,
+      "ac2": 22408.2,
       "avgAging1": 15.46,
-      "avgAging2": 143.1
+      "avgAging2": 142.57
     },
     "apichart": {
       "name": "Apichart Kampuang",
       "sites": 52,
-      "ac1": 542969.7,
-      "ac2": 107304.9,
-      "avgAging1": 14.04,
-      "avgAging2": 27.03
+      "ac1": 680831.4,
+      "ac2": 194224.2,
+      "avgAging1": 14.15,
+      "avgAging2": 26.8
     }
   },
   "workTypes": {
     "MBB": {
-      "sites": 179,
-      "remain": 1873671.2
+      "sites": 211,
+      "remain": 1977479
     },
     "IPTAN": {
       "sites": 79,
-      "remain": 12296.8
+      "remain": 10381.2
     }
   },
   "documentStatus": {
     "ac1": {
-      "amount": 2712057.88,
-      "done": 1633479.3199999977,
-      "avgAging": 12.283842794759826
+      "amount": 960469,
+      "done": 0,
+      "avgAging": 13.6308
     },
     "ac2": {
-      "amount": 1162310.52,
-      "done": 346761.5799999996,
-      "avgAging": 54.54255319148936
+      "amount": 209358,
+      "done": 0,
+      "avgAging": 31.58
     }
   },
   "financials": {
-    "estimateFinalIncome": 3874368.4,
-    "ar": 1399546.52,
-    "ap": 275714.5,
-    "remain": 1885968
+    "estimateFinalIncome": 4608232.4,
+    "ar": 1916244.06,
+    "ap": 540628.5,
+    "remain": 2100727.2
   },
   "siteStatus": {
-    "total": 258,
-    "completed": 203,
-    "onProcess": 53
+    "total": 290,
+    "completed": 254,
+    "onProcess": 34
   },
   "recoveryPlan": {
     "juneAcceptanceTarget": 192566,
     "juneActionPlanAC2": 242060.3,
-    "installOnProcess": 1048550
+    "installOnProcess": 705561
   },
   "backlogTrend": [
     {
@@ -144,7 +144,7 @@
     },
     {
       "week": "W26",
-      "value": 1885968
+      "value": 2100727.2
     }
   ],
   "teamWeeklyPerformance": {
@@ -177,6 +177,8 @@
       "W27": 2,
       "W23": 2,
       "W30": 4,
+      "W31": 4,
+      "W32": 4,
       "W26": 2
     },
     "นาย อภิชาติ ฟังสันเทียะ": {
@@ -195,7 +197,9 @@
       "W29": 5,
       "W23": 3,
       "W30": 4,
-      "W25": 3
+      "W25": 3,
+      "W32": 4,
+      "W31": 5
     },
     "บริษัท สุพรรณ เทเลคอม จำกัด": {
       "W5": 4,
@@ -222,8 +226,10 @@
       "W24": 1,
       "W26": 1,
       "W28": 3,
+      "W31": 1,
       "W25": 1,
       "W27": 2,
+      "W32": 1,
       "W29": 2
     },
     "INHOUSE_Anat Srianut": {
@@ -234,10 +240,17 @@
     "นาย ภูริวัจน์ ขวัญแก้ว": {
       "W28": 5,
       "W30": 2,
-      "W27": 1
+      "W27": 1,
+      "W31": 6,
+      "W32": 7
     },
     "นาย จรัล ศรีเหลี่ยม": {
-      "W30": 1
+      "W32": 7,
+      "W31": 7,
+      "W30": 2
+    },
+    "นาย พงพัฒน์ มาลาทิพท์": {
+      "W32": 4
     }
   },
   "teamWeeklyData": [
@@ -384,7 +397,24 @@
       "INHOUSE PHET SAITHONG": 4,
       "นาย อภิชาติ ฟังสันเทียะ": 4,
       "นาย ภูริวัจน์ ขวัญแก้ว": 2,
-      "นาย จรัล ศรีเหลี่ยม": 1
+      "นาย จรัล ศรีเหลี่ยม": 2
+    },
+    {
+      "week": "W31",
+      "INHOUSE PHET SAITHONG": 4,
+      "นาย อภิชาติ ฟังสันเทียะ": 5,
+      "INHOUSE WACHIRA SAOWARO": 1,
+      "นาย ภูริวัจน์ ขวัญแก้ว": 6,
+      "นาย จรัล ศรีเหลี่ยม": 7
+    },
+    {
+      "week": "W32",
+      "INHOUSE PHET SAITHONG": 4,
+      "นาย อภิชาติ ฟังสันเทียะ": 4,
+      "INHOUSE WACHIRA SAOWARO": 1,
+      "นาย ภูริวัจน์ ขวัญแก้ว": 7,
+      "นาย จรัล ศรีเหลี่ยม": 7,
+      "นาย พงพัฒน์ มาลาทิพท์": 4
     }
   ]
 }
