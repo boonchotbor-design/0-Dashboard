@@ -2073,10 +2073,22 @@
               const el = document.getElementById('qcImprovementNotes');
               if (el) el.textContent = qcImprove;
             }
+            // QC pass rate from Part 1 (if value is present)
+            const qcPassRateVal = findMetric(p1, 'pass rate', 'Value');
             const elInspected = document.getElementById('qcInspected');
-            if (elInspected) elInspected.textContent = "142";
             const elPassRate = document.getElementById('qcPassRate');
-            if (elPassRate) elPassRate.textContent = "95%";
+            if (elPassRate) {
+              if (qcPassRateVal !== null && qcPassRateVal !== '' && !isNaN(Number(qcPassRateVal))) {
+                const pct = Number(qcPassRateVal);
+                elPassRate.textContent = (pct <= 1 ? (pct * 100).toFixed(0) : pct.toFixed(0)) + '%';
+                // update KPI QC card
+                const kpiQC = document.getElementById('kpiQC');
+                if (kpiQC) kpiQC.innerHTML = (pct <= 1 ? (pct * 100).toFixed(0) : pct.toFixed(0)) + '<span class="unit">%</span>';
+              } else {
+                elPassRate.textContent = '-';
+              }
+            }
+            if (elInspected) elInspected.textContent = '-';
           }
 
           /* ─── Part 2 - Aging ─── */
@@ -2608,15 +2620,33 @@
             };
 
             // Dynamic Plan Breakdown Parsing for the CURRENT reportWeek
-            // Because the new Excel format repeats the Metric name 4 times without Slide Title,
-            // we grab all matching rows for the current reportWeek and assign them 2023,2024,2025,2026 sequentially.
+            // Strategy:
+            // 1. Try: Metric = 'Action Plan AC#N WKNN' (exact, 4 rows) → sequential 2023-2026
+            // 2. Try: Metric contains 'Action Plan AC#N WK(reportWeek)' filtered by rows, use Slide Title year
+            // 3. Fallback: old Slide Title-based lookup
             const extractBreakdown = (acNum, wkNum) => {
+              // Strategy 1: exact metric name, sequential rows
               const regex = new RegExp(`action plan ac.?${acNum} wk\\s*${wkNum}$`, 'i');
               const rows = p4.filter(r => regex.test(String(r['Metric']).trim()));
               if (rows.length === 4) {
                 return [getV(rows[0]), getV(rows[1]), getV(rows[2]), getV(rows[3])];
               }
-              // Fallback to old Slide Title based lookup
+              // Strategy 2: FIXED format — Slide Title contains year, Metric might be next WK
+              // e.g. Slide Title = 'Plan: Acceptance AC#1 Plan WK33 (2023)', Metric = 'Action Plan AC#1 WK34'
+              const reAcSlide = new RegExp(`ac.?${acNum}.*plan`, 'i');
+              const fixedRows = p4.filter(r => reAcSlide.test(String(r['Slide Title'] || '')));
+              if (fixedRows.length >= 4) {
+                const byYear = {};
+                fixedRows.forEach(r => {
+                  const t = String(r['Slide Title'] || '');
+                  const m = t.match(/\(?(2023|2024|2025|2026|TOTAL)\)?/i);
+                  if (m) byYear[m[1].toUpperCase()] = getV(r);
+                });
+                if ('2023' in byYear || '2024' in byYear || '2025' in byYear || '2026' in byYear) {
+                  return [byYear['2023'] ?? null, byYear['2024'] ?? null, byYear['2025'] ?? null, byYear['2026'] ?? null];
+                }
+              }
+              // Strategy 3: old Slide Title based lookup
               const reAc = new RegExp(`action plan ac#?${acNum}|acceptance ac#?${acNum} plan`, 'i');
               return [
                 getValByTitleRegex(reAc, '(2023)') ?? getValByTitleRegex(reAc, '2023'),
@@ -2821,6 +2851,40 @@
               setUI('rem3pillarsAC1', fmtBaht(remAC1Total));
               setUI('rem3pillarsUnfulfill', fmtBaht(remUnfulfillTotal));
               setUI('rem3pillarsTotal', fmtBaht(remAC1Total + remUnfulfillTotal));
+            }
+
+            // ── FIXED Excel format: AC1 DONE REMAIN & UNFULFILL REMAIN from Part 4 ──
+            // In FIXED template, these rows live in Part 4 (Slide 20) differentiated by Slide Title year.
+            // This runs AFTER Sheet1 pivot so it will override with more accurate Part 4 data if available.
+            {
+              const ac1DoneRows = p4.filter(r => /AC1 DONE.*REMAIN/i.test(String(r['Slide Title'] || '')));
+              const unfulfillRows = p4.filter(r => /UNFULFILL\s*\(\d{4}\)\s*REMAIN/i.test(String(r['Slide Title'] || '')));
+              const pillarsRow = p4.find(r => /3 Pillars|Summary of REMAIN/i.test(String(r['Metric'] || '')));
+
+              if (ac1DoneRows.length > 0) {
+                let ac1Total = 0;
+                ['2023','2024','2025','2026'].forEach(yr => {
+                  const row = ac1DoneRows.find(r => String(r['Slide Title']).includes('(' + yr + ')'));
+                  const val = row ? (Number(getV(row)) || 0) : 0;
+                  setUI('remAC1done' + yr, fmtBaht(val));
+                  ac1Total += val;
+                });
+                setUI('remAC1doneTotal', fmtBaht(ac1Total));
+                setUI('rem3pillarsAC1', fmtBaht(ac1Total));
+
+                let unfulfillTotal = 0;
+                ['2023','2024','2025','2026'].forEach(yr => {
+                  const row = unfulfillRows.find(r => String(r['Slide Title']).includes('(' + yr + ')'));
+                  const val = row ? (Number(getV(row)) || 0) : 0;
+                  setUI('remUnfulfill' + yr, fmtBaht(val));
+                  unfulfillTotal += val;
+                });
+                setUI('remUnfulfillTotal', fmtBaht(unfulfillTotal));
+                setUI('rem3pillarsUnfulfill', fmtBaht(unfulfillTotal));
+
+                const grandTotal = pillarsRow ? (Number(getV(pillarsRow)) || (ac1Total + unfulfillTotal)) : (ac1Total + unfulfillTotal);
+                setUI('rem3pillarsTotal', fmtBaht(grandTotal));
+              }
             }
 
 
@@ -3275,7 +3339,7 @@
               doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
             }
           };
-          localStorage.setItem('dashboardData2026_v6', JSON.stringify(dashState));
+          localStorage.setItem('dashboardData2026_v8', JSON.stringify(dashState));
 
           /* ─── Show Save button & status ─── */
           document.getElementById('btnSave').classList.add('show');
@@ -3294,10 +3358,10 @@
 
     // Restore state from LocalStorage on load
     window.addEventListener('DOMContentLoaded', () => {
-      const DASH_VERSION = 'v7';
+      const DASH_VERSION = 'v8';
       const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
       // Remove stale versions
-      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6'].forEach(k => localStorage.removeItem(k));
+      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7'].forEach(k => localStorage.removeItem(k));
       const saved = localStorage.getItem(DASH_KEY);
       if (saved) {
         try {
@@ -3392,7 +3456,7 @@
             doc: window.docChart ? [[...window.docChart.data.datasets[0].data], [...window.docChart.data.datasets[1].data]] : []
           }
         };
-        localStorage.setItem('dashboardData2026_v7', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v8', JSON.stringify(dashState));
 
         // Show success
         const st = document.getElementById('importStatus');
