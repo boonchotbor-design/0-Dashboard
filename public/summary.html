@@ -2407,7 +2407,15 @@
           
           let sumAc1Amt = 0, sumAc1Done = 0, countAc1Aging = 0, sumAc1Aging = 0;
           let sumAc2Amt = 0, sumAc2Done = 0, countAc2Aging = 0, sumAc2Aging = 0;
-          
+          let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
+          let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
+          let countCompleted = 0, countOnProcess = 0, countCancel = 0;
+          let countHae = 0, countTme = 0;
+          let s26Rows = [], s26HeaderRow = -1;
+          let s26AC1AmtIdx=-1, s26AC2AmtIdx=-1, s26AC1AgingIdx=-1, s26AC2AgingIdx=-1;
+          let s26DocOwnerIdx=-1, s26PEOwnerIdx=-1, s26MS1AgingIdx=-1, s26MS2AgingIdx=-1;
+          let workTypeStats = {};
+
           if (p4.length) {
             importedSheets.push('Part 4');
             const getV = (row) => {
@@ -3112,19 +3120,17 @@
 
 
             // ── AC#1 / AC#2 raw data from 2026 sheet (dynamic header indices) ──
-            const s26Name = wb.SheetNames.find(n => /2026/i.test(n));
+            let s26Name = wb.SheetNames.find(n => /2026/i.test(n));
             sumAc1Amt = 0; sumAc1Done = 0; countAc1Aging = 0; sumAc1Aging = 0;
             sumAc2Amt = 0; sumAc2Done = 0; countAc2Aging = 0; sumAc2Aging = 0;
-            let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
-            let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
-            // Completed / On Process / Cancel from 2026 sheet
-            let countCompleted = 0, countOnProcess = 0, countCancel = 0;
-            let countHae = 0, countTme = 0;
-            // Expose to outer scope for DOC/PE Owner stats
-            let s26Rows = [], s26HeaderRow = -1;
-            let s26AC1AmtIdx=-1, s26AC2AmtIdx=-1, s26AC1AgingIdx=-1, s26AC2AgingIdx=-1;
-            let s26DocOwnerIdx=-1, s26PEOwnerIdx=-1, s26MS1AgingIdx=-1, s26MS2AgingIdx=-1;
-            let workTypeStats = {};
+            minAc1Aging = Infinity; maxAc1Aging = -Infinity;
+            minAc2Aging = Infinity; maxAc2Aging = -Infinity;
+            countCompleted = 0; countOnProcess = 0; countCancel = 0;
+            countHae = 0; countTme = 0;
+            s26Rows = []; s26HeaderRow = -1;
+            s26AC1AmtIdx=-1; s26AC2AmtIdx=-1; s26AC1AgingIdx=-1; s26AC2AgingIdx=-1;
+            s26DocOwnerIdx=-1; s26PEOwnerIdx=-1; s26MS1AgingIdx=-1; s26MS2AgingIdx=-1;
+            workTypeStats = {};
 
             if (s26Name) {
               s26Rows = XLSX.utils.sheet_to_json(wb.Sheets[s26Name], {header: 1, defval: ''});
