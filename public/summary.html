@@ -2416,9 +2416,18 @@
           let s26DocOwnerIdx=-1, s26PEOwnerIdx=-1, s26MS1AgingIdx=-1, s26MS2AgingIdx=-1;
           let workTypeStats = {};
 
+          // Pre-declare p4 variables used outside if(p4.length) block
+          let actPlan = null, income = null, backlog = null;
+          let blRows = [], target = null;
+          let fmtBaht = v => Number(v || 0).toLocaleString('th-TH', {maximumFractionDigits: 0}) + ' ฿';
+          let setUI = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+          let getV = row => row ? (row['Value (THB)'] ?? row['Value'] ?? row['value'] ?? null) : null;
+          let getVal = () => null; // will be overridden inside p4 block
+
           if (p4.length) {
+
             importedSheets.push('Part 4');
-            const getV = (row) => {
+            getV = (row) => {
               // Handle column keys with/without leading/trailing spaces
               const k = Object.keys(row).find(key => {
                 const t = key.trim();
@@ -2426,13 +2435,13 @@
               });
               return k ? row[k] : null;
             };
-            const getVal = (kw) => {
+            getVal = (kw) => {
               const row = p4.find(r => String(r['Metric']).toLowerCase().includes(kw.toLowerCase()));
               return row ? getV(row) : null;
             };
 
             // ── Backlog Week X vs Week Y ──
-            const blRows = p4.filter(r => /backlog week/i.test(String(r['Metric'])));
+            blRows = p4.filter(r => /backlog week/i.test(String(r['Metric'])));
             if (blRows.length >= 2) {
               const wk1Label = String(blRows[0]['Metric'] || '').replace(/backlog/i, '').trim(); 
               const wk2Label = String(blRows[1]['Metric'] || '').replace(/backlog/i, '').trim(); 
@@ -2477,10 +2486,10 @@
               return rows.reduce((acc, r) => acc + (Number(getV(r)) || 0), 0);
             };
 
-            const income = getVal('estimate final income') || getVal('estimate income');
+            income = getVal('estimate final income') || getVal('estimate income');
             const ar = getVal('ar (commerce)') || getVal('ar');
             const ap = getVal('ap (payment)') || getVal('ap') || getVal('accounts payable');
-            const backlog = getVal('remain to claim') || getVal('backlog week');
+            backlog = getVal('remain to claim') || getVal('backlog week');
 
             const getValByTitle = (metricKw, titleKw) => {
               const row = p4.find(r =>
@@ -2491,7 +2500,7 @@
             };
 
             // Action Plan — try new naming 'Action Plan TOTAL WKxx' then old naming
-            let actPlan = null;
+            actPlan = null;
             const apTotalRows = p4.filter(r => /action plan total wk\d+/i.test(String(r['Metric'])));
             if (apTotalRows.length > 0) {
               // Take latest week (sort by WK number)
@@ -2514,8 +2523,8 @@
               }
             }
             if (actPlan === null) actPlan = getSum('action plan');
-            const fmtBaht = v => Number(v || 0).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
-            const setUI = (id, val) => { const el = document.getElementById(id); if (el && val !== null) el.textContent = val; };
+            fmtBaht = v => Number(v || 0).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
+            setUI = (id, val) => { const el = document.getElementById(id); if (el && val !== null) el.textContent = val; };
 
             // On-Process (Install On-Process items from Slide 19)
             const onProcRows = p4.filter(r => /on-process/i.test(String(r['Metric'])));
@@ -2549,7 +2558,7 @@
                   : Math.round(v/1000) + '<span class="unit">K ฿</span>';
               }
               const targetRow = p4.find(r => /target/i.test(String(r['Metric']).toLowerCase()) && /acceptance plan|target/i.test(String(r['Slide Title']).toLowerCase()));
-              const target = targetRow ? getV(targetRow) : null;
+              target = targetRow ? getV(targetRow) : null;
               if (target !== null || onProcTotal !== null) {
                 const fmtM = val => {
                   const v = Number(val);
