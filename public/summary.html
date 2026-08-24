@@ -3500,18 +3500,32 @@
           /* ─── Update Charts dynamically ─── */
 
           if (p3.length) {
-            const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#1'));
-            const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#2'));
-            if (window.docChart) {
-              window.docChart.data.datasets[0].data = [
-                sumAc1Amt > 0 ? sumAc1Amt : (ac1row ? getValOrFallback(ac1row['Amount (THB)'], 2307342) : 2307342),
-                sumAc2Amt > 0 ? sumAc2Amt : (ac2row ? getValOrFallback(ac2row['Amount (THB)'], 988861) : 988861)
-              ];
-              window.docChart.data.datasets[1].data = [
-                sumAc1Amt > 0 ? sumAc1Done : (ac1row ? getValOrFallback(ac1row['Done (THB)'], 1055497) : 1055497),
-                sumAc2Amt > 0 ? sumAc2Done : (ac2row ? getValOrFallback(ac2row['Done (THB)'], 177499) : 177499)
-              ];
+            const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])));
+            const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])));
+            if (window.docChart && (ac1row || ac2row)) {
+              // Use Part 3 values (pre-computed totals from 2026 sheet by user)
+              const ac1Amt  = ac1row ? (Number(ac1row['Amount (THB)']) || 0) : 0;
+              const ac1Done = ac1row ? (Number(ac1row['Done (THB)'])   || 0) : 0;
+              const ac2Amt  = ac2row ? (Number(ac2row['Amount (THB)']) || 0) : 0;
+              const ac2Done = ac2row ? (Number(ac2row['Done (THB)'])   || 0) : 0;
+              window.docChart.data.datasets[0].data = [ac1Amt, ac2Amt];
+              window.docChart.data.datasets[1].data = [ac1Done, ac2Done];
               window.docChart.update();
+              // Update Avg Aging labels from Part 3
+              if (ac1row && ac1row['Avg Aging']) setBadge('docAc1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
+              if (ac2row && ac2row['Avg Aging']) setBadge('docAc2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
+              // Compute Remain = sumAB - ac1Amt - ac2Amt (using SO Total from 2026 column AB)
+              const sumAB = (() => {
+                if (!s26Rows || s26HeaderRow < 0) return 0;
+                const hdr = s26Rows[s26HeaderRow];
+                const idxAB = hdr.findIndex(h => /ESTIMATE\s*FINAL\s*INCOME/i.test(String(h)));
+                if (idxAB < 0) return 0;
+                let t = 0;
+                for (let i = s26HeaderRow + 1; i < s26Rows.length; i++) t += parseFloat(s26Rows[i][idxAB]) || 0;
+                return t;
+              })();
+              const remain = sumAB - ac1Amt - ac2Amt;
+              setBadge('docRemainSO', remain > 0 ? fmtBaht(remain) : '-');
             }
           }
           if (p1.length || raw2026) {
