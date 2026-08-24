@@ -3624,7 +3624,7 @@
             income: p4.length ? (() => { const r = p4.find(x => /estimate final income/i.test(String(x['Metric']))); return r ? (r['Value (THB)'] || r['Value'] || null) : null; })() : null,
             backlog: p4.length ? (() => { const r = p4.find(x => /remain to claim/i.test(String(x['Metric']))); return r ? (r['Value (THB)'] || r['Value'] || null) : null; })() : null,
             blRows: p4.filter(r => /backlog week/i.test(String(r['Metric']))),
-            actPlan: actPlan,
+            actPlan: (typeof actPlan !== 'undefined' ? actPlan : null),
             ac1Avg: countAc1Aging > 0 ? (sumAc1Aging / countAc1Aging) : 0,
             ac1Min: minAc1Aging === Infinity ? 0 : minAc1Aging,
             ac1Max: maxAc1Aging === -Infinity ? 0 : maxAc1Aging,
