@@ -3109,8 +3109,8 @@
 
             // ── AC#1 / AC#2 raw data from 2026 sheet (dynamic header indices) ──
             const s26Name = wb.SheetNames.find(n => /2026/i.test(n));
-            let sumAc1Amt = 0, countAc1Aging = 0, sumAc1Aging = 0;
-            let sumAc2Amt = 0, countAc2Aging = 0, sumAc2Aging = 0;
+            let sumAc1Amt = 0, sumAc1Done = 0, countAc1Aging = 0, sumAc1Aging = 0;
+            let sumAc2Amt = 0, sumAc2Done = 0, countAc2Aging = 0, sumAc2Aging = 0;
             let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
             let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
             // Completed / On Process / Cancel from 2026 sheet
@@ -3138,6 +3138,8 @@
                 // Acceptance amounts use column name 'Accaptance AC#1 AMOUNT' (note typo) → match broadly
                 const ac1AmtIdx = headers.findIndex(h => /AC#?1.*AMOUNT|AMOUNT.*AC#?1/i.test(String(h)));
                 const ac2AmtIdx = headers.findIndex(h => /AC#?2.*AMOUNT|AMOUNT.*AC#?2/i.test(String(h)));
+                const ac1DoneIdx = headers.findIndex(h => /AC#?1.*DONE|DONE.*AC#?1/i.test(String(h)));
+                const ac2DoneIdx = headers.findIndex(h => /AC#?2.*DONE|DONE.*AC#?2/i.test(String(h)));
                 const ac1AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#1'));
                 const ac2AgingIdx = headers.findIndex(h => String(h).toUpperCase().includes('AGING#2'));
                 // Milestone SLA columns — exact names: 'AGING 1st Milestone', 'AGING 2nd Milestone'
@@ -3163,10 +3165,15 @@
                   const row = s26Rows[i];
                   if (!row || row.length === 0) continue;
                   
-                  // AC#1 Amt
+                  // AC#1 Amt & Done
                   if (ac1AmtIdx > -1 && row[ac1AmtIdx] !== undefined && row[ac1AmtIdx] !== '') {
                     const val = Number(String(row[ac1AmtIdx]).replace(/[^0-9.-]/g, ''));
-                    if (!isNaN(val)) sumAc1Amt += val;
+                    if (!isNaN(val)) {
+                      sumAc1Amt += val;
+                      if (ac1DoneIdx > -1 && row[ac1DoneIdx] !== undefined && String(row[ac1DoneIdx]).trim() !== '' && String(row[ac1DoneIdx]).trim() !== '-') {
+                        sumAc1Done += val; // If there is a date in DONE, the amount is collected
+                      }
+                    }
                   }
                   // AC#1 Aging
                   if (ac1AgingIdx > -1 && row[ac1AgingIdx] !== undefined && String(row[ac1AgingIdx]).trim() !== '') {
@@ -3180,10 +3187,15 @@
                     }
                   }
                   
-                  // AC#2 Amt
+                  // AC#2 Amt & Done
                   if (ac2AmtIdx > -1 && row[ac2AmtIdx] !== undefined && row[ac2AmtIdx] !== '') {
                     const val = Number(String(row[ac2AmtIdx]).replace(/[^0-9.-]/g, ''));
-                    if (!isNaN(val)) sumAc2Amt += val;
+                    if (!isNaN(val)) {
+                      sumAc2Amt += val;
+                      if (ac2DoneIdx > -1 && row[ac2DoneIdx] !== undefined && String(row[ac2DoneIdx]).trim() !== '' && String(row[ac2DoneIdx]).trim() !== '-') {
+                        sumAc2Done += val;
+                      }
+                    }
                   }
                   // AC#2 Aging
                   if (ac2AgingIdx > -1 && row[ac2AgingIdx] !== undefined && String(row[ac2AgingIdx]).trim() !== '') {
@@ -3480,14 +3492,14 @@
           if (p3.length) {
             const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#1'));
             const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])) || String(r['Slide Title']).includes('Performance') && String(r['Owner / Type']).includes('AC#2'));
-            if (window.docChart && ac1row && ac2row) {
+            if (window.docChart) {
               window.docChart.data.datasets[0].data = [
-                getValOrFallback(ac1row['Amount (THB)'], 2307342),
-                getValOrFallback(ac2row['Amount (THB)'], 988861)
+                sumAc1Amt > 0 ? sumAc1Amt : (ac1row ? getValOrFallback(ac1row['Amount (THB)'], 2307342) : 2307342),
+                sumAc2Amt > 0 ? sumAc2Amt : (ac2row ? getValOrFallback(ac2row['Amount (THB)'], 988861) : 988861)
               ];
               window.docChart.data.datasets[1].data = [
-                getValOrFallback(ac1row['Done (THB)'], 1055497),
-                getValOrFallback(ac2row['Done (THB)'], 177499)
+                sumAc1Amt > 0 ? sumAc1Done : (ac1row ? getValOrFallback(ac1row['Done (THB)'], 1055497) : 1055497),
+                sumAc2Amt > 0 ? sumAc2Done : (ac2row ? getValOrFallback(ac2row['Done (THB)'], 177499) : 177499)
               ];
               window.docChart.update();
             }
