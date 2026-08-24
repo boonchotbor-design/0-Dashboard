@@ -2404,6 +2404,10 @@
           /* ─── Part 4 - Financials ─── */
           const p4raw = wb.Sheets['Part 4 - Financials'] || wb.Sheets['Financials & Recovery'] || wb.Sheets['Financials'];
           const p4 = p4raw ? XLSX.utils.sheet_to_json(p4raw, { defval: '' }) : [];
+          
+          let sumAc1Amt = 0, sumAc1Done = 0, countAc1Aging = 0, sumAc1Aging = 0;
+          let sumAc2Amt = 0, sumAc2Done = 0, countAc2Aging = 0, sumAc2Aging = 0;
+          
           if (p4.length) {
             importedSheets.push('Part 4');
             const getV = (row) => {
@@ -3109,8 +3113,8 @@
 
             // ── AC#1 / AC#2 raw data from 2026 sheet (dynamic header indices) ──
             const s26Name = wb.SheetNames.find(n => /2026/i.test(n));
-            let sumAc1Amt = 0, sumAc1Done = 0, countAc1Aging = 0, sumAc1Aging = 0;
-            let sumAc2Amt = 0, sumAc2Done = 0, countAc2Aging = 0, sumAc2Aging = 0;
+            sumAc1Amt = 0; sumAc1Done = 0; countAc1Aging = 0; sumAc1Aging = 0;
+            sumAc2Amt = 0; sumAc2Done = 0; countAc2Aging = 0; sumAc2Aging = 0;
             let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
             let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
             // Completed / On Process / Cancel from 2026 sheet
