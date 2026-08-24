@@ -2419,7 +2419,6 @@
           // Pre-declare p4 variables used outside if(p4.length) block
           let actPlan = null, income = null, backlog = null;
           let blRows = [], target = null;
-          let fmtBaht = v => Number(v || 0).toLocaleString('th-TH', {maximumFractionDigits: 0}) + ' ฿';
           let setUI = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
           let getV = row => row ? (row['Value (THB)'] ?? row['Value'] ?? row['value'] ?? null) : null;
           let getVal = () => null; // will be overridden inside p4 block
@@ -2523,7 +2522,6 @@
               }
             }
             if (actPlan === null) actPlan = getSum('action plan');
-            fmtBaht = v => Number(v || 0).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿';
             setUI = (id, val) => { const el = document.getElementById(id); if (el && val !== null) el.textContent = val; };
 
             // On-Process (Install On-Process items from Slide 19)
@@ -3642,7 +3640,10 @@
           });
 
         } catch (err) {
+          console.error('Import error:', err.message, err.stack);
           alert('Import error: ' + err.message + '\n' + err.stack);
+          const st = document.getElementById('importStatus');
+          if (st) { st.style.display = 'inline-block'; st.textContent = '⚠ Import warning: ' + err.message; st.style.color = '#f59e0b'; }
         }
       };
       reader.readAsBinaryString(file);
