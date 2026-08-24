@@ -952,6 +952,141 @@
       color: var(--text-muted);
       margin-top: 2px;
     }
+
+    /* ── Weekly Report Card ── */
+    .wr-card {
+      background: linear-gradient(135deg, rgba(15,23,42,.95), rgba(22,29,46,.95));
+      border: 1px solid rgba(99,179,237,.25);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .wr-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,.06), rgba(139,92,246,.04));
+      pointer-events: none;
+    }
+    .wr-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .wr-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .wr-subtitle {
+      font-size: .7rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .wr-copy-btn {
+      background: rgba(59,130,246,.15);
+      border: 1px solid rgba(59,130,246,.35);
+      color: #93c5fd;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: .72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .wr-copy-btn:hover { background: rgba(59,130,246,.3); }
+    .wr-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .wr-body { grid-template-columns: 1fr; } }
+    .wr-section {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .wr-section-title {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wr-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: .76rem;
+    }
+    .wr-row:last-child { border-bottom: none; }
+    .wr-label { color: var(--text-secondary); }
+    .wr-val { font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+    .wr-val.green { color: #34d399; }
+    .wr-val.amber { color: #fbbf24; }
+    .wr-val.red { color: #f87171; }
+    .wr-val.blue { color: #93c5fd; }
+    .wr-val.purple { color: #c4b5fd; }
+    .wr-warn {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: .73rem;
+      line-height: 1.6;
+    }
+    .wr-warn.red { background: rgba(239,68,68,.1); border-left: 3px solid #ef4444; color: #fca5a5; }
+    .wr-warn.amber { background: rgba(245,158,11,.1); border-left: 3px solid #f59e0b; color: #fcd34d; }
+    .wr-warn.green { background: rgba(16,185,129,.1); border-left: 3px solid #10b981; color: #6ee7b7; }
+    .wr-action-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .wr-action-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: .75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .wr-action-list li::before {
+      content: '▸';
+      color: #3b82f6;
+      font-size: .8rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .wr-full-text {
+      background: rgba(0,0,0,.25);
+      border-radius: 10px;
+      padding: 16px;
+      font-size: .75rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      font-family: 'Inter', sans-serif;
+      margin-top: 16px;
+      border: 1px solid rgba(255,255,255,.05);
+    }
   </style>
 </head>
 
@@ -1052,6 +1187,77 @@
         <span class="kpi-trend trend-up">Ahead</span>
       </div>
 
+    </div>
+
+    <!-- ── Weekly Report Summary Card ── -->
+    <div class="wr-card" id="weeklyReportCard" style="display:none;">
+      <div class="wr-header">
+        <div>
+          <div class="wr-title">📋 สรุปความคืบหน้าประจำ<span id="wrWeekLabel">สัปดาห์</span></div>
+          <div class="wr-subtitle">HAE &amp; TME Telecom · Auto-generated from Excel Import · เหมาะสำหรับรายงานผู้บริหาร</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+          <span class="status-chip chip-blue" id="wrImportTime">-</span>
+          <button class="wr-copy-btn" onclick="copyWeeklyReport()">📋 Copy รายงาน</button>
+        </div>
+      </div>
+      <div class="wr-body">
+        <!-- Section 1: Overall Progress -->
+        <div class="wr-section">
+          <div class="wr-section-title">🏗️ Overall Progress</div>
+          <div class="wr-row"><span class="wr-label">ไซต์ Completed</span><span class="wr-val green" id="wrCompleted">-</span></div>
+          <div class="wr-row"><span class="wr-label">On Process</span><span class="wr-val blue" id="wrOnProcess">-</span></div>
+          <div class="wr-row"><span class="wr-label">Total Sites</span><span class="wr-val" id="wrTotal">-</span></div>
+          <div class="wr-row"><span class="wr-label">% Done</span><span class="wr-val green" id="wrPctDone">-</span></div>
+          <div class="wr-row"><span class="wr-label">HAE / TME</span><span class="wr-val" id="wrHaeTme">-</span></div>
+        </div>
+        <!-- Section 2: Financial KPI -->
+        <div class="wr-section">
+          <div class="wr-section-title">💰 Financial KPI</div>
+          <div class="wr-row"><span class="wr-label">Est. Final Income</span><span class="wr-val green" id="wrIncome">-</span></div>
+          <div class="wr-row"><span class="wr-label">Remaining Backlog</span><span class="wr-val amber" id="wrBacklog">-</span></div>
+          <div class="wr-row"><span class="wr-label" id="wrBlPrevLabel">Backlog Prev WK</span></span><span class="wr-val" id="wrBlPrev">-</span></div>
+          <div class="wr-row"><span class="wr-label" id="wrBlCurLabel">Backlog Cur WK</span><span class="wr-val" id="wrBlCur">-</span></div>
+          <div class="wr-row"><span class="wr-label">Δ Backlog</span><span class="wr-val" id="wrBlDiff">-</span></div>
+          <div class="wr-row"><span class="wr-label">Action Plan WK</span><span class="wr-val" id="wrActPlan">-</span></div>
+        </div>
+        <!-- Section 3: Aging AC#1 -->
+        <div class="wr-section">
+          <div class="wr-section-title">⏱️ Aging — AC#1 (Acceptance ครั้งที่ 1)</div>
+          <div class="wr-row"><span class="wr-label">Avg Aging</span><span class="wr-val blue" id="wrAc1Avg">-</span></div>
+          <div class="wr-row"><span class="wr-label">Min Aging (เร็วสุด)</span><span class="wr-val green" id="wrAc1Min">-</span></div>
+          <div class="wr-row"><span class="wr-label">Max Aging (ช้าสุด)</span><span class="wr-val" id="wrAc1Max">-</span></div>
+          <div class="wr-row"><span class="wr-label">HAE M1 Milestone Avg</span><span class="wr-val purple" id="wrHaeM1">-</span></div>
+          <div id="wrAc1Alert" class="wr-warn" style="display:none;"></div>
+        </div>
+        <!-- Section 4: Aging AC#2 -->
+        <div class="wr-section">
+          <div class="wr-section-title">⏱️ Aging — AC#2 (Acceptance ครั้งที่ 2)</div>
+          <div class="wr-row"><span class="wr-label">Avg Aging</span><span class="wr-val blue" id="wrAc2Avg">-</span></div>
+          <div class="wr-row"><span class="wr-label">Min Aging (เร็วสุด)</span><span class="wr-val green" id="wrAc2Min">-</span></div>
+          <div class="wr-row"><span class="wr-label">Max Aging (ช้าสุด)</span><span class="wr-val" id="wrAc2Max">-</span></div>
+          <div class="wr-row"><span class="wr-label">TME M1 Milestone Avg</span><span class="wr-val purple" id="wrTmeM1">-</span></div>
+          <div id="wrAc2Alert" class="wr-warn" style="display:none;"></div>
+        </div>
+        <!-- Section 5: Quality -->
+        <div class="wr-section">
+          <div class="wr-section-title">✅ Smart QC &amp; Quality</div>
+          <div class="wr-row"><span class="wr-label">Pass Rate</span><span class="wr-val green" id="wrQcRate">-</span></div>
+          <div class="wr-row"><span class="wr-label">Done in SLA</span><span class="wr-val green" id="wrQcDone">-</span></div>
+          <div class="wr-row"><span class="wr-label">Done Late</span><span class="wr-val amber" id="wrQcLate">-</span></div>
+          <div class="wr-row"><span class="wr-label">Pending</span><span class="wr-val" id="wrQcPend">-</span></div>
+          <div class="wr-row"><span class="wr-label">PAT Subcon Done</span><span class="wr-val green" id="wrPatDone">-</span></div>
+        </div>
+        <!-- Section 6: Action Plan -->
+        <div class="wr-section">
+          <div class="wr-section-title">🎯 Action Plan สัปดาห์หน้า</div>
+          <ul class="wr-action-list" id="wrActionList">
+            <li>รอนำเข้าข้อมูลจาก Excel</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Full Thai Report Text -->
+      <div id="wrFullText" class="wr-full-text" style="display:none;"></div>
     </div>
 
     <!-- ── Executive Bottom Line (Part 1) ── -->
@@ -2619,11 +2825,11 @@
               return row ? getV(row) : null;
             };
 
-            // Dynamic Plan Breakdown Parsing for the CURRENT reportWeek
+            // Dynamic Plan Breakdown Parsing for the NEXT reportWeek
             // Strategy:
             // 1. Try: Metric = 'Action Plan AC#N WKNN' (exact, 4 rows) → sequential 2023-2026
-            // 2. Try: Metric contains 'Action Plan AC#N WK(reportWeek)' filtered by rows, use Slide Title year
-            // 3. Fallback: old Slide Title-based lookup
+            // 2. Try: FIXED format — Slide Title contains year
+            // 3. Fallback: old Slide Title based lookup
             const extractBreakdown = (acNum, wkNum) => {
               // Strategy 1: exact metric name, sequential rows
               const regex = new RegExp(`action plan ac.?${acNum} wk\\s*${wkNum}$`, 'i');
@@ -2631,8 +2837,7 @@
               if (rows.length === 4) {
                 return [getV(rows[0]), getV(rows[1]), getV(rows[2]), getV(rows[3])];
               }
-              // Strategy 2: FIXED format — Slide Title contains year, Metric might be next WK
-              // e.g. Slide Title = 'Plan: Acceptance AC#1 Plan WK33 (2023)', Metric = 'Action Plan AC#1 WK34'
+              // Strategy 2: FIXED format — Slide Title contains year
               const reAcSlide = new RegExp(`ac.?${acNum}.*plan`, 'i');
               const fixedRows = p4.filter(r => reAcSlide.test(String(r['Slide Title'] || '')));
               if (fixedRows.length >= 4) {
@@ -2656,35 +2861,41 @@
               ];
             };
 
-            const prevWk = reportWeek - 1;
-            const ac1Breakdown = extractBreakdown(1, reportWeek);
+            const curWk = reportWeek;
+            const nextWk = reportWeek + 1;
+            
+            const ac1Breakdown = extractBreakdown(1, nextWk);
             const vAc123 = ac1Breakdown[0];
             const vAc124 = ac1Breakdown[1];
             const vAc125 = ac1Breakdown[2];
             const vAc126 = ac1Breakdown[3];
             const reAc1 = /action plan ac#?1|acceptance ac#?1 plan/i;
-            const vAc1Wk28 = getValByTitleRegex(reAc1, 'WK'+prevWk)
-                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
+            const vAc1Wk28 = getValByTitleRegex(reAc1, 'WK'+curWk)
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+curWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
-            const ac2Breakdown = extractBreakdown(2, reportWeek);
+            const ac2Breakdown = extractBreakdown(2, nextWk);
             const vAc223 = ac2Breakdown[0];
             const vAc224 = ac2Breakdown[1];
             const vAc225 = ac2Breakdown[2];
             const vAc226 = ac2Breakdown[3];
             const reAc2 = /action plan ac#?2|acceptance ac#?2 plan/i;
-            const vAc2Wk28 = getValByTitleRegex(reAc2, 'WK'+prevWk)
-                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
+            const vAc2Wk28 = getValByTitleRegex(reAc2, 'WK'+curWk)
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+curWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
-            // Totals — search for WK<reportWeek> TOTAL first, then old naming
+            // Totals — search for WK<nextWk> TOTAL first, then old naming
             const vAc1Total = (() => {
-              const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+reportWeek+' total', 'i').test(String(row['Metric'])));
+              const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+curWk+' total', 'i').test(String(row['Metric'])));
               if(r) return getV(r);
+              const r2 = p4.find(row => new RegExp('ac.?1.*wk\\s*'+nextWk+'.*total', 'i').test(String(row['Slide Title'])));
+              if(r2) return getV(r2);
               const reAc1Total = /action plan ac#?1 total|action plan ac#?1/i;
               return getValByTitleRegex(reAc1Total, '(total)') ?? getValByTitleRegex(reAc1Total, 'total');
             })();
             const vAc2Total = (() => {
-              const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+reportWeek+' total', 'i').test(String(row['Metric'])));
+              const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+curWk+' total', 'i').test(String(row['Metric'])));
               if(r) return getV(r);
+              const r2 = p4.find(row => new RegExp('ac.?2.*wk\\s*'+nextWk+'.*total', 'i').test(String(row['Slide Title'])));
+              if(r2) return getV(r2);
               const reAc2Total = /action plan ac#?2 total|action plan ac#?2/i;
               return getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
             })();
@@ -2705,23 +2916,31 @@
             setUI('dtlAC2Total', fmtB(vAc2Total));
             setUI('dtlAC2WK28', fmtB(vAc2Wk28));
 
-            // Update Labels to use reportWeek dynamically
+            // Update Labels to use curWk and nextWk dynamically
             const updateLbl = (id, txt) => { const el = document.getElementById(id); if (el && el.previousElementSibling) el.previousElementSibling.textContent = txt; };
-            updateLbl('dtlAC1WK28', 'WK'+(reportWeek-1)+' Plan');
-            updateLbl('dtlAC12023', 'WK'+reportWeek+' Plan (2023)');
-            updateLbl('dtlAC12024', 'WK'+reportWeek+' Plan (2024)');
-            updateLbl('dtlAC12025', 'WK'+reportWeek+' Plan (2025)');
-            updateLbl('dtlAC12026', 'WK'+reportWeek+' Plan (2026)');
+            updateLbl('dtlAC1WK28', 'WK'+curWk+' Plan');
+            updateLbl('dtlAC12023', 'WK'+nextWk+' Plan (2023)');
+            updateLbl('dtlAC12024', 'WK'+nextWk+' Plan (2024)');
+            updateLbl('dtlAC12025', 'WK'+nextWk+' Plan (2025)');
+            updateLbl('dtlAC12026', 'WK'+nextWk+' Plan (2026)');
             const ac1TotalLbl = document.getElementById('dtlAC1Total');
-            if(ac1TotalLbl && ac1TotalLbl.previousElementSibling) ac1TotalLbl.previousElementSibling.textContent = 'WK'+reportWeek+' TOTAL';
+            if(ac1TotalLbl && ac1TotalLbl.previousElementSibling) ac1TotalLbl.previousElementSibling.textContent = 'WK'+nextWk+' TOTAL';
+            const lblAc1Prev = document.getElementById('lblAc1PrevWk');
+            if (lblAc1Prev) lblAc1Prev.textContent = 'WK' + curWk;
+            const lblAc1Latest = document.getElementById('lblAc1LatestWk');
+            if (lblAc1Latest) lblAc1Latest.textContent = 'WK' + nextWk;
 
-            updateLbl('dtlAC2WK28', 'WK'+(reportWeek-1)+' Plan');
-            updateLbl('dtlAC22023', 'WK'+reportWeek+' Plan (2023)');
-            updateLbl('dtlAC22024', 'WK'+reportWeek+' Plan (2024)');
-            updateLbl('dtlAC22025', 'WK'+reportWeek+' Plan (2025)');
-            updateLbl('dtlAC22026', 'WK'+reportWeek+' Plan (2026)');
+            updateLbl('dtlAC2WK28', 'WK'+curWk+' Plan');
+            updateLbl('dtlAC22023', 'WK'+nextWk+' Plan (2023)');
+            updateLbl('dtlAC22024', 'WK'+nextWk+' Plan (2024)');
+            updateLbl('dtlAC22025', 'WK'+nextWk+' Plan (2025)');
+            updateLbl('dtlAC22026', 'WK'+nextWk+' Plan (2026)');
             const ac2TotalLbl = document.getElementById('dtlAC2Total');
-            if(ac2TotalLbl && ac2TotalLbl.previousElementSibling) ac2TotalLbl.previousElementSibling.textContent = 'WK'+reportWeek+' TOTAL';
+            if(ac2TotalLbl && ac2TotalLbl.previousElementSibling) ac2TotalLbl.previousElementSibling.textContent = 'WK'+nextWk+' TOTAL';
+            const lblAc2Prev = document.getElementById('lblAc2PrevWk');
+            if (lblAc2Prev) lblAc2Prev.textContent = 'WK' + curWk;
+            const lblAc2Latest = document.getElementById('lblAc2LatestWk');
+            if (lblAc2Latest) lblAc2Latest.textContent = 'WK' + nextWk;
 
             // Update card titles
             const ac1CardTitle = ac1TotalLbl?.closest('.card')?.querySelector('.card-title');
@@ -3348,6 +3567,35 @@
           st.textContent = `✓ Imported: ${importedSheets.join(', ')} — กด Save เพื่อบันทึก`;
           setTimeout(() => { st.style.display = 'none'; }, 8000);
 
+          /* ─── Generate Weekly Report Summary ─── */
+          generateWeeklyReport({
+            week: reportWeek,
+            completed: countCompleted,
+            onProcess: countOnProcess,
+            cancel: countCancel,
+            totalSites: countCompleted + countOnProcess + countCancel,
+            haeCount: countHae,
+            tmeCount: countTme,
+            income: p4.length ? (() => { const r = p4.find(x => /estimate final income/i.test(String(x['Metric']))); return r ? (r['Value (THB)'] || r['Value'] || null) : null; })() : null,
+            backlog: p4.length ? (() => { const r = p4.find(x => /remain to claim/i.test(String(x['Metric']))); return r ? (r['Value (THB)'] || r['Value'] || null) : null; })() : null,
+            blRows: p4.filter(r => /backlog week/i.test(String(r['Metric']))),
+            actPlan: actPlan,
+            ac1Avg: countAc1Aging > 0 ? (sumAc1Aging / countAc1Aging) : 0,
+            ac1Min: minAc1Aging === Infinity ? 0 : minAc1Aging,
+            ac1Max: maxAc1Aging === -Infinity ? 0 : maxAc1Aging,
+            ac2Avg: countAc2Aging > 0 ? (sumAc2Aging / countAc2Aging) : 0,
+            ac2Min: minAc2Aging === Infinity ? 0 : minAc2Aging,
+            ac2Max: maxAc2Aging === -Infinity ? 0 : maxAc2Aging,
+            haeM1: (() => { const r = p2.find(x => /HAE/i.test(String(x['Category / Person'])) && !/M2/i.test(String(x['Category / Person']))); return r ? r['M1 Aging'] : null; })(),
+            tmeM1: (() => { const r = p2.find(x => /TME/i.test(String(x['Category / Person'])) && !/M2/i.test(String(x['Category / Person'])) && !/IPRAN/i.test(String(x['Category / Person']))); return r ? r['M1 Aging'] : null; })(),
+            qcDone: document.getElementById('sumQcDone')?.textContent,
+            qcLate: document.getElementById('sumQcLate')?.textContent,
+            qcPend: document.getElementById('sumQcPend')?.textContent,
+            patDone: document.getElementById('sumPatDone')?.textContent,
+            ac1DocAvg: p3.length ? (() => { const r = p3.find(x => /AC#?1.*JAN-DEC/i.test(String(x['Owner / Type']))); return r ? r['Avg Aging'] : null; })() : null,
+            ac2DocAvg: p3.length ? (() => { const r = p3.find(x => /AC#?2.*JAN-DEC/i.test(String(x['Owner / Type']))); return r ? r['Avg Aging'] : null; })() : null,
+          });
+
         } catch (err) {
           alert('Import error: ' + err.message + '\n' + err.stack);
         }
@@ -3355,6 +3603,223 @@
       reader.readAsBinaryString(file);
       e.target.value = '';
     });
+
+    /* ═══════════════════════════════════════════════
+       WEEKLY REPORT GENERATOR
+    ═══════════════════════════════════════════════ */
+    function generateWeeklyReport(d) {
+      const card = document.getElementById('weeklyReportCard');
+      if (!card) return;
+      card.style.display = 'block';
+
+      const fmt = (v) => v !== null && v !== undefined && !isNaN(Number(v))
+        ? Number(v).toLocaleString('th-TH', { maximumFractionDigits: 0 }) + ' ฿'
+        : '-';
+      const fmtD = (v) => (v && !isNaN(Number(v)) && Number(v) > 0) ? Number(v).toFixed(2) + ' วัน' : '-';
+      const fmtPct = (v) => (v && !isNaN(Number(v))) ? Number(v).toFixed(1) + '%' : '-';
+      const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      const setClass = (id, cls) => { const el = document.getElementById(id); if (el) el.className = 'wr-val ' + cls; };
+
+      /* ─ Header ─ */
+      set('wrWeekLabel', `สัปดาห์ที่ ${d.week} / 2026`);
+      set('wrImportTime', new Date().toLocaleTimeString('th-TH', {hour:'2-digit',minute:'2-digit'}) + ' น.');
+
+      /* ─ Overall Progress ─ */
+      const total = d.totalSites || (d.completed + d.onProcess + d.cancel);
+      const pct = total > 0 ? ((d.completed / total) * 100) : 0;
+      set('wrCompleted', d.completed > 0 ? d.completed + ' ไซต์' : '-');
+      set('wrOnProcess', d.onProcess > 0 ? d.onProcess + ' ไซต์' : '-');
+      set('wrTotal', total > 0 ? total + ' ไซต์' : '-');
+      set('wrPctDone', fmtPct(pct));
+      setClass('wrPctDone', pct >= 80 ? 'green' : pct >= 50 ? 'amber' : 'red');
+      set('wrHaeTme', (d.haeCount > 0 || d.tmeCount > 0) ? `HAE ${d.haeCount} · TME ${d.tmeCount}` : '-');
+
+      /* ─ Financial KPI ─ */
+      set('wrIncome', fmt(d.income));
+      set('wrBacklog', fmt(d.backlog));
+      set('wrActPlan', fmt(d.actPlan));
+      // Backlog comparison rows
+      const blR = (d.blRows || []).filter(r => /backlog week/i.test(String(r['Metric'])));
+      if (blR.length >= 2) {
+        const getV = r => r['Value (THB)'] !== undefined ? r['Value (THB)'] : (r['Value'] || 0);
+        const lbl1 = String(blR[blR.length-2]['Metric']).replace(/backlog/i,'').trim();
+        const lbl2 = String(blR[blR.length-1]['Metric']).replace(/backlog/i,'').trim();
+        const v1 = Number(getV(blR[blR.length-2]));
+        const v2 = Number(getV(blR[blR.length-1]));
+        const diff = v2 - v1;
+        set('wrBlPrevLabel', lbl1);
+        set('wrBlCurLabel', lbl2);
+        set('wrBlPrev', fmt(v1));
+        set('wrBlCur', fmt(v2));
+        const diffEl = document.getElementById('wrBlDiff');
+        if (diffEl) {
+          diffEl.textContent = (diff >= 0 ? '+' : '') + fmt(Math.abs(diff));
+          diffEl.className = 'wr-val ' + (diff <= 0 ? 'green' : 'red');
+        }
+      }
+
+      /* ─ Aging AC#1 ─ */
+      set('wrAc1Avg', fmtD(d.ac1Avg));
+      set('wrAc1Min', fmtD(d.ac1Min));
+      const ac1MaxEl = document.getElementById('wrAc1Max');
+      if (ac1MaxEl) {
+        ac1MaxEl.textContent = fmtD(d.ac1Max);
+        ac1MaxEl.className = 'wr-val ' + (d.ac1Max > 30 ? 'red' : d.ac1Max > 15 ? 'amber' : 'green');
+      }
+      set('wrHaeM1', fmtD(d.haeM1));
+      const ac1Alert = document.getElementById('wrAc1Alert');
+      if (ac1Alert) {
+        if (d.ac1Max > 30) {
+          ac1Alert.className = 'wr-warn red';
+          ac1Alert.textContent = `⚠️ Max Aging AC#1 สูงถึง ${fmtD(d.ac1Max)} — มีไซต์ที่ค้างนานเกินกว่า 30 วัน ต้องเร่งรัดด่วน!`;
+          ac1Alert.style.display = 'block';
+        } else if (d.ac1Max > 15) {
+          ac1Alert.className = 'wr-warn amber';
+          ac1Alert.textContent = `⚡ Max Aging AC#1 อยู่ที่ ${fmtD(d.ac1Max)} — ควรติดตามไซต์ที่ค้างนาน`;
+          ac1Alert.style.display = 'block';
+        } else if (d.ac1Avg > 0) {
+          ac1Alert.className = 'wr-warn green';
+          ac1Alert.textContent = `✅ AC#1 Aging อยู่ในเกณฑ์ปกติ (Max ${fmtD(d.ac1Max)})`;
+          ac1Alert.style.display = 'block';
+        }
+      }
+
+      /* ─ Aging AC#2 ─ */
+      set('wrAc2Avg', fmtD(d.ac2Avg));
+      set('wrAc2Min', fmtD(d.ac2Min));
+      const ac2MaxEl = document.getElementById('wrAc2Max');
+      if (ac2MaxEl) {
+        ac2MaxEl.textContent = fmtD(d.ac2Max);
+        ac2MaxEl.className = 'wr-val ' + (d.ac2Max > 45 ? 'red' : d.ac2Max > 20 ? 'amber' : 'green');
+      }
+      set('wrTmeM1', fmtD(d.tmeM1));
+      const ac2Alert = document.getElementById('wrAc2Alert');
+      if (ac2Alert) {
+        if (d.ac2Max > 45) {
+          ac2Alert.className = 'wr-warn red';
+          ac2Alert.textContent = `🚨 Max Aging AC#2 สูงถึง ${fmtD(d.ac2Max)} — ต้องเร่งรัดเอกสาร AC#2 ทันที!`;
+          ac2Alert.style.display = 'block';
+        } else if (d.ac2Max > 20) {
+          ac2Alert.className = 'wr-warn amber';
+          ac2Alert.textContent = `⚡ Max Aging AC#2 อยู่ที่ ${fmtD(d.ac2Max)} — ควรติดตามและเร่งส่งเอกสาร`;
+          ac2Alert.style.display = 'block';
+        } else if (d.ac2Avg > 0) {
+          ac2Alert.className = 'wr-warn green';
+          ac2Alert.textContent = `✅ AC#2 Aging อยู่ในเกณฑ์ดี (Max ${fmtD(d.ac2Max)})`;
+          ac2Alert.style.display = 'block';
+        }
+      }
+
+      /* ─ Smart QC ─ */
+      const qcDoneNum = parseInt(d.qcDone) || 0;
+      const qcLateNum = parseInt(d.qcLate) || 0;
+      const qcPendNum = parseInt(d.qcPend) || 0;
+      const qcTotal = qcDoneNum + qcLateNum + qcPendNum;
+      const qcRate = qcTotal > 0 ? ((qcDoneNum / qcTotal) * 100).toFixed(1) : '-';
+      set('wrQcRate', qcTotal > 0 ? qcRate + '%' : '-');
+      const qcRateEl = document.getElementById('wrQcRate');
+      if (qcRateEl && qcTotal > 0) qcRateEl.className = 'wr-val ' + (Number(qcRate) >= 80 ? 'green' : Number(qcRate) >= 60 ? 'amber' : 'red');
+      set('wrQcDone', d.qcDone || '-');
+      set('wrQcLate', d.qcLate || '-');
+      set('wrQcPend', d.qcPend || '-');
+      set('wrPatDone', d.patDone || '-');
+
+      /* ─ Action Plan List ─ */
+      const actions = [];
+      if (d.ac1Max > 30) actions.push(`🔴 เร่งรัดปิดเอกสาร AC#1 ที่ค้างเกิน 30 วัน (Max ${fmtD(d.ac1Max)}) — ต้องดำเนินการทันที`);
+      if (d.ac2Max > 45) actions.push(`🔴 เร่งรัดส่งเอกสาร AC#2 ที่ค้างเกิน 45 วัน (Max ${fmtD(d.ac2Max)}) — ตรวจสอบกับ DOC Owner`);
+      if (d.ac2Max > 20 && d.ac2Max <= 45) actions.push(`🟡 ติดตาม AC#2 Max Aging ${fmtD(d.ac2Max)} — ประสานงาน DOC Owner เพื่อเร่งเอกสาร`);
+      if (d.tmeM1 && Number(d.tmeM1) > 10) actions.push(`🟡 TME M1 Milestone Avg สูง (${fmtD(d.tmeM1)}) — ตรวจสอบคอขวดกระบวนการ M1 ฝั่ง TME`);
+      if (d.onProcess > 20) actions.push(`📋 ไซต์ On-Process ยังมี ${d.onProcess} ไซต์ — ติดตามความคืบหน้าและ SLA`);
+      if (qcLateNum > 10) actions.push(`🔍 Smart QC Done Late ${qcLateNum} ไซต์ — ตรวจสอบคุณภาพงานและ Rework ที่ค้างอยู่`);
+      if (d.backlog && Number(d.backlog) > 1000000) actions.push(`💰 Backlog ยังสูง (${fmt(d.backlog)}) — เร่งรัด Acceptance เพื่อลด Backlog`);
+      if (actions.length === 0) actions.push(`✅ ทุก KPI อยู่ในเกณฑ์ปกติ — คงรักษาความเร็วและคุณภาพงานในสัปดาห์หน้า`);
+      actions.push(`📅 Update ตัวเลขใหม่สัปดาห์หน้า (WK${Number(d.week)+1}) และ Import Excel ใหม่เพื่อรีเฟรช Dashboard`);
+
+      const ul = document.getElementById('wrActionList');
+      if (ul) ul.innerHTML = actions.map(a => `<li>${a}</li>`).join('');
+
+      /* ─ Full Thai Report Text (for Copy) ─ */
+      const blRows = (d.blRows || []).filter(r => /backlog week/i.test(String(r['Metric'])));
+      const getVraw = r => r['Value (THB)'] !== undefined ? r['Value (THB)'] : (r['Value'] || 0);
+      const blPrevLbl = blRows.length >= 2 ? String(blRows[blRows.length-2]['Metric']).replace(/backlog/i,'').trim() : 'Prev WK';
+      const blCurLbl  = blRows.length >= 2 ? String(blRows[blRows.length-1]['Metric']).replace(/backlog/i,'').trim() : 'Cur WK';
+      const blPrevVal = blRows.length >= 2 ? Number(getVraw(blRows[blRows.length-2])) : 0;
+      const blCurVal  = blRows.length >= 2 ? Number(getVraw(blRows[blRows.length-1])) : 0;
+      const blDiff    = blCurVal - blPrevVal;
+
+      const fullText = [
+        `📊 สรุปความคืบหน้าประจำสัปดาห์ที่ ${d.week} / 2026`,
+        `HAE & TME Telecom — Strategic Performance Dashboard`,
+        `════════════════════════════════════`,
+        ``,
+        `📌 ภาพรวมโครงการ (Overall Progress)`,
+        `• Completed: ${d.completed > 0 ? d.completed + ' ไซต์' : '-'}  |  On Process: ${d.onProcess > 0 ? d.onProcess + ' ไซต์' : '-'}  |  Total: ${total > 0 ? total + ' ไซต์' : '-'}`,
+        `• ความคืบหน้ารวม: ${fmtPct(pct)}  |  HAE ${d.haeCount} ไซต์  ·  TME ${d.tmeCount} ไซต์`,
+        ``,
+        `💰 ตัวเลขการเงิน (Financial KPI)`,
+        `• Estimated Final Income: ${fmt(d.income)}`,
+        `• Remaining Backlog: ${fmt(d.backlog)}`,
+        `• Backlog ${blPrevLbl}: ${fmt(blPrevVal)}  →  Backlog ${blCurLbl}: ${fmt(blCurVal)}  (${blDiff <= 0 ? '▼' : '▲'} ${fmt(Math.abs(blDiff))})`,
+        `• Action Plan WK${d.week}: ${fmt(d.actPlan)}`,
+        ``,
+        `⏱️ Aging Analysis`,
+        `• AC#1 — Avg: ${fmtD(d.ac1Avg)}  |  Min: ${fmtD(d.ac1Min)}  |  Max: ${fmtD(d.ac1Max)}`,
+        `• AC#2 — Avg: ${fmtD(d.ac2Avg)}  |  Min: ${fmtD(d.ac2Min)}  |  Max: ${fmtD(d.ac2Max)}`,
+        `• HAE M1 Milestone Avg: ${fmtD(d.haeM1)}  |  TME M1 Milestone Avg: ${fmtD(d.tmeM1)}`,
+        d.ac1Max > 30 ? `⚠️ Max Aging AC#1 สูงถึง ${fmtD(d.ac1Max)} — ต้องเร่งรัดด่วน!` : '',
+        d.ac2Max > 45 ? `🚨 Max Aging AC#2 สูงถึง ${fmtD(d.ac2Max)} — ต้องดำเนินการทันที!` : '',
+        ``,
+        `✅ Smart QC`,
+        `• Pass Rate: ${qcTotal > 0 ? qcRate + '%' : '-'}  |  Done in SLA: ${d.qcDone || '-'}  |  Done Late: ${d.qcLate || '-'}  |  Pending: ${d.qcPend || '-'}`,
+        `• PAT Subcon Done in SLA: ${d.patDone || '-'}`,
+        ``,
+        `🎯 Action Plan สัปดาห์หน้า (WK${Number(d.week)+1})`,
+        ...actions.map(a => `• ${a.replace(/^[🔴🟡📋🔍💰✅📅]/u, '').trim()}`),
+        ``,
+        `────────────────────────────────────`,
+        `Auto-generated by Strategic Performance Dashboard · ${new Date().toLocaleDateString('th-TH', {year:'numeric',month:'long',day:'numeric'})}`,
+      ].filter(l => l !== '').join('\n');
+
+      const ftEl = document.getElementById('wrFullText');
+      if (ftEl) { ftEl.textContent = fullText; ftEl.style.display = 'block'; }
+
+      /* ─ Save weekly report IDs ─ */
+      const wrIDs = ['wrWeekLabel','wrImportTime','wrCompleted','wrOnProcess','wrTotal','wrPctDone','wrHaeTme',
+        'wrIncome','wrBacklog','wrActPlan','wrBlPrev','wrBlCur','wrBlDiff','wrBlPrevLabel','wrBlCurLabel',
+        'wrAc1Avg','wrAc1Min','wrAc1Max','wrHaeM1',
+        'wrAc2Avg','wrAc2Min','wrAc2Max','wrTmeM1',
+        'wrQcRate','wrQcDone','wrQcLate','wrQcPend','wrPatDone','wrActionList','wrFullText'];
+      try {
+        const wrState = {};
+        wrIDs.forEach(id => { const el = document.getElementById(id); if(el) wrState[id] = el.tagName==='UL' ? el.innerHTML : (el.tagName==='DIV' ? el.innerHTML : el.textContent); });
+        wrState['wrCardVisible'] = 'true';
+        wrState['wrAc1AlertHTML'] = document.getElementById('wrAc1Alert')?.innerHTML || '';
+        wrState['wrAc1AlertDisplay'] = document.getElementById('wrAc1Alert')?.style.display || 'none';
+        wrState['wrAc1AlertClass'] = document.getElementById('wrAc1Alert')?.className || '';
+        wrState['wrAc2AlertHTML'] = document.getElementById('wrAc2Alert')?.innerHTML || '';
+        wrState['wrAc2AlertDisplay'] = document.getElementById('wrAc2Alert')?.style.display || 'none';
+        wrState['wrAc2AlertClass'] = document.getElementById('wrAc2Alert')?.className || '';
+        localStorage.setItem('weeklyReport2026_v1', JSON.stringify(wrState));
+      } catch(e) {}
+    }
+
+    /* Copy weekly report to clipboard */
+    function copyWeeklyReport() {
+      const ft = document.getElementById('wrFullText');
+      if (!ft) return;
+      navigator.clipboard.writeText(ft.textContent).then(() => {
+        const btn = document.querySelector('.wr-copy-btn');
+        if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => { btn.textContent = '📋 Copy รายงาน'; }, 2000); }
+      }).catch(() => {
+        const range = document.createRange();
+        range.selectNodeContents(ft);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+      });
+    }
 
     // Restore state from LocalStorage on load
     window.addEventListener('DOMContentLoaded', () => {
@@ -3397,6 +3862,35 @@
         // Show Save button since we have previously imported data
         document.getElementById('btnSave').classList.add('show');
       }
+      /* ─── Restore Weekly Report Card ─── */
+      try {
+        const wrSaved = localStorage.getItem('weeklyReport2026_v1');
+        if (wrSaved) {
+          const wrState = JSON.parse(wrSaved);
+          if (wrState['wrCardVisible'] === 'true') {
+            const card = document.getElementById('weeklyReportCard');
+            if (card) card.style.display = 'block';
+            const wrIDs = ['wrWeekLabel','wrImportTime','wrCompleted','wrOnProcess','wrTotal','wrPctDone','wrHaeTme',
+              'wrIncome','wrBacklog','wrActPlan','wrBlPrev','wrBlCur','wrBlDiff','wrBlPrevLabel','wrBlCurLabel',
+              'wrAc1Avg','wrAc1Min','wrAc1Max','wrHaeM1',
+              'wrAc2Avg','wrAc2Min','wrAc2Max','wrTmeM1',
+              'wrQcRate','wrQcDone','wrQcLate','wrQcPend','wrPatDone','wrFullText'];
+            wrIDs.forEach(id => {
+              const el = document.getElementById(id);
+              if (el && wrState[id] !== undefined) {
+                if (el.tagName === 'DIV') el.innerHTML = wrState[id];
+                else el.textContent = wrState[id];
+              }
+            });
+            const wrul = document.getElementById('wrActionList');
+            if (wrul && wrState['wrActionList']) wrul.innerHTML = wrState['wrActionList'];
+            const a1 = document.getElementById('wrAc1Alert');
+            if (a1 && wrState['wrAc1AlertHTML']) { a1.innerHTML = wrState['wrAc1AlertHTML']; a1.style.display = wrState['wrAc1AlertDisplay']; a1.className = wrState['wrAc1AlertClass']; }
+            const a2 = document.getElementById('wrAc2Alert');
+            if (a2 && wrState['wrAc2AlertHTML']) { a2.innerHTML = wrState['wrAc2AlertHTML']; a2.style.display = wrState['wrAc2AlertDisplay']; a2.className = wrState['wrAc2AlertClass']; }
+          }
+        }
+      } catch(e) { console.error('Restore weekly report error:', e); }
     });
 
     /* ═══════════════════════════════════════════════
