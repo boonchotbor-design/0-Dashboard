@@ -3512,8 +3512,9 @@
               window.docChart.data.datasets[1].data = [ac1Done, ac2Done];
               window.docChart.update();
               // Update Avg Aging labels from Part 3
-              if (ac1row && ac1row['Avg Aging']) setBadge('docAc1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
-              if (ac2row && ac2row['Avg Aging']) setBadge('docAc2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
+              const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+              if (ac1row && ac1row['Avg Aging']) setEl('docAc1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
+              if (ac2row && ac2row['Avg Aging']) setEl('docAc2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
               // Compute Remain = sumAB - ac1Amt - ac2Amt (using SO Total from 2026 column AB)
               const sumAB = (() => {
                 if (!s26Rows || s26HeaderRow < 0) return 0;
@@ -3525,7 +3526,7 @@
                 return t;
               })();
               const remain = sumAB - ac1Amt - ac2Amt;
-              setBadge('docRemainSO', remain > 0 ? fmtBaht(remain) : '-');
+              setEl('docRemainSO', remain > 0 ? fmtBaht(remain) : '-');
             }
           }
           if (p1.length || raw2026) {
