@@ -3392,11 +3392,9 @@
                 if (!m) continue;
                 
                 let wt = 'Other';
-                if (s26WorkTypeIdx > -1) {
-                    const wtRaw = String(row[s26WorkTypeIdx] || '').trim();
-                    const typeMatch = peTypes.find(t => t.match.test(wtRaw));
-                    if (typeMatch) wt = typeMatch.label;
-                }
+                const rowString = Object.values(row).join(' ');
+                const typeMatch = peTypes.find(t => t.match.test(rowString));
+                if (typeMatch) wt = typeMatch.label;
                 if (wt === 'Other') continue; // only show the requested types
 
                 const k = m.label + '|' + wt;
