@@ -3377,9 +3377,9 @@
                 { nameMatch: /palagon/i, label: 'Palagon Prommueangma' }
               ];
               const peTypes = [
-                { match: /HAE-MBB/i, label: 'HAE-MBB' },
-                { match: /TME-IPRAN/i, label: 'TME-IPRAN' },
-                { match: /TME-MBB/i, label: 'TME-MBB' },
+                { match: /(?=.*HAE)(?=.*MBB)|HAE-MBB/i, label: 'HAE-MBB' },
+                { match: /IPRAN/i, label: 'TME-IPRAN' },
+                { match: /(?=.*TME)(?=.*MBB)|TME-MBB/i, label: 'TME-MBB' },
                 { match: /BAT(E|TE)RRY|BATT/i, label: 'TME-BATTERY' }
               ];
               const peStats2 = {}; // key: "ownerLabel|typeLabel"
@@ -3391,11 +3391,19 @@
                 const m = peOwnerDefs2.find(d => d.nameMatch.test(pName));
                 if (!m) continue;
                 
-                let wt = 'Other';
+                let wt = '';
                 const rowString = Object.values(row).join(' ');
                 const typeMatch = peTypes.find(t => t.match.test(rowString));
-                if (typeMatch) wt = typeMatch.label;
-                if (wt === 'Other') continue; // only show the requested types
+                if (typeMatch) {
+                    wt = typeMatch.label;
+                } else if (/MBB/i.test(rowString)) {
+                    wt = m.label.includes('Adisak') ? 'HAE-MBB' : 'TME-MBB';
+                } else {
+                    if (s26WorkTypeIdx > -1) {
+                        wt = String(row[s26WorkTypeIdx] || '').trim();
+                    }
+                    if (!wt) wt = 'Other';
+                }
 
                 const k = m.label + '|' + wt;
                 if (!peStats2[k]) peStats2[k] = { owner: m.label, type: wt, sites: 0, ms1Ages: [], ms2Ages: [] };
