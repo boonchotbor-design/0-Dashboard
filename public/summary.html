@@ -1393,10 +1393,10 @@
           HAE</div>
         <div class="prog-item">
           <div class="prog-header"><span class="label">🔵 HAE-MBB</span><span class="val"><span
-                style="color:var(--text-muted);font-weight:400;margin-right:6px;">119 sites</span>2,100,030 ฿</span>
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;" id="ppHaeMbbSites">119 sites</span><span id="ppHaeMbbAmt">2,100,030 ฿</span></span>
           </div>
           <div class="prog-bar">
-            <div class="prog-fill" style="width:85%;--fill-color:#3b82f6"></div>
+            <div class="prog-fill" id="ppHaeMbbBar" style="width:85%;--fill-color:#3b82f6"></div>
           </div>
         </div>
         <div
@@ -1404,31 +1404,31 @@
           TME</div>
         <div class="prog-item">
           <div class="prog-header"><span class="label">🟣 TME-MBB</span><span class="val"><span
-                style="color:var(--text-muted);font-weight:400;margin-right:6px;">11 sites</span>104,547 ฿</span></div>
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;" id="ppTmeMbbSites">11 sites</span><span id="ppTmeMbbAmt">104,547 ฿</span></span></div>
           <div class="prog-bar">
-            <div class="prog-fill" style="width:43%;--fill-color:#8b5cf6"></div>
+            <div class="prog-fill" id="ppTmeMbbBar" style="width:43%;--fill-color:#8b5cf6"></div>
           </div>
         </div>
         <div class="prog-item">
           <div class="prog-header"><span class="label">🟡 TME-IPRAN</span><span class="val"><span
-                style="color:var(--text-muted);font-weight:400;margin-right:6px;">54 sites</span>100,000 ฿</span></div>
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;" id="ppTmeIpranSites">54 sites</span><span id="ppTmeIpranAmt">100,000 ฿</span></span></div>
           <div class="prog-bar">
-            <div class="prog-fill" style="width:30%;--fill-color:#f59e0b"></div>
+            <div class="prog-fill" id="ppTmeIpranBar" style="width:30%;--fill-color:#f59e0b"></div>
           </div>
         </div>
         <div class="prog-item">
           <div class="prog-header"><span class="label">🔴 TME-BATTERY</span><span class="val"><span
-                style="color:var(--text-muted);font-weight:400;margin-right:6px;">12 sites</span>40,445 ฿</span></div>
+                style="color:var(--text-muted);font-weight:400;margin-right:6px;" id="ppTmeBattSites">12 sites</span><span id="ppTmeBattAmt">40,445 ฿</span></span></div>
           <div class="prog-bar">
-            <div class="prog-fill" style="width:17%;--fill-color:#ef4444"></div>
+            <div class="prog-fill" id="ppTmeBattBar" style="width:17%;--fill-color:#ef4444"></div>
           </div>
         </div>
         <div
           style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.72rem;">
           <span style="color:var(--text-muted)" id="totalSitesText">Total Sites <strong
-              style="color:var(--text-primary)">208</strong></span>
-          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6">130</strong>
-            · TME <strong style="color:#8b5cf6">77</strong></span>
+              style="color:var(--text-primary)" id="ppTotalSites">208</strong></span>
+          <span style="color:var(--text-muted)" id="projectBreakdownText">HAE <strong style="color:#3b82f6" id="ppTotalHae">130</strong>
+            · TME <strong style="color:#8b5cf6" id="ppTotalTme">77</strong></span>
         </div>
       </div>
 
@@ -3529,6 +3529,109 @@
             setUI('dtlAC2Total', fmtB((Number(vAc223)||0)+(Number(vAc224)||0)+(Number(vAc225)||0)+(Number(vAc226)||0)));
 
           } // end if (p4.length)
+
+          /* ─── Parse 2026 Sheet for Portfolio Performance & Financial Health (COMPLETED sites) ─── */
+          const sheet2026 = wb.Sheets['2026'];
+          if (sheet2026) {
+            const data2026 = XLSX.utils.sheet_to_json(sheet2026, { header: 1, defval: '' });
+            let headerIdx = -1;
+            for(let i=0; i<10; i++){
+                if(data2026[i] && (data2026[i].includes('STATUS WORK') || data2026[i].includes('Status') || data2026[i].includes('SITE_ID') || data2026[i].includes('Site ID'))){
+                    headerIdx = i; break;
+                }
+            }
+            
+            if (headerIdx > -1) {
+              const headers = data2026[headerIdx];
+              const rows = data2026.slice(headerIdx + 1);
+              
+              const getColIdx = (names) => {
+                  for(let n of names) {
+                      let idx = headers.findIndex(h => typeof h === 'string' && h.toUpperCase() === n.toUpperCase());
+                      if(idx > -1) return idx;
+                  }
+                  for(let n of names) {
+                      let idx = headers.findIndex(h => typeof h === 'string' && h.toUpperCase().includes(n.toUpperCase()));
+                      if(idx > -1) return idx;
+                  }
+                  return -1;
+              };
+              
+              const statusCol = getColIdx(['STATUS WORK', 'STATUS']);
+              const projectCol = getColIdx(['PROJECT']);
+              const typeCol = getColIdx(['WORK TYPE', 'WORK_TYPE', 'TYPE']);
+              const incomeCol = getColIdx(['ESTIMATE FINAL INCOME']);
+              const arCol = getColIdx(['AR']);
+              const apCol = getColIdx(['AP']);
+              const remainCol = getColIdx(['REMAIN']);
+              
+              let stats = {};
+              let finCompleted = { income: 0, ar: 0, ap: 0, remain: 0 };
+              
+              for (let r of rows) {
+                  if (!r || r.length === 0) continue;
+                  let status = statusCol > -1 ? String(r[statusCol] || '').toUpperCase().trim() : '';
+                  let proj = projectCol > -1 ? String(r[projectCol] || '').toUpperCase().trim() : '';
+                  let typ = typeCol > -1 ? String(r[typeCol] || '').toUpperCase().trim() : '';
+                  
+                  let inc = parseFloat(r[incomeCol]) || 0;
+                  let ar = parseFloat(r[arCol]) || 0;
+                  let ap = parseFloat(r[apCol]) || 0;
+                  let rem = parseFloat(r[remainCol]) || 0;
+                  
+                  let key = proj + '-' + typ;
+                  if (key === '-') key = 'UNKNOWN';
+                  if (!stats[key]) stats[key] = { totalSites: 0, completedSites: 0, totalIncome: 0, completedIncome: 0 };
+                  
+                  stats[key].totalSites++;
+                  stats[key].totalIncome += inc;
+                  
+                  if (status === 'COMPLETED') {
+                      stats[key].completedSites++;
+                      stats[key].completedIncome += inc;
+                      
+                      finCompleted.income += inc;
+                      finCompleted.ar += ar;
+                      finCompleted.ap += ap;
+                      finCompleted.remain += rem;
+                  }
+              }
+              
+              // 1. Update Portfolio Performance (Picture 1) using COMPLETED counts & income
+              const updatePP = (key, siteId, amtId, barId) => {
+                  if (stats[key]) {
+                      const s = stats[key];
+                      setUI(siteId, s.completedSites + ' sites');
+                      setUI(amtId, fmtBaht(s.completedIncome));
+                  } else {
+                      setUI(siteId, '0 sites');
+                      setUI(amtId, '0 ฿');
+                  }
+              };
+              
+              updatePP('HAE-MBB', 'ppHaeMbbSites', 'ppHaeMbbAmt', 'ppHaeMbbBar');
+              updatePP('TME-MBB', 'ppTmeMbbSites', 'ppTmeMbbAmt', 'ppTmeMbbBar');
+              updatePP('TME-IPRAN', 'ppTmeIpranSites', 'ppTmeIpranAmt', 'ppTmeIpranBar');
+              updatePP('TME-BATERRY', 'ppTmeBattSites', 'ppTmeBattAmt', 'ppTmeBattBar'); // Note: 'BATERRY' spelling based on dump
+              
+              let totalSites = 0, totalHae = 0, totalTme = 0;
+              Object.keys(stats).forEach(k => {
+                  const comp = stats[k].completedSites;
+                  totalSites += comp;
+                  if (k.startsWith('HAE')) totalHae += comp;
+                  if (k.startsWith('TME')) totalTme += comp;
+              });
+              setUI('ppTotalSites', totalSites);
+              setUI('ppTotalHae', totalHae);
+              setUI('ppTotalTme', totalTme);
+              
+              // 2. Update Financial Health Overview (Picture 2) using COMPLETED only
+              setUI('finIncome', fmtBaht(finCompleted.income));
+              setUI('finAR', fmtBaht(finCompleted.ar));
+              setUI('finAP', fmtBaht(finCompleted.ap));
+              setUI('finBacklog', fmtBaht(finCompleted.remain));
+            }
+          }
 
           /* ─── Update Charts dynamically ─── */
 
