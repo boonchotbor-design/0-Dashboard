@@ -1863,6 +1863,118 @@
         </table>
       </div>
 
+      <!-- Card: SLA Onprocess TRUE -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon" style="--card-icon-bg:rgba(239,68,68,.15)">🚨</span>
+          SLA On-Process TRUE
+        </div>
+
+        <!-- EXECUTIVE SUMMARY -->
+        <div style="display:flex; gap: 12px; margin-bottom: 20px;">
+          <div
+            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">SMART QC SUMMARY</div>
+            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
+                id="sumQcDoneTrue">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
+                id="sumQcLateTrue">-</span></div>
+            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
+                id="sumQcPendTrue">-</span></div>
+            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
+                id="sumQcOverTrue">-</span></div>
+          </div>
+          <div
+            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">PAT SUBCON SUMMARY</div>
+            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
+                id="sumPatDoneTrue">-</span></div>
+            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
+                id="sumPatLateTrue">-</span></div>
+            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
+                id="sumPatPendTrue">-</span></div>
+            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
+                id="sumPatOverTrue">-</span></div>
+          </div>
+        </div>
+
+        <!-- SMART QC -->
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Action Required: SMART QC</div>
+        <table class="dash-table" style="margin-bottom: 16px;">
+          <thead>
+            <tr>
+              <th>Site DUID</th>
+              <th style="width: 50px;">Aging</th>
+            </tr>
+          </thead>
+          <tbody id="slaSmartQcBodyTrue">
+            <tr>
+              <td style="color:var(--text-primary); font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Ph1_EXP_ER</td>
+              <td><span class="badge badge-amber">3d</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- PAT SUBCON -->
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Action Required: PAT SUBCON</div>
+        <table class="dash-table" style="margin-bottom: 16px;">
+          <thead>
+            <tr>
+              <th>Site DUID</th>
+              <th style="width: 50px;">Aging</th>
+            </tr>
+          </thead>
+          <tbody id="slaPatSubconBodyTrue">
+            <tr>
+              <td colspan="2"
+                style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites
+                are up to date 🎉</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- PAT NOT PASS -->
+        <div
+          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+          Rework Required: PAT NOT PASS</div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Site DUID</th>
+              <th style="width: 50px;">Aging</th>
+              <th>Assign</th>
+            </tr>
+          </thead>
+          <tbody id="slaReworkBodyTrue">
+            <tr>
+              <td style="color:#ef4444; font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Modernize_EXP_ER</td>
+              <td><span class="badge badge-amber">1d</span></td>
+              <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
+            </tr>
+            <tr>
+              <td style="color:#ef4444; font-size: 0.72rem;">BUNAM_2026 Capacity Expansion Modernize_EXP_ER</td>
+              <td><span class="badge badge-amber">1d</span></td>
+              <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
+            </tr>
+            <tr>
+              <td style="color:#ef4444; font-size: 0.72rem;">OTCPM_2026 Capacity Expansion Modernize_EXP_ER</td>
+              <td><span class="badge badge-amber">4d</span></td>
+              <td style="color:var(--accent-green); font-size: 0.72rem;">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
+            </tr>
+            <tr>
+              <td style="color:#ef4444; font-size: 0.72rem;">SEAHM_2026 Capacity Expansion Modernize_EXP_ER</td>
+              <td><span class="badge badge-amber">1d</span></td>
+              <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
       <!-- Card: SLA Onprocess AIS -->
       <div class="card">
         <div class="card-title">
@@ -1975,119 +2087,7 @@
       </div>
 
 
-<!-- Card: SLA Onprocess TRUE -->
-      <div class="card">
-        <div class="card-title">
-          <span class="icon" style="--card-icon-bg:rgba(239,68,68,.15)">🚨</span>
-          SLA On-Process TRUE
-        </div>
-
-        <!-- EXECUTIVE SUMMARY -->
-        <div style="display:flex; gap: 12px; margin-bottom: 20px;">
-          <div
-            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
-            <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">SMART QC SUMMARY</div>
-            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
-                id="sumQcDoneTrue">-</span></div>
-            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
-                id="sumQcLateTrue">-</span></div>
-            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
-                id="sumQcPendTrue">-</span></div>
-            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
-                id="sumQcOverTrue">-</span></div>
-          </div>
-          <div
-            style="flex:1; background:rgba(255,255,255,0.03); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
-            <div style="font-size:.7rem; color:#94a3b8; font-weight:600; margin-bottom: 8px;">PAT SUBCON SUMMARY</div>
-            <div class="fin-row"><span class="fin-label">Done in SLA</span><span class="fin-val green"
-                id="sumPatDoneTrue">-</span></div>
-            <div class="fin-row"><span class="fin-label">Done Late</span><span class="fin-val amber"
-                id="sumPatLateTrue">-</span></div>
-            <div class="fin-row"><span class="fin-label">Pending</span><span class="fin-val" style="color:#93c5fd"
-                id="sumPatPendTrue">-</span></div>
-            <div class="fin-row"><span class="fin-label">Over SLA</span><span class="fin-val" style="color:#ef4444"
-                id="sumPatOverTrue">-</span></div>
-          </div>
-        </div>
-
-        <!-- SMART QC -->
-        <div
-          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
-          Action Required: SMART QC</div>
-        <table class="dash-table" style="margin-bottom: 16px;">
-          <thead>
-            <tr>
-              <th>Site DUID</th>
-              <th style="width: 50px;">Aging</th>
-            </tr>
-          </thead>
-          <tbody id="slaSmartQcBodyTrue">
-            <tr>
-              <td style="color:var(--text-primary); font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Ph1_EXP_ER</td>
-              <td><span class="badge badge-amber">3d</span></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- PAT SUBCON -->
-        <div
-          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
-          Action Required: PAT SUBCON</div>
-        <table class="dash-table" style="margin-bottom: 16px;">
-          <thead>
-            <tr>
-              <th>Site DUID</th>
-              <th style="width: 50px;">Aging</th>
-            </tr>
-          </thead>
-          <tbody id="slaPatSubconBodyTrue">
-            <tr>
-              <td colspan="2"
-                style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites
-                are up to date 🎉</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- PAT NOT PASS -->
-        <div
-          style="font-size: .75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
-          Rework Required: PAT NOT PASS</div>
-        <table class="dash-table">
-          <thead>
-            <tr>
-              <th>Site DUID</th>
-              <th style="width: 50px;">Aging</th>
-              <th>Assign</th>
-            </tr>
-          </thead>
-          <tbody id="slaReworkBodyTrue">
-            <tr>
-              <td style="color:#ef4444; font-size: 0.72rem;">NOGKM_2026 Capacity Expansion Modernize_EXP_ER</td>
-              <td><span class="badge badge-amber">1d</span></td>
-              <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
-            </tr>
-            <tr>
-              <td style="color:#ef4444; font-size: 0.72rem;">BUNAM_2026 Capacity Expansion Modernize_EXP_ER</td>
-              <td><span class="badge badge-amber">1d</span></td>
-              <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
-            </tr>
-            <tr>
-              <td style="color:#ef4444; font-size: 0.72rem;">OTCPM_2026 Capacity Expansion Modernize_EXP_ER</td>
-              <td><span class="badge badge-amber">4d</span></td>
-              <td style="color:var(--accent-green); font-size: 0.72rem;">น.ส. หทัยรัตน์ สิงห์แก้ว</td>
-            </tr>
-            <tr>
-              <td style="color:#ef4444; font-size: 0.72rem;">SEAHM_2026 Capacity Expansion Modernize_EXP_ER</td>
-              <td><span class="badge badge-amber">1d</span></td>
-              <td style="color:var(--accent-green); font-size: 0.72rem;">Apichart Kampuang</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-
-      <!-- Work Type Analysis -->
+<!-- Work Type Analysis -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">🧩</span>
