@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strategic Performance Dashboard 2026 | Week 26</title>
+  <title>Strategic Performance Dashboard 2026 | Week 36</title>
   <meta name="description" content="Real-time project performance dashboard for HAE & TME projects 2026" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1113,7 +1113,7 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="week-badge" id="weekBadge" contenteditable="true" spellcheck="false" title="Click to edit">WEEK 26
+        <span class="week-badge" id="weekBadge" contenteditable="true" spellcheck="false" title="Click to edit">WEEK 36
           · 2026</span>
         <span class="live-dot">LIVE</span>
         <div class="toolbar">
@@ -1315,15 +1315,15 @@
         </div>
       </div>
 
-      <!-- Backlog Week 26 VS Backlog Week 27 -->
+      <!-- Backlog Week 35 VS Backlog Week 36 -->
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">⚖️</span>
-          <span id="blWkLabel">Backlog Week 26 VS Week 27</span>
+          <span id="blWkLabel">Backlog Week 35 VS Week 36</span>
         </div>
-        <div class="fin-row"><span class="fin-label" id="blWk1Label">Week 26</span><span class="fin-val amber"
+        <div class="fin-row"><span class="fin-label" id="blWk1Label">Week 35</span><span class="fin-val amber"
             id="blWk1Val">-</span></div>
-        <div class="fin-row"><span class="fin-label" id="blWk2Label">Week 27</span><span class="fin-val amber"
+        <div class="fin-row"><span class="fin-label" id="blWk2Label">Week 36</span><span class="fin-val amber"
             id="blWk2Val">-</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
           <span class="fin-label" style="font-weight:600;color:#fcd34d">Difference</span>
@@ -1611,8 +1611,8 @@
       </div>
     </div>
 
-    <!-- ── SO WEEK 27 VS WEEK 28 (Sheet1) ── -->
-    <p class="section-title" id="soSectionTitle">📊 SO WEEK 27 VS WEEK 28</p>
+    <!-- ── SO WEEK 35 VS WEEK 36 (Sheet1) ── -->
+    <p class="section-title" id="soSectionTitle">📊 SO WEEK 35 VS WEEK 36</p>
     <div class="card" style="margin-bottom:28px">
       <div class="card-title">
         <span class="icon" style="--card-icon-bg:rgba(139,92,246,.15)">⚖️</span>
@@ -2200,7 +2200,7 @@
     <!-- Footer -->
     <footer
       style="text-align:center;padding:20px 0;color:var(--text-muted);font-size:.72rem;border-top:1px solid var(--border);margin-top:8px">
-      Strategic Performance Dashboard · Week 27, 2026 · Auto-generated from live data
+      Strategic Performance Dashboard · Week 36, 2026 · Auto-generated from live data
     </footer>
 
   </div><!-- /container -->
@@ -2337,7 +2337,7 @@
           }
 
           let importedSheets = [];
-          let reportWeek = 28;
+          let reportWeek = 36;
 
           /* ─── Part 1 - Overview ─── */
           const p1 = getSheet('Part 1 - Overview');
@@ -2345,7 +2345,7 @@
             importedSheets.push('Part 1');
             const week = findMetric(p1, 'report week', 'Value');
             if (week) {
-              reportWeek = parseInt(week) || 28;
+              reportWeek = parseInt(week) || 36;
               document.getElementById('weekBadge').textContent = `WEEK ${week} · 2026`;
             }
 
@@ -2666,111 +2666,43 @@
             }
 
 
-          /* ─── Part 7 - SLA On-Process ─── */
+          /* ─── Part 7 - SLA On-Process (AIS & TRUE) ─── */
+            const parseSlaSheet = (sheetName,
+                qcDoneId, qcLateId, qcPendId, qcOverId,
+                patDoneId, patLateId, patPendId, patOverId,
+                smartQcTbodyId, patSubconTbodyId, reworkTbodyId) => {
+              if (!sheetName || !wb.Sheets[sheetName]) return;
+              if (!importedSheets.includes('Part 7')) importedSheets.push('Part 7');
+              const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, defval: '' });
 
-            const p7Name = wb.SheetNames.find(n => {
-              const normalized = n.toUpperCase().replace(/[\s-_]+/g, '');
-              return normalized.includes('PART7') || normalized.includes('SLAONPROCESS');
-            });
-            const p7 = p7Name ? wb.Sheets[p7Name] : null;
-            if (p7) {
-              importedSheets.push('Part 7');
-              const p7Rows = XLSX.utils.sheet_to_json(p7, { header: 1, defval: '' });
-
+              // Find column positions for each section header
+              let sqSite = -1, sqAge = -1;
+              let paSite = -1, paAge = -1, paOwn = -1;
+              let rwSite = -1, rwAge = -1, rwOwn = -1;
               let startRow = -1;
-              let colBIndex = 1;
-              for (let i = 0; i < p7Rows.length; i++) {
-                const row = p7Rows[i];
-                if (row) {
-                  const idx = row.findIndex(cell => {
-                    const val = String(cell || '').toUpperCase().replace(/\s+/g, ' ');
-                    return val.includes('SITE DUID') || val.includes('SITE_DUID');
-                  });
-                  if (idx >= 0) {
-                    colBIndex = idx;
-                    startRow = i + 1;
-                    break;
-                  }
-                }
-              }
 
-              if (startRow === -1) {
-                startRow = Math.min(28, p7Rows.length);
-              }
-
-              const parseSlaColumn = (siteCol, agingCol, ownerCol) => {
-                const result = [];
-                for (let i = startRow; i < p7Rows.length; i++) {
-                  const row = p7Rows[i];
-                  if (!row) continue;
-                  const site = String(row[siteCol] || '').trim();
-                  if (!site) continue; 
-
-                  if (site.toLowerCase().includes('all sites are up to date') || site.toLowerCase().includes('up to date')) {
-                    result.push({ site: site, upToDate: true });
-                    break;
-                  }
-
-                  let aging = String(row[agingCol] || '').trim();
-                  aging = aging.replace(/\s*วัน\s*/g, 'd');
-                  if (aging && !isNaN(aging)) aging = aging + 'd';
-                  if (!aging) aging = '-';
-
-                  const owner = ownerCol !== undefined ? String(row[ownerCol] || '').trim() : '';
-                  result.push({ site, aging, owner });
-                }
-                return result;
-              };
-
-              let smartQcSite = -1, smartQcAging = -1;
-              let patSite = -1, patAging = -1, patOwner = -1;
-              let reworkSite = -1, reworkAging = -1, reworkOwner = -1;
-
-              for (let i = 0; i < Math.min(30, p7Rows.length); i++) {
-                const row = p7Rows[i];
-                if (!row) continue;
+              for (let i = 0; i < Math.min(30, rows.length); i++) {
+                const row = rows[i]; if (!row) continue;
                 for (let c = 0; c < row.length; c++) {
                   const val = String(row[c] || '').toUpperCase().replace(/\s+/g, ' ');
-                  if (val.includes('SMART QC')) {
-                    smartQcSite = c;
-                    smartQcAging = c + 1;
-                  }
-                  if (val.includes('PAT SUBCON')) {
-                    patSite = c;
-                    patAging = c + 1;
-                    patOwner = c + 2;
-                  }
-                  if (val.includes('REWORK REQUIRED') || val.includes('PAT NOT PASS')) {
-                    reworkSite = c;
-                    reworkAging = c + 1;
-                    reworkOwner = c + 2;
-                  }
+                  if (val.includes('ACTION REQUIRED') && val.includes('SMART QC')) { sqSite = c; sqAge = c + 1; }
+                  if (val.includes('ACTION REQUIRED') && val.includes('PAT SUBCON')) { paSite = c; paAge = c + 1; paOwn = c + 2; }
+                  if (val.includes('REWORK REQUIRED') || val.includes('PAT NOT PASS') || val.includes('ALARM FOUND')) { rwSite = c; rwAge = c + 1; rwOwn = c + 2; }
+                  if (val.includes('SITE DUID') || val.includes('SITE_DUID')) { if (startRow === -1) startRow = i + 1; }
                 }
               }
+              // Fallback: standard column layout col 0|4|8
+              if (sqSite === -1) { sqSite = 0; sqAge = 1; }
+              if (paSite === -1) { paSite = 4; paAge = 5; paOwn = 6; }
+              if (rwSite === -1) { rwSite = 8; rwAge = 9; rwOwn = 10; }
+              if (startRow === -1) startRow = Math.min(23, rows.length);
 
-              if (smartQcSite === -1) {
-                smartQcSite = colBIndex; smartQcAging = colBIndex + 1;
-                patSite = colBIndex + 4; patAging = colBIndex + 5; patOwner = colBIndex + 6;
-                reworkSite = colBIndex + 8; reworkAging = colBIndex + 9; reworkOwner = colBIndex + 10;
-              }
-
-              const smartQcData = smartQcSite >= 0 ? parseSlaColumn(smartQcSite, smartQcAging) : [];
-              const patSubconData = patSite >= 0 ? parseSlaColumn(patSite, patAging, patOwner) : [];
-              const reworkData = reworkSite >= 0 ? parseSlaColumn(reworkSite, reworkAging, reworkOwner) : [];
-
-              // Part 7 structure: rows 0-1 = headers, rows 2-5 = summary data
-              // Col 0-2: SMART QC (status | count | avgAging)
-              // Col 4-6: PAT SUBCON (status | count | avgAging)
-              const slaFixedRows = p7Rows.slice(2, 6); // rows[2]=Done in SLA, [3]=Done Late, [4]=Pending, [5]=Over SLA
-
-              const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-
-              // Search-based extraction (robust format)
+              // Search-based extraction within specific colIdx
               const extractSum = (colIdx, label) => {
                 if (colIdx < 0) return '-';
-                for (let i = 0; i < Math.min(15, p7Rows.length); i++) {
-                  const r = p7Rows[i];
-                  if (r && String(r[colIdx] || '').includes(label)) {
+                for (let i = 0; i < Math.min(15, rows.length); i++) {
+                  const r = rows[i];
+                  if (r && String(r[colIdx] || '').toLowerCase().includes(label.toLowerCase())) {
                     const val = r[colIdx + 1];
                     return (val !== '' && val !== null && val !== undefined) ? String(val) : '-';
                   }
@@ -2778,47 +2710,73 @@
                 return '-';
               };
 
-              if (smartQcSite >= 0) {
-                setTxt('sumQcDone', extractSum(smartQcSite, 'Done in SLA'));
-                setTxt('sumQcLate', extractSum(smartQcSite, 'Done Late'));
-                setTxt('sumQcPend', extractSum(smartQcSite, 'Pending'));
-                setTxt('sumQcOver', extractSum(smartQcSite, 'Over SLA'));
-              }
-              if (patSite >= 0) {
-                setTxt('sumPatDone', extractSum(patSite, 'Done in SLA'));
-                setTxt('sumPatLate', extractSum(patSite, 'Done Late'));
-                setTxt('sumPatPend', extractSum(patSite, 'Pending'));
-                setTxt('sumPatOver', extractSum(patSite, 'Over SLA'));
-              }
+              const setT = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+              setT(qcDoneId,  extractSum(sqSite,  'Done in SLA'));
+              setT(qcLateId,  extractSum(sqSite,  'Done Late'));
+              setT(qcPendId,  extractSum(sqSite,  'Pending'));
+              setT(qcOverId,  extractSum(sqSite,  'Over SLA'));
+              setT(patDoneId, extractSum(paSite, 'Done in SLA'));
+              setT(patLateId, extractSum(paSite, 'Done Late'));
+              setT(patPendId, extractSum(paSite, 'Pending'));
+              setT(patOverId, extractSum(paSite, 'Over SLA'));
 
+              // Parse action-required list from startRow downward for a given column set
+              const parseCols = (siteCol, agingCol, ownerCol) => {
+                const result = [];
+                for (let i = startRow; i < rows.length; i++) {
+                  const row = rows[i]; if (!row) continue;
+                  const site = String(row[siteCol] || '').trim();
+                  if (!site) continue;
+                  if (site.toLowerCase().includes('all sites are up to date') || site.toLowerCase().includes('up to date')) {
+                    result.push({ site, upToDate: true }); break;
+                  }
+                  let aging = String(row[agingCol] || '').trim();
+                  aging = aging.replace(/\s*วัน\s*/g, 'd');
+                  if (aging && !isNaN(Number(aging))) aging = aging + 'd';
+                  if (!aging) aging = '-';
+                  const owner = ownerCol !== undefined ? String(row[ownerCol] || '').trim() : '';
+                  result.push({ site, aging, owner });
+                }
+                return result;
+              };
 
-              const renderTable = (tbodyId, data, hasOwner) => {
-                const tbody = document.getElementById(tbodyId);
-                if (!tbody) return;
+              const renderT = (tbodyId, data, hasOwner) => {
+                const tbody = document.getElementById(tbodyId); if (!tbody) return;
                 if (data.length === 0 || (data.length === 1 && data[0].upToDate)) {
-                  tbody.innerHTML = `<tr><td colspan="${hasOwner ? 3 : 2}" style="text-align: center; color: var(--text-secondary); font-style: italic; padding: 12px 0;">All sites are up to date 🎉</td></tr>`;
+                  tbody.innerHTML = `<tr><td colspan="${hasOwner ? 3 : 2}" style="text-align:center;color:var(--text-secondary);font-style:italic;padding:12px 0;">All sites are up to date 🎉</td></tr>`;
                   return;
                 }
                 let html = '';
                 data.forEach(item => {
-                  let siteColor = tbodyId === 'slaReworkBody' ? '#ef4444' : 'var(--text-primary)';
-                  const badgeColor = String(item.aging).includes('0d') ? 'badge-green' : 'badge-amber';
-                  let tr = `<tr>
-                  <td style="color:${siteColor}; font-size: 0.72rem;">${item.site}</td>
-                  <td><span class="badge ${badgeColor}">${item.aging}</span></td>`;
-                  if (hasOwner) {
-                    tr += `<td style="color:var(--accent-green); font-size: 0.72rem;">${item.owner}</td>`;
-                  }
+                  const siteColor = tbodyId.toLowerCase().includes('rework') ? '#ef4444' : 'var(--text-primary)';
+                  const agingNum = parseInt(String(item.aging));
+                  const badgeColor = (!isNaN(agingNum) && agingNum <= 0) ? 'badge-green' : 'badge-amber';
+                  let tr = `<tr><td style="color:${siteColor};font-size:0.72rem;">${item.site}</td><td><span class="badge ${badgeColor}">${item.aging}</span></td>`;
+                  if (hasOwner) tr += `<td style="color:var(--accent-green);font-size:0.72rem;">${item.owner}</td>`;
                   tr += `</tr>`;
                   html += tr;
                 });
                 tbody.innerHTML = html;
               };
 
-              renderTable('slaSmartQcBody', smartQcData, false);
-              renderTable('slaPatSubconBody', patSubconData, true);
-              renderTable('slaReworkBody', reworkData, true);
-            }
+              renderT(smartQcTbodyId, parseCols(sqSite, sqAge), false);
+              renderT(patSubconTbodyId, parseCols(paSite, paAge, paOwn), true);
+              renderT(reworkTbodyId, parseCols(rwSite, rwAge, rwOwn), true);
+            };
+
+            // AIS sheet → AIS card (LEFT)
+            const p7AisName = wb.SheetNames.find(n => /SLA On-Process AIS/i.test(n));
+            parseSlaSheet(p7AisName,
+              'sumQcDone',     'sumQcLate',     'sumQcPend',     'sumQcOver',
+              'sumPatDone',    'sumPatLate',    'sumPatPend',    'sumPatOver',
+              'slaSmartQcBody', 'slaPatSubconBody', 'slaReworkBody');
+
+            // TRUE sheet → TRUE card (RIGHT)
+            const p7TrueName = wb.SheetNames.find(n => /SLA On-Process TRUE/i.test(n));
+            parseSlaSheet(p7TrueName,
+              'sumQcDoneTrue', 'sumQcLateTrue', 'sumQcPendTrue', 'sumQcOverTrue',
+              'sumPatDoneTrue','sumPatLateTrue','sumPatPendTrue','sumPatOverTrue',
+              'slaSmartQcBodyTrue', 'slaPatSubconBodyTrue', 'slaReworkBodyTrue');
 
             if (importedSheets.length > 0) {
               try { window.backlogChart.update(); } catch (e) { }
