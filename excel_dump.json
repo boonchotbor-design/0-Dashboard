@@ -1,0 +1,433 @@
+{
+  "p1": [
+    {
+      "Slide No": "Slide 1",
+      "Slide Title": "Title Slide",
+      "Metric / Data Point": "Report Week",
+      "Value": 35,
+      "Notes / Key Message": "สรุปผลการดำเนินงานโครงการติดตั้งโครงข่ายโทรคมนาคม HAE และ TME ประจำสัปดาห์ที่ 35"
+    },
+    {
+      "Slide No": "Slide 1",
+      "Slide Title": "Executive Bottom Line",
+      "Metric / Data Point": "HAE M1 Avg",
+      "Value": 3.1363636363636362,
+      "Notes / Key Message": "หน้างานยังคงเดินหน้าอย่างรวดเร็ว แต่ระบบเอกสารยังมีปัญหาคอขวด"
+    },
+    {
+      "Slide No": "Slide 1",
+      "Slide Title": "Executive Bottom Line",
+      "Metric / Data Point": "TME M1 Avg",
+      "Value": 15.820224719101123,
+      "Notes / Key Message": "ข้อมูลดิบอาจมีความคลาดเคลื่อนในระบบ"
+    },
+    {
+      "Slide No": "Slide 2",
+      "Slide Title": "Portfolio Performance Snapshot",
+      "Metric / Data Point": "Overall Progress",
+      "Value": "",
+      "Notes / Key Message": "สัดส่วนของ HAE และ TME ในพอร์ตโฟลิโอทั้งหมด"
+    },
+    {
+      "Slide No": "Slide 2",
+      "Slide Title": "Smart QC Overview",
+      "Metric / Data Point": "Pass Rate",
+      "Value": "",
+      "Notes / Key Message": "อัตราการผ่านการตรวจสอบคุณภาพเปรียบเทียบสองโครงการ"
+    },
+    {
+      "Slide No": "Slide 2",
+      "Slide Title": "Operation Error & Defect Analysis",
+      "Metric / Data Point": "Defect Issue 1",
+      "Value": "",
+      "Notes / Key Message": "การขาดอุปกรณ์ป้องกัน PPE / ส่งข้อมูลไม่ครบ"
+    },
+    {
+      "Slide No": "Slide 2",
+      "Slide Title": "Improvement Plan for On-Site Quality",
+      "Metric / Data Point": "Action Plan",
+      "Value": "",
+      "Notes / Key Message": "บูรณาการ AIS SPE Standards อย่างเคร่งครัด"
+    }
+  ],
+  "p4": [
+    {
+      "Slide No": "Slide 12",
+      "Slide Title": "Financial Health Overview",
+      "Metric": "Estimate Final Income",
+      "Value (THB)": 5148057.4,
+      "Notes": "ภาพรวมรายได้ประมาณการ",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 12",
+      "Slide Title": "AR vs AP (Economic Efficiency)",
+      "Metric": "AR (Commerce)",
+      "Value (THB)": 1916244.0599999987,
+      "Notes": "วิเคราะห์ส่วนต่าง (Margin)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 12",
+      "Slide Title": "AR vs AP (Economic Efficiency)",
+      "Metric": "AP (Payment)",
+      "Value (THB)": 540628.5,
+      "Notes": "สถานะการเบิกจ่าย Subcontractors",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 12",
+      "Slide Title": "Unfulfilled Revenue (Remain)",
+      "Metric": "Remain to Claim",
+      "Value (THB)": 2691184.8400000017,
+      "Notes": "เม็ดเงินที่หายไปชั่วคราว",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 13",
+      "Slide Title": "Backlog Backlog Week 34 VS Backlog Week 35",
+      "Metric": "Backlog Week 34",
+      "Value (THB)": 1529546.0599999987,
+      "Notes": "เปรียบเทียบเป้าหมายการเก็บเงินระหว่างสัปดาห์",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 13",
+      "Slide Title": "Backlog Backlog Week 34 VS Backlog Week 35",
+      "Metric": "Backlog Week 35",
+      "Value (THB)": 1563489.43,
+      "Notes": "กราฟเส้นแนวโน้มยอดคงค้าง",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 14",
+      "Slide Title": "Actual Acceptance WK32",
+      "Metric": "Actual Acceptance WK32",
+      "Value (THB)": 200182.15,
+      "Notes": "ยอด Actual Acceptance WK32",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 14",
+      "Slide Title": "Actual Acceptance WK33",
+      "Metric": "Actual Acceptance WK33",
+      "Value (THB)": 574611.7999999996,
+      "Notes": "ยอด Actual Acceptance WK33",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 14",
+      "Slide Title": "Actual Acceptance WK34",
+      "Metric": "Actual Acceptance WK34",
+      "Value (THB)": 321841.30000000016,
+      "Notes": "ยอด Actual Acceptance WK34",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 14",
+      "Slide Title": "Actual Acceptance WK35",
+      "Metric": "Actual Acceptance WK35",
+      "Value (THB)": 390171.6,
+      "Notes": "ยอด Actual Acceptance WK35",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 14",
+      "Slide Title": "Actual Acceptance WK36",
+      "Metric": "Actual Acceptance WK36",
+      "Value (THB)": "",
+      "Notes": "ยอด Actual Acceptance WK36",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 15",
+      "Slide Title": "Actual Acceptance TOTAL (JAN-AUGUST) HUAWEI",
+      "Metric": "Actual Acceptance TOTAL (JAN-AUGUST) HUAWEI",
+      "Value (THB)": 5779708.34,
+      "Notes": "ยอด Actual Actual Acceptance TOTAL (JAN-AUGUST) HUAWEI",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 15",
+      "Slide Title": "Actual Acceptance TOTAL (JAN-AUGUST) TRUE-TUC",
+      "Metric": "Actual Acceptance TOTAL (JAN-AUGUST) TRUE-TUC",
+      "Value (THB)": 6985932.211651094,
+      "Notes": "ยอด Actual Actual Acceptance TOTAL (JAN-AUGUST) TRUE-TUC",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 16",
+      "Slide Title": "Plan: Action Plan AC#1 WK35",
+      "Metric": "Action Plan AC#1 WK35",
+      "Value (THB)": 231649.1,
+      "Notes": "Action Plan AC#1 WK35",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 16",
+      "Slide Title": "Plan: Action Plan AC#2 WK35",
+      "Metric": "Action Plan AC#2 WK35",
+      "Value (THB)": 36485.04000000002,
+      "Notes": "Action Plan AC#2 WK35",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 16",
+      "Slide Title": "Plan: Action Plan TOTAL WK35",
+      "Metric": "Action Plan TOTAL WK35",
+      "Value (THB)": 268134.14,
+      "Notes": "Action Plan TOTAL WK35",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 17",
+      "Slide Title": "Plan: Acceptance AC#1 Plan WK36 (2023)",
+      "Metric": "Action Plan AC#1 WK36",
+      "Value (THB)": 0,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2023)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 17",
+      "Slide Title": "Plan: Acceptance AC#1 Plan WK36 (2024)",
+      "Metric": "Action Plan AC#1 WK36",
+      "Value (THB)": 0,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2024)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 17",
+      "Slide Title": "Plan: Acceptance AC#1 Plan WK36 (2025)",
+      "Metric": "Action Plan AC#1 WK36",
+      "Value (THB)": 0,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2025)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 17",
+      "Slide Title": "Plan: Acceptance AC#1 Plan WK36 (2026)",
+      "Metric": "Action Plan AC#1 WK36",
+      "Value (THB)": 82483,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2026)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 17",
+      "Slide Title": "Plan: Acceptance AC#1 Plan WK36 (TOTAL)",
+      "Metric": "Action Plan AC#1 WK 36 TOTAL",
+      "Value (THB)": 82483,
+      "Notes": "ยอด Remain  Plan AC#1 WK 30 Total Amount",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 18",
+      "Slide Title": "Plan: Acceptance AC#2 Plan WK36 (2023)",
+      "Metric": "Action Plan AC#2 WK36",
+      "Value (THB)": 0,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2023)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 18",
+      "Slide Title": "Plan: Acceptance AC#2 Plan WK36 (2024)",
+      "Metric": "Action Plan AC#2 WK36",
+      "Value (THB)": 0,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2024)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 18",
+      "Slide Title": "Plan: Acceptance AC#2 Plan WK36 (2025)",
+      "Metric": "Action Plan AC#2 WK36",
+      "Value (THB)": 29088,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2025)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 18",
+      "Slide Title": "Plan: Acceptance AC#2 Plan WK36 (2026)",
+      "Metric": "Action Plan AC#2 WK36",
+      "Value (THB)": 60759.4,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2026)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 18",
+      "Slide Title": "Plan: Acceptance AC#2 Plan WK36 (TOTAL)",
+      "Metric": "Action Plan AC#2 WK36 TOTAL",
+      "Value (THB)": 89847.4,
+      "Notes": "แผนผลักดัน Plan AC#2 WK30 Total Amount",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 19",
+      "Slide Title": "Recovery Plan: Install On-Process",
+      "Metric": "On-Process (2026) TME-MBB",
+      "Value (THB)": 427765,
+      "Notes": "มูลค่างานที่อยู่ระหว่างดำเนินการ",
+      "__EMPTY": "TME",
+      "__EMPTY_1": "MBB"
+    },
+    {
+      "Slide No": "Slide 19",
+      "Slide Title": "Recovery Plan: Install On-Process",
+      "Metric": "On-Process (2026) TME-IPRAN",
+      "Value (THB)": 225486.40000000002,
+      "Notes": "มูลค่างานที่อยู่ระหว่างดำเนินการ",
+      "__EMPTY": "TME",
+      "__EMPTY_1": "IPRAN"
+    },
+    {
+      "Slide No": "Slide 19",
+      "Slide Title": "Recovery Plan: Install On-Process",
+      "Metric": "On-Process (2026) TME-BATTERY",
+      "Value (THB)": 5107,
+      "Notes": "มูลค่างานที่อยู่ระหว่างดำเนินการ",
+      "__EMPTY": "TME",
+      "__EMPTY_1": "BATERRY"
+    },
+    {
+      "Slide No": "Slide 19",
+      "Slide Title": "Recovery Plan: Install On-Process",
+      "Metric": "On-Process (2026) HAE-MBB",
+      "Value (THB)": 4489699,
+      "Notes": "มูลค่างานที่อยู่ระหว่างดำเนินการ",
+      "__EMPTY": "HAE",
+      "__EMPTY_1": "MBB"
+    },
+    {
+      "Slide No": "Slide 19",
+      "Slide Title": "Recovery Plan: Install On-Process",
+      "Metric": "On-Process (2026) TRE-DISMANTLE",
+      "Value (THB)": 0,
+      "Notes": "มูลค่างานที่อยู่ระหว่างดำเนินการ",
+      "__EMPTY": "TRE",
+      "__EMPTY_1": "DISMANTLE"
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "AC1 DONE (2023) REMAIN",
+      "Metric": "AC1 DONE  REMAIN/ Total",
+      "Value (THB)": 34335.54,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2023)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "AC1 DONE (2024) REMAIN",
+      "Metric": "AC1 DONE  REMAIN/ Total",
+      "Value (THB)": 7724.429999999999,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2024)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "AC1 DONE (2025) REMAIN",
+      "Metric": "AC1 DONE  REMAIN/ Total",
+      "Value (THB)": 27600,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2025)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "AC1 DONE (2026) REMAIN",
+      "Metric": "AC1 DONE  REMAIN/ Total",
+      "Value (THB)": 159046.64,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2026)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "UNFULFILL (2023) REMAIN",
+      "Metric": "UNFULFILL REMAIN / Total",
+      "Value (THB)": 78217,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2023)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "UNFULFILL (2024) REMAIN",
+      "Metric": "UNFULFILL REMAIN / Total",
+      "Value (THB)": 60400,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2024)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "UNFULFILL (2025) REMAIN",
+      "Metric": "UNFULFILL REMAIN / Total",
+      "Value (THB)": 57762,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2025)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "UNFULFILL (2026) REMAIN",
+      "Metric": "UNFULFILL REMAIN / Total",
+      "Value (THB)": 966714,
+      "Notes": "ยอด Remain ที่ตั้งเป้าจะเคลียร์ (2026)",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 20",
+      "Slide Title": "Summary of REMAIN (3 Pillars)",
+      "Metric": "Summary of REMAIN (3 Pillars)",
+      "Value (THB)": 1391799.6099999999,
+      "Notes": "",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 21",
+      "Slide Title": "Acceptane Target Plan JULY",
+      "Metric": "Acceptane Target Plan AUGUST",
+      "Value (THB)": 977310.2799999999,
+      "Notes": "Acceptane Target Plan AUGUST",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    },
+    {
+      "Slide No": "Slide 21",
+      "Slide Title": "Acceptane Target Actual JULY",
+      "Metric": "Acceptane Target Actual AUGUST",
+      "Value (THB)": 1486806.8499999996,
+      "Notes": "Acceptane Target Actual AUGUST",
+      "__EMPTY": "",
+      "__EMPTY_1": ""
+    }
+  ]
+}
