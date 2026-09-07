@@ -1464,10 +1464,14 @@
           <canvas id="docChart"></canvas>
         </div>
         <div style="margin-top:12px">
+          <div class="metric-row"><span class="metric-label">AC1 % เก็บได้ (Done)</span><span class="metric-value green"
+              id="finAC1Pct">90.0%</span></div>
+          <div class="metric-row"><span class="metric-label">AC2 % เก็บได้ (Done)</span><span class="metric-value amber"
+              id="finAC2Pct">49.4%</span></div>
           <div class="metric-row"><span class="metric-label">AC1 Avg Aging</span><span class="metric-value amber"
-              id="finAC1Aging">9.7 days</span></div>
+              id="finAC1Aging">14.3 days</span></div>
           <div class="metric-row"><span class="metric-label">AC2 Avg Aging</span><span class="metric-value red"
-              id="finAC2Aging">11.5 days</span></div>
+              id="finAC2Aging">58.4 days</span></div>
         </div>
       </div>
     </div>
@@ -2272,7 +2276,20 @@
         responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { position: 'bottom', labels: { color: '#64748b', boxWidth: 10, boxHeight: 10, padding: 12 } },
-          tooltip: { backgroundColor: '#1c2540', callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ฿' + ctx.parsed.y.toLocaleString('th-TH', { maximumFractionDigits: 0 }) } }
+          tooltip: {
+            backgroundColor: '#1c2540',
+            callbacks: {
+              label: ctx => {
+                const val = ' ฿' + ctx.parsed.y.toLocaleString('th-TH', { maximumFractionDigits: 0 });
+                if (ctx.datasetIndex === 1) {
+                  const total = ctx.chart.data.datasets[0].data[ctx.dataIndex];
+                  const pct = total > 0 ? ' (' + ((ctx.parsed.y / total) * 100).toFixed(1) + '%)' : '';
+                  return ' ' + ctx.dataset.label + ': ' + val + pct;
+                }
+                return ' ' + ctx.dataset.label + ': ' + val;
+              }
+            }
+          }
         },
         scales: {
           x: { grid: { display: false }, ticks: { color: '#64748b' } },
@@ -2463,10 +2480,18 @@
             if (ac1row) {
               const el = document.getElementById('finAC1Aging');
               if (el) el.textContent = ac1row['Avg Aging'] ? Number(ac1row['Avg Aging']).toFixed(1) + ' days' : '-';
+              const amt1 = Number(ac1row['Amount (THB)']) || 0;
+              const done1 = Number(ac1row['Done (THB)']) || 0;
+              const elPct = document.getElementById('finAC1Pct');
+              if (elPct) elPct.textContent = amt1 > 0 ? (done1 / amt1 * 100).toFixed(1) + '%' : '-';
             }
             if (ac2row) {
               const el = document.getElementById('finAC2Aging');
               if (el) el.textContent = ac2row['Avg Aging'] ? Number(ac2row['Avg Aging']).toFixed(1) + ' days' : '-';
+              const amt2 = Number(ac2row['Amount (THB)']) || 0;
+              const done2 = Number(ac2row['Done (THB)']) || 0;
+              const elPct = document.getElementById('finAC2Pct');
+              if (elPct) elPct.textContent = amt2 > 0 ? (done2 / amt2 * 100).toFixed(1) + '%' : '-';
             }
 
             // Overall Team Install dynamically — add Sites column
@@ -3717,10 +3742,18 @@
               window.docChart.data.datasets[0].data = [ac1Amt, ac2Amt];
               window.docChart.data.datasets[1].data = [ac1Done, ac2Done];
               window.docChart.update();
-              // Update Avg Aging labels from Part 3
+              // Update Avg Aging labels and Pct from Part 3
               const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-              if (ac1row && ac1row['Avg Aging']) setEl('docAc1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
-              if (ac2row && ac2row['Avg Aging']) setEl('docAc2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
+              if (ac1row && ac1row['Avg Aging']) {
+                setEl('docAc1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
+                setEl('finAC1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
+              }
+              if (ac2row && ac2row['Avg Aging']) {
+                setEl('docAc2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
+                setEl('finAC2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
+              }
+              if (ac1Amt > 0) setEl('finAC1Pct', (ac1Done / ac1Amt * 100).toFixed(1) + '%');
+              if (ac2Amt > 0) setEl('finAC2Pct', (ac2Done / ac2Amt * 100).toFixed(1) + '%');
               // Compute Remain = sumAB - ac1Amt - ac2Amt (using SO Total from 2026 column AB)
               const sumAB = (() => {
                 if (!s26Rows || s26HeaderRow < 0) return 0;
@@ -3756,7 +3789,7 @@
             'lblKpiActionPlan', 'lblActWk1', 'lblActWk2', 'lblActWk3', 'lblActWk4', 'lblActWk5',
             'lblAc1PrevWk', 'lblAc2PrevWk', 'lblAc1LatestWk', 'lblAc2LatestWk',
             'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
-            'finAC1Aging', 'finAC2Aging',
+            'finAC1Aging', 'finAC2Aging', 'finAC1Pct', 'finAC2Pct',
             'dtlActWk1', 'dtlActWk2', 'dtlActWk3', 'dtlActWk4', 'dtlActWk5', 'dtlActJUNE', 'dtlActHuawei', 'dtlActTrueTuc',
             'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
             'dtlAC1Latest_2023', 'dtlAC1Latest_2024', 'dtlAC1Latest_2025', 'dtlAC1Latest_2026', 'dtlAC1LatestTotal',
@@ -4158,7 +4191,7 @@
             'lblKpiActionPlan', 'lblActWk1', 'lblActWk2', 'lblActWk3', 'lblActWk4', 'lblActWk5',
             'lblAc1PrevWk', 'lblAc2PrevWk', 'lblAc1LatestWk', 'lblAc2LatestWk',
           'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
-          'finAC1Aging', 'finAC2Aging',
+          'finAC1Aging', 'finAC2Aging', 'finAC1Pct', 'finAC2Pct',
           'dtlActWk1', 'dtlActWk2', 'dtlActWk3', 'dtlActWk4', 'dtlActWk5', 'dtlActJUNE',
           'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
           'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
