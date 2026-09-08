@@ -3834,7 +3834,7 @@
               doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
             }
           };
-          localStorage.setItem('dashboardData2026_v8', JSON.stringify(dashState));
+          localStorage.setItem('dashboardData2026_v9', JSON.stringify(dashState));
 
           /* ─── Show Save button & status ─── */
           document.getElementById('btnSave').classList.add('show');
@@ -4102,10 +4102,10 @@
 
     // Restore state from LocalStorage on load
     window.addEventListener('DOMContentLoaded', () => {
-      const DASH_VERSION = 'v8';
+      const DASH_VERSION = 'v9';
       const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
       // Remove stale versions
-      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7'].forEach(k => localStorage.removeItem(k));
+      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7', 'dashboardData2026_v8'].forEach(k => localStorage.removeItem(k));
       const saved = localStorage.getItem(DASH_KEY);
       if (saved) {
         try {
@@ -4229,7 +4229,7 @@
             doc: window.docChart ? [[...window.docChart.data.datasets[0].data], [...window.docChart.data.datasets[1].data]] : []
           }
         };
-        localStorage.setItem('dashboardData2026_v8', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v9', JSON.stringify(dashState));
 
         // Show success
         const st = document.getElementById('importStatus');
