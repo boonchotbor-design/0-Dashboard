@@ -2354,7 +2354,7 @@
           }
 
           let importedSheets = [];
-          let reportWeek = 36;
+          let reportWeek = 37;
 
           /* ─── Part 1 - Overview ─── */
           const p1 = getSheet('Part 1 - Overview');
@@ -3254,7 +3254,8 @@
                 const ac2StatusIdx = headers.findIndex(h => /AC.?2.*STATUS|STATUS.*AC.?2/i.test(String(h)));
                 // Fallback: use column index 57 (BF) if no status column found by name
                 const statusColFinal = statusIdx > -1 ? statusIdx : (ac2StatusIdx > -1 ? ac2StatusIdx : 57);
-                const typeIdx = headers.findIndex(h => /owner|type/i.test(String(h)));
+                const projectIdx = headers.findIndex(h => /^project$/i.test(String(h).trim()));
+                const typeIdx = projectIdx > -1 ? projectIdx : headers.findIndex(h => /project|type/i.test(String(h)));
                 const workTypeIdx = headers.findIndex(h => /work\s*type/i.test(String(h)));
                 s26WorkTypeIdx = workTypeIdx;
                 // Find WON CODE column to validate data rows (skip summary/total rows)
@@ -3389,15 +3390,19 @@
               if (elComp) elComp.textContent = countCompleted;
               if (elOnProc) elOnProc.textContent = countOnProcess;
               if (elRem) elRem.textContent = countCancel;
+              if (window.siteDonut) {
+                window.siteDonut.data.datasets[0].data = [countCompleted, countOnProcess, countCancel];
+                window.siteDonut.update();
+              }
               // Also update the KPI sub-label
               const elKpiSub = document.getElementById('kpiTotalSitesSub');
               if (elKpiSub) {
                 const total = countCompleted + countOnProcess + countCancel;
                 document.getElementById('kpiTotalSites') && (document.getElementById('kpiTotalSites').textContent = total);
                 
-                // If we found HAE/TME, use them, otherwise use fallback to old values
-                let haeStr = countHae > 0 ? countHae : (elKpiSub.textContent.match(/HAE (\d+)/) || [, '130'])[1];
-                let tmeStr = countTme > 0 ? countTme : (elKpiSub.textContent.match(/TME (\d+)/) || [, '77'])[1];
+                // If we found HAE/TME, use them, otherwise use fallback to WK37 values
+                let haeStr = countHae > 0 ? countHae : (elKpiSub.textContent.match(/HAE (\d+)/) || [, '224'])[1];
+                let tmeStr = countTme > 0 ? countTme : (elKpiSub.textContent.match(/TME (\d+)/) || [, '97'])[1];
                 elKpiSub.textContent = `HAE ${haeStr} · TME ${tmeStr} · Completed ${countCompleted}`;
                 
                 const pct = total > 0 ? ((countCompleted / total) * 100).toFixed(1) : 0;
@@ -3656,6 +3661,7 @@
                   return -1;
               };
               
+              const wonCol = getColIdx(['WON CODE', 'WONCODE']);
               const statusCol = getColIdx(['STATUS WORK', 'STATUS']);
               const projectCol = getColIdx(['PROJECT']);
               const typeCol = getColIdx(['WORK TYPE', 'WORK_TYPE', 'TYPE']);
@@ -3669,6 +3675,7 @@
               
               for (let r of rows) {
                   if (!r || r.length === 0) continue;
+                  if (wonCol > -1 && !String(r[wonCol] || '').trim()) continue;
                   let status = statusCol > -1 ? String(r[statusCol] || '').toUpperCase().trim() : '';
                   let proj = projectCol > -1 ? String(r[projectCol] || '').toUpperCase().trim() : '';
                   let typ = typeCol > -1 ? String(r[typeCol] || '').toUpperCase().trim() : '';
@@ -3772,9 +3779,9 @@
               setEl('docRemainSO', remain > 0 ? fmtBaht(remain) : '-');
             }
           }
-          if (p1.length || raw2026) {
-            const completed = document.getElementById('legendCompleted')?.textContent || 153;
-            const onProcess = document.getElementById('legendOnProcess')?.textContent || 53;
+          if (p1.length || sheet2026) {
+            const completed = document.getElementById('legendCompleted')?.textContent || 295;
+            const onProcess = document.getElementById('legendOnProcess')?.textContent || 24;
             const remaining = document.getElementById('legendRemaining')?.textContent || 2;
             if (window.siteDonut) {
               window.siteDonut.data.datasets[0].data = [Number(completed), Number(onProcess), Number(remaining)];
@@ -3838,7 +3845,7 @@
               doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
             }
           };
-          localStorage.setItem('dashboardData2026_v9', JSON.stringify(dashState));
+          localStorage.setItem('dashboardData2026_v10', JSON.stringify(dashState));
 
           /* ─── Show Save button & status ─── */
           document.getElementById('btnSave').classList.add('show');
@@ -4083,7 +4090,7 @@
         wrState['wrAc2AlertHTML'] = document.getElementById('wrAc2Alert')?.innerHTML || '';
         wrState['wrAc2AlertDisplay'] = document.getElementById('wrAc2Alert')?.style.display || 'none';
         wrState['wrAc2AlertClass'] = document.getElementById('wrAc2Alert')?.className || '';
-        localStorage.setItem('weeklyReport2026_v1', JSON.stringify(wrState));
+        localStorage.setItem('weeklyReport2026_v2', JSON.stringify(wrState));
       } catch(e) {}
     }
 
@@ -4106,10 +4113,10 @@
 
     // Restore state from LocalStorage on load
     window.addEventListener('DOMContentLoaded', () => {
-      const DASH_VERSION = 'v9';
+      const DASH_VERSION = 'v10';
       const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
       // Remove stale versions
-      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7', 'dashboardData2026_v8'].forEach(k => localStorage.removeItem(k));
+      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7', 'dashboardData2026_v8', 'dashboardData2026_v9', 'weeklyReport2026_v1'].forEach(k => localStorage.removeItem(k));
       const saved = localStorage.getItem(DASH_KEY);
       if (saved) {
         try {
@@ -4147,7 +4154,7 @@
       }
       /* ─── Restore Weekly Report Card ─── */
       try {
-        const wrSaved = localStorage.getItem('weeklyReport2026_v1');
+        const wrSaved = localStorage.getItem('weeklyReport2026_v2');
         if (wrSaved) {
           const wrState = JSON.parse(wrSaved);
           if (wrState['wrCardVisible'] === 'true') {
@@ -4233,7 +4240,7 @@
             doc: window.docChart ? [[...window.docChart.data.datasets[0].data], [...window.docChart.data.datasets[1].data]] : []
           }
         };
-        localStorage.setItem('dashboardData2026_v9', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v10', JSON.stringify(dashState));
 
         // Show success
         const st = document.getElementById('importStatus');
