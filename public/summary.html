@@ -1531,21 +1531,21 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>
-          Plan: Acceptance AC#1 (WK28 &amp; WK29)
+          Plan: Acceptance AC#1 (WK36 &amp; WK37)
         </div>
-        <div class="fin-row"><span class="fin-label">WK28 Plan</span><span class="fin-val amber"
-            id="dtlAC1WK28">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2023)</span><span class="fin-val amber"
-            id="dtlAC12023">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2024)</span><span class="fin-val amber"
-            id="dtlAC12024">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2025)</span><span class="fin-val amber"
-            id="dtlAC12025">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2026)</span><span class="fin-val amber"
-            id="dtlAC12026">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK36 Plan</span><span class="fin-val amber"
+            id="dtlAC1WK28">182,483 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2023)</span><span class="fin-val amber"
+            id="dtlAC12023">0 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2024)</span><span class="fin-val amber"
+            id="dtlAC12024">0 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2025)</span><span class="fin-val amber"
+            id="dtlAC12025">0 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2026)</span><span class="fin-val amber"
+            id="dtlAC12026">85,350 ฿</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(245,158,11,.3)">
-          <span class="fin-label" style="font-weight:600;color:#fcd34d">WK29 TOTAL</span>
-          <span class="fin-val amber" style="font-weight:700" id="dtlAC1Total">-</span>
+          <span class="fin-label" style="font-weight:600;color:#fcd34d">WK37 TOTAL</span>
+          <span class="fin-val amber" style="font-weight:700" id="dtlAC1Total">85,350 ฿</span>
         </div>
       </div>
 
@@ -1553,21 +1553,21 @@
       <div class="card">
         <div class="card-title">
           <span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>
-          Plan: Acceptance AC#2 (WK28 &amp; WK29)
+          Plan: Acceptance AC#2 (WK36 &amp; WK37)
         </div>
-        <div class="fin-row"><span class="fin-label">WK28 Plan</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC2WK28">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2023)</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22023">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2024)</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22024">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2025)</span><span class="fin-val" style="color:#93c5fd"
+        <div class="fin-row"><span class="fin-label">WK36 Plan</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC2WK28">139,847 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2023)</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22023">0 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2024)</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22024">0 ฿</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2025)</span><span class="fin-val" style="color:#93c5fd"
             id="dtlAC22025">-</span></div>
-        <div class="fin-row"><span class="fin-label">WK29 Plan (2026)</span><span class="fin-val" style="color:#93c5fd"
-            id="dtlAC22026">-</span></div>
+        <div class="fin-row"><span class="fin-label">WK37 Plan (2026)</span><span class="fin-val" style="color:#93c5fd"
+            id="dtlAC22026">68,128 ฿</span></div>
         <div class="fin-row" style="margin-top:8px;padding-top:14px;border-top:1px solid rgba(59,130,246,.3)">
-          <span class="fin-label" style="font-weight:600;color:#93c5fd">WK29 TOTAL</span>
-          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2Total">-</span>
+          <span class="fin-label" style="font-weight:600;color:#93c5fd">WK37 TOTAL</span>
+          <span class="fin-val" style="font-weight:700;color:#93c5fd" id="dtlAC2Total">68,128 ฿</span>
         </div>
       </div>
 
@@ -3010,40 +3010,40 @@
               ];
             };
 
+            const prevWk = reportWeek - 1;
             const curWk = reportWeek;
-            const nextWk = reportWeek + 1;
             
-            const ac1Breakdown = extractBreakdown(1, nextWk);
+            const ac1Breakdown = extractBreakdown(1, curWk);
             const vAc123 = ac1Breakdown[0];
             const vAc124 = ac1Breakdown[1];
             const vAc125 = ac1Breakdown[2];
             const vAc126 = ac1Breakdown[3];
             const reAc1 = /action plan ac#?1|acceptance ac#?1 plan/i;
-            const vAc1Wk28 = getValByTitleRegex(reAc1, 'WK'+curWk)
-                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+curWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
+            const vAc1WkPrev = getValByTitleRegex(reAc1, 'WK'+prevWk)
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
-            const ac2Breakdown = extractBreakdown(2, nextWk);
+            const ac2Breakdown = extractBreakdown(2, curWk);
             const vAc223 = ac2Breakdown[0];
             const vAc224 = ac2Breakdown[1];
             const vAc225 = ac2Breakdown[2];
             const vAc226 = ac2Breakdown[3];
             const reAc2 = /action plan ac#?2|acceptance ac#?2 plan/i;
-            const vAc2Wk28 = getValByTitleRegex(reAc2, 'WK'+curWk)
-                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+curWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
+            const vAc2WkPrev = getValByTitleRegex(reAc2, 'WK'+prevWk)
+                          ?? (() => { const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+prevWk,'i').test(String(row['Metric']))); return r ? getV(r) : null; })();
 
-            // Totals — search for WK<nextWk> TOTAL first, then old naming
+            // Totals — search for WK<curWk> TOTAL first (checking both Metric & Slide Title), then fallback
             const vAc1Total = (() => {
-              const r = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+curWk+' total', 'i').test(String(row['Metric'])));
+              const r = p4.find(row => new RegExp('ac.?1.*wk\\s*'+curWk+'.*total', 'i').test(String(row['Metric']) + ' ' + String(row['Slide Title'])));
               if(r) return getV(r);
-              const r2 = p4.find(row => new RegExp('ac.?1.*wk\\s*'+nextWk+'.*total', 'i').test(String(row['Slide Title'])));
+              const r2 = p4.find(row => new RegExp('action plan ac.?1 wk\\s*'+curWk+' total', 'i').test(String(row['Metric'])));
               if(r2) return getV(r2);
               const reAc1Total = /action plan ac#?1 total|action plan ac#?1/i;
               return getValByTitleRegex(reAc1Total, '(total)') ?? getValByTitleRegex(reAc1Total, 'total');
             })();
             const vAc2Total = (() => {
-              const r = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+curWk+' total', 'i').test(String(row['Metric'])));
+              const r = p4.find(row => new RegExp('ac.?2.*wk\\s*'+curWk+'.*total', 'i').test(String(row['Metric']) + ' ' + String(row['Slide Title'])));
               if(r) return getV(r);
-              const r2 = p4.find(row => new RegExp('ac.?2.*wk\\s*'+nextWk+'.*total', 'i').test(String(row['Slide Title'])));
+              const r2 = p4.find(row => new RegExp('action plan ac.?2 wk\\s*'+curWk+' total', 'i').test(String(row['Metric'])));
               if(r2) return getV(r2);
               const reAc2Total = /action plan ac#?2 total|action plan ac#?2/i;
               return getValByTitleRegex(reAc2Total, '(total)') ?? getValByTitleRegex(reAc2Total, 'total');
@@ -3055,7 +3055,7 @@
             setUI('dtlAC12025', fmtB(vAc125));
             setUI('dtlAC12026', fmtB(vAc126));
             setUI('dtlAC1Total', fmtB(vAc1Total));
-            setUI('dtlAC1WK28', fmtB(vAc1Wk28));
+            setUI('dtlAC1WK28', fmtB(vAc1WkPrev));
 
             // Set AC#2 Prev Breakdown
             setUI('dtlAC22023', fmtB(vAc223));
@@ -3063,39 +3063,39 @@
             setUI('dtlAC22025', fmtB(vAc225));
             setUI('dtlAC22026', fmtB(vAc226));
             setUI('dtlAC2Total', fmtB(vAc2Total));
-            setUI('dtlAC2WK28', fmtB(vAc2Wk28));
+            setUI('dtlAC2WK28', fmtB(vAc2WkPrev));
 
-            // Update Labels to use curWk and nextWk dynamically
+            // Update Labels to use prevWk and curWk dynamically
             const updateLbl = (id, txt) => { const el = document.getElementById(id); if (el && el.previousElementSibling) el.previousElementSibling.textContent = txt; };
-            updateLbl('dtlAC1WK28', 'WK'+curWk+' Plan');
-            updateLbl('dtlAC12023', 'WK'+nextWk+' Plan (2023)');
-            updateLbl('dtlAC12024', 'WK'+nextWk+' Plan (2024)');
-            updateLbl('dtlAC12025', 'WK'+nextWk+' Plan (2025)');
-            updateLbl('dtlAC12026', 'WK'+nextWk+' Plan (2026)');
+            updateLbl('dtlAC1WK28', 'WK'+prevWk+' Plan');
+            updateLbl('dtlAC12023', 'WK'+curWk+' Plan (2023)');
+            updateLbl('dtlAC12024', 'WK'+curWk+' Plan (2024)');
+            updateLbl('dtlAC12025', 'WK'+curWk+' Plan (2025)');
+            updateLbl('dtlAC12026', 'WK'+curWk+' Plan (2026)');
             const ac1TotalLbl = document.getElementById('dtlAC1Total');
-            if(ac1TotalLbl && ac1TotalLbl.previousElementSibling) ac1TotalLbl.previousElementSibling.textContent = 'WK'+nextWk+' TOTAL';
+            if(ac1TotalLbl && ac1TotalLbl.previousElementSibling) ac1TotalLbl.previousElementSibling.textContent = 'WK'+curWk+' TOTAL';
             const lblAc1Prev = document.getElementById('lblAc1PrevWk');
-            if (lblAc1Prev) lblAc1Prev.textContent = 'WK' + curWk;
+            if (lblAc1Prev) lblAc1Prev.textContent = 'WK' + prevWk;
             const lblAc1Latest = document.getElementById('lblAc1LatestWk');
-            if (lblAc1Latest) lblAc1Latest.textContent = 'WK' + nextWk;
+            if (lblAc1Latest) lblAc1Latest.textContent = 'WK' + curWk;
 
-            updateLbl('dtlAC2WK28', 'WK'+curWk+' Plan');
-            updateLbl('dtlAC22023', 'WK'+nextWk+' Plan (2023)');
-            updateLbl('dtlAC22024', 'WK'+nextWk+' Plan (2024)');
-            updateLbl('dtlAC22025', 'WK'+nextWk+' Plan (2025)');
-            updateLbl('dtlAC22026', 'WK'+nextWk+' Plan (2026)');
+            updateLbl('dtlAC2WK28', 'WK'+prevWk+' Plan');
+            updateLbl('dtlAC22023', 'WK'+curWk+' Plan (2023)');
+            updateLbl('dtlAC22024', 'WK'+curWk+' Plan (2024)');
+            updateLbl('dtlAC22025', 'WK'+curWk+' Plan (2025)');
+            updateLbl('dtlAC22026', 'WK'+curWk+' Plan (2026)');
             const ac2TotalLbl = document.getElementById('dtlAC2Total');
-            if(ac2TotalLbl && ac2TotalLbl.previousElementSibling) ac2TotalLbl.previousElementSibling.textContent = 'WK'+nextWk+' TOTAL';
+            if(ac2TotalLbl && ac2TotalLbl.previousElementSibling) ac2TotalLbl.previousElementSibling.textContent = 'WK'+curWk+' TOTAL';
             const lblAc2Prev = document.getElementById('lblAc2PrevWk');
-            if (lblAc2Prev) lblAc2Prev.textContent = 'WK' + curWk;
+            if (lblAc2Prev) lblAc2Prev.textContent = 'WK' + prevWk;
             const lblAc2Latest = document.getElementById('lblAc2LatestWk');
-            if (lblAc2Latest) lblAc2Latest.textContent = 'WK' + nextWk;
+            if (lblAc2Latest) lblAc2Latest.textContent = 'WK' + curWk;
 
             // Update card titles
             const ac1CardTitle = ac1TotalLbl?.closest('.card')?.querySelector('.card-title');
-            if(ac1CardTitle) ac1CardTitle.innerHTML = `<span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>Plan: Acceptance AC#1 (WK${reportWeek-1} &amp; WK${reportWeek})`;
+            if(ac1CardTitle) ac1CardTitle.innerHTML = `<span class="icon" style="--card-icon-bg:rgba(245,158,11,.15)">📋</span>Plan: Acceptance AC#1 (WK${prevWk} &amp; WK${curWk})`;
             const ac2CardTitle = ac2TotalLbl?.closest('.card')?.querySelector('.card-title');
-            if(ac2CardTitle) ac2CardTitle.innerHTML = `<span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>Plan: Acceptance AC#2 (WK${reportWeek-1} &amp; WK${reportWeek})`;
+            if(ac2CardTitle) ac2CardTitle.innerHTML = `<span class="icon" style="--card-icon-bg:rgba(59,130,246,.15)">🚀</span>Plan: Acceptance AC#2 (WK${prevWk} &amp; WK${curWk})`;
 
             const sheet1 = wb.Sheets['Sheet1'];
             if (sheet1) {
@@ -3853,9 +3853,9 @@
             'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
             'finAC1Aging', 'finAC2Aging', 'finAC1Pct', 'finAC2Pct',
             'dtlActWk1', 'dtlActWk2', 'dtlActWk3', 'dtlActWk4', 'dtlActWk5', 'dtlActJUNE', 'dtlActHuawei', 'dtlActTrueTuc',
-            'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
+            'dtlAC1WK28', 'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
             'dtlAC1Latest_2023', 'dtlAC1Latest_2024', 'dtlAC1Latest_2025', 'dtlAC1Latest_2026', 'dtlAC1LatestTotal',
-            'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
+            'dtlAC2WK28', 'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
             'dtlAC2Latest_2023', 'dtlAC2Latest_2024', 'dtlAC2Latest_2025', 'dtlAC2Latest_2026', 'dtlAC2LatestTotal',
             'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
             'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
@@ -3896,7 +3896,7 @@
               doc: window.docChart ? [window.docChart.data.datasets[0].data, window.docChart.data.datasets[1].data] : []
             }
           };
-          localStorage.setItem('dashboardData2026_v11', JSON.stringify(dashState));
+          localStorage.setItem('dashboardData2026_v12', JSON.stringify(dashState));
 
           /* ─── Show Save button & status ─── */
           document.getElementById('btnSave').classList.add('show');
@@ -4164,10 +4164,10 @@
 
     // Restore state from LocalStorage on load
     window.addEventListener('DOMContentLoaded', () => {
-      const DASH_VERSION = 'v11';
+      const DASH_VERSION = 'v12';
       const DASH_KEY = 'dashboardData2026_' + DASH_VERSION;
       // Remove stale versions
-      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7', 'dashboardData2026_v8', 'dashboardData2026_v9', 'dashboardData2026_v10', 'weeklyReport2026_v1'].forEach(k => localStorage.removeItem(k));
+      ['dashboardData2026', 'dashboardData2026_v2', 'dashboardData2026_v3', 'dashboardData2026_v4', 'dashboardData2026_v5', 'dashboardData2026_v6', 'dashboardData2026_v7', 'dashboardData2026_v8', 'dashboardData2026_v9', 'dashboardData2026_v10', 'dashboardData2026_v11', 'weeklyReport2026_v1'].forEach(k => localStorage.removeItem(k));
       const saved = localStorage.getItem(DASH_KEY);
       if (saved) {
         try {
@@ -4255,8 +4255,8 @@
           'finIncome', 'finAR', 'finAP', 'finBacklog', 'finAC2Target', 'finActionPlan', 'finOnProcess',
           'finAC1Aging', 'finAC2Aging', 'finAC1Pct', 'finAC2Pct',
           'dtlActWk1', 'dtlActWk2', 'dtlActWk3', 'dtlActWk4', 'dtlActWk5', 'dtlActJUNE',
-          'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
-          'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
+          'dtlAC1WK28', 'dtlAC12023', 'dtlAC12024', 'dtlAC12025', 'dtlAC12026', 'dtlAC1Total',
+          'dtlAC2WK28', 'dtlAC22023', 'dtlAC22024', 'dtlAC22025', 'dtlAC22026', 'dtlAC2Total',
           'dtlOnProcMBB', 'dtlOnProcIPRAN', 'dtlOnProcBATT', 'dtlOnProcHAEMBB', 'dtlOnProcTRE',
           'remAC1done2023', 'remAC1done2024', 'remAC1done2025', 'remAC1done2026', 'remAC1doneTotal',
           'remUnfulfill2023', 'remUnfulfill2024', 'remUnfulfill2025', 'remUnfulfill2026', 'remUnfulfillTotal',
@@ -4291,7 +4291,7 @@
             doc: window.docChart ? [[...window.docChart.data.datasets[0].data], [...window.docChart.data.datasets[1].data]] : []
           }
         };
-        localStorage.setItem('dashboardData2026_v11', JSON.stringify(dashState));
+        localStorage.setItem('dashboardData2026_v12', JSON.stringify(dashState));
 
         // Show success
         const st = document.getElementById('importStatus');
