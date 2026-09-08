@@ -20,7 +20,7 @@ const s26 = wb.Sheets['2026'];
 const rawRows = xlsx.utils.sheet_to_json(s26, { header: 1, defval: '' });
 
 const summaryRow = rawRows[1];
-const dataRows = rawRows.slice(3).filter(r => r[0] !== '' && r[0] !== 0);
+const dataRows = rawRows.slice(3).filter(r => r[0] !== '' && r[0] !== 0 && String(r[0]).trim() !== '');
 
 const COL = {
   PROJECT: 6,
@@ -133,8 +133,9 @@ const palM1 = palPE.all.filter(r => n(r[COL.AGING_1]) > 0);
 const palM2 = palPE.all.filter(r => n(r[COL.AGING_2]) > 0);
 
 const hathairat = byDOC['น.ส. หทัยรัตน์ สิงห์แก้ว'] || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
-const sermsiri = byDOC['Sermsiri  Bampentam'] || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
+const sermsiri = byDOC['Sermsiri  Bampentam'] || byDOC['Sermsiri Bampentam'] || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
 const apichart = byDOC['Apichart Kampuang'] || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
+const adisakDoc = byDOC['Adisak Chanmao'] || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
 
 // Team Weekly
 const teamWeeklyPerformance = {};
@@ -236,6 +237,14 @@ const output = {
       ac2: parseFloat(apichart.ac2.toFixed(2)),
       avgAging1: parseFloat((apichart.aging1.length ? apichart.aging1.reduce((a, b) => a + b) / apichart.aging1.length : 0).toFixed(2)),
       avgAging2: parseFloat((apichart.aging2.length ? apichart.aging2.reduce((a, b) => a + b) / apichart.aging2.length : 0).toFixed(2))
+    },
+    adisak: {
+      name: 'Adisak Chanmao',
+      sites: adisakDoc.rows.length,
+      ac1: parseFloat(adisakDoc.ac1.toFixed(2)),
+      ac2: parseFloat(adisakDoc.ac2.toFixed(2)),
+      avgAging1: parseFloat((adisakDoc.aging1.length ? adisakDoc.aging1.reduce((a, b) => a + b) / adisakDoc.aging1.length : 0).toFixed(2)),
+      avgAging2: parseFloat((adisakDoc.aging2.length ? adisakDoc.aging2.reduce((a, b) => a + b) / adisakDoc.aging2.length : 0).toFixed(2))
     }
   },
   workTypes: {
@@ -270,6 +279,18 @@ const output = {
     total: dataRows.length,
     completed: completed.length,
     onProcess: onProcess.length
+  },
+  slaOnProcess: {
+    ais: {
+      smartQC: { doneInSLA: 136, doneLate: 63, pending: 0, overSLA: 0 },
+      patSubcon: { doneInSLA: 119, doneLate: 80, pending: 0, overSLA: 0 },
+      rework: 6
+    },
+    true: {
+      smartQC: { doneInSLA: 9, doneLate: 8, pending: 1, overSLA: 0 },
+      patSubcon: { doneInSLA: 14, doneLate: 2, pending: 1, overSLA: 0 },
+      alarmFound: 0
+    }
   },
   recoveryPlan: {
     juneAcceptanceTarget: 192566,

@@ -73,6 +73,14 @@
       "ac2": 196493.1,
       "avgAging1": 13.95,
       "avgAging2": 26.8
+    },
+    "adisak": {
+      "name": "Adisak Chanmao",
+      "sites": 29,
+      "ac1": 124090.72,
+      "ac2": 26579.48,
+      "avgAging1": 23.71,
+      "avgAging2": 116.86
     }
   },
   "workTypes": {
@@ -107,6 +115,38 @@
     "total": 321,
     "completed": 295,
     "onProcess": 24
+  },
+  "slaOnProcess": {
+    "ais": {
+      "smartQC": {
+        "doneInSLA": 136,
+        "doneLate": 63,
+        "pending": 0,
+        "overSLA": 0
+      },
+      "patSubcon": {
+        "doneInSLA": 119,
+        "doneLate": 80,
+        "pending": 0,
+        "overSLA": 0
+      },
+      "rework": 6
+    },
+    "true": {
+      "smartQC": {
+        "doneInSLA": 9,
+        "doneLate": 8,
+        "pending": 1,
+        "overSLA": 0
+      },
+      "patSubcon": {
+        "doneInSLA": 14,
+        "doneLate": 2,
+        "pending": 1,
+        "overSLA": 0
+      },
+      "alarmFound": 0
+    }
   },
   "recoveryPlan": {
     "juneAcceptanceTarget": 192566,
