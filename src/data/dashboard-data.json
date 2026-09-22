@@ -1,38 +1,38 @@
 {
-  "reportWeek": 37,
+  "reportWeek": 39,
   "projectYear": 2026,
   "performance": {
-    "haeM1Avg": 3.9,
-    "tmeM1Avg": 4.16,
-    "overallM1Avg": 3.94,
-    "overallM2Avg": 10.12,
+    "haeM1Avg": 2.57,
+    "tmeM1Avg": 15.03,
+    "overallM1Avg": 2.84,
+    "overallM2Avg": 9.98,
     "smartQC": {
       "passRate": 95,
-      "totalInspected": 142
+      "totalInspected": 215
     }
   },
   "projects": {
     "HAE": {
-      "sites": 224,
-      "income": 4511825,
-      "ar": 1709004.2,
-      "ap": 412165,
-      "remain": 885993.8
+      "sites": 213,
+      "income": 4380034,
+      "ar": 2899372.5,
+      "ap": 745151.2,
+      "remain": 284024.6
     },
     "TME": {
-      "sites": 97,
-      "income": 737218.4,
-      "ar": 207239.86,
-      "ap": 128463.5,
-      "remain": 198670.2
+      "sites": 94,
+      "income": 676172.4,
+      "ar": 457647.3,
+      "ap": 138453.5,
+      "remain": 132993
     }
   },
   "peAging": {
     "adisak": {
       "name": "Adisak Chanmao",
       "sites": 266,
-      "m1": 3.82,
-      "m2": 10.45,
+      "m1": 2.7,
+      "m2": 10.37,
       "hae_mbb": 190,
       "hae_iptan": 0,
       "tme_mbb": 1,
@@ -41,107 +41,107 @@
     "palagon": {
       "name": "Palagon Prommueangma",
       "sites": 28,
-      "m1": 5,
-      "m2": 6.81,
+      "m1": 4.11,
+      "m2": 6.56,
       "hae_mbb": 10,
       "hae_iptan": 0,
       "tme_mbb": 17,
-      "tme_iptan": 1
+      "tme_iptan": 0
     }
   },
   "docOwners": {
     "hathairat": {
       "name": "น.ส. หทัยรัตน์ สิงห์แก้ว",
-      "sites": 108,
-      "ac1": 1718529.5,
-      "ac2": 366738.3,
-      "avgAging1": 12.92,
-      "avgAging2": 30.95
+      "sites": 118,
+      "ac1": 1944439.1,
+      "ac2": 472325.7,
+      "avgAging1": 12.64,
+      "avgAging2": 33
     },
     "sermsiri": {
       "name": "Sermsiri Bampentam",
-      "sites": 50,
-      "ac1": 113164,
-      "ac2": 22408.2,
-      "avgAging1": 15.46,
-      "avgAging2": 142.57
+      "sites": 38,
+      "ac1": 76645.6,
+      "ac2": 13278.6,
+      "avgAging1": 17.03,
+      "avgAging2": 139.13
     },
     "apichart": {
       "name": "Apichart Kampuang",
-      "sites": 58,
-      "ac1": 780044.5,
-      "ac2": 196493.1,
-      "avgAging1": 13.95,
-      "avgAging2": 26.8
+      "sites": 60,
+      "ac1": 867633.2,
+      "ac2": 221116.2,
+      "avgAging1": 13.65,
+      "avgAging2": 26.95
     },
     "adisak": {
       "name": "Adisak Chanmao",
-      "sites": 29,
-      "ac1": 124090.72,
-      "ac2": 26579.48,
-      "avgAging1": 23.71,
-      "avgAging2": 116.86
+      "sites": 3,
+      "ac1": 33181.36,
+      "ac2": 6849.84,
+      "avgAging1": 31,
+      "avgAging2": 92.67
     }
   },
   "workTypes": {
     "MBB": {
-      "sites": 242,
-      "remain": 1069175.8
+      "sites": 231,
+      "remain": 411267.6
     },
     "IPTAN": {
-      "sites": 79,
-      "remain": 15488.2
+      "sites": 75,
+      "remain": 643
     }
   },
   "documentStatus": {
     "ac1": {
-      "amount": 3694341.98,
-      "done": 3385456.319999993,
-      "avgAging": 14.301652892561984
+      "amount": 4544582.28,
+      "done": 3711952.92,
+      "avgAging": 15.1
     },
     "ac2": {
-      "amount": 1583289.4200000002,
-      "done": 782067.0799999989,
-      "avgAging": 58.41203703703704
+      "amount": 1947678.12,
+      "done": 922247.78,
+      "avgAging": 59.59
     }
   },
   "financials": {
-    "estimateFinalIncome": 5277631.4,
-    "ar": 1916244.06,
-    "ap": 540628.5,
-    "remain": 1113252
+    "estimateFinalIncome": 6492260.4,
+    "ar": 3357019.8,
+    "ap": 883604.7,
+    "remain": 2150855.2
   },
   "siteStatus": {
-    "total": 321,
-    "completed": 295,
-    "onProcess": 24
+    "total": 307,
+    "completed": 307,
+    "onProcess": 0
   },
   "slaOnProcess": {
     "ais": {
       "smartQC": {
-        "doneInSLA": 136,
-        "doneLate": 63,
-        "pending": 0,
+        "doneInSLA": 143,
+        "doneLate": 67,
+        "pending": 5,
         "overSLA": 0
       },
       "patSubcon": {
-        "doneInSLA": 119,
-        "doneLate": 80,
+        "doneInSLA": 138,
+        "doneLate": 72,
         "pending": 0,
         "overSLA": 0
       },
-      "rework": 6
+      "rework": 4
     },
     "true": {
       "smartQC": {
-        "doneInSLA": 9,
+        "doneInSLA": 11,
         "doneLate": 8,
-        "pending": 1,
-        "overSLA": 0
+        "pending": 0,
+        "overSLA": 1
       },
       "patSubcon": {
         "doneInSLA": 14,
-        "doneLate": 2,
+        "doneLate": 4,
         "pending": 1,
         "overSLA": 0
       },
@@ -151,7 +151,7 @@
   "recoveryPlan": {
     "juneAcceptanceTarget": 192566,
     "juneActionPlanAC2": 242060.3,
-    "installOnProcess": 468203
+    "installOnProcess": 701341
   },
   "backlogTrend": [
     {
@@ -193,6 +193,14 @@
     {
       "week": "W37",
       "value": 1113252
+    },
+    {
+      "week": "W38",
+      "value": 1010548.2
+    },
+    {
+      "week": "W39",
+      "value": 2150855.2
     }
   ],
   "teamWeeklyPerformance": {
@@ -231,7 +239,8 @@
       "W36": 1,
       "W33": 2,
       "W34": 1,
-      "W35": 2
+      "W35": 2,
+      "W38": 2
     },
     "นาย อภิชาติ ฟังสันเทียะ": {
       "W3": 1,
@@ -254,9 +263,10 @@
       "W34": 4,
       "W32": 4,
       "W31": 5,
-      "W33": 3
+      "W33": 3,
+      "W38": 3
     },
-    "บริษัท สุพรรณ เทเลคอม จำกัด": {
+    "บริษัท สุพรรณ เทเลคอม จำกัด": {
       "W5": 4,
       "W7": 3,
       "W8": 12,
@@ -333,7 +343,7 @@
       "INHOUSE Adirek Kong-ang": 2,
       "INHOUSE PHET SAITHONG": 1,
       "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 4,
+      "บริษัท สุพรรณ เทเลคอม จำกัด": 4,
       "นาย ชัชวาล เคราะห์ดี": 2
     },
     {
@@ -347,14 +357,14 @@
       "INHOUSE Adirek Kong-ang": 4,
       "INHOUSE PHET SAITHONG": 1,
       "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 3,
+      "บริษัท สุพรรณ เทเลคอม จำกัด": 3,
       "นาย ชัชวาล เคราะห์ดี": 4
     },
     {
       "week": "W8",
       "INHOUSE PHET SAITHONG": 2,
       "นาย อภิชาติ ฟังสันเทียะ": 2,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 12,
+      "บริษัท สุพรรณ เทเลคอม จำกัด": 12,
       "นาย ชัชวาล เคราะห์ดี": 8,
       "INHOUSE WACHIRA SAOWARO": 3
     },
@@ -362,7 +372,7 @@
       "week": "W9",
       "INHOUSE PHET SAITHONG": 2,
       "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 4,
+      "บริษัท สุพรรณ เทเลคอม จำกัด": 4,
       "นาย ชัชวาล เคราะห์ดี": 12
     },
     {
@@ -505,6 +515,11 @@
       "week": "W36",
       "INHOUSE PHET SAITHONG": 1,
       "INHOUSE WACHIRA SAOWARO": 2
+    },
+    {
+      "week": "W38",
+      "INHOUSE PHET SAITHONG": 2,
+      "นาย อภิชาติ ฟังสันเทียะ": 3
     }
   ]
 }
