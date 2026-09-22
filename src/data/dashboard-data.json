@@ -2,10 +2,10 @@
   "reportWeek": 39,
   "projectYear": 2026,
   "performance": {
-    "haeM1Avg": 2.57,
-    "tmeM1Avg": 15.03,
-    "overallM1Avg": 2.84,
-    "overallM2Avg": 9.98,
+    "haeM1Avg": 3.90,
+    "tmeM1Avg": 3.62,
+    "overallM1Avg": 3.85,
+    "overallM2Avg": 10.02,
     "smartQC": {
       "passRate": 95,
       "totalInspected": 215
@@ -20,38 +20,38 @@
       "remain": 284024.6
     },
     "TME": {
-      "sites": 94,
+      "sites": 96,
       "income": 676172.4,
       "ar": 457647.3,
-      "ap": 138453.5,
+      "ap": 124306.3,
       "remain": 132993
     }
   },
   "peAging": {
     "adisak": {
       "name": "Adisak Chanmao",
-      "sites": 266,
-      "m1": 2.7,
-      "m2": 10.37,
+      "sites": 268,
+      "m1": 3.77,
+      "m2": 10.38,
       "hae_mbb": 190,
       "hae_iptan": 0,
       "tme_mbb": 1,
-      "tme_iptan": 75
+      "tme_iptan": 77
     },
     "palagon": {
       "name": "Palagon Prommueangma",
       "sites": 28,
-      "m1": 4.11,
-      "m2": 6.56,
+      "m1": 4.60,
+      "m2": 6.81,
       "hae_mbb": 10,
       "hae_iptan": 0,
       "tme_mbb": 17,
-      "tme_iptan": 0
+      "tme_iptan": 1
     },
     "apichart": {
       "name": "Apichart Kampuang",
       "sites": 11,
-      "m1": 2.91,
+      "m1": 3.56,
       "m2": 6.67,
       "hae_mbb": 11,
       "hae_iptan": 0,
@@ -99,32 +99,32 @@
       "remain": 411267.6
     },
     "IPTAN": {
-      "sites": 75,
-      "remain": 643
+      "sites": 80,
+      "remain": 4957
     }
   },
   "documentStatus": {
-    "siteCompletedIncome": 5056206,
+    "siteCompletedIncome": 5056206.4,
     "ac1": {
-      "amount": 3539344.20,
-      "done": 3711952.92,
-      "avgAging": 15.1
+      "amount": 3539344.48,
+      "done": 3710394.92,
+      "avgAging": 15.11
     },
     "ac2": {
-      "amount": 1516861.80,
+      "amount": 1516861.92,
       "done": 922247.78,
-      "avgAging": 59.59
+      "avgAging": 59.72
     }
   },
   "financials": {
-    "estimateFinalIncome": 6492260.4,
+    "estimateFinalIncome": 5056206.4,
     "ar": 3357019.8,
-    "ap": 883604.7,
-    "remain": 2150855.2
+    "ap": 869457.5,
+    "remain": 417017.6
   },
   "siteStatus": {
-    "total": 307,
-    "completed": 307,
+    "total": 311,
+    "completed": 309,
     "onProcess": 0
   },
   "slaOnProcess": {
@@ -165,372 +165,94 @@
     "installOnProcess": 701341
   },
   "backlogTrend": [
-    {
-      "week": "W08",
-      "value": 1680000
-    },
-    {
-      "week": "W12",
-      "value": 1030000
-    },
-    {
-      "week": "W16",
-      "value": 700000
-    },
-    {
-      "week": "W20",
-      "value": 500000
-    },
-    {
-      "week": "W23",
-      "value": 278511
-    },
-    {
-      "week": "W24",
-      "value": 1187938
-    },
-    {
-      "week": "W25",
-      "value": 1150000
-    },
-    {
-      "week": "W26",
-      "value": 2100727.2
-    },
-    {
-      "week": "W36",
-      "value": 1090680.2
-    },
-    {
-      "week": "W37",
-      "value": 1113252
-    },
-    {
-      "week": "W38",
-      "value": 1010548.2
-    },
-    {
-      "week": "W39",
-      "value": 2150855.2
-    }
+    { "week": "W08", "value": 1680000 },
+    { "week": "W12", "value": 1030000 },
+    { "week": "W16", "value": 700000 },
+    { "week": "W20", "value": 500000 },
+    { "week": "W23", "value": 278511 },
+    { "week": "W24", "value": 1187938 },
+    { "week": "W25", "value": 1150000 },
+    { "week": "W26", "value": 2100727.2 },
+    { "week": "W36", "value": 1090680.2 },
+    { "week": "W37", "value": 1113252 },
+    { "week": "W38", "value": 1010548.2 },
+    { "week": "W39", "value": 417017.6 }
   ],
   "teamWeeklyPerformance": {
     "INHOUSE Adirek Kong-ang": {
-      "W4": 2,
-      "W3": 1,
-      "W5": 2,
-      "W6": 1,
-      "W7": 4,
-      "W12": 1,
-      "W14": 1,
-      "W17": 1,
-      "W21": 1,
-      "W22": 2
+      "W4": 2, "W3": 1, "W5": 2, "W6": 1, "W7": 4,
+      "W12": 1, "W14": 1, "W17": 1, "W21": 1, "W22": 2
     },
     "INHOUSE PHET SAITHONG": {
-      "W4": 3,
-      "W5": 1,
-      "W6": 3,
-      "W7": 1,
-      "W8": 2,
-      "W9": 2,
-      "W14": 1,
-      "W18": 1,
-      "W25": 3,
-      "W22": 2,
-      "W24": 2,
-      "W28": 3,
-      "W29": 3,
-      "W27": 2,
-      "W23": 2,
-      "W30": 4,
-      "W31": 4,
-      "W26": 2,
-      "W32": 4,
-      "W36": 1,
-      "W33": 2,
-      "W34": 1,
-      "W35": 2,
-      "W38": 2
+      "W4": 3, "W5": 1, "W6": 3, "W7": 1, "W8": 2, "W9": 2,
+      "W14": 1, "W18": 1, "W25": 3, "W22": 2, "W24": 2,
+      "W28": 3, "W29": 3, "W27": 2, "W23": 2, "W30": 4,
+      "W31": 4, "W26": 2, "W32": 4, "W36": 1, "W33": 2,
+      "W34": 1, "W35": 2, "W38": 2
     },
     "นาย อภิชาติ ฟังสันเทียะ": {
-      "W3": 1,
-      "W4": 4,
-      "W5": 1,
-      "W6": 3,
-      "W7": 1,
-      "W8": 2,
-      "W9": 1,
-      "W22": 3,
-      "W24": 4,
-      "W26": 3,
-      "W27": 4,
-      "W28": 1,
-      "W29": 5,
-      "W23": 3,
-      "W30": 4,
-      "W35": 2,
-      "W25": 3,
-      "W34": 4,
-      "W32": 4,
-      "W31": 5,
-      "W33": 3,
-      "W38": 3
+      "W3": 1, "W4": 4, "W5": 1, "W6": 3, "W7": 1, "W8": 2,
+      "W9": 1, "W22": 3, "W24": 4, "W26": 3, "W27": 4, "W28": 1,
+      "W29": 5, "W23": 3, "W30": 4, "W35": 2, "W25": 3,
+      "W34": 4, "W32": 4, "W31": 5, "W33": 3, "W38": 3
     },
     "บริษัท สุพรรณ เทเลคอม จำกัด": {
-      "W5": 4,
-      "W7": 3,
-      "W8": 12,
-      "W9": 4
+      "W5": 4, "W7": 3, "W8": 12, "W9": 4
     },
     "นาย ชัชวาล เคราะห์ดี": {
-      "W5": 2,
-      "W7": 4,
-      "W8": 8,
-      "W9": 12,
-      "W10": 2,
-      "W11": 6,
-      "W12": 8,
-      "W13": 9,
-      "W14": 1
+      "W5": 2, "W7": 4, "W8": 8, "W9": 12, "W10": 2,
+      "W11": 6, "W12": 8, "W13": 9, "W14": 1
     },
     "INHOUSE WACHIRA SAOWARO": {
-      "W8": 3,
-      "W22": 1,
-      "W23": 2,
-      "W24": 1,
-      "W26": 1,
-      "W28": 3,
-      "W31": 1,
-      "W25": 1,
-      "W27": 2,
-      "W32": 2,
-      "W29": 2,
-      "W34": 3,
-      "W36": 2,
-      "W33": 1,
-      "W35": 1
+      "W8": 3, "W22": 1, "W23": 2, "W24": 1, "W26": 1,
+      "W28": 3, "W31": 1, "W25": 1, "W27": 2, "W32": 2,
+      "W29": 2, "W34": 3, "W36": 2, "W33": 1, "W35": 1
     },
     "INHOUSE_Anat Srianut": {
-      "W22": 1,
-      "W23": 2,
-      "W24": 2
+      "W22": 1, "W23": 2, "W24": 2
     },
     "นาย พงพัฒน์ มาลาทิพท์": {
-      "W32": 5,
-      "W33": 5
+      "W32": 5, "W33": 5
     },
     "นาย ภูริวัจน์ ขวัญแก้ว": {
-      "W28": 5,
-      "W30": 2,
-      "W27": 1,
-      "W31": 6,
-      "W34": 3,
-      "W32": 7,
-      "W33": 4
+      "W28": 5, "W30": 2, "W27": 1, "W31": 6, "W34": 3,
+      "W32": 7, "W33": 4
     },
     "นาย จรัล ศรีเหลี่ยม": {
-      "W32": 7,
-      "W31": 7,
-      "W30": 2,
-      "W35": 1,
-      "W33": 5
+      "W32": 7, "W31": 7, "W30": 2, "W35": 1, "W33": 5
     }
   },
   "teamWeeklyData": [
-    {
-      "week": "W3",
-      "INHOUSE Adirek Kong-ang": 1,
-      "นาย อภิชาติ ฟังสันเทียะ": 1
-    },
-    {
-      "week": "W4",
-      "INHOUSE Adirek Kong-ang": 2,
-      "INHOUSE PHET SAITHONG": 3,
-      "นาย อภิชาติ ฟังสันเทียะ": 4
-    },
-    {
-      "week": "W5",
-      "INHOUSE Adirek Kong-ang": 2,
-      "INHOUSE PHET SAITHONG": 1,
-      "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 4,
-      "นาย ชัชวาล เคราะห์ดี": 2
-    },
-    {
-      "week": "W6",
-      "INHOUSE Adirek Kong-ang": 1,
-      "INHOUSE PHET SAITHONG": 3,
-      "นาย อภิชาติ ฟังสันเทียะ": 3
-    },
-    {
-      "week": "W7",
-      "INHOUSE Adirek Kong-ang": 4,
-      "INHOUSE PHET SAITHONG": 1,
-      "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 3,
-      "นาย ชัชวาล เคราะห์ดี": 4
-    },
-    {
-      "week": "W8",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 2,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 12,
-      "นาย ชัชวาล เคราะห์ดี": 8,
-      "INHOUSE WACHIRA SAOWARO": 3
-    },
-    {
-      "week": "W9",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "บริษัท สุพรรณ เทเลคอม จำกัด": 4,
-      "นาย ชัชวาล เคราะห์ดี": 12
-    },
-    {
-      "week": "W10",
-      "นาย ชัชวาล เคราะห์ดี": 2
-    },
-    {
-      "week": "W11",
-      "นาย ชัชวาล เคราะห์ดี": 6
-    },
-    {
-      "week": "W12",
-      "INHOUSE Adirek Kong-ang": 1,
-      "นาย ชัชวาล เคราะห์ดี": 8
-    },
-    {
-      "week": "W13",
-      "นาย ชัชวาล เคราะห์ดี": 9
-    },
-    {
-      "week": "W14",
-      "INHOUSE Adirek Kong-ang": 1,
-      "INHOUSE PHET SAITHONG": 1,
-      "นาย ชัชวาล เคราะห์ดี": 1
-    },
-    {
-      "week": "W17",
-      "INHOUSE Adirek Kong-ang": 1
-    },
-    {
-      "week": "W18",
-      "INHOUSE PHET SAITHONG": 1
-    },
-    {
-      "week": "W21",
-      "INHOUSE Adirek Kong-ang": 1
-    },
-    {
-      "week": "W22",
-      "INHOUSE Adirek Kong-ang": 2,
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 3,
-      "INHOUSE WACHIRA SAOWARO": 1,
-      "INHOUSE_Anat Srianut": 1
-    },
-    {
-      "week": "W23",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 3,
-      "INHOUSE WACHIRA SAOWARO": 2,
-      "INHOUSE_Anat Srianut": 2
-    },
-    {
-      "week": "W24",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 4,
-      "INHOUSE WACHIRA SAOWARO": 1,
-      "INHOUSE_Anat Srianut": 2
-    },
-    {
-      "week": "W25",
-      "INHOUSE PHET SAITHONG": 3,
-      "นาย อภิชาติ ฟังสันเทียะ": 3,
-      "INHOUSE WACHIRA SAOWARO": 1
-    },
-    {
-      "week": "W26",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 3,
-      "INHOUSE WACHIRA SAOWARO": 1
-    },
-    {
-      "week": "W27",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 4,
-      "INHOUSE WACHIRA SAOWARO": 2,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 1
-    },
-    {
-      "week": "W28",
-      "INHOUSE PHET SAITHONG": 3,
-      "นาย อภิชาติ ฟังสันเทียะ": 1,
-      "INHOUSE WACHIRA SAOWARO": 3,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 5
-    },
-    {
-      "week": "W29",
-      "INHOUSE PHET SAITHONG": 3,
-      "นาย อภิชาติ ฟังสันเทียะ": 5,
-      "INHOUSE WACHIRA SAOWARO": 2
-    },
-    {
-      "week": "W30",
-      "INHOUSE PHET SAITHONG": 4,
-      "นาย อภิชาติ ฟังสันเทียะ": 4,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 2,
-      "นาย จรัล ศรีเหลี่ยม": 2
-    },
-    {
-      "week": "W31",
-      "INHOUSE PHET SAITHONG": 4,
-      "นาย อภิชาติ ฟังสันเทียะ": 5,
-      "INHOUSE WACHIRA SAOWARO": 1,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 6,
-      "นาย จรัล ศรีเหลี่ยม": 7
-    },
-    {
-      "week": "W32",
-      "INHOUSE PHET SAITHONG": 4,
-      "นาย อภิชาติ ฟังสันเทียะ": 4,
-      "INHOUSE WACHIRA SAOWARO": 2,
-      "นาย พงพัฒน์ มาลาทิพท์": 5,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 7,
-      "นาย จรัล ศรีเหลี่ยม": 7
-    },
-    {
-      "week": "W33",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 3,
-      "INHOUSE WACHIRA SAOWARO": 1,
-      "นาย พงพัฒน์ มาลาทิพท์": 5,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 4,
-      "นาย จรัล ศรีเหลี่ยม": 5
-    },
-    {
-      "week": "W34",
-      "INHOUSE PHET SAITHONG": 1,
-      "นาย อภิชาติ ฟังสันเทียะ": 4,
-      "INHOUSE WACHIRA SAOWARO": 3,
-      "นาย ภูริวัจน์ ขวัญแก้ว": 3
-    },
-    {
-      "week": "W35",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 2,
-      "INHOUSE WACHIRA SAOWARO": 1,
-      "นาย จรัล ศรีเหลี่ยม": 1
-    },
-    {
-      "week": "W36",
-      "INHOUSE PHET SAITHONG": 1,
-      "INHOUSE WACHIRA SAOWARO": 2
-    },
-    {
-      "week": "W38",
-      "INHOUSE PHET SAITHONG": 2,
-      "นาย อภิชาติ ฟังสันเทียะ": 3
-    }
+    { "week": "W3", "INHOUSE Adirek Kong-ang": 1, "นาย อภิชาติ ฟังสันเทียะ": 1 },
+    { "week": "W4", "INHOUSE Adirek Kong-ang": 2, "INHOUSE PHET SAITHONG": 3, "นาย อภิชาติ ฟังสันเทียะ": 4 },
+    { "week": "W5", "INHOUSE Adirek Kong-ang": 2, "INHOUSE PHET SAITHONG": 1, "นาย อภิชาติ ฟังสันเทียะ": 1, "บริษัท สุพรรณ เทเลคอม จำกัด": 4, "นาย ชัชวาล เคราะห์ดี": 2 },
+    { "week": "W6", "INHOUSE Adirek Kong-ang": 1, "INHOUSE PHET SAITHONG": 3, "นาย อภิชาติ ฟังสันเทียะ": 3 },
+    { "week": "W7", "INHOUSE Adirek Kong-ang": 4, "INHOUSE PHET SAITHONG": 1, "นาย อภิชาติ ฟังสันเทียะ": 1, "บริษัท สุพรรณ เทเลคอม จำกัด": 3, "นาย ชัชวาล เคราะห์ดี": 4 },
+    { "week": "W8", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 2, "บริษัท สุพรรณ เทเลคอม จำกัด": 12, "นาย ชัชวาล เคราะห์ดี": 8, "INHOUSE WACHIRA SAOWARO": 3 },
+    { "week": "W9", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 1, "บริษัท สุพรรณ เทเลคอม จำกัด": 4, "นาย ชัชวาล เคราะห์ดี": 12 },
+    { "week": "W10", "นาย ชัชวาล เคราะห์ดี": 2 },
+    { "week": "W11", "นาย ชัชวาล เคราะห์ดี": 6 },
+    { "week": "W12", "INHOUSE Adirek Kong-ang": 1, "นาย ชัชวาล เคราะห์ดี": 8 },
+    { "week": "W13", "นาย ชัชวาล เคราะห์ดี": 9 },
+    { "week": "W14", "INHOUSE Adirek Kong-ang": 1, "INHOUSE PHET SAITHONG": 1, "นาย ชัชวาล เคราะห์ดี": 1 },
+    { "week": "W17", "INHOUSE Adirek Kong-ang": 1 },
+    { "week": "W18", "INHOUSE PHET SAITHONG": 1 },
+    { "week": "W21", "INHOUSE Adirek Kong-ang": 1 },
+    { "week": "W22", "INHOUSE Adirek Kong-ang": 2, "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 3, "INHOUSE WACHIRA SAOWARO": 1, "INHOUSE_Anat Srianut": 1 },
+    { "week": "W23", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 3, "INHOUSE WACHIRA SAOWARO": 2, "INHOUSE_Anat Srianut": 2 },
+    { "week": "W24", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 4, "INHOUSE WACHIRA SAOWARO": 1, "INHOUSE_Anat Srianut": 2 },
+    { "week": "W25", "INHOUSE PHET SAITHONG": 3, "นาย อภิชาติ ฟังสันเทียะ": 3, "INHOUSE WACHIRA SAOWARO": 1 },
+    { "week": "W26", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 3, "INHOUSE WACHIRA SAOWARO": 1 },
+    { "week": "W27", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 4, "INHOUSE WACHIRA SAOWARO": 2, "นาย ภูริวัจน์ ขวัญแก้ว": 1 },
+    { "week": "W28", "INHOUSE PHET SAITHONG": 3, "นาย อภิชาติ ฟังสันเทียะ": 1, "INHOUSE WACHIRA SAOWARO": 3, "นาย ภูริวัจน์ ขวัญแก้ว": 5 },
+    { "week": "W29", "INHOUSE PHET SAITHONG": 3, "นาย อภิชาติ ฟังสันเทียะ": 5, "INHOUSE WACHIRA SAOWARO": 2 },
+    { "week": "W30", "INHOUSE PHET SAITHONG": 4, "นาย อภิชาติ ฟังสันเทียะ": 4, "นาย ภูริวัจน์ ขวัญแก้ว": 2, "นาย จรัล ศรีเหลี่ยม": 2 },
+    { "week": "W31", "INHOUSE PHET SAITHONG": 4, "นาย อภิชาติ ฟังสันเทียะ": 5, "INHOUSE WACHIRA SAOWARO": 1, "นาย ภูริวัจน์ ขวัญแก้ว": 6, "นาย จรัล ศรีเหลี่ยม": 7 },
+    { "week": "W32", "INHOUSE PHET SAITHONG": 4, "นาย อภิชาติ ฟังสันเทียะ": 4, "INHOUSE WACHIRA SAOWARO": 2, "นาย พงพัฒน์ มาลาทิพท์": 5, "นาย ภูริวัจน์ ขวัญแก้ว": 7, "นาย จรัล ศรีเหลี่ยม": 7 },
+    { "week": "W33", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 3, "INHOUSE WACHIRA SAOWARO": 1, "นาย พงพัฒน์ มาลาทิพท์": 5, "นาย ภูริวัจน์ ขวัญแก้ว": 4, "นาย จรัล ศรีเหลี่ยม": 5 },
+    { "week": "W34", "INHOUSE PHET SAITHONG": 1, "นาย อภิชาติ ฟังสันเทียะ": 4, "INHOUSE WACHIRA SAOWARO": 3, "นาย ภูริวัจน์ ขวัญแก้ว": 3 },
+    { "week": "W35", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 2, "INHOUSE WACHIRA SAOWARO": 1, "นาย จรัล ศรีเหลี่ยม": 1 },
+    { "week": "W36", "INHOUSE PHET SAITHONG": 1, "INHOUSE WACHIRA SAOWARO": 2 },
+    { "week": "W38", "INHOUSE PHET SAITHONG": 2, "นาย อภิชาติ ฟังสันเทียะ": 3 }
   ]
 }
