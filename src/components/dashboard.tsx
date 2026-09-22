@@ -104,6 +104,7 @@ function xlsxToJson(workbook: XLSX.WorkBook): any {
 
   const adisakPE = byPE['Adisak Chanmao'] || { all: [], hae_mbb: [], hae_iptan: [], tme_mbb: [], tme_iptan: [] };
   const palagonPE = byPE['Palagon Prommueangma'] || { all: [], hae_mbb: [], hae_iptan: [], tme_mbb: [], tme_iptan: [] };
+  const apichartPE = byPE['Apichart Kampuang'] || { all: [], hae_mbb: [], hae_iptan: [], tme_mbb: [], tme_iptan: [] };
 
   const hathairat = byDOC['น.ส. หทัยรัตน์ สิงห์แก้ว'] || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
   const sermsiri  = byDOC['Sermsiri  Bampentam']      || { rows: [], ac1: 0, ac2: 0, aging1: [], aging2: [] };
@@ -124,8 +125,10 @@ function xlsxToJson(workbook: XLSX.WorkBook): any {
 
   const adiM1rows = adisakPE.all.filter((r: any) => n(r[COL.AGING_1]) > 0);
   const palM1rows = palagonPE.all.filter((r: any) => n(r[COL.AGING_1]) > 0);
+  const apiM1rows = apichartPE.all.filter((r: any) => n(r[COL.AGING_1]) > 0);
   const adiM2rows = adisakPE.all.filter((r: any) => n(r[COL.AGING_2]) > 0);
   const palM2rows = palagonPE.all.filter((r: any) => n(r[COL.AGING_2]) > 0);
+  const apiM2rows = apichartPE.all.filter((r: any) => n(r[COL.AGING_2]) > 0);
 
   const summaryRow = rawRows[1] || [];
   const totalIncome = n(summaryRow[COL.ESTIMATE_INCOME]);
@@ -176,6 +179,13 @@ function xlsxToJson(workbook: XLSX.WorkBook): any {
         m2: parseFloat((palM2rows.length ? palM2rows.reduce((s: number, r: any) => s + n(r[COL.AGING_2]), 0) / palM2rows.length : 0).toFixed(2)),
         hae_mbb: palagonPE.hae_mbb.length, hae_iptan: palagonPE.hae_iptan.length,
         tme_mbb: palagonPE.tme_mbb.length, tme_iptan: palagonPE.tme_iptan.length,
+      },
+      apichart: {
+        name: 'Apichart Kampuang', sites: apichartPE.all.length,
+        m1: parseFloat((apiM1rows.length ? apiM1rows.reduce((s: number, r: any) => s + n(r[COL.AGING_1]), 0) / apiM1rows.length : 0).toFixed(2)),
+        m2: parseFloat((apiM2rows.length ? apiM2rows.reduce((s: number, r: any) => s + n(r[COL.AGING_2]), 0) / apiM2rows.length : 0).toFixed(2)),
+        hae_mbb: apichartPE.hae_mbb.length, hae_iptan: apichartPE.hae_iptan.length,
+        tme_mbb: apichartPE.tme_mbb.length, tme_iptan: apichartPE.tme_iptan.length,
       },
     },
     docOwners: {
@@ -721,6 +731,7 @@ export function Dashboard({ activeSlide, data, onImport }: {
                 {[
                   { name: 'Adisak Chanmao', m1: d.peAging.adisak.m1, m2: Math.abs(d.peAging.adisak.m2), sla: 'M1 OK / M2 ⚠', watch: false },
                   { name: 'Palagon Prommueangma', m1: Math.abs(d.peAging.palagon.m1), m2: Math.abs(d.peAging.palagon.m2), sla: 'ต้องติดตาม', watch: true },
+                  ...(d.peAging.apichart ? [{ name: 'Apichart Kampuang', m1: d.peAging.apichart.m1, m2: Math.abs(d.peAging.apichart.m2), sla: 'M1 OK / M2 OK', watch: false }] : [])
                 ].map(pe => (
                   <tr key={pe.name} className="border-b border-zinc-800 hover:bg-zinc-800/30 transition-colors">
                     <td className="p-4 text-white font-medium">{pe.name}</td>

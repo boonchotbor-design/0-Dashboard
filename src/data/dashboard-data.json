@@ -47,6 +47,16 @@
       "hae_iptan": 0,
       "tme_mbb": 17,
       "tme_iptan": 0
+    },
+    "apichart": {
+      "name": "Apichart Kampuang",
+      "sites": 11,
+      "m1": 2.91,
+      "m2": 6.67,
+      "hae_mbb": 11,
+      "hae_iptan": 0,
+      "tme_mbb": 0,
+      "tme_iptan": 0
     }
   },
   "docOwners": {

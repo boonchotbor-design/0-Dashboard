@@ -1882,7 +1882,7 @@
             <tr>
               <td style="color:var(--text-primary);font-weight:500">Adisak Chanmao <span style="color:#94a3b8;font-size:0.85em">(TME-IPRAN)</span></td>
               <td><span class="badge badge-purple">75</span></td>
-              <td><span class="badge badge-green">2.3d</span></td>
+              <td><span class="badge badge-green">1.9d</span></td>
               <td style="font-size:.75rem;color:#94a3b8">↓1d / ↑20d</td>
               <td><span class="badge badge-amber">17.6d</span></td>
               <td style="font-size:.75rem;color:#94a3b8">↓1d / ↑110d</td>
@@ -1904,20 +1904,20 @@
               <td style="font-size:.75rem;color:#94a3b8">↓4d / ↑7d</td>
             </tr>
             <tr>
-              <td style="color:var(--text-primary);font-weight:500">Palagon Prommueangma <span style="color:#94a3b8;font-size:0.85em">(TME-BATTERY)</span></td>
-              <td><span class="badge badge-purple">1</span></td>
-              <td><span class="badge badge-green">7.0d</span></td>
-              <td style="font-size:.75rem;color:#94a3b8">↓7d / ↑7d</td>
-              <td><span class="badge badge-green">7.0d</span></td>
-              <td style="font-size:.75rem;color:#94a3b8">↓7d / ↑7d</td>
-            </tr>
-            <tr>
               <td style="color:var(--text-primary);font-weight:500">Palagon Prommueangma <span style="color:#94a3b8;font-size:0.85em">(TME-MBB)</span></td>
-              <td><span class="badge badge-purple">17</span></td>
-              <td><span class="badge badge-green">6.4d</span></td>
+              <td><span class="badge badge-purple">18</span></td>
+              <td><span class="badge badge-green">5.6d</span></td>
               <td style="font-size:.75rem;color:#94a3b8">↓1d / ↑20d</td>
               <td><span class="badge badge-green">7.6d</span></td>
               <td style="font-size:.75rem;color:#94a3b8">↓1d / ↑22d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Apichart Kampuang <span style="color:#94a3b8;font-size:0.85em">(HAE-MBB)</span></td>
+              <td><span class="badge badge-purple">11</span></td>
+              <td><span class="badge badge-green">3.6d</span></td>
+              <td style="font-size:.75rem;color:#94a3b8">↓1d / ↑6d</td>
+              <td><span class="badge badge-green">6.7d</span></td>
+              <td style="font-size:.75rem;color:#94a3b8">↓6d / ↑8d</td>
             </tr>
           </tbody>
         </table>
@@ -3525,7 +3525,8 @@
               // PE Owner SLA — MS1 & MS2 (Separated by Type)
               const peOwnerDefs2 = [
                 { nameMatch: /adisak/i,  label: 'Adisak Chanmao' },
-                { nameMatch: /palagon/i, label: 'Palagon Prommueangma' }
+                { nameMatch: /palagon/i, label: 'Palagon Prommueangma' },
+                { nameMatch: /apichart/i, label: 'Apichart Kampuang' }
               ];
               const peTypes = [
                 { match: /(?=.*HAE)(?=.*MBB)|HAE-MBB/i, label: 'HAE-MBB' },
@@ -3548,7 +3549,7 @@
                 if (typeMatch) {
                     wt = typeMatch.label;
                 } else if (/MBB/i.test(rowString)) {
-                    wt = m.label.includes('Adisak') ? 'HAE-MBB' : 'TME-MBB';
+                    wt = (m.label.includes('Adisak') || m.label.includes('Apichart')) ? 'HAE-MBB' : 'TME-MBB';
                 } else {
                     if (s26WorkTypeIdx > -1) {
                         wt = String(row[s26WorkTypeIdx] || '').trim();
