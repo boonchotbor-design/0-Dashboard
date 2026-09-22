@@ -104,20 +104,24 @@
     }
   },
   "documentStatus": {
+    "totalEstFinalIncome": 6492260.4,
     "siteCompletedIncome": 5056206.4,
     "ac1": {
-      "amount": 3539344.48,
-      "done": 3710394.92,
+      "amount": 4544582.28,
+      "done": 3711952.92,
+      "pct": 81.7,
       "avgAging": 15.11
     },
     "ac2": {
-      "amount": 1516861.92,
+      "amount": 1947678.12,
       "done": 922247.78,
-      "avgAging": 59.72
+      "pct": 47.4,
+      "avgAging": 59.84
     }
   },
   "financials": {
-    "estimateFinalIncome": 5056206.4,
+    "estimateFinalIncome": 6492260.4,
+    "siteCompletedIncome": 5056206.4,
     "ar": 3357019.8,
     "ap": 869457.5,
     "remain": 417017.6
