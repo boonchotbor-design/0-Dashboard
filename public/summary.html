@@ -1215,8 +1215,9 @@
         <div class="wr-section">
           <div class="wr-section-title">💰 Financial KPI</div>
           <div class="wr-row"><span class="wr-label">Est. Final Income</span><span class="wr-val green" id="wrIncome">-</span></div>
+          <div class="wr-row"><span class="wr-label">Site Completed Income</span><span class="wr-val green" id="wrCompletedIncome">-</span></div>
           <div class="wr-row"><span class="wr-label">Remaining Backlog</span><span class="wr-val amber" id="wrBacklog">-</span></div>
-          <div class="wr-row"><span class="wr-label" id="wrBlPrevLabel">Backlog Prev WK</span></span><span class="wr-val" id="wrBlPrev">-</span></div>
+          <div class="wr-row"><span class="wr-label" id="wrBlPrevLabel">Backlog Prev WK</span><span class="wr-val" id="wrBlPrev">-</span></div>
           <div class="wr-row"><span class="wr-label" id="wrBlCurLabel">Backlog Cur WK</span><span class="wr-val" id="wrBlCur">-</span></div>
           <div class="wr-row"><span class="wr-label">Δ Backlog</span><span class="wr-val" id="wrBlDiff">-</span></div>
           <div class="wr-row"><span class="wr-label">Action Plan WK</span><span class="wr-val" id="wrActPlan">-</span></div>
@@ -2571,6 +2572,7 @@
           let minAc1Aging = Infinity, maxAc1Aging = -Infinity;
           let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
           let countCompleted = 0, countOnProcess = 0, countCancel = 0;
+          let sumCompletedIncome = 0;
           let countHae = 0, countTme = 0;
           let s26Rows = [], s26HeaderRow = -1;
           let s26AC1AmtIdx=-1, s26AC2AmtIdx=-1, s26AC1AgingIdx=-1, s26AC2AgingIdx=-1;
@@ -3297,6 +3299,7 @@
                 const statusColFinal = statusIdx > -1 ? statusIdx : (ac2StatusIdx > -1 ? ac2StatusIdx : 57);
                 const projectIdx = headers.findIndex(h => /^project$/i.test(String(h).trim()));
                 const typeIdx = projectIdx > -1 ? projectIdx : headers.findIndex(h => /project|type/i.test(String(h)));
+                const s26EstFinalIncomeIdx = headers.findIndex(h => /estimate.*final.*income/i.test(String(h)));
                 const workTypeIdx = headers.findIndex(h => /work\s*type/i.test(String(h)));
                 s26WorkTypeIdx = workTypeIdx;
                 // Find WON CODE and WON NAME / SITE ID columns to validate data rows
@@ -3359,7 +3362,14 @@
                   // Completed / On Process / Cancel from STATUS WORK column (Col BF index 57)
                   {
                     const status = statusRaw.toLowerCase();
-                    if (status === 'completed' || status === 'done' || status === 'เสร็จแล้ว') countCompleted++;
+                    if (status === 'completed' || status === 'done' || status === 'เสร็จแล้ว') {
+                      countCompleted++;
+                      const incCol = s26EstFinalIncomeIdx > -1 ? s26EstFinalIncomeIdx : 27;
+                      if (row[incCol] !== undefined && row[incCol] !== '') {
+                        const incVal = Number(String(row[incCol]).replace(/[^0-9.-]/g, ''));
+                        if (!isNaN(incVal)) sumCompletedIncome += incVal;
+                      }
+                    }
                     else if (status === 'on process' || status === 'in progress' || status === 'กำลังดำเนินการ') countOnProcess++;
                     else if (status === 'cancel' || status === 'cancelled' || status === 'ยกเลิก') countCancel++;
                   }
@@ -3918,6 +3928,13 @@
           setTimeout(() => { st.style.display = 'none'; }, 8000);
 
           /* ─── Generate Weekly Report Summary ─── */
+          const p4Get = (kw) => {
+            const r = p4.find(x => String(x['Metric']).toLowerCase().includes(kw.toLowerCase()));
+            return r ? getV(r) : null;
+          };
+          const p4Inc = p4.length ? p4Get('estimate final income') : null;
+          const p4Bl = p4.length ? (p4Get('remain to claim') || p4Get('backlog week')) : null;
+
           generateWeeklyReport({
             week: reportWeek,
             completed: countCompleted,
@@ -3926,8 +3943,13 @@
             totalSites: countCompleted + countOnProcess + countCancel,
             haeCount: countHae,
             tmeCount: countTme,
-            income: p4.length ? (() => { const r = p4.find(x => /estimate final income/i.test(String(x['Metric']))); return r ? (r['Value (THB)'] || r['Value'] || null) : null; })() : null,
-            backlog: p4.length ? (() => { const r = p4.find(x => /remain to claim/i.test(String(x['Metric']))); return r ? (r['Value (THB)'] || r['Value'] || null) : null; })() : null,
+            completedIncome: sumCompletedIncome > 0 ? sumCompletedIncome : null,
+            income: (typeof income !== 'undefined' && income !== null)
+              ? income
+              : (p4Inc !== null ? p4Inc : (sumCompletedIncome > 0 ? sumCompletedIncome : null)),
+            backlog: (typeof backlog !== 'undefined' && backlog !== null)
+              ? backlog
+              : p4Bl,
             blRows: p4.filter(r => /backlog week/i.test(String(r['Metric']))),
             actPlan: (typeof actPlan !== 'undefined' ? actPlan : null),
             ac1Avg: countAc1Aging > 0 ? (sumAc1Aging / countAc1Aging) : 0,
@@ -3988,17 +4010,26 @@
       set('wrHaeTme', (d.haeCount > 0 || d.tmeCount > 0) ? `HAE ${d.haeCount} · TME ${d.tmeCount}` : '-');
 
       /* ─ Financial KPI ─ */
-      set('wrIncome', fmt(d.income));
+      const dispIncome = d.income || d.completedIncome;
+      set('wrIncome', fmt(dispIncome));
+      set('wrCompletedIncome', fmt(d.completedIncome || dispIncome));
       set('wrBacklog', fmt(d.backlog));
       set('wrActPlan', fmt(d.actPlan));
       // Backlog comparison rows
       const blR = (d.blRows || []).filter(r => /backlog week/i.test(String(r['Metric'])));
       if (blR.length >= 2) {
-        const getV = r => r['Value (THB)'] !== undefined ? r['Value (THB)'] : (r['Value'] || 0);
+        const getV_bl = r => {
+          if (!r) return 0;
+          const k = Object.keys(r).find(key => {
+            const t = key.trim();
+            return t === 'Value (THB)' || t === 'Amount (THB)' || t === 'Value';
+          });
+          return k ? (Number(r[k]) || 0) : 0;
+        };
         const lbl1 = String(blR[blR.length-2]['Metric']).replace(/backlog/i,'').trim();
         const lbl2 = String(blR[blR.length-1]['Metric']).replace(/backlog/i,'').trim();
-        const v1 = Number(getV(blR[blR.length-2]));
-        const v2 = Number(getV(blR[blR.length-1]));
+        const v1 = Number(getV_bl(blR[blR.length-2]));
+        const v2 = Number(getV_bl(blR[blR.length-1]));
         const diff = v2 - v1;
         set('wrBlPrevLabel', lbl1);
         set('wrBlCurLabel', lbl2);
@@ -4094,7 +4125,14 @@
 
       /* ─ Full Thai Report Text (for Copy) ─ */
       const blRows = (d.blRows || []).filter(r => /backlog week/i.test(String(r['Metric'])));
-      const getVraw = r => r['Value (THB)'] !== undefined ? r['Value (THB)'] : (r['Value'] || 0);
+      const getVraw = r => {
+        if (!r) return 0;
+        const k = Object.keys(r).find(key => {
+          const t = key.trim();
+          return t === 'Value (THB)' || t === 'Amount (THB)' || t === 'Value';
+        });
+        return k ? (Number(r[k]) || 0) : 0;
+      };
       const blPrevLbl = blRows.length >= 2 ? String(blRows[blRows.length-2]['Metric']).replace(/backlog/i,'').trim() : 'Prev WK';
       const blCurLbl  = blRows.length >= 2 ? String(blRows[blRows.length-1]['Metric']).replace(/backlog/i,'').trim() : 'Cur WK';
       const blPrevVal = blRows.length >= 2 ? Number(getVraw(blRows[blRows.length-2])) : 0;
@@ -4111,7 +4149,8 @@
         `• ความคืบหน้ารวม: ${fmtPct(pct)}  |  HAE ${d.haeCount} ไซต์  ·  TME ${d.tmeCount} ไซต์`,
         ``,
         `💰 ตัวเลขการเงิน (Financial KPI)`,
-        `• Estimated Final Income: ${fmt(d.income)}`,
+        `• Estimated Final Income: ${fmt(d.income || d.completedIncome)}`,
+        d.completedIncome ? `• Site Completed Income: ${fmt(d.completedIncome)}` : '',
         `• Remaining Backlog: ${fmt(d.backlog)}`,
         `• Backlog ${blPrevLbl}: ${fmt(blPrevVal)}  →  Backlog ${blCurLbl}: ${fmt(blCurVal)}  (${blDiff <= 0 ? '▼' : '▲'} ${fmt(Math.abs(blDiff))})`,
         `• Action Plan WK${d.week}: ${fmt(d.actPlan)}`,
@@ -4139,7 +4178,7 @@
 
       /* ─ Save weekly report IDs ─ */
       const wrIDs = ['wrWeekLabel','wrImportTime','wrCompleted','wrOnProcess','wrTotal','wrPctDone','wrHaeTme',
-        'wrIncome','wrBacklog','wrActPlan','wrBlPrev','wrBlCur','wrBlDiff','wrBlPrevLabel','wrBlCurLabel',
+        'wrIncome','wrCompletedIncome','wrBacklog','wrActPlan','wrBlPrev','wrBlCur','wrBlDiff','wrBlPrevLabel','wrBlCurLabel',
         'wrAc1Avg','wrAc1Min','wrAc1Max','wrHaeM1',
         'wrAc2Avg','wrAc2Min','wrAc2Max','wrTmeM1',
         'wrQcRate','wrQcDone','wrQcLate','wrQcPend','wrPatDone','wrActionList','wrFullText'];
@@ -4224,7 +4263,7 @@
             const card = document.getElementById('weeklyReportCard');
             if (card) card.style.display = 'block';
             const wrIDs = ['wrWeekLabel','wrImportTime','wrCompleted','wrOnProcess','wrTotal','wrPctDone','wrHaeTme',
-              'wrIncome','wrBacklog','wrActPlan','wrBlPrev','wrBlCur','wrBlDiff','wrBlPrevLabel','wrBlCurLabel',
+              'wrIncome','wrCompletedIncome','wrBacklog','wrActPlan','wrBlPrev','wrBlCur','wrBlDiff','wrBlPrevLabel','wrBlCurLabel',
               'wrAc1Avg','wrAc1Min','wrAc1Max','wrHaeM1',
               'wrAc2Avg','wrAc2Min','wrAc2Max','wrTmeM1',
               'wrQcRate','wrQcDone','wrQcLate','wrQcPend','wrPatDone','wrFullText'];
