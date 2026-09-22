@@ -3693,6 +3693,7 @@
           } // end if (p4.length)
 
           /* ─── Parse 2026 Sheet for Portfolio Performance & Financial Health (COMPLETED sites) ─── */
+          let finCompleted = { income: 0, ar: 0, ap: 0, remain: 0 };
           const sheet2026 = wb.Sheets['2026'];
           if (sheet2026) {
             const data2026 = XLSX.utils.sheet_to_json(sheet2026, { header: 1, defval: '' });
@@ -3730,7 +3731,7 @@
               const remainCol = getColIdx(['REMAIN']);
               
               let stats = {};
-              let finCompleted = { income: 0, ar: 0, ap: 0, remain: 0 };
+              finCompleted = { income: 0, ar: 0, ap: 0, remain: 0 };
               
               for (let r of rows) {
                   if (!r || r.length === 0) continue;
