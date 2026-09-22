@@ -2573,6 +2573,7 @@
           let minAc2Aging = Infinity, maxAc2Aging = -Infinity;
           let countCompleted = 0, countOnProcess = 0, countCancel = 0;
           let sumCompletedIncome = 0;
+          let totalEstFinalIncome = 0;
           let countHae = 0, countTme = 0;
           let s26Rows = [], s26HeaderRow = -1;
           let s26AC1AmtIdx=-1, s26AC2AmtIdx=-1, s26AC1AgingIdx=-1, s26AC2AgingIdx=-1;
@@ -3256,7 +3257,7 @@
             minAc2Aging = Infinity; maxAc2Aging = -Infinity;
             countCompleted = 0; countOnProcess = 0; countCancel = 0;
             countHae = 0; countTme = 0;
-            let totalEstFinalIncome = 0;
+            totalEstFinalIncome = 0;
             s26Rows = []; s26HeaderRow = -1;
             s26AC1AmtIdx=-1; s26AC2AmtIdx=-1; s26AC1AgingIdx=-1; s26AC2AgingIdx=-1;
             s26DocOwnerIdx=-1; s26PEOwnerIdx=-1; s26MS1AgingIdx=-1; s26MS2AgingIdx=-1; s26WorkTypeIdx=-1;
@@ -3777,6 +3778,7 @@
               
               let stats = {};
               finCompleted = { income: 0, ar: 0, ap: 0, remain: 0 };
+              let fallbackEstFinalInc = 0;
               
               for (let r of rows) {
                   if (!r || r.length === 0) continue;
@@ -3817,6 +3819,12 @@
                           finCompleted.remain += rem;
                       }
                   }
+                  if (proj === 'HAE' || proj === 'TME') {
+                      fallbackEstFinalInc += inc;
+                  }
+              }
+              if (totalEstFinalIncome === 0 && fallbackEstFinalInc > 0) {
+                  totalEstFinalIncome = fallbackEstFinalInc;
               }
               
               // 1. Update Portfolio Performance using COMPLETED counts & income
@@ -3863,7 +3871,7 @@
 
           /* ─── Update Charts dynamically ─── */
 
-          if (p3.length || finCompleted.income > 0 || sumCompletedIncome > 0 || totalEstFinalIncome > 0) {
+          if (p3.length || (typeof finCompleted !== 'undefined' && finCompleted.income > 0) || sumCompletedIncome > 0 || (typeof totalEstFinalIncome !== 'undefined' && totalEstFinalIncome > 0)) {
             const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])));
             const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])));
             if (window.docChart) {
@@ -4019,7 +4027,7 @@
             haeCount: countHae,
             tmeCount: countTme,
             completedIncome: sumCompletedIncome > 0 ? sumCompletedIncome : (finCompleted.income > 0 ? finCompleted.income : 5056206),
-            income: (totalEstFinalIncome > 0 ? totalEstFinalIncome : 6492260),
+            income: ((typeof totalEstFinalIncome !== 'undefined' && totalEstFinalIncome > 0) ? totalEstFinalIncome : 6492260),
             backlog: (typeof backlog !== 'undefined' && backlog !== null)
               ? backlog
               : p4Bl,
