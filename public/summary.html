@@ -1466,9 +1466,9 @@
         </div>
         <div style="margin-top:12px">
           <div class="metric-row"><span class="metric-label">AC1 % เก็บได้ (Done)</span><span class="metric-value green"
-              id="finAC1Pct">81.7%</span></div>
+              id="finAC1Pct">104.9%</span></div>
           <div class="metric-row"><span class="metric-label">AC2 % เก็บได้ (Done)</span><span class="metric-value amber"
-              id="finAC2Pct">47.4%</span></div>
+              id="finAC2Pct">60.8%</span></div>
           <div class="metric-row"><span class="metric-label">AC1 Avg Aging</span><span class="metric-value amber"
               id="finAC1Aging">15.1 days</span></div>
           <div class="metric-row"><span class="metric-label">AC2 Avg Aging</span><span class="metric-value red"
@@ -2309,7 +2309,7 @@
       data: {
         labels: ['AC1', 'AC2'],
         datasets: [
-          { label: 'Total Amount', data: [4544582, 1947678], backgroundColor: 'rgba(59,130,246,.5)', borderColor: '#3b82f6', borderWidth: 1.5, borderRadius: 6 },
+          { label: 'Total Amount', data: [3539344, 1516862], backgroundColor: 'rgba(59,130,246,.5)', borderColor: '#3b82f6', borderWidth: 1.5, borderRadius: 6 },
           { label: 'Done', data: [3711953, 922248], backgroundColor: 'rgba(16,185,129,.5)', borderColor: '#10b981', borderWidth: 1.5, borderRadius: 6 }
         ]
       },
@@ -3811,16 +3811,18 @@
           if (p3.length) {
             const ac1row = p3.find(r => /AC#?1.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])));
             const ac2row = p3.find(r => /AC#?2.*\(JAN-DEC\)/i.test(String(r['Owner / Type'])));
-            if (window.docChart && (ac1row || ac2row)) {
-              // Use Part 3 values (pre-computed totals from 2026 sheet by user)
-              const ac1Amt  = ac1row ? (Number(ac1row['Amount (THB)']) || 0) : 0;
-              const ac1Done = ac1row ? (Number(ac1row['Done (THB)'])   || 0) : 0;
-              const ac2Amt  = ac2row ? (Number(ac2row['Amount (THB)']) || 0) : 0;
-              const ac2Done = ac2row ? (Number(ac2row['Done (THB)'])   || 0) : 0;
+            if (window.docChart && (ac1row || ac2row || finCompleted.income > 0)) {
+              // AC#1 Amount = 70% of Site Completed Income, AC#2 Amount = 30%
+              const siteCompInc = finCompleted.income || 0;
+              const ac1Amt  = parseFloat((siteCompInc * 0.70).toFixed(2));
+              const ac2Amt  = parseFloat((siteCompInc * 0.30).toFixed(2));
+              // Done amounts come from actual Part 3 acceptance data
+              const ac1Done = ac1row ? (Number(ac1row['Done (THB)']) || 0) : 0;
+              const ac2Done = ac2row ? (Number(ac2row['Done (THB)']) || 0) : 0;
               window.docChart.data.datasets[0].data = [ac1Amt, ac2Amt];
               window.docChart.data.datasets[1].data = [ac1Done, ac2Done];
               window.docChart.update();
-              // Update Avg Aging labels and Pct from Part 3
+              // Update Avg Aging labels and Pct
               const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
               if (ac1row && ac1row['Avg Aging']) {
                 setEl('docAc1Aging', Number(ac1row['Avg Aging']).toFixed(1) + ' days');
@@ -3830,9 +3832,15 @@
                 setEl('docAc2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
                 setEl('finAC2Aging', Number(ac2row['Avg Aging']).toFixed(1) + ' days');
               }
+              // % = AC Done / AC Amount × 100
               if (ac1Amt > 0) setEl('finAC1Pct', (ac1Done / ac1Amt * 100).toFixed(1) + '%');
               if (ac2Amt > 0) setEl('finAC2Pct', (ac2Done / ac2Amt * 100).toFixed(1) + '%');
-              // Compute Remain = sumAB - ac1Amt - ac2Amt (using SO Total from 2026 column AB)
+              // Show AC#1 and AC#2 amounts
+              setEl('finAC1Amt', fmtBaht(ac1Amt));
+              setEl('finAC2Amt', fmtBaht(ac2Amt));
+              setEl('finAC1Done', fmtBaht(ac1Done));
+              setEl('finAC2Done', fmtBaht(ac2Done));
+              // Compute Remain
               const sumAB = (() => {
                 if (!s26Rows || s26HeaderRow < 0) return 0;
                 const hdr = s26Rows[s26HeaderRow];

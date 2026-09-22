@@ -144,11 +144,15 @@ function xlsxToJson(workbook: XLSX.WorkBook): any {
     return row[keyName] !== undefined && row[keyName] !== '' ? row[keyName] : row[emptyKey];
   };
 
-  const ac1Amount = ac1Row ? n(getVal(ac1Row, 'Amount (THB)', '__EMPTY_2')) : 2307341.68;
+  // Site Completed Income = sum of ESTIMATE_INCOME from COMPLETED rows
+  const siteCompletedIncome = completed.reduce((s: number, r: any) => s + n(r[COL.ESTIMATE_INCOME]), 0);
+  // AC#1 Total = 70% of Site Completed Income, AC#2 Total = 30%
+  const ac1Amount = parseFloat((siteCompletedIncome * 0.70).toFixed(2));
+  const ac2Amount = parseFloat((siteCompletedIncome * 0.30).toFixed(2));
+  // Done amounts come from actual Part 3 acceptance data
   const ac1Done = ac1Row ? n(getVal(ac1Row, 'Done (THB)', '__EMPTY_3')) : 1055496.92;
   const ac1AvgAging = ac1Row ? n(getVal(ac1Row, 'Avg Aging', '__EMPTY_4')) : 9.70386266;
 
-  const ac2Amount = ac2Row ? n(getVal(ac2Row, 'Amount (THB)', '__EMPTY_2')) : 988860.72;
   const ac2Done = ac2Row ? n(getVal(ac2Row, 'Done (THB)', '__EMPTY_3')) : 177499.20;
   const ac2AvgAging = ac2Row ? n(getVal(ac2Row, 'Avg Aging', '__EMPTY_4')) : 11.54054054;
 

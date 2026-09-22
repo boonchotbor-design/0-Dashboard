@@ -104,13 +104,14 @@
     }
   },
   "documentStatus": {
+    "siteCompletedIncome": 5056206,
     "ac1": {
-      "amount": 4544582.28,
+      "amount": 3539344.20,
       "done": 3711952.92,
       "avgAging": 15.1
     },
     "ac2": {
-      "amount": 1947678.12,
+      "amount": 1516861.80,
       "done": 922247.78,
       "avgAging": 59.59
     }
