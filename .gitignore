@@ -35,6 +35,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Excel temp lock files
+~$*.xlsx
+~$*.xls
 scratch/
 
 # typescript
