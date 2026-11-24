@@ -686,7 +686,7 @@
     <div class="exec-card">
       <div class="card-head">
         <h2>🚨 10. SLA On-Process AIS</h2>
-        <div class="subtitle">สถิติ Smart QC, PAT Subcon และไซต์ที่ต้อง Rework ของ AIS</div>
+        <div class="subtitle">สถิติ Smart QC, PAT Subcon และไซต์ Action / Rework Required ของ AIS</div>
       </div>
       <table class="clean-table" style="margin-bottom:12px;">
         <thead>
@@ -701,26 +701,53 @@
         <tbody>
           <tr>
             <td><strong>Smart QC</strong></td>
-            <td><span class="tag-status tag-green">200 ไซต์ (68.3%)</span></td>
+            <td><span class="tag-status tag-green">202 ไซต์ (67.1%)</span></td>
             <td>93 ไซต์</td>
-            <td>5 ไซต์</td>
+            <td>6 ไซต์</td>
             <td>0 ไซต์</td>
           </tr>
           <tr>
             <td><strong>PAT Subcon</strong></td>
-            <td><span class="tag-status tag-green">217 ไซต์ (74.3%)</span></td>
+            <td><span class="tag-status tag-green">217 ไซต์ (73.6%)</span></td>
             <td>75 ไซต์</td>
-            <td>1 ไซต์</td>
+            <td>3 ไซต์</td>
             <td>0 ไซต์</td>
           </tr>
         </tbody>
       </table>
-      <div style="font-size:0.75rem;font-weight:700;color:#ef4444;margin-bottom:6px;">⚠️ Rework Required: PAT NOT PASS (4 ไซต์)</div>
-      <div style="font-size:0.72rem;color:#475569;line-height:1.6;background:#f8fafc;padding:8px;border-radius:6px;">
-        • <strong>BZBLM_2026</strong> (7d) – ผู้รับผิดชอบ: Apichart Kampuang<br>
-        • <strong>NVOTM_2026</strong> (6d) – ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว<br>
-        • <strong>NYOBM_2026</strong> (6d) – ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว<br>
-        • <strong>AKBBM_2026</strong> (11d) – ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว
+      
+      <!-- Action & Rework Required Lists -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+        <!-- Action Required -->
+        <div style="background:#f8fafc;padding:10px;border-radius:6px;border:1px solid #e2e8f0;">
+          <div style="font-size:0.73rem;font-weight:700;color:#2563eb;margin-bottom:4px;">⚡ Action Required: SMART QC (6 ไซต์)</div>
+          <div style="font-size:0.7rem;color:#475569;line-height:1.5;">
+            • BPMJM_2026 (1d)<br>
+            • BYKKM_2026 (0d)<br>
+            • SECOM_2026 (1d)<br>
+            • SPGTM_2026 (1d)<br>
+            • SSGKM_2026 (0d)<br>
+            • BUCLM_2026 (0d)
+          </div>
+          <div style="font-size:0.73rem;font-weight:700;color:#2563eb;margin:8px 0 4px;">⚡ Action: PAT SUBCON (3 ไซต์)</div>
+          <div style="font-size:0.7rem;color:#475569;line-height:1.5;">
+            • WLGTM_2025 (1d) – คุณหทัยรัตน์<br>
+            • BHMFM_2026 (0d) – คุณหทัยรัตน์<br>
+            • KSOHM_2026 (0d) – คุณหทัยรัตน์
+          </div>
+        </div>
+
+        <!-- Rework Required -->
+        <div style="background:#fef2f2;padding:10px;border-radius:6px;border:1px solid #fecaca;">
+          <div style="font-size:0.73rem;font-weight:700;color:#dc2626;margin-bottom:6px;">⚠️ Rework Required: PAT NOT PASS</div>
+          <div style="font-size:0.72rem;color:#991b1b;line-height:1.6;font-weight:600;">
+            • MYGMM_2026 Capacity Expansion Ph2_EXP_ER<br>
+            <span style="font-weight:400;color:#7f1d1d;">Aging: 5 วัน · ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว</span>
+          </div>
+          <div style="margin-top:10px;font-size:0.68rem;color:#64748b;font-style:italic;">
+            *อัปเดตตรงตามชีต "Part 7 - SLA On-Process AIS" ใน Excel WK48 ล่าสุด
+          </div>
+        </div>
       </div>
     </div>
 
@@ -759,8 +786,9 @@
       </table>
       <div style="font-size:0.75rem;font-weight:700;color:#f59e0b;margin-bottom:6px;">⚡ Action Required Sites</div>
       <div style="font-size:0.72rem;color:#475569;line-height:1.6;background:#f8fafc;padding:8px;border-radius:6px;">
-        • <strong>Smart QC Required:</strong> CBR7015_Flash_RAN_EAS R3 (Aging 6d ⚠️ SQC)<br>
-        • <strong>PAT Subcon Required:</strong> CBR7015_Flash_battery_EAS R3 (Aging 1d TLN)
+        • <strong>Smart QC Required:</strong> <span style="color:#22c55e;">✅ All sites are up to date 🎉</span><br>
+        • <strong>PAT Subcon Required:</strong> <span style="color:#ef4444;">🔴 RYG0627_FlashRevisit_EAS R3 (Aging 37d — Over SLA, GSC HW)</span><br>
+        • <strong>Rework Required:</strong> <span style="color:#22c55e;">✅ No rework required 🎉</span>
       </div>
     </div>
   </div>
@@ -811,8 +839,8 @@ Telecom Rollout (HAE & TME)
 7. Milestone Aging Analysis: HAE M1 4.00 วัน | TME M1 5.14 วัน
 8. DOC Owner: คุณหทัยรัตน์ (200 ไซต์), คุณอภิชาติ (62 ไซต์), คุณเสริมศิริ (38 ไซต์ - 🚨 AC2 146.2d), คุณอดิศักดิ์ (3 ไซต์)
 9. SLA PE Owner: คุณอดิศักดิ์ (MS1 4.0d / MS2 7.6d), คุณพลาการ (MS1 2.5d / MS2 5.6d)
-10. SLA AIS: Smart QC ผ่าน 68.3% (200 ไซต์) | PAT 74.3% (217 ไซต์) | Rework 4 ไซต์
-11. SLA TRUE: Smart QC ผ่าน 50% (11 ไซต์) | PAT 76.2% (16 ไซต์)</div>
+10. SLA AIS: Smart QC ผ่าน 67.1% (202 ไซต์) | PAT 73.6% (217 ไซต์) | Rework PAT Not Pass 1 ไซต์ (MYGMM_2026 - 5d)
+11. SLA TRUE: Smart QC ผ่าน 50% (11 ไซต์) | PAT 76.2% (16 ไซต์) | Over SLA 1 ไซต์ (RYG0627 - 37d)</div>
   </section>
 
 </div>
