@@ -139,27 +139,9 @@
     .kpi-sub.up { color: #10b981; font-weight: 600; }
     .kpi-sub.down { color: #ef4444; font-weight: 600; }
 
-    /* ─── Section Dividers ─── */
-    .section-header-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--navy-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin: 22px 0 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-header-title::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: #cbd5e1;
-    }
-
     /* ─── Grid Systems ─── */
     .grid-2 { display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 16px; margin-bottom: 18px; }
+    .grid-2-eq { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 18px; }
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
 
@@ -244,6 +226,23 @@
     .tag-red { background: #fee2e2; color: #b91c1c; }
     .tag-blue { background: #dbeafe; color: #1d4ed8; }
 
+    /* ─── Mini Breakdown Card ─── */
+    .mini-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .mini-card-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--navy-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     /* ─── Copy Panel ─── */
     .copy-panel {
       background: #ffffff;
@@ -269,7 +268,7 @@
 
     @media (max-width: 1024px) {
       .kpi-ribbon { grid-template-columns: repeat(2, 1fr); }
-      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .grid-2, .grid-2-eq, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -322,7 +321,7 @@
     </div>
   </section>
 
-  <!-- ─── Row: Graft / Combo & Donut Chart Layout (Matching Images) ─── -->
+  <!-- ─── Row: Graft / Combo & Donut Chart Layout ─── -->
   <div class="grid-2">
     <!-- Financial Acceptance Highlights Combo Chart -->
     <div class="exec-card">
@@ -379,93 +378,159 @@
     </div>
   </div>
 
-  <!-- ─── 3. Document Status & 4. Financial Health Overview ─── -->
-  <div class="grid-2">
-    <!-- 3. Document Status -->
-    <div class="exec-card">
-      <div class="card-head">
-        <h2>📄 3. Document Status (AC#1 &amp; AC#2)</h2>
-        <div class="subtitle">ประสิทธิภาพการเก็บเงินและระยะเวลาตรวจรับเอกสาร</div>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">3.1 AC1 % เก็บได้ (Done)</span>
-        <span class="metric-val green">82.18% (4,860,496 ฿ จาก 5,914,483 ฿)</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">3.2 AC2 % เก็บได้ (Done)</span>
-        <span class="metric-val amber">50.30% (1,274,901 ฿ จาก 2,534,778 ฿)</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">3.3 AC1 Avg Aging</span>
-        <span class="metric-val">11.32 วัน (Min 1.0d · Max 116.0d)</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">3.4 AC2 Avg Aging</span>
-        <span class="metric-val red">39.38 วัน (Min 11.0d · 🚨 Max 254.0d)</span>
-      </div>
+  <!-- ─── 3. Document Status ─── -->
+  <div class="exec-card" style="margin-bottom:18px;">
+    <div class="card-head">
+      <h2>📄 3. Document Status (AC#1 &amp; AC#2 Performance)</h2>
+      <div class="subtitle">ประสิทธิภาพการเก็บเงินและระยะเวลาตรวจรับเอกสาร</div>
     </div>
-
-    <!-- 4. Financial Health Overview -->
-    <div class="exec-card">
-      <div class="card-head">
-        <h2>💰 4. Financial Health Overview</h2>
-        <div class="subtitle">สถานะทางการเงินและยอดคงค้างในโครงการ</div>
+    <div class="grid-4" style="margin-bottom:0;">
+      <div class="mini-card" style="border-left:4px solid #10b981;">
+        <div class="mini-card-title">3.1 AC1 % เก็บได้ (Done)</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#10b981;margin:4px 0;">82.18%</div>
+        <div style="font-size:0.72rem;color:#64748b;">4,860,496 ฿ จาก 5,914,483 ฿</div>
       </div>
-      <div class="metric-row">
-        <span class="metric-label">4.1 Estimate Final Income</span>
-        <span class="metric-val">8,449,261.40 ฿</span>
+      <div class="mini-card" style="border-left:4px solid #f59e0b;">
+        <div class="mini-card-title">3.2 AC2 % เก็บได้ (Done)</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#f59e0b;margin:4px 0;">50.30%</div>
+        <div style="font-size:0.72rem;color:#64748b;">1,274,901 ฿ จาก 2,534,778 ฿</div>
       </div>
-      <div class="metric-row">
-        <span class="metric-label">4.2 AR (Commerce - รอเรียกเก็บ)</span>
-        <span class="metric-val green">5,408,323.50 ฿</span>
+      <div class="mini-card" style="border-left:4px solid #3b82f6;">
+        <div class="mini-card-title">3.3 AC1 Avg Aging</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">11.32 วัน</div>
+        <div style="font-size:0.72rem;color:#64748b;">Min 1.0d · Max 116.0d</div>
       </div>
-      <div class="metric-row">
-        <span class="metric-label">4.3 AP (Payment - รอจ่ายซับคอน)</span>
-        <span class="metric-val amber">1,401,872.70 ฿</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">4.4 Unfulfilled Revenue (Remain)</span>
-        <span class="metric-val red">1,999,526.00 ฿ (จาก Backlog 2.17M)</span>
+      <div class="mini-card" style="border-left:4px solid #ef4444;">
+        <div class="mini-card-title">3.4 AC2 Avg Aging</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#ef4444;margin:4px 0;">39.38 วัน</div>
+        <div style="font-size:0.72rem;color:#ef4444;font-weight:600;">Min 11.0d · 🚨 Max 254.0d</div>
       </div>
     </div>
   </div>
 
-  <!-- ─── 5. Portfolio Performance ─── -->
+  <!-- ─── 4. Financial Details — Part 4 Breakdown (NEW SECTION) ─── -->
   <div class="exec-card" style="margin-bottom:18px;">
     <div class="card-head">
-      <h2>📁 5. Portfolio Performance (รายโครงการและแพ็กเกจงาน)</h2>
+      <h2>💵 4. Financial Details — Part 4 Breakdown</h2>
+      <div class="subtitle">ผลการตรวจรับจริง (Actual Acceptance) เทียบแผนงาน Action Plan AC#1 และ AC#2 (WK47 &amp; WK48)</div>
+    </div>
+    <div class="grid-4" style="margin-bottom:0;">
+      <!-- Actual Acceptance -->
+      <div class="mini-card">
+        <div class="mini-card-title">💰 Actual Acceptance</div>
+        <div class="metric-row"><span class="metric-label">WK44</span><span class="metric-val green">430,586 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK45</span><span class="metric-val">-</span></div>
+        <div class="metric-row"><span class="metric-label">WK46</span><span class="metric-val green">255,481 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK47</span><span class="metric-val green">33,054 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK48</span><span class="metric-val">-</span></div>
+        <div class="metric-row" style="border-top:1px solid #cbd5e1;margin-top:4px;padding-top:6px;">
+          <span class="metric-label" style="font-weight:700;color:#0f2d59;">5-Week Total</span>
+          <span class="metric-val green" style="font-size:0.9rem;">719,121 ฿</span>
+        </div>
+      </div>
+
+      <!-- Actual Acceptance TOTAL -->
+      <div class="mini-card">
+        <div class="mini-card-title">📈 Actual Acceptance TOTAL</div>
+        <div class="metric-row"><span class="metric-label">HUAWEI (JAN-OCT)</span><span class="metric-val green">7,327,394 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">TRUE-TUC (JAN-OCT)</span><span class="metric-val green">6,982,082 ฿</span></div>
+        <div style="font-size:0.68rem;font-weight:700;color:#64748b;margin:8px 0 4px;text-transform:uppercase;">Slide 21 — Target Nov</div>
+        <div class="metric-row"><span class="metric-label">Target Plan NOV</span><span class="metric-val amber">1,191,979 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">Actual NOV</span><span class="metric-val green">719,121 ฿</span></div>
+      </div>
+
+      <!-- Plan: Acceptance AC#1 (WK47 & WK48) -->
+      <div class="mini-card">
+        <div class="mini-card-title">📋 Plan: Acceptance AC#1</div>
+        <div class="metric-row"><span class="metric-label">WK47 Plan</span><span class="metric-val amber">185,456 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK48 Plan (2023-25)</span><span class="metric-val">0 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK48 Plan (2026)</span><span class="metric-val amber">357,714 ฿</span></div>
+        <div class="metric-row" style="border-top:1px solid #cbd5e1;margin-top:14px;padding-top:8px;">
+          <span class="metric-label" style="font-weight:700;color:#b45309;">WK48 TOTAL</span>
+          <span class="metric-val amber" style="font-size:0.9rem;">357,714 ฿</span>
+        </div>
+      </div>
+
+      <!-- Plan: Acceptance AC#2 (WK47 & WK48) -->
+      <div class="mini-card">
+        <div class="mini-card-title">🚀 Plan: Acceptance AC#2</div>
+        <div class="metric-row"><span class="metric-label">WK47 Plan</span><span class="metric-val">0 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK48 Plan (2023-25)</span><span class="metric-val">0 ฿</span></div>
+        <div class="metric-row"><span class="metric-label">WK48 Plan (2026)</span><span class="metric-val" style="color:#2563eb;">56,571 ฿</span></div>
+        <div class="metric-row" style="border-top:1px solid #cbd5e1;margin-top:14px;padding-top:8px;">
+          <span class="metric-label" style="font-weight:700;color:#1d4ed8;">WK48 TOTAL</span>
+          <span class="metric-val" style="color:#2563eb;font-size:0.9rem;">56,571 ฿</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 5. Financial Health Overview ─── -->
+  <div class="exec-card" style="margin-bottom:18px;">
+    <div class="card-head">
+      <h2>💰 5. Financial Health Overview</h2>
+      <div class="subtitle">สถานะทางการเงินและยอดคงค้างในโครงการ</div>
+    </div>
+    <div class="grid-4" style="margin-bottom:0;">
+      <div class="mini-card" style="border-left:4px solid #0f2d59;">
+        <div class="mini-card-title">5.1 Estimate Final Income</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">8,449,261.40 ฿</div>
+        <div style="font-size:0.72rem;color:#64748b;">Completed Income 6.74M ฿</div>
+      </div>
+      <div class="mini-card" style="border-left:4px solid #10b981;">
+        <div class="mini-card-title">5.2 AR (Commerce)</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#10b981;margin:4px 0;">5,408,323.50 ฿</div>
+        <div style="font-size:0.72rem;color:#64748b;">ยอดรอเรียกเก็บเงิน</div>
+      </div>
+      <div class="mini-card" style="border-left:4px solid #f59e0b;">
+        <div class="mini-card-title">5.3 AP (Payment)</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#f59e0b;margin:4px 0;">1,401,872.70 ฿</div>
+        <div style="font-size:0.72rem;color:#64748b;">ยอดรอจ่ายซับคอน</div>
+      </div>
+      <div class="mini-card" style="border-left:4px solid #ef4444;">
+        <div class="mini-card-title">5.4 Unfulfilled Revenue (Remain)</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#ef4444;margin:4px 0;">1,999,526.00 ฿</div>
+        <div style="font-size:0.72rem;color:#ef4444;">จาก Remaining Backlog 2.17M ฿</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 6. Portfolio Performance ─── -->
+  <div class="exec-card" style="margin-bottom:18px;">
+    <div class="card-head">
+      <h2>📁 6. Portfolio Performance (รายโครงการและแพ็กเกจงาน)</h2>
       <div class="subtitle">สรุปจำนวนไซต์และมูลค่างานที่เสร็จสิ้นแยกตาม Project Type</div>
     </div>
     <div class="grid-4" style="margin-bottom:0;">
       <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #1e60c6;">
-        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.1 HAE-MBB</div>
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">6.1 HAE-MBB</div>
         <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">6,022,433 ฿</div>
         <div style="font-size:0.72rem;color:#10b981;font-weight:600;">294 sites (เสร็จสิ้นแล้ว)</div>
       </div>
       <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #f59e0b;">
-        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.2 TME-MBB</div>
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">6.2 TME-MBB</div>
         <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">481,705 ฿</div>
         <div style="font-size:0.72rem;color:#10b981;font-weight:600;">21 sites (เสร็จสมบูรณ์)</div>
       </div>
       <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #10b981;">
-        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.3 TME-IPRAN</div>
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">6.3 TME-IPRAN</div>
         <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">225,486 ฿</div>
         <div style="font-size:0.72rem;color:#10b981;font-weight:600;">77 sites (เสร็จสมบูรณ์)</div>
       </div>
       <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #8b5cf6;">
-        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.4 TME-BATTERY</div>
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">6.4 TME-BATTERY</div>
         <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">10,214 ฿</div>
         <div style="font-size:0.72rem;color:#10b981;font-weight:600;">2 sites (เสร็จสมบูรณ์)</div>
       </div>
     </div>
   </div>
 
-  <!-- ─── 6. 1st & 2nd Milestone AGING Analysis & 7. DOC Owner ─── -->
-  <div class="grid-2">
-    <!-- 6. Milestone Aging Analysis -->
+  <!-- ─── 7. 1st & 2nd Milestone AGING Analysis & 8. DOC Owner ─── -->
+  <div class="grid-2-eq">
+    <!-- 7. Milestone Aging Analysis -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>⏱️ 6. 1st &amp; 2nd Milestone AGING Analysis</h2>
+        <h2>⏱️ 7. 1st &amp; 2nd Milestone AGING Analysis</h2>
         <div class="subtitle">ความเร็วหน้างาน vs คอขวดการตรวจรับ (Execution Paradox)</div>
       </div>
       <table class="clean-table">
@@ -506,10 +571,10 @@
       </table>
     </div>
 
-    <!-- 7. DOC Owner -->
+    <!-- 8. DOC Owner -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>👤 7. DOC Owner (ประสิทธิภาพรายบุคคล)</h2>
+        <h2>👤 8. DOC Owner (ประสิทธิภาพรายบุคคล)</h2>
         <div class="subtitle">สถิติการส่งมอบงาน AC1 / AC2 รายผู้รับผิดชอบเอกสาร</div>
       </div>
       <table class="clean-table">
@@ -556,10 +621,10 @@
     </div>
   </div>
 
-  <!-- ─── 8. SLA PE Owner (2026) ─── -->
+  <!-- ─── 9. SLA PE Owner (2026) ─── -->
   <div class="exec-card" style="margin-bottom:18px;">
     <div class="card-head">
-      <h2>🏗️ 8. SLA PE Owner (2026)</h2>
+      <h2>🏗️ 9. SLA PE Owner (2026)</h2>
       <div class="subtitle">สถิติความเร็วการส่งมอบ Milestone 1 และ 2 ของวิศวกรคุมไซต์ (PE)</div>
     </div>
     <table class="clean-table">
@@ -615,12 +680,12 @@
     </table>
   </div>
 
-  <!-- ─── 9. SLA On-Process AIS & 10. SLA On-Process TRUE ─── -->
-  <div class="grid-2">
-    <!-- 9. SLA On-Process AIS -->
+  <!-- ─── 10. SLA On-Process AIS & 11. SLA On-Process TRUE ─── -->
+  <div class="grid-2-eq">
+    <!-- 10. SLA On-Process AIS -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>🚨 9. SLA On-Process AIS</h2>
+        <h2>🚨 10. SLA On-Process AIS</h2>
         <div class="subtitle">สถิติ Smart QC, PAT Subcon และไซต์ที่ต้อง Rework ของ AIS</div>
       </div>
       <table class="clean-table" style="margin-bottom:12px;">
@@ -659,10 +724,10 @@
       </div>
     </div>
 
-    <!-- 10. SLA On-Process TRUE -->
+    <!-- 11. SLA On-Process TRUE -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>🚨 10. SLA On-Process TRUE</h2>
+        <h2>🚨 11. SLA On-Process TRUE</h2>
         <div class="subtitle">สถิติ Smart QC, PAT Subcon และไซต์ Action Required ของ TRUE</div>
       </div>
       <table class="clean-table" style="margin-bottom:12px;">
@@ -725,24 +790,29 @@ Telecom Rollout (HAE & TME)
    • 3.3 AC1 Avg Aging: 11.32 วัน (Max 116 วัน)
    • 3.4 AC2 Avg Aging: 39.38 วัน (🚨 Max 254 วัน)
 
-4. Financial Health Overview
-   • 4.1 Estimate Final Income: 8,449,261 ฿
-   • 4.2 AR (รอเรียกเก็บ): 5,408,324 ฿
-   • 4.3 AP (รอจ่ายช่าง): 1,401,873 ฿
-   • 4.4 Unfulfilled Revenue: 1,999,526 ฿ (Backlog รวม 2.17M ฿ ลดลง 🔻 266K ฿)
+4. Financial Details — Part 4 Breakdown
+   • Actual Acceptance: 5-Week Total 719,121 ฿ (WK44: 430K, WK46: 255K, WK47: 33K)
+   • Actual Acceptance TOTAL: Huawei 7.33M ฿ | TRUE-TUC 6.98M ฿
+   • Plan Acceptance AC#1: WK47 185K ฿ ➔ WK48 Plan 357,714 ฿
+   • Plan Acceptance AC#2: WK47 0 ฿ ➔ WK48 Plan 56,571 ฿
 
-5. Portfolio Performance (Completed)
-   • 5.1 HAE-MBB: 294 ไซต์ (6,022,433 ฿)
-   • 5.2 TME-MBB: 21 ไซต์ (481,705 ฿)
-   • 5.3 TME-IPRAN: 77 ไซต์ (225,486 ฿)
-   • 5.4 TME-BATTERY: 2 ไซต์ (10,214 ฿)
+5. Financial Health Overview
+   • 5.1 Estimate Final Income: 8,449,261 ฿
+   • 5.2 AR (รอเรียกเก็บ): 5,408,324 ฿
+   • 5.3 AP (รอจ่ายช่าง): 1,401,873 ฿
+   • 5.4 Unfulfilled Revenue: 1,999,526 ฿ (Backlog รวม 2.17M ฿ ลดลง 🔻 266K ฿)
 
-6. Milestone Aging Analysis
-   • HAE M1: 4.00 วัน | TME M1: 5.14 วัน
-7. DOC Owner: คุณหทัยรัตน์ (200 ไซต์), คุณอภิชาติ (62 ไซต์), คุณเสริมศิริ (38 ไซต์ - 🚨 AC2 146.2d), คุณอดิศักดิ์ (3 ไซต์)
-8. SLA PE Owner: คุณอดิศักดิ์ (MS1 4.0d / MS2 7.6d), คุณพลาการ (MS1 2.5d / MS2 5.6d)
-9. SLA AIS: Smart QC ผ่านใน SLA 68.3% (200 ไซต์) | PAT 74.3% (217 ไซต์) | Rework 4 ไซต์
-10. SLA TRUE: Smart QC ผ่าน 50% (11 ไซต์) | PAT 76.2% (16 ไซต์)</div>
+6. Portfolio Performance (Completed)
+   • 6.1 HAE-MBB: 294 ไซต์ (6,022,433 ฿)
+   • 6.2 TME-MBB: 21 ไซต์ (481,705 ฿)
+   • 6.3 TME-IPRAN: 77 ไซต์ (225,486 ฿)
+   • 6.4 TME-BATTERY: 2 ไซต์ (10,214 ฿)
+
+7. Milestone Aging Analysis: HAE M1 4.00 วัน | TME M1 5.14 วัน
+8. DOC Owner: คุณหทัยรัตน์ (200 ไซต์), คุณอภิชาติ (62 ไซต์), คุณเสริมศิริ (38 ไซต์ - 🚨 AC2 146.2d), คุณอดิศักดิ์ (3 ไซต์)
+9. SLA PE Owner: คุณอดิศักดิ์ (MS1 4.0d / MS2 7.6d), คุณพลาการ (MS1 2.5d / MS2 5.6d)
+10. SLA AIS: Smart QC ผ่าน 68.3% (200 ไซต์) | PAT 74.3% (217 ไซต์) | Rework 4 ไซต์
+11. SLA TRUE: Smart QC ผ่าน 50% (11 ไซต์) | PAT 76.2% (16 ไซต์)</div>
   </section>
 
 </div>
