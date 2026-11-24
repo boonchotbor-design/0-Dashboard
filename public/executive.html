@@ -3,85 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Executive Summary Dashboard 2026 | WK48</title>
+  <title>Executive Strategic Dashboard 2026 | WK48</title>
   <!-- Google Fonts: Inter & Sarabun -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Chart.js & html2canvas / jsPDF -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root {
-      --bg-page: #f0f4f9;
+      --bg-page: #f1f5f9;
       --card-bg: #ffffff;
       --navy-primary: #0f2d59;
       --navy-dark: #091b36;
       --blue-accent: #1e60c6;
       --amber-gold: #f59e0b;
-      --amber-line: #eab308;
       --green-line: #10b981;
       --red-accent: #ef4444;
       --text-main: #1e293b;
       --text-muted: #64748b;
       --border-color: #e2e8f0;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 12px rgba(15,45,89,0.08);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 14px rgba(15,45,89,0.07);
       --header-bg: linear-gradient(135deg, #091b36 0%, #0f2d59 60%, #17427f 100%);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', 'Sarabun', sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      padding: 24px;
-      min-height: 100vh;
-    }
-
-    .dashboard-container {
-      max-width: 1380px;
-      margin: 0 auto;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Sarabun', sans-serif; }
+    body { background-color: var(--bg-page); color: var(--text-main); padding: 20px 24px 60px; min-height: 100vh; }
+    .dashboard-container { max-width: 1400px; margin: 0 auto; }
 
     /* ─── Top Header Bar ─── */
     .top-header {
       background: var(--header-bg);
       color: #ffffff;
       border-radius: 14px;
-      padding: 20px 28px;
+      padding: 18px 26px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: var(--shadow-md);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
-
     .title-group h1 {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      letter-spacing: -0.3px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
-    .title-group p {
-      font-size: 0.85rem;
-      color: #93c5fd;
-      margin-top: 4px;
-    }
-
+    .title-group p { font-size: 0.85rem; color: #93c5fd; margin-top: 4px; }
     .badge-week {
-      background: rgba(245, 158, 11, 0.2);
+      background: rgba(245, 158, 11, 0.25);
       border: 1px solid #f59e0b;
       color: #fef08a;
       font-size: 0.75rem;
@@ -91,13 +66,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-
-    .header-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
+    .header-actions { display: flex; gap: 10px; align-items: center; }
     .btn {
       padding: 8px 16px;
       border-radius: 8px;
@@ -111,75 +80,54 @@
       transition: all 0.2s;
       text-decoration: none;
     }
-
-    .btn-light {
-      background: #ffffff;
-      color: var(--navy-primary);
-    }
-    .btn-light:hover { background: #f1f5f9; }
-
-    .btn-amber {
-      background: #f59e0b;
-      color: #0f172a;
-    }
+    .btn-light { background: #ffffff; color: var(--navy-primary); }
+    .btn-light:hover { background: #f8fafc; }
+    .btn-amber { background: #f59e0b; color: #0f172a; }
     .btn-amber:hover { background: #d97706; }
-
-    .btn-outline {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: #ffffff;
-    }
+    .btn-outline { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; }
     .btn-outline:hover { background: rgba(255,255,255,0.2); }
 
     /* ─── Metric KPI Ribbon ─── */
     .kpi-ribbon {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 14px;
+      margin-bottom: 20px;
     }
-
     .kpi-card {
       background: var(--card-bg);
       border-radius: 12px;
-      padding: 16px 20px;
+      padding: 16px 18px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
     }
-
     .kpi-card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
+      top: 0; left: 0; width: 4px; height: 100%;
       background: var(--navy-primary);
     }
-
     .kpi-card.amber::before { background: var(--amber-gold); }
     .kpi-card.green::before { background: var(--green-line); }
     .kpi-card.blue::before { background: var(--blue-accent); }
     .kpi-card.red::before { background: var(--red-accent); }
 
     .kpi-label {
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 0.72rem;
+      font-weight: 700;
       text-transform: uppercase;
       color: var(--text-muted);
       letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-
     .kpi-val {
       font-size: 1.45rem;
       font-weight: 800;
       color: var(--navy-dark);
       letter-spacing: -0.5px;
     }
-
     .kpi-sub {
       font-size: 0.72rem;
       color: var(--text-muted);
@@ -188,149 +136,107 @@
       align-items: center;
       gap: 4px;
     }
-
     .kpi-sub.up { color: #10b981; font-weight: 600; }
     .kpi-sub.down { color: #ef4444; font-weight: 600; }
 
-    /* ─── Main Grid Layout (Visual Style matching Sample Images) ─── */
-    .report-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 0.95fr;
-      gap: 20px;
-      margin-bottom: 24px;
+    /* ─── Section Dividers ─── */
+    .section-header-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 22px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+    .section-header-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #cbd5e1;
+    }
+
+    /* ─── Grid Systems ─── */
+    .grid-2 { display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 16px; margin-bottom: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
 
     .exec-card {
       background: #ffffff;
       border-radius: 12px;
-      padding: 22px;
+      padding: 18px 20px;
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
     }
-
     .card-head {
-      margin-bottom: 16px;
-      padding-bottom: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
       border-bottom: 2px solid #f1f5f9;
       position: relative;
     }
-
     .card-head::after {
       content: "";
       position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 50px;
-      height: 2px;
+      bottom: -2px; left: 0; width: 45px; height: 2px;
       background: var(--amber-gold);
     }
-
     .card-head h2 {
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       font-weight: 700;
       color: var(--navy-primary);
       display: flex;
       align-items: center;
       gap: 8px;
     }
+    .card-head .subtitle { font-size: 0.74rem; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
 
-    .card-head .subtitle {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-weight: 400;
-      margin-top: 3px;
-    }
+    /* ─── Donut & Combo Chart Styles ─── */
+    .chart-container-combo { height: 260px; position: relative; margin-top: 8px; }
+    .donut-layout { display: flex; align-items: center; justify-content: space-around; height: 260px; }
+    .donut-chart-box { width: 190px; height: 190px; position: relative; }
+    .donut-legend-box { display: flex; flex-direction: column; gap: 10px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+    .legend-square { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .legend-text strong { display: block; color: var(--navy-primary); font-size: 0.84rem; }
 
-    /* ─── Financial Highlights Combo Chart Container ─── */
-    .chart-container-combo {
-      height: 290px;
-      position: relative;
-      margin-top: 10px;
-    }
-
-    /* ─── Donut Chart Layout ─── */
-    .donut-layout {
+    /* ─── Metric Row within Cards ─── */
+    .metric-row {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: space-around;
-      height: 290px;
-    }
-
-    .donut-chart-box {
-      width: 220px;
-      height: 220px;
-      position: relative;
-    }
-
-    .donut-legend-box {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid #f1f5f9;
       font-size: 0.82rem;
-      color: var(--text-main);
     }
-
-    .legend-square {
-      width: 14px;
-      height: 14px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
-    .legend-text strong {
-      display: block;
-      color: var(--navy-primary);
-      font-size: 0.88rem;
-    }
-
-    /* ─── Bottom Section Grid (Table + Action Plan) ─── */
-    .bottom-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-label { color: var(--text-muted); font-weight: 500; }
+    .metric-val { font-weight: 700; color: var(--navy-primary); }
+    .metric-val.green { color: #10b981; }
+    .metric-val.red { color: #ef4444; }
+    .metric-val.amber { color: #f59e0b; }
 
     /* ─── Data Tables ─── */
-    .clean-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-      margin-top: 8px;
-    }
-
+    .clean-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 4px; }
     .clean-table th {
       background: #f8fafc;
       color: var(--navy-primary);
       font-weight: 600;
       text-align: left;
-      padding: 10px 12px;
+      padding: 8px 10px;
       border-bottom: 2px solid var(--border-color);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
     }
-
-    .clean-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #f1f5f9;
-      color: var(--text-main);
-    }
-
-    .clean-table tr:hover {
-      background-color: #f8fafc;
-    }
+    .clean-table td { padding: 8px 10px; border-bottom: 1px solid #f1f5f9; color: var(--text-main); }
+    .clean-table tr:hover { background-color: #f8fafc; }
 
     .tag-status {
       display: inline-block;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
     }
     .tag-green { background: #dcfce7; color: #15803d; }
@@ -338,41 +244,32 @@
     .tag-red { background: #fee2e2; color: #b91c1c; }
     .tag-blue { background: #dbeafe; color: #1d4ed8; }
 
-    /* ─── Text Copy Box (LINE / Email Ready) ─── */
+    /* ─── Copy Panel ─── */
     .copy-panel {
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
-      padding: 20px;
+      padding: 18px 20px;
       box-shadow: var(--shadow-sm);
+      margin-top: 10px;
     }
-
-    .copy-panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
     .copy-area {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 8px;
-      padding: 14px;
+      padding: 12px;
       font-size: 0.78rem;
       line-height: 1.6;
       color: #334155;
       white-space: pre-wrap;
-      max-height: 200px;
+      max-height: 180px;
       overflow-y: auto;
       font-family: 'Consolas', 'Courier New', monospace;
     }
 
-    /* ─── Responsive ─── */
     @media (max-width: 1024px) {
       .kpi-ribbon { grid-template-columns: repeat(2, 1fr); }
-      .report-grid { grid-template-columns: 1fr; }
-      .bottom-grid { grid-template-columns: 1fr; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -380,14 +277,14 @@
 
 <div class="dashboard-container" id="captureArea">
 
-  <!-- ─── 1. Top Header ─── -->
+  <!-- ─── 1. สรุปความคืบหน้าประจำสัปดาห์ที่ 48 / 2026 (Header) ─── -->
   <header class="top-header">
     <div class="title-group">
       <h1>
-        <span>🏛️ Telecom Strategic Executive Report</span>
-        <span class="badge-week">Week 48 · 2026</span>
+        <span>🏛️ 1. สรุปความคืบหน้าประจำสัปดาห์ที่ 48 / 2026</span>
+        <span class="badge-week">WK48 · 2026</span>
       </h1>
-      <p>สรุปผลการดำเนินงานระดับบริหารโครงการ HAE & TME ประจำสัปดาห์</p>
+      <p>Strategic Executive Performance Report | โครงการ HAE &amp; TME Telecom Rollout</p>
     </div>
     <div class="header-actions">
       <a href="summary.html" class="btn btn-outline">📂 Full Dashboard</a>
@@ -396,54 +293,53 @@
     </div>
   </header>
 
-  <!-- ─── 2. Metric KPI Ribbon ─── -->
+  <!-- ─── KPI Quick Strip (Site & Finance Highlights) ─── -->
   <section class="kpi-ribbon">
     <div class="kpi-card green">
       <div class="kpi-label">Completed Sites</div>
-      <div class="kpi-val">394 <span style="font-size:0.9rem;font-weight:600;color:#10b981;">(75.0%)</span></div>
-      <div class="kpi-sub">Total 525 ไซต์ · HAE 294 | TME 100</div>
+      <div class="kpi-val">394 <span style="font-size:0.85rem;font-weight:600;color:#10b981;">(75.0%)</span></div>
+      <div class="kpi-sub">HAE 294 · TME 100 ไซต์</div>
     </div>
     <div class="kpi-card blue">
       <div class="kpi-label">On Process Sites</div>
-      <div class="kpi-val">131 <span style="font-size:0.9rem;font-weight:600;color:#3b82f6;">(25.0%)</span></div>
-      <div class="kpi-sub">HAE On-Process ทั้งหมด 131 ไซต์</div>
+      <div class="kpi-val">131 <span style="font-size:0.85rem;font-weight:600;color:#3b82f6;">(25.0%)</span></div>
+      <div class="kpi-sub">HAE On-Process ทั้งหมด</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Estimated Final Income</div>
-      <div class="kpi-val">8.45M ฿</div>
-      <div class="kpi-sub">ไซต์เสร็จรับรู้แล้ว 6.74M ฿</div>
+      <div class="kpi-label">Estimate Final Income</div>
+      <div class="kpi-val">8,449,261 ฿</div>
+      <div class="kpi-sub">Completed Income 6.74M ฿</div>
     </div>
     <div class="kpi-card amber">
-      <div class="kpi-label">Remaining Backlog</div>
-      <div class="kpi-val">2.17M ฿</div>
+      <div class="kpi-label">Backlog คงค้าง</div>
+      <div class="kpi-val">2,173,929 ฿</div>
       <div class="kpi-sub up">▼ ลดลง -266,736 ฿ (-10.9%)</div>
     </div>
     <div class="kpi-card red">
       <div class="kpi-label">AC#2 Critical Aging</div>
-      <div class="kpi-val">39.38d <span style="font-size:0.85rem;color:#ef4444;font-weight:600;">Max 254d</span></div>
-      <div class="kpi-sub down">⚠️ ค้างนานเกิน 100 วัน 4 ไซต์</div>
+      <div class="kpi-val">39.38d <span style="font-size:0.78rem;color:#ef4444;font-weight:600;">Max 254d</span></div>
+      <div class="kpi-sub down">⚠️ ค้างเกิน 100 วัน 4 ไซต์</div>
     </div>
   </section>
 
-  <!-- ─── 3. Main Chart Visual Grid (Styled like User's Attached Sample) ─── -->
-  <section class="report-grid">
-
-    <!-- Card 1: Financial & Acceptance Highlights (Bar + Dual-Line Combo Chart) -->
+  <!-- ─── Row: Graft / Combo & Donut Chart Layout (Matching Images) ─── -->
+  <div class="grid-2">
+    <!-- Financial Acceptance Highlights Combo Chart -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>📊 Financial &amp; Acceptance Highlights</h2>
-        <div class="subtitle">แนวโน้มรายได้การตรวจรับ (Acceptance Value) เทียบกับอัตราส่วนสำเร็จ AC#1 และ AC#2 สะสม</div>
+        <h2>📊 Financial &amp; Acceptance Trend (Graft Highlights)</h2>
+        <div class="subtitle">รายได้การตรวจรับ (Acceptance Value) เทียบกับอัตราส่วนสำเร็จสะสม AC#1 และ AC#2</div>
       </div>
       <div class="chart-container-combo">
         <canvas id="financialHighlightsChart"></canvas>
       </div>
     </div>
 
-    <!-- Card 2: Project Share & Work Breakdown (Donut Chart matching Sample Image) -->
+    <!-- 2. Site Completion Donut (2.1 Completed, 2.2 On Process, 2.3 Cancel) -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>🥧 Site Portfolio &amp; Client Share</h2>
-        <div class="subtitle">สัดส่วนสถานะการดำเนินงานและพอร์ตลูกค้ารวม 525 ไซต์</div>
+        <h2>🥧 2. Site Completion (525 ไซต์)</h2>
+        <div class="subtitle">2.1 Completed | 2.2 On Process | 2.3 Cancel</div>
       </div>
       <div class="donut-layout">
         <div class="donut-chart-box">
@@ -451,147 +347,364 @@
         </div>
         <div class="donut-legend-box">
           <div class="legend-item">
-            <span class="legend-square" style="background:#0f2d59"></span>
+            <span class="legend-square" style="background:#10b981"></span>
             <div class="legend-text">
-              <strong>HAE Completed</strong>
-              <span>294 ไซต์ (56.0%)</span>
+              <strong>2.1 Completed</strong>
+              <span>394 ไซต์ (75.0%)</span>
             </div>
           </div>
           <div class="legend-item">
-            <span class="legend-square" style="background:#1e60c6"></span>
+            <span class="legend-square" style="background:#3b82f6"></span>
             <div class="legend-text">
-              <strong>HAE On Process</strong>
+              <strong>2.2 On Process</strong>
               <span>131 ไซต์ (25.0%)</span>
             </div>
           </div>
           <div class="legend-item">
-            <span class="legend-square" style="background:#f59e0b"></span>
+            <span class="legend-square" style="background:#94a3b8"></span>
             <div class="legend-text">
-              <strong>TME Completed (100%)</strong>
-              <span>100 ไซต์ (19.0%)</span>
+              <strong>2.3 Cancel</strong>
+              <span>0 ไซต์ (0.0%)</span>
             </div>
           </div>
-          <div class="legend-item">
-            <span class="legend-square" style="background:#cbd5e1"></span>
+          <div class="legend-item" style="border-top:1px dashed #e2e8f0;padding-top:6px;margin-top:2px;">
+            <span class="legend-square" style="background:#f59e0b"></span>
             <div class="legend-text">
-              <strong>Cancel Sites</strong>
-              <span>0 ไซต์ (0.0%)</span>
+              <strong>TME Completed 100%</strong>
+              <span>100 ไซต์ (ปิดครบ 🎉)</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-  </section>
-
-  <!-- ─── 4. Secondary Detail Grid (DOC Owner + SLA Quality) ─── -->
-  <section class="bottom-grid">
-
-    <!-- Card 3: DOC Owner Aging & Bottleneck -->
+  <!-- ─── 3. Document Status & 4. Financial Health Overview ─── -->
+  <div class="grid-2">
+    <!-- 3. Document Status -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>⏱️ DOC Owner Aging &amp; Performance</h2>
-        <div class="subtitle">ผลการติดตามระยะเวลาการส่งมอบเอกสารและวิเคราะห์จุดคอขวด</div>
+        <h2>📄 3. Document Status (AC#1 &amp; AC#2)</h2>
+        <div class="subtitle">ประสิทธิภาพการเก็บเงินและระยะเวลาตรวจรับเอกสาร</div>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">3.1 AC1 % เก็บได้ (Done)</span>
+        <span class="metric-val green">82.18% (4,860,496 ฿ จาก 5,914,483 ฿)</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">3.2 AC2 % เก็บได้ (Done)</span>
+        <span class="metric-val amber">50.30% (1,274,901 ฿ จาก 2,534,778 ฿)</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">3.3 AC1 Avg Aging</span>
+        <span class="metric-val">11.32 วัน (Min 1.0d · Max 116.0d)</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">3.4 AC2 Avg Aging</span>
+        <span class="metric-val red">39.38 วัน (Min 11.0d · 🚨 Max 254.0d)</span>
+      </div>
+    </div>
+
+    <!-- 4. Financial Health Overview -->
+    <div class="exec-card">
+      <div class="card-head">
+        <h2>💰 4. Financial Health Overview</h2>
+        <div class="subtitle">สถานะทางการเงินและยอดคงค้างในโครงการ</div>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">4.1 Estimate Final Income</span>
+        <span class="metric-val">8,449,261.40 ฿</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">4.2 AR (Commerce - รอเรียกเก็บ)</span>
+        <span class="metric-val green">5,408,323.50 ฿</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">4.3 AP (Payment - รอจ่ายซับคอน)</span>
+        <span class="metric-val amber">1,401,872.70 ฿</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">4.4 Unfulfilled Revenue (Remain)</span>
+        <span class="metric-val red">1,999,526.00 ฿ (จาก Backlog 2.17M)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 5. Portfolio Performance ─── -->
+  <div class="exec-card" style="margin-bottom:18px;">
+    <div class="card-head">
+      <h2>📁 5. Portfolio Performance (รายโครงการและแพ็กเกจงาน)</h2>
+      <div class="subtitle">สรุปจำนวนไซต์และมูลค่างานที่เสร็จสิ้นแยกตาม Project Type</div>
+    </div>
+    <div class="grid-4" style="margin-bottom:0;">
+      <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #1e60c6;">
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.1 HAE-MBB</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">6,022,433 ฿</div>
+        <div style="font-size:0.72rem;color:#10b981;font-weight:600;">294 sites (เสร็จสิ้นแล้ว)</div>
+      </div>
+      <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #f59e0b;">
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.2 TME-MBB</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">481,705 ฿</div>
+        <div style="font-size:0.72rem;color:#10b981;font-weight:600;">21 sites (เสร็จสมบูรณ์)</div>
+      </div>
+      <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #10b981;">
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.3 TME-IPRAN</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">225,486 ฿</div>
+        <div style="font-size:0.72rem;color:#10b981;font-weight:600;">77 sites (เสร็จสมบูรณ์)</div>
+      </div>
+      <div style="background:#f8fafc;padding:12px;border-radius:8px;border-left:4px solid #8b5cf6;">
+        <div style="font-size:0.75rem;color:#64748b;font-weight:600;">5.4 TME-BATTERY</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0f2d59;margin:4px 0;">10,214 ฿</div>
+        <div style="font-size:0.72rem;color:#10b981;font-weight:600;">2 sites (เสร็จสมบูรณ์)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 6. 1st & 2nd Milestone AGING Analysis & 7. DOC Owner ─── -->
+  <div class="grid-2">
+    <!-- 6. Milestone Aging Analysis -->
+    <div class="exec-card">
+      <div class="card-head">
+        <h2>⏱️ 6. 1st &amp; 2nd Milestone AGING Analysis</h2>
+        <div class="subtitle">ความเร็วหน้างาน vs คอขวดการตรวจรับ (Execution Paradox)</div>
+      </div>
+      <table class="clean-table">
+        <thead>
+          <tr>
+            <th>Milestone Category</th>
+            <th>M1 Avg Aging</th>
+            <th>M2 Avg Aging</th>
+            <th>สถานะความเร็ว</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>HAE Milestone</strong></td>
+            <td><span class="tag-status tag-green">4.00 วัน</span></td>
+            <td><span class="tag-status tag-blue">7.60 วัน</span></td>
+            <td>หน้างานคล่องตัวสูง</td>
+          </tr>
+          <tr>
+            <td><strong>TME Milestone</strong></td>
+            <td><span class="tag-status tag-green">5.14 วัน</span></td>
+            <td><span class="tag-status tag-blue">7.60 วัน</span></td>
+            <td>หน้างานทำได้ตามเกณฑ์</td>
+          </tr>
+          <tr>
+            <td><strong>Work Type: MBB</strong></td>
+            <td>4.00 วัน (Min 1d / Max 18d)</td>
+            <td>7.60 วัน (Min 1d / Max 27d)</td>
+            <td>เสร็จตาม SLA ปกติ</td>
+          </tr>
+          <tr>
+            <td><strong>Work Type: IPRAN</strong></td>
+            <td>1.90 วัน (Min 1d / Max 20d)</td>
+            <td>17.60 วัน (🚨 Max 110d)</td>
+            <td>M2 มีไซต์ค้างนาน</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 7. DOC Owner -->
+    <div class="exec-card">
+      <div class="card-head">
+        <h2>👤 7. DOC Owner (ประสิทธิภาพรายบุคคล)</h2>
+        <div class="subtitle">สถิติการส่งมอบงาน AC1 / AC2 รายผู้รับผิดชอบเอกสาร</div>
       </div>
       <table class="clean-table">
         <thead>
           <tr>
             <th>DOC Owner</th>
             <th>Sites</th>
-            <th>AC#1 Done (Avg)</th>
-            <th>AC#2 Done (Avg)</th>
+            <th>AC1 Done (Avg)</th>
+            <th>AC2 Done (Avg)</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>คุณหทัยรัตน์ สิงห์แก้ว</strong></td>
+            <td><strong>น.ส. หทัยรัตน์ สิงห์แก้ว</strong></td>
             <td>200</td>
-            <td>2.92M ฿ (13.2d)</td>
-            <td>723K ฿ (31.9d)</td>
+            <td>2,917,143 ฿ (13.2d)</td>
+            <td>723,263 ฿ (31.9d)</td>
             <td><span class="tag-status tag-green">Good Flow</span></td>
           </tr>
           <tr>
-            <td><strong>คุณอภิชาติ คำพวง</strong></td>
+            <td><strong>Apichart Kampuang</strong></td>
             <td>62</td>
-            <td>907K ฿ (13.6d)</td>
-            <td>258K ฿ (29.9d)</td>
+            <td>907,107 ฿ (13.6d)</td>
+            <td>258,602 ฿ (29.9d)</td>
             <td><span class="tag-status tag-green">Good Flow</span></td>
           </tr>
           <tr>
-            <td><strong>คุณเสริมศิริ บำเพ็ญธรรม</strong></td>
+            <td><strong>Sermsiri Bampentam</strong></td>
             <td>38</td>
-            <td>73.4K ฿ (17.0d)</td>
-            <td>14.1K ฿ (146.2d)</td>
+            <td>73,384 ฿ (17.0d)</td>
+            <td>14,067 ฿ (146.2d)</td>
             <td><span class="tag-status tag-red">🚨 Critical AC2</span></td>
           </tr>
           <tr>
-            <td><strong>คุณอดิศักดิ์ จันทร์เมา</strong></td>
+            <td><strong>Adisak Chanmao</strong></td>
             <td>3</td>
-            <td>33.2K ฿ (31.0d)</td>
-            <td>6.9K ฿ (92.7d)</td>
+            <td>33,181 ฿ (31.0d)</td>
+            <td>6,850 ฿ (92.7d)</td>
             <td><span class="tag-status tag-amber">⚠️ High Aging</span></td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
 
-    <!-- Card 4: Quality & Smart QC SLA -->
+  <!-- ─── 8. SLA PE Owner (2026) ─── -->
+  <div class="exec-card" style="margin-bottom:18px;">
+    <div class="card-head">
+      <h2>🏗️ 8. SLA PE Owner (2026)</h2>
+      <div class="subtitle">สถิติความเร็วการส่งมอบ Milestone 1 และ 2 ของวิศวกรคุมไซต์ (PE)</div>
+    </div>
+    <table class="clean-table">
+      <thead>
+        <tr>
+          <th>PE Owner &amp; Scope</th>
+          <th>Sites</th>
+          <th>MS1 Avg Aging</th>
+          <th>MS1 Min / Max</th>
+          <th>MS2 Avg Aging</th>
+          <th>MS2 Min / Max</th>
+          <th>Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Adisak Chanmao (HAE-MBB)</strong></td>
+          <td>190 ไซต์</td>
+          <td><span class="tag-status tag-green">4.0 วัน</span></td>
+          <td>↓1d / ↑18d</td>
+          <td><span class="tag-status tag-blue">7.6 วัน</span></td>
+          <td>↓1d / ↑27d</td>
+          <td>ปกติ ผ่านเกณฑ์ SLA</td>
+        </tr>
+        <tr>
+          <td><strong>Adisak Chanmao (TME-IPRAN)</strong></td>
+          <td>75 ไซต์</td>
+          <td><span class="tag-status tag-green">1.9 วัน</span></td>
+          <td>↓1d / ↑20d</td>
+          <td><span class="tag-status tag-amber">17.6 วัน</span></td>
+          <td>↓1d / ↑110d</td>
+          <td>⚠️ MS2 มีไซต์ค้างสะสม</td>
+        </tr>
+        <tr>
+          <td><strong>Palagon Prommueangma (HAE-MBB)</strong></td>
+          <td>10 ไซต์</td>
+          <td><span class="tag-status tag-green">2.5 วัน</span></td>
+          <td>↓1d / ↑5d</td>
+          <td><span class="tag-status tag-green">5.6 วัน</span></td>
+          <td>↓4d / ↑7d</td>
+          <td>ดีเยี่ยม รวดเร็วทุกไซต์</td>
+        </tr>
+        <tr>
+          <td><strong>Palagon Prommueangma (TME-MBB)</strong></td>
+          <td>18 ไซต์</td>
+          <td><span class="tag-status tag-green">5.6 วัน</span></td>
+          <td>↓1d / ↑20d</td>
+          <td><span class="tag-status tag-blue">7.6 วัน</span></td>
+          <td>↓1d / ↑22d</td>
+          <td>ปกติ ผ่านเกณฑ์ SLA</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── 9. SLA On-Process AIS & 10. SLA On-Process TRUE ─── -->
+  <div class="grid-2">
+    <!-- 9. SLA On-Process AIS -->
     <div class="exec-card">
       <div class="card-head">
-        <h2>✅ Quality &amp; SLA Compliance</h2>
-        <div class="subtitle">สถิติการผ่านการตรวจ Smart QC และ PAT Subcon ประจำสัปดาห์</div>
+        <h2>🚨 9. SLA On-Process AIS</h2>
+        <div class="subtitle">สถิติ Smart QC, PAT Subcon และไซต์ที่ต้อง Rework ของ AIS</div>
       </div>
-      <table class="clean-table">
+      <table class="clean-table" style="margin-bottom:12px;">
         <thead>
           <tr>
-            <th>กระบวนการ (Process)</th>
+            <th>Process</th>
             <th>Done in SLA</th>
             <th>Done Late</th>
             <th>Pending</th>
-            <th>SLA Compliance</th>
+            <th>Over SLA</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>AIS: Smart QC</strong></td>
-            <td>200 ไซต์</td>
+            <td><strong>Smart QC</strong></td>
+            <td><span class="tag-status tag-green">200 ไซต์ (68.3%)</span></td>
             <td>93 ไซต์</td>
             <td>5 ไซต์</td>
-            <td><span class="tag-status tag-blue">68.3%</span></td>
+            <td>0 ไซต์</td>
           </tr>
           <tr>
-            <td><strong>AIS: PAT Subcontractor</strong></td>
-            <td>217 ไซต์</td>
+            <td><strong>PAT Subcon</strong></td>
+            <td><span class="tag-status tag-green">217 ไซต์ (74.3%)</span></td>
             <td>75 ไซต์</td>
             <td>1 ไซต์</td>
-            <td><span class="tag-status tag-green">74.3%</span></td>
-          </tr>
-          <tr>
-            <td><strong>TRUE: Smart QC</strong></td>
-            <td>11 ไซต์</td>
-            <td>11 ไซต์</td>
             <td>0 ไซต์</td>
-            <td><span class="tag-status tag-amber">50.0%</span></td>
-          </tr>
-          <tr>
-            <td><strong>TRUE: PAT Subcontractor</strong></td>
-            <td>16 ไซต์</td>
-            <td>4 ไซต์</td>
-            <td>1 ไซต์</td>
-            <td><span class="tag-status tag-green">76.2%</span></td>
           </tr>
         </tbody>
       </table>
+      <div style="font-size:0.75rem;font-weight:700;color:#ef4444;margin-bottom:6px;">⚠️ Rework Required: PAT NOT PASS (4 ไซต์)</div>
+      <div style="font-size:0.72rem;color:#475569;line-height:1.6;background:#f8fafc;padding:8px;border-radius:6px;">
+        • <strong>BZBLM_2026</strong> (7d) – ผู้รับผิดชอบ: Apichart Kampuang<br>
+        • <strong>NVOTM_2026</strong> (6d) – ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว<br>
+        • <strong>NYOBM_2026</strong> (6d) – ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว<br>
+        • <strong>AKBBM_2026</strong> (11d) – ผู้รับผิดชอบ: น.ส. หทัยรัตน์ สิงห์แก้ว
+      </div>
     </div>
 
-  </section>
+    <!-- 10. SLA On-Process TRUE -->
+    <div class="exec-card">
+      <div class="card-head">
+        <h2>🚨 10. SLA On-Process TRUE</h2>
+        <div class="subtitle">สถิติ Smart QC, PAT Subcon และไซต์ Action Required ของ TRUE</div>
+      </div>
+      <table class="clean-table" style="margin-bottom:12px;">
+        <thead>
+          <tr>
+            <th>Process</th>
+            <th>Done in SLA</th>
+            <th>Done Late</th>
+            <th>Pending</th>
+            <th>Over SLA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Smart QC</strong></td>
+            <td><span class="tag-status tag-amber">11 ไซต์ (50.0%)</span></td>
+            <td>11 ไซต์</td>
+            <td>0 ไซต์</td>
+            <td>0 ไซต์</td>
+          </tr>
+          <tr>
+            <td><strong>PAT Subcon</strong></td>
+            <td><span class="tag-status tag-green">16 ไซต์ (76.2%)</span></td>
+            <td>4 ไซต์</td>
+            <td>1 ไซต์</td>
+            <td><span class="tag-status tag-red">1 ไซต์</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:0.75rem;font-weight:700;color:#f59e0b;margin-bottom:6px;">⚡ Action Required Sites</div>
+      <div style="font-size:0.72rem;color:#475569;line-height:1.6;background:#f8fafc;padding:8px;border-radius:6px;">
+        • <strong>Smart QC Required:</strong> CBR7015_Flash_RAN_EAS R3 (Aging 6d ⚠️ SQC)<br>
+        • <strong>PAT Subcon Required:</strong> CBR7015_Flash_battery_EAS R3 (Aging 1d TLN)
+      </div>
+    </div>
+  </div>
 
-  <!-- ─── 5. Ready-to-Send Text Message Box (LINE & Email) ─── -->
+  <!-- ─── Ready-to-Send Text Message Box (LINE & Email) ─── -->
   <section class="copy-panel">
-    <div class="copy-panel-header">
-      <h3 style="font-size:0.95rem;color:var(--navy-primary);font-weight:700;">
-        💬 Executive Message Snippet (พร้อมส่งต่อ LINE / Group Chat)
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <h3 style="font-size:0.92rem;color:var(--navy-primary);font-weight:700;">
+        💬 Executive Message Summary (พร้อมคัดลอกส่ง LINE / Email)
       </h3>
       <button class="btn btn-amber" onclick="copyReportText()" id="copyBtn">📋 Copy ข้อความ</button>
     </div>
@@ -599,34 +712,37 @@
 Telecom Rollout (HAE & TME)
 
 ══════════════════════
-📋 ภาพรวมโครงการ (Overall Progress)
-• ไซต์ทั้งหมด: 525 ไซต์
-• Completed: 394 ไซต์ (75.0%) ✅
-• On Process: 131 ไซต์ (25.0%) ⏳
-• Cancel: 0 ไซต์
-• สัดส่วนรายโปรเจกต์:
-  - HAE: 425 ไซต์ (Completed 294 / On Process 131)
-  - TME: 100 ไซต์ (Completed 100 ไซต์ - ปิดครบ 100% 🎉)
+1. สรุปความคืบหน้าภาพรวม (WK48/2026)
+2. Site Completion (รวม 525 ไซต์)
+   • 2.1 Completed: 394 ไซต์ (75.0%) ✅
+   • 2.2 On Process: 131 ไซต์ (25.0%) ⏳
+   • 2.3 Cancel: 0 ไซต์ (0.0%)
+   *หมายเหตุ: TME 100 ไซต์ ดำเนินการเสร็จครบ 100% แล้ว 🎉
 
-══════════════════════
-💰 สถานะทางการเงิน (Financials)
-• รายได้ประมาณการ (Est. Income): 8,449,261 ฿
-• ไซต์ที่ปิดจบแล้วรับรู้รายได้: 6,739,838 ฿
-• AR (รอเก็บเงิน): 5,408,324 ฿ | AP (รอจ่ายช่าง): 1,401,873 ฿
-• Backlog คงค้าง: 2,173,929 ฿ (ลดลง 🔻 266,736 ฿)
-• แผน Action Plan WK48: 414,285 ฿
+3. Document Status
+   • 3.1 AC1 % เก็บได้: 82.18% (4.86M จาก 5.91M ฿)
+   • 3.2 AC2 % เก็บได้: 50.30% (1.27M จาก 2.53M ฿)
+   • 3.3 AC1 Avg Aging: 11.32 วัน (Max 116 วัน)
+   • 3.4 AC2 Avg Aging: 39.38 วัน (🚨 Max 254 วัน)
 
-══════════════════════
-⏱️ Aging & Bottlenecks
-• AC#1: ตรวจรับแล้ว 82.2% | เฉลี่ย 11.3 วัน (Max 116 วัน)
-• AC#2: ตรวจรับแล้ว 50.3% | เฉลี่ย 39.4 วัน (🚨 Max 254 วัน)
-• จุดคอขวด: คุณเสริมศิริ (AC2 Avg 146.2d) และคุณอดิศักดิ์ (AC2 Avg 92.7d)
+4. Financial Health Overview
+   • 4.1 Estimate Final Income: 8,449,261 ฿
+   • 4.2 AR (รอเรียกเก็บ): 5,408,324 ฿
+   • 4.3 AP (รอจ่ายช่าง): 1,401,873 ฿
+   • 4.4 Unfulfilled Revenue: 1,999,526 ฿ (Backlog รวม 2.17M ฿ ลดลง 🔻 266K ฿)
 
-══════════════════════
-🎯 แผนงานเร่งด่วนสัปดาห์หน้า (Action Items)
-1. 🔴 เร่งรัดปิดเอกสาร AC#2 ค้างนานระดับวิกฤต (>100 วัน)
-2. 🟡 ผลักดันไซต์ On-Process HAE 131 ไซต์ ให้จบตามเป้าหมาย
-3. 🟡 ลดงาน Rework เพื่อยกระดับ Smart QC สู่เป้าหมาย 80%</div>
+5. Portfolio Performance (Completed)
+   • 5.1 HAE-MBB: 294 ไซต์ (6,022,433 ฿)
+   • 5.2 TME-MBB: 21 ไซต์ (481,705 ฿)
+   • 5.3 TME-IPRAN: 77 ไซต์ (225,486 ฿)
+   • 5.4 TME-BATTERY: 2 ไซต์ (10,214 ฿)
+
+6. Milestone Aging Analysis
+   • HAE M1: 4.00 วัน | TME M1: 5.14 วัน
+7. DOC Owner: คุณหทัยรัตน์ (200 ไซต์), คุณอภิชาติ (62 ไซต์), คุณเสริมศิริ (38 ไซต์ - 🚨 AC2 146.2d), คุณอดิศักดิ์ (3 ไซต์)
+8. SLA PE Owner: คุณอดิศักดิ์ (MS1 4.0d / MS2 7.6d), คุณพลาการ (MS1 2.5d / MS2 5.6d)
+9. SLA AIS: Smart QC ผ่านใน SLA 68.3% (200 ไซต์) | PAT 74.3% (217 ไซต์) | Rework 4 ไซต์
+10. SLA TRUE: Smart QC ผ่าน 50% (11 ไซต์) | PAT 76.2% (16 ไซต์)</div>
   </section>
 
 </div>
@@ -634,7 +750,6 @@ Telecom Rollout (HAE & TME)
 <script>
   /* ── 1. Financial Highlights: Bar + Dual Line Combo Chart ── */
   const ctxCombo = document.getElementById('financialHighlightsChart').getContext('2d');
-  
   new Chart(ctxCombo, {
     type: 'bar',
     data: {
@@ -644,7 +759,7 @@ Telecom Rollout (HAE & TME)
           type: 'bar',
           label: 'Acceptance Revenue (฿)',
           data: [430586, 0, 255481, 33054, 414285],
-          backgroundColor: '#0f2d59', // Dark Navy bar as in sample
+          backgroundColor: '#0f2d59',
           borderRadius: 4,
           yAxisID: 'y',
           order: 3
@@ -653,11 +768,10 @@ Telecom Rollout (HAE & TME)
           type: 'line',
           label: 'AC#1 Done Cumulative (%)',
           data: [72, 75, 78, 80, 82.2],
-          borderColor: '#f59e0b', // Amber line
+          borderColor: '#f59e0b',
           backgroundColor: '#f59e0b',
           borderWidth: 3,
           pointRadius: 5,
-          pointBackgroundColor: '#f59e0b',
           tension: 0.3,
           yAxisID: 'y1',
           order: 1
@@ -666,11 +780,10 @@ Telecom Rollout (HAE & TME)
           type: 'line',
           label: 'AC#2 Done Cumulative (%)',
           data: [38, 41, 44, 47, 50.3],
-          borderColor: '#10b981', // Green line
+          borderColor: '#10b981',
           backgroundColor: '#10b981',
           borderWidth: 3,
           pointRadius: 5,
-          pointBackgroundColor: '#10b981',
           tension: 0.3,
           yAxisID: 'y1',
           order: 2
@@ -681,70 +794,34 @@ Telecom Rollout (HAE & TME)
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            boxWidth: 12,
-            font: { size: 11, weight: '500' },
-            padding: 15
-          }
-        },
+        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10, weight: '500' } } },
         tooltip: {
           backgroundColor: '#091b36',
-          titleFont: { size: 12, weight: 'bold' },
           callbacks: {
-            label: function(context) {
-              if (context.dataset.type === 'line') {
-                return ` ${context.dataset.label}: ${context.raw}%`;
-              }
-              return ` ${context.dataset.label}: ฿${Number(context.raw).toLocaleString('th-TH')}`;
+            label: function(c) {
+              if (c.dataset.type === 'line') return ` ${c.dataset.label}: ${c.raw}%`;
+              return ` ${c.dataset.label}: ฿${Number(c.raw).toLocaleString('th-TH')}`;
             }
           }
         }
       },
       scales: {
-        x: {
-          grid: { display: false },
-          ticks: { font: { weight: '600', size: 11 } }
-        },
-        y: {
-          type: 'linear',
-          position: 'left',
-          title: { display: true, text: 'Revenue (THB)', font: { size: 10 } },
-          grid: { color: '#e2e8f0' },
-          ticks: {
-            callback: v => v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v
-          }
-        },
-        y1: {
-          type: 'linear',
-          position: 'right',
-          title: { display: true, text: 'Completion (%)', font: { size: 10 } },
-          min: 0,
-          max: 100,
-          grid: { drawOnChartArea: false },
-          ticks: {
-            callback: v => v + '%'
-          }
-        }
+        x: { grid: { display: false } },
+        y: { type: 'linear', position: 'left', ticks: { callback: v => v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v } },
+        y1: { type: 'linear', position: 'right', min: 0, max: 100, grid: { drawOnChartArea: false }, ticks: { callback: v => v + '%' } }
       }
     }
   });
 
-  /* ── 2. Portfolio Donut Chart (Styled exactly like sample image) ── */
+  /* ── 2. Portfolio Donut Chart ── */
   const ctxDonut = document.getElementById('portfolioDonutChart').getContext('2d');
-  
   new Chart(ctxDonut, {
     type: 'doughnut',
     data: {
-      labels: ['HAE Completed', 'HAE On Process', 'TME Completed'],
+      labels: ['Completed (HAE)', 'On Process (HAE)', 'Completed (TME)'],
       datasets: [{
         data: [294, 131, 100],
-        backgroundColor: [
-          '#0f2d59', // Dark Navy (56%)
-          '#1e60c6', // Blue Accent (25%)
-          '#f59e0b'  // Amber (19%)
-        ],
+        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
         borderWidth: 2,
         borderColor: '#ffffff',
         hoverOffset: 6
@@ -759,11 +836,10 @@ Telecom Rollout (HAE & TME)
         tooltip: {
           backgroundColor: '#091b36',
           callbacks: {
-            label: function(context) {
+            label: function(c) {
               const total = 525;
-              const val = context.raw;
-              const pct = ((val / total) * 100).toFixed(1);
-              return ` ${context.label}: ${val} ไซต์ (${pct}%)`;
+              const val = c.raw;
+              return ` ${c.label}: ${val} ไซต์ (${((val/total)*100).toFixed(1)}%)`;
             }
           }
         }
@@ -776,11 +852,9 @@ Telecom Rollout (HAE & TME)
     const text = document.getElementById('lineSnippet').innerText;
     navigator.clipboard.writeText(text).then(() => {
       const btn = document.getElementById('copyBtn');
-      btn.innerText = '✅ Copied to Clipboard!';
+      btn.innerText = '✅ Copied!';
       setTimeout(() => { btn.innerText = '📋 Copy ข้อความ'; }, 2000);
-    }).catch(err => {
-      alert('Error copying text: ' + err);
-    });
+    }).catch(err => { alert('Copy error: ' + err); });
   }
 
   /* ── Export PDF Feature ── */
@@ -813,7 +887,7 @@ Telecom Rollout (HAE & TME)
 
       pdf.save('Executive_Summary_Report_WK48.pdf');
     } catch (e) {
-      alert('Export PDF failed: ' + e.message);
+      alert('Export PDF error: ' + e.message);
     } finally {
       btn.innerText = '📄 Export PDF';
       btn.disabled = false;
